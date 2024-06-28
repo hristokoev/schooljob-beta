@@ -8,13 +8,22 @@
 
 export interface Config {
   collections: {
+    jobs: Job;
+    'job-categories': JobCategory;
+    organizations: Organization;
+    candidates: Candidate;
+    applications: Application;
+    cvs: Cv;
+    'site-uploads': SiteUpload;
+    agreements: Agreement;
     users: User;
-    pages: Page;
-    media: Media;
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
   };
-  globals: {};
+  globals: {
+    dashboard: Dashboard;
+    data: Data;
+  };
   locale: null;
   user: User & {
     collection: 'users';
@@ -22,29 +31,87 @@ export interface Config {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "users".
+ * via the `definition` "jobs".
  */
-export interface User {
+export interface Job {
   id: string;
-  updatedAt: string;
-  createdAt: string;
-  email: string;
-  resetPasswordToken?: string | null;
-  resetPasswordExpiration?: string | null;
-  salt?: string | null;
-  hash?: string | null;
-  loginAttempts?: number | null;
-  lockUntil?: string | null;
-  password?: string | null;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "pages".
- */
-export interface Page {
-  id: string;
-  title?: string | null;
-  content?: {
+  status: string;
+  title: string;
+  employmentType: (
+    | 'fulltime'
+    | 'parttime'
+    | 'contract'
+    | 'temporary'
+    | 'internship'
+    | 'freelance'
+    | 'apprenticeship'
+    | 'volunteer'
+    | 'seasonal'
+  )[];
+  location?: string | null;
+  locationType?: ('onsite' | 'remote' | 'hybrid')[] | null;
+  education?:
+    | (
+        | 'noEducation'
+        | 'highSchool'
+        | 'associateDegree'
+        | 'bachelorsDegree'
+        | 'mastersDegree'
+        | 'doctoralDegree'
+        | 'professionalDegree'
+      )[]
+    | null;
+  experience?:
+    | (
+        | 'noExperience'
+        | 'lessThanOneYear'
+        | 'oneTwoYears'
+        | 'twoThreeYears'
+        | 'threeFiveYears'
+        | 'fiveTenYears'
+        | 'tenPlusYears'
+      )[]
+    | null;
+  language?:
+    | (
+        | 'sq'
+        | 'bg'
+        | 'ca'
+        | 'hr'
+        | 'cs'
+        | 'da'
+        | 'nl'
+        | 'en'
+        | 'fi'
+        | 'fr'
+        | 'de'
+        | 'el'
+        | 'hu'
+        | 'it'
+        | 'no'
+        | 'pl'
+        | 'pt'
+        | 'ro'
+        | 'ru'
+        | 'sr'
+        | 'sk'
+        | 'es'
+        | 'sv'
+        | 'tr'
+        | 'uk'
+      )[]
+    | null;
+  salary?: {
+    enabled?: boolean | null;
+    range?: boolean | null;
+    base?: number | null;
+    minSalary?: number | null;
+    maxSalary?: number | null;
+    currency?: ('czk' | 'eur') | null;
+    salaryType?: ('hourly' | 'daily' | 'weekly' | 'biweekly' | 'monthly' | 'annually') | null;
+  };
+  description?: string | null;
+  richText?: {
     root: {
       type: string;
       children: {
@@ -59,16 +126,111 @@ export interface Page {
     };
     [k: string]: unknown;
   } | null;
+  skills?:
+    | {
+        [k: string]: unknown;
+      }
+    | unknown[]
+    | string
+    | number
+    | boolean
+    | null;
+  certifications?:
+    | {
+        [k: string]: unknown;
+      }
+    | unknown[]
+    | string
+    | number
+    | boolean
+    | null;
+  responsibilities?:
+    | {
+        [k: string]: unknown;
+      }
+    | unknown[]
+    | string
+    | number
+    | boolean
+    | null;
+  benefits?:
+    | {
+        [k: string]: unknown;
+      }
+    | unknown[]
+    | string
+    | number
+    | boolean
+    | null;
+  suitableFor?: {
+    students?: boolean | null;
+    disabledPeople?: boolean | null;
+    pregnantWomen?: boolean | null;
+    mothersOnMaternityLeave?: boolean | null;
+    retirees?: boolean | null;
+  };
+  applications?: (string | Application)[] | null;
+  featured?: boolean | null;
+  hasEndDate?: boolean | null;
+  endDate?: string | null;
+  categories: (string | JobCategory)[];
+  organization: string | Organization;
+  slug?: string | null;
+  customApplyUrl?: string | null;
+  createdBy?: (string | null) | User;
+  publicId?: number | null;
   updatedAt: string;
   createdAt: string;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "media".
+ * via the `definition` "applications".
  */
-export interface Media {
+export interface Application {
   id: string;
-  text?: string | null;
+  job: string | Job;
+  candidate?: (string | null) | Candidate;
+  firstName?: string | null;
+  lastName?: string | null;
+  email?: string | null;
+  phone?: string | null;
+  location?: string | null;
+  coverLetter?: string | null;
+  cv: string | Cv;
+  agreements?: (string | Agreement)[] | null;
+  status: 'pending' | 'accepted' | 'rejected';
+  fullName?: string | null;
+  trackingId?: number | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "candidates".
+ */
+export interface Candidate {
+  id: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+  phone?: string | null;
+  location?: string | null;
+  photo?: string | SiteUpload | null;
+  bio?: string | null;
+  applications?: (string | Application)[] | null;
+  jobsSaved?: (string | Job)[] | null;
+  createdBy?: (string | null) | User;
+  fullName?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "site-uploads".
+ */
+export interface SiteUpload {
+  id: string;
+  createdBy?: (string | null) | User;
   updatedAt: string;
   createdAt: string;
   url?: string | null;
@@ -80,6 +242,133 @@ export interface Media {
   height?: number | null;
   focalX?: number | null;
   focalY?: number | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "users".
+ */
+export interface User {
+  id: string;
+  role: 'super-admin' | 'admin' | 'organization' | 'candidate';
+  title?: string | null;
+  firstName?: string | null;
+  lastName?: string | null;
+  profile?:
+    | ({
+        relationTo: 'organizations';
+        value: string | Organization;
+      } | null)
+    | ({
+        relationTo: 'candidates';
+        value: string | Candidate;
+      } | null);
+  updatedAt: string;
+  createdAt: string;
+  email: string;
+  resetPasswordToken?: string | null;
+  resetPasswordExpiration?: string | null;
+  salt?: string | null;
+  hash?: string | null;
+  loginAttempts?: number | null;
+  lockUntil?: string | null;
+  password?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "organizations".
+ */
+export interface Organization {
+  id: string;
+  title: string;
+  email: string;
+  phone?: string | null;
+  location?: string | null;
+  vatId?: string | null;
+  logo?: string | SiteUpload | null;
+  imageCover?: string | SiteUpload | null;
+  description?: string | null;
+  richText?: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  url?: string | null;
+  jobsPublished?: (string | Job)[] | null;
+  jobsUnpublished?: (string | Job)[] | null;
+  featured?: boolean | null;
+  categories?: (string | JobCategory)[] | null;
+  slug?: string | null;
+  createdBy?: (string | null) | User;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "job-categories".
+ */
+export interface JobCategory {
+  id: string;
+  title: string;
+  slug?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "cvs".
+ */
+export interface Cv {
+  id: string;
+  job?: (string | null) | Job;
+  organization?: (string | null) | Organization;
+  createdBy?: (string | null) | User;
+  updatedAt: string;
+  createdAt: string;
+  url?: string | null;
+  thumbnailURL?: string | null;
+  filename?: string | null;
+  mimeType?: string | null;
+  filesize?: number | null;
+  width?: number | null;
+  height?: number | null;
+  focalX?: number | null;
+  focalY?: number | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "agreements".
+ */
+export interface Agreement {
+  id: string;
+  title: string;
+  richText: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+  slug?: string | null;
+  updatedAt: string;
+  createdAt: string;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -114,6 +403,35 @@ export interface PayloadMigration {
   batch?: number | null;
   updatedAt: string;
   createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "dashboard".
+ */
+export interface Dashboard {
+  id: string;
+  invalidIds?:
+    | {
+        [k: string]: unknown;
+      }
+    | unknown[]
+    | string
+    | number
+    | boolean
+    | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "data".
+ */
+export interface Data {
+  id: string;
+  lastPublicJobId?: number | null;
+  lastApplicationTrackingId?: number | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
 }
 
 
