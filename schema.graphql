@@ -41,8 +41,6 @@ type Query {
   PayloadPreferences(draft: Boolean, where: PayloadPreference_where, limit: Int, page: Int, sort: String): PayloadPreferences
   countPayloadPreferences(draft: Boolean, where: PayloadPreference_where): countPayloadPreferences
   docAccessPayloadPreference(id: String!): payload_preferencesDocAccess
-  Dashboard(draft: Boolean): Dashboard
-  docAccessDashboard: dashboardDocAccess
   Data(draft: Boolean): Data
   docAccessData: dataDocAccess
   Access: Access
@@ -52,6 +50,8 @@ type Job {
   id: String
   status: String!
   title: String!
+  categories: [JobCategory!]!
+  organization: Organization!
   employmentType: [Job_employmentType!]!
   location: String
   locationType: [Job_locationType!]
@@ -59,19 +59,17 @@ type Job {
   experience: [Job_experience!]
   language: [Job_language!]
   salary: Job_Salary
-  description: String
+  description: String!
   richText(depth: Int): JSON
-  skills: JSON
-  certifications: JSON
-  responsibilities: JSON
-  benefits: JSON
+  skills: [String]
+  certifications: [String]
+  responsibilities: [String]
+  benefits: [String]
   suitableFor: Job_SuitableFor
   applications: [Application!]
   featured: Boolean
   hasEndDate: Boolean
   endDate: DateTime
-  categories: [JobCategory!]!
-  organization: Organization!
   slug: String
   customApplyUrl: String
   createdBy: User
@@ -80,141 +78,37 @@ type Job {
   createdAt: DateTime
 }
 
-enum Job_employmentType {
-  fulltime
-  parttime
-  contract
-  temporary
-  internship
-  freelance
-  apprenticeship
-  volunteer
-  seasonal
-}
-
-enum Job_locationType {
-  onsite
-  remote
-  hybrid
-}
-
-enum Job_education {
-  noEducation
-  highSchool
-  associateDegree
-  bachelorsDegree
-  mastersDegree
-  doctoralDegree
-  professionalDegree
-}
-
-enum Job_experience {
-  noExperience
-  lessThanOneYear
-  oneTwoYears
-  twoThreeYears
-  threeFiveYears
-  fiveTenYears
-  tenPlusYears
-}
-
-enum Job_language {
-  sq
-  bg
-  ca
-  hr
-  cs
-  da
-  nl
-  en
-  fi
-  fr
-  de
-  el
-  hu
-  it
-  no
-  pl
-  pt
-  ro
-  ru
-  sr
-  sk
-  es
-  sv
-  tr
-  uk
-}
-
-type Job_Salary {
-  enabled: Boolean
-  range: Boolean
-  base: Float
-  minSalary: Float
-  maxSalary: Float
-  currency: Job_Salary_currency
-  salaryType: Job_Salary_salaryType
-}
-
-enum Job_Salary_currency {
-  czk
-  eur
-}
-
-enum Job_Salary_salaryType {
-  hourly
-  daily
-  weekly
-  biweekly
-  monthly
-  annually
-}
-
-"""
-The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
-"""
-scalar JSON @specifiedBy(url: "http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf")
-
-type Job_SuitableFor {
-  students: Boolean
-  disabledPeople: Boolean
-  pregnantWomen: Boolean
-  mothersOnMaternityLeave: Boolean
-  retirees: Boolean
-}
-
-type Application {
+type JobCategory {
   id: String
-  job: Job!
-  candidate: Candidate
-  firstName: String
-  lastName: String
-  email: String
-  phone: String
-  location: String
-  coverLetter: String
-  cv(where: Application_Cv_where): Cv!
-  agreements: [Agreement!]
-  status: Application_status!
-  fullName: String
-  trackingId: Float
+  title: String!
+  slug: String
   updatedAt: DateTime
   createdAt: DateTime
 }
 
-type Candidate {
+"""
+A date-time string at UTC, such as 2007-12-03T10:15:30Z, compliant with the `date-time` format outlined in section 5.6 of the RFC 3339 profile of the ISO 8601 standard for representation of dates and times using the Gregorian calendar.
+"""
+scalar DateTime
+
+type Organization {
   id: String
-  firstName: String!
-  lastName: String!
+  title: String!
+  slug: String
+  featured: Boolean
   email: String!
   phone: String
   location: String
-  photo(where: Candidate_Photo_where): SiteUpload
-  bio: String
-  applications: [Application!]
-  jobsSaved: [Job!]
+  vatId: String
+  categories: [JobCategory!]
+  logo(where: Organization_Logo_where): SiteUpload
+  imageCover(where: Organization_ImageCover_where): SiteUpload
+  description: String
+  richText(depth: Int): JSON
+  url: String
+  jobsPublished: [Job!]
+  jobsUnpublished: [Job!]
   createdBy: User
-  fullName: String
   updatedAt: DateTime
   createdAt: DateTime
 }
@@ -273,27 +167,503 @@ enum User_Profile_RelationTo {
 
 union User_Profile = Organization | Candidate
 
-type Organization {
+type Candidate {
   id: String
-  title: String!
+  firstName: String!
+  lastName: String!
   email: String!
   phone: String
   location: String
-  vatId: String
-  logo(where: Organization_Logo_where): SiteUpload
-  imageCover(where: Organization_ImageCover_where): SiteUpload
-  description: String
-  richText(depth: Int): JSON
-  url: String
-  jobsPublished: [Job!]
-  jobsUnpublished: [Job!]
-  featured: Boolean
-  categories: [JobCategory!]
-  slug: String
+  photo(where: Candidate_Photo_where): SiteUpload
+  bio: String
+  applications: [Application!]
+  jobsSaved: [Job!]
   createdBy: User
+  fullName: String
   updatedAt: DateTime
   createdAt: DateTime
 }
+
+input Candidate_Photo_where {
+  createdBy: Candidate_Photo_createdBy_operator
+  updatedAt: Candidate_Photo_updatedAt_operator
+  createdAt: Candidate_Photo_createdAt_operator
+  url: Candidate_Photo_url_operator
+  thumbnailURL: Candidate_Photo_thumbnailURL_operator
+  filename: Candidate_Photo_filename_operator
+  mimeType: Candidate_Photo_mimeType_operator
+  filesize: Candidate_Photo_filesize_operator
+  width: Candidate_Photo_width_operator
+  height: Candidate_Photo_height_operator
+  focalX: Candidate_Photo_focalX_operator
+  focalY: Candidate_Photo_focalY_operator
+  id: Candidate_Photo_id_operator
+  AND: [Candidate_Photo_where_and]
+  OR: [Candidate_Photo_where_or]
+}
+
+input Candidate_Photo_createdBy_operator {
+  equals: JSON
+  not_equals: JSON
+  in: [JSON]
+  not_in: [JSON]
+  all: [JSON]
+  exists: Boolean
+}
+
+"""
+The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
+"""
+scalar JSON @specifiedBy(url: "http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf")
+
+input Candidate_Photo_updatedAt_operator {
+  equals: DateTime
+  not_equals: DateTime
+  greater_than_equal: DateTime
+  greater_than: DateTime
+  less_than_equal: DateTime
+  less_than: DateTime
+  like: DateTime
+  exists: Boolean
+}
+
+input Candidate_Photo_createdAt_operator {
+  equals: DateTime
+  not_equals: DateTime
+  greater_than_equal: DateTime
+  greater_than: DateTime
+  less_than_equal: DateTime
+  less_than: DateTime
+  like: DateTime
+  exists: Boolean
+}
+
+input Candidate_Photo_url_operator {
+  equals: String
+  not_equals: String
+  like: String
+  contains: String
+  in: [String]
+  not_in: [String]
+  all: [String]
+  exists: Boolean
+}
+
+input Candidate_Photo_thumbnailURL_operator {
+  equals: String
+  not_equals: String
+  like: String
+  contains: String
+  in: [String]
+  not_in: [String]
+  all: [String]
+  exists: Boolean
+}
+
+input Candidate_Photo_filename_operator {
+  equals: String
+  not_equals: String
+  like: String
+  contains: String
+  in: [String]
+  not_in: [String]
+  all: [String]
+  exists: Boolean
+}
+
+input Candidate_Photo_mimeType_operator {
+  equals: String
+  not_equals: String
+  like: String
+  contains: String
+  in: [String]
+  not_in: [String]
+  all: [String]
+  exists: Boolean
+}
+
+input Candidate_Photo_filesize_operator {
+  equals: Float
+  not_equals: Float
+  greater_than_equal: Float
+  greater_than: Float
+  less_than_equal: Float
+  less_than: Float
+  exists: Boolean
+}
+
+input Candidate_Photo_width_operator {
+  equals: Float
+  not_equals: Float
+  greater_than_equal: Float
+  greater_than: Float
+  less_than_equal: Float
+  less_than: Float
+  exists: Boolean
+}
+
+input Candidate_Photo_height_operator {
+  equals: Float
+  not_equals: Float
+  greater_than_equal: Float
+  greater_than: Float
+  less_than_equal: Float
+  less_than: Float
+  exists: Boolean
+}
+
+input Candidate_Photo_focalX_operator {
+  equals: Float
+  not_equals: Float
+  greater_than_equal: Float
+  greater_than: Float
+  less_than_equal: Float
+  less_than: Float
+  exists: Boolean
+}
+
+input Candidate_Photo_focalY_operator {
+  equals: Float
+  not_equals: Float
+  greater_than_equal: Float
+  greater_than: Float
+  less_than_equal: Float
+  less_than: Float
+  exists: Boolean
+}
+
+input Candidate_Photo_id_operator {
+  equals: String
+  not_equals: String
+  like: String
+  contains: String
+  in: [String]
+  not_in: [String]
+  all: [String]
+  exists: Boolean
+}
+
+input Candidate_Photo_where_and {
+  createdBy: Candidate_Photo_createdBy_operator
+  updatedAt: Candidate_Photo_updatedAt_operator
+  createdAt: Candidate_Photo_createdAt_operator
+  url: Candidate_Photo_url_operator
+  thumbnailURL: Candidate_Photo_thumbnailURL_operator
+  filename: Candidate_Photo_filename_operator
+  mimeType: Candidate_Photo_mimeType_operator
+  filesize: Candidate_Photo_filesize_operator
+  width: Candidate_Photo_width_operator
+  height: Candidate_Photo_height_operator
+  focalX: Candidate_Photo_focalX_operator
+  focalY: Candidate_Photo_focalY_operator
+  id: Candidate_Photo_id_operator
+  AND: [Candidate_Photo_where_and]
+  OR: [Candidate_Photo_where_or]
+}
+
+input Candidate_Photo_where_or {
+  createdBy: Candidate_Photo_createdBy_operator
+  updatedAt: Candidate_Photo_updatedAt_operator
+  createdAt: Candidate_Photo_createdAt_operator
+  url: Candidate_Photo_url_operator
+  thumbnailURL: Candidate_Photo_thumbnailURL_operator
+  filename: Candidate_Photo_filename_operator
+  mimeType: Candidate_Photo_mimeType_operator
+  filesize: Candidate_Photo_filesize_operator
+  width: Candidate_Photo_width_operator
+  height: Candidate_Photo_height_operator
+  focalX: Candidate_Photo_focalX_operator
+  focalY: Candidate_Photo_focalY_operator
+  id: Candidate_Photo_id_operator
+  AND: [Candidate_Photo_where_and]
+  OR: [Candidate_Photo_where_or]
+}
+
+type Application {
+  id: String
+  job: Job!
+  candidate: Candidate
+  firstName: String
+  lastName: String
+  email: String
+  phone: String
+  location: String
+  coverLetter: String
+  cv(where: Application_Cv_where): Cv!
+  agreements: [Agreement!]
+  status: Application_status!
+  fullName: String
+  trackingId: Float
+  updatedAt: DateTime
+  createdAt: DateTime
+}
+
+type Cv {
+  id: String
+  job: Job
+  organization: Organization
+  createdBy: User
+  prefix: String
+  updatedAt: DateTime
+  createdAt: DateTime
+  url: String
+  thumbnailURL: String
+  filename: String
+  mimeType: String
+  filesize: Float
+  width: Float
+  height: Float
+  focalX: Float
+  focalY: Float
+}
+
+input Application_Cv_where {
+  job: Application_Cv_job_operator
+  organization: Application_Cv_organization_operator
+  createdBy: Application_Cv_createdBy_operator
+  prefix: Application_Cv_prefix_operator
+  updatedAt: Application_Cv_updatedAt_operator
+  createdAt: Application_Cv_createdAt_operator
+  url: Application_Cv_url_operator
+  thumbnailURL: Application_Cv_thumbnailURL_operator
+  filename: Application_Cv_filename_operator
+  mimeType: Application_Cv_mimeType_operator
+  filesize: Application_Cv_filesize_operator
+  width: Application_Cv_width_operator
+  height: Application_Cv_height_operator
+  focalX: Application_Cv_focalX_operator
+  focalY: Application_Cv_focalY_operator
+  id: Application_Cv_id_operator
+  AND: [Application_Cv_where_and]
+  OR: [Application_Cv_where_or]
+}
+
+input Application_Cv_job_operator {
+  equals: JSON
+  not_equals: JSON
+  in: [JSON]
+  not_in: [JSON]
+  all: [JSON]
+  exists: Boolean
+}
+
+input Application_Cv_organization_operator {
+  equals: JSON
+  not_equals: JSON
+  in: [JSON]
+  not_in: [JSON]
+  all: [JSON]
+  exists: Boolean
+}
+
+input Application_Cv_createdBy_operator {
+  equals: JSON
+  not_equals: JSON
+  in: [JSON]
+  not_in: [JSON]
+  all: [JSON]
+  exists: Boolean
+}
+
+input Application_Cv_prefix_operator {
+  equals: String
+  not_equals: String
+  like: String
+  contains: String
+  in: [String]
+  not_in: [String]
+  all: [String]
+  exists: Boolean
+}
+
+input Application_Cv_updatedAt_operator {
+  equals: DateTime
+  not_equals: DateTime
+  greater_than_equal: DateTime
+  greater_than: DateTime
+  less_than_equal: DateTime
+  less_than: DateTime
+  like: DateTime
+  exists: Boolean
+}
+
+input Application_Cv_createdAt_operator {
+  equals: DateTime
+  not_equals: DateTime
+  greater_than_equal: DateTime
+  greater_than: DateTime
+  less_than_equal: DateTime
+  less_than: DateTime
+  like: DateTime
+  exists: Boolean
+}
+
+input Application_Cv_url_operator {
+  equals: String
+  not_equals: String
+  like: String
+  contains: String
+  in: [String]
+  not_in: [String]
+  all: [String]
+  exists: Boolean
+}
+
+input Application_Cv_thumbnailURL_operator {
+  equals: String
+  not_equals: String
+  like: String
+  contains: String
+  in: [String]
+  not_in: [String]
+  all: [String]
+  exists: Boolean
+}
+
+input Application_Cv_filename_operator {
+  equals: String
+  not_equals: String
+  like: String
+  contains: String
+  in: [String]
+  not_in: [String]
+  all: [String]
+  exists: Boolean
+}
+
+input Application_Cv_mimeType_operator {
+  equals: String
+  not_equals: String
+  like: String
+  contains: String
+  in: [String]
+  not_in: [String]
+  all: [String]
+  exists: Boolean
+}
+
+input Application_Cv_filesize_operator {
+  equals: Float
+  not_equals: Float
+  greater_than_equal: Float
+  greater_than: Float
+  less_than_equal: Float
+  less_than: Float
+  exists: Boolean
+}
+
+input Application_Cv_width_operator {
+  equals: Float
+  not_equals: Float
+  greater_than_equal: Float
+  greater_than: Float
+  less_than_equal: Float
+  less_than: Float
+  exists: Boolean
+}
+
+input Application_Cv_height_operator {
+  equals: Float
+  not_equals: Float
+  greater_than_equal: Float
+  greater_than: Float
+  less_than_equal: Float
+  less_than: Float
+  exists: Boolean
+}
+
+input Application_Cv_focalX_operator {
+  equals: Float
+  not_equals: Float
+  greater_than_equal: Float
+  greater_than: Float
+  less_than_equal: Float
+  less_than: Float
+  exists: Boolean
+}
+
+input Application_Cv_focalY_operator {
+  equals: Float
+  not_equals: Float
+  greater_than_equal: Float
+  greater_than: Float
+  less_than_equal: Float
+  less_than: Float
+  exists: Boolean
+}
+
+input Application_Cv_id_operator {
+  equals: String
+  not_equals: String
+  like: String
+  contains: String
+  in: [String]
+  not_in: [String]
+  all: [String]
+  exists: Boolean
+}
+
+input Application_Cv_where_and {
+  job: Application_Cv_job_operator
+  organization: Application_Cv_organization_operator
+  createdBy: Application_Cv_createdBy_operator
+  prefix: Application_Cv_prefix_operator
+  updatedAt: Application_Cv_updatedAt_operator
+  createdAt: Application_Cv_createdAt_operator
+  url: Application_Cv_url_operator
+  thumbnailURL: Application_Cv_thumbnailURL_operator
+  filename: Application_Cv_filename_operator
+  mimeType: Application_Cv_mimeType_operator
+  filesize: Application_Cv_filesize_operator
+  width: Application_Cv_width_operator
+  height: Application_Cv_height_operator
+  focalX: Application_Cv_focalX_operator
+  focalY: Application_Cv_focalY_operator
+  id: Application_Cv_id_operator
+  AND: [Application_Cv_where_and]
+  OR: [Application_Cv_where_or]
+}
+
+input Application_Cv_where_or {
+  job: Application_Cv_job_operator
+  organization: Application_Cv_organization_operator
+  createdBy: Application_Cv_createdBy_operator
+  prefix: Application_Cv_prefix_operator
+  updatedAt: Application_Cv_updatedAt_operator
+  createdAt: Application_Cv_createdAt_operator
+  url: Application_Cv_url_operator
+  thumbnailURL: Application_Cv_thumbnailURL_operator
+  filename: Application_Cv_filename_operator
+  mimeType: Application_Cv_mimeType_operator
+  filesize: Application_Cv_filesize_operator
+  width: Application_Cv_width_operator
+  height: Application_Cv_height_operator
+  focalX: Application_Cv_focalX_operator
+  focalY: Application_Cv_focalY_operator
+  id: Application_Cv_id_operator
+  AND: [Application_Cv_where_and]
+  OR: [Application_Cv_where_or]
+}
+
+type Agreement {
+  id: String
+  title: String!
+  richText(depth: Int): JSON!
+  slug: String
+  updatedAt: DateTime
+  createdAt: DateTime
+}
+
+enum Application_status {
+  pending
+  accepted
+  rejected
+}
+
+"""
+A field whose value conforms to the standard internet email address format as specified in HTML Spec: https://html.spec.whatwg.org/multipage/input.html#valid-e-mail-address.
+"""
+scalar EmailAddress @specifiedBy(url: "https://html.spec.whatwg.org/multipage/input.html#valid-e-mail-address")
 
 input Organization_Logo_where {
   createdBy: Organization_Logo_createdBy_operator
@@ -332,11 +702,6 @@ input Organization_Logo_updatedAt_operator {
   like: DateTime
   exists: Boolean
 }
-
-"""
-A date-time string at UTC, such as 2007-12-03T10:15:30Z, compliant with the `date-time` format outlined in section 5.6 of the RFC 3339 profile of the ISO 8601 standard for representation of dates and times using the Gregorian calendar.
-"""
-scalar DateTime
 
 input Organization_Logo_createdAt_operator {
   equals: DateTime
@@ -680,454 +1045,101 @@ input Organization_ImageCover_where_or {
   OR: [Organization_ImageCover_where_or]
 }
 
-type JobCategory {
-  id: String
-  title: String!
-  slug: String
-  updatedAt: DateTime
-  createdAt: DateTime
+enum Job_employmentType {
+  fulltime
+  parttime
+  contract
+  temporary
+  internship
+  freelance
+  apprenticeship
+  volunteer
+  seasonal
 }
 
-"""
-A field whose value conforms to the standard internet email address format as specified in HTML Spec: https://html.spec.whatwg.org/multipage/input.html#valid-e-mail-address.
-"""
-scalar EmailAddress @specifiedBy(url: "https://html.spec.whatwg.org/multipage/input.html#valid-e-mail-address")
-
-input Candidate_Photo_where {
-  createdBy: Candidate_Photo_createdBy_operator
-  updatedAt: Candidate_Photo_updatedAt_operator
-  createdAt: Candidate_Photo_createdAt_operator
-  url: Candidate_Photo_url_operator
-  thumbnailURL: Candidate_Photo_thumbnailURL_operator
-  filename: Candidate_Photo_filename_operator
-  mimeType: Candidate_Photo_mimeType_operator
-  filesize: Candidate_Photo_filesize_operator
-  width: Candidate_Photo_width_operator
-  height: Candidate_Photo_height_operator
-  focalX: Candidate_Photo_focalX_operator
-  focalY: Candidate_Photo_focalY_operator
-  id: Candidate_Photo_id_operator
-  AND: [Candidate_Photo_where_and]
-  OR: [Candidate_Photo_where_or]
+enum Job_locationType {
+  onsite
+  remote
+  hybrid
 }
 
-input Candidate_Photo_createdBy_operator {
-  equals: JSON
-  not_equals: JSON
-  in: [JSON]
-  not_in: [JSON]
-  all: [JSON]
-  exists: Boolean
+enum Job_education {
+  noEducation
+  highSchool
+  associateDegree
+  bachelorsDegree
+  mastersDegree
+  doctoralDegree
+  professionalDegree
 }
 
-input Candidate_Photo_updatedAt_operator {
-  equals: DateTime
-  not_equals: DateTime
-  greater_than_equal: DateTime
-  greater_than: DateTime
-  less_than_equal: DateTime
-  less_than: DateTime
-  like: DateTime
-  exists: Boolean
+enum Job_experience {
+  noExperience
+  lessThanOneYear
+  oneTwoYears
+  twoThreeYears
+  threeFiveYears
+  fiveTenYears
+  tenPlusYears
 }
 
-input Candidate_Photo_createdAt_operator {
-  equals: DateTime
-  not_equals: DateTime
-  greater_than_equal: DateTime
-  greater_than: DateTime
-  less_than_equal: DateTime
-  less_than: DateTime
-  like: DateTime
-  exists: Boolean
+enum Job_language {
+  sq
+  bg
+  ca
+  hr
+  cs
+  da
+  nl
+  en
+  fi
+  fr
+  de
+  el
+  hu
+  it
+  no
+  pl
+  pt
+  ro
+  ru
+  sr
+  sk
+  es
+  sv
+  tr
+  uk
 }
 
-input Candidate_Photo_url_operator {
-  equals: String
-  not_equals: String
-  like: String
-  contains: String
-  in: [String]
-  not_in: [String]
-  all: [String]
-  exists: Boolean
+type Job_Salary {
+  enabled: Boolean
+  range: Boolean
+  base: Float
+  minSalary: Float
+  maxSalary: Float
+  currency: Job_Salary_currency
+  salaryType: Job_Salary_salaryType
 }
 
-input Candidate_Photo_thumbnailURL_operator {
-  equals: String
-  not_equals: String
-  like: String
-  contains: String
-  in: [String]
-  not_in: [String]
-  all: [String]
-  exists: Boolean
+enum Job_Salary_currency {
+  czk
+  eur
 }
 
-input Candidate_Photo_filename_operator {
-  equals: String
-  not_equals: String
-  like: String
-  contains: String
-  in: [String]
-  not_in: [String]
-  all: [String]
-  exists: Boolean
+enum Job_Salary_salaryType {
+  hourly
+  daily
+  weekly
+  biweekly
+  monthly
+  annually
 }
 
-input Candidate_Photo_mimeType_operator {
-  equals: String
-  not_equals: String
-  like: String
-  contains: String
-  in: [String]
-  not_in: [String]
-  all: [String]
-  exists: Boolean
-}
-
-input Candidate_Photo_filesize_operator {
-  equals: Float
-  not_equals: Float
-  greater_than_equal: Float
-  greater_than: Float
-  less_than_equal: Float
-  less_than: Float
-  exists: Boolean
-}
-
-input Candidate_Photo_width_operator {
-  equals: Float
-  not_equals: Float
-  greater_than_equal: Float
-  greater_than: Float
-  less_than_equal: Float
-  less_than: Float
-  exists: Boolean
-}
-
-input Candidate_Photo_height_operator {
-  equals: Float
-  not_equals: Float
-  greater_than_equal: Float
-  greater_than: Float
-  less_than_equal: Float
-  less_than: Float
-  exists: Boolean
-}
-
-input Candidate_Photo_focalX_operator {
-  equals: Float
-  not_equals: Float
-  greater_than_equal: Float
-  greater_than: Float
-  less_than_equal: Float
-  less_than: Float
-  exists: Boolean
-}
-
-input Candidate_Photo_focalY_operator {
-  equals: Float
-  not_equals: Float
-  greater_than_equal: Float
-  greater_than: Float
-  less_than_equal: Float
-  less_than: Float
-  exists: Boolean
-}
-
-input Candidate_Photo_id_operator {
-  equals: String
-  not_equals: String
-  like: String
-  contains: String
-  in: [String]
-  not_in: [String]
-  all: [String]
-  exists: Boolean
-}
-
-input Candidate_Photo_where_and {
-  createdBy: Candidate_Photo_createdBy_operator
-  updatedAt: Candidate_Photo_updatedAt_operator
-  createdAt: Candidate_Photo_createdAt_operator
-  url: Candidate_Photo_url_operator
-  thumbnailURL: Candidate_Photo_thumbnailURL_operator
-  filename: Candidate_Photo_filename_operator
-  mimeType: Candidate_Photo_mimeType_operator
-  filesize: Candidate_Photo_filesize_operator
-  width: Candidate_Photo_width_operator
-  height: Candidate_Photo_height_operator
-  focalX: Candidate_Photo_focalX_operator
-  focalY: Candidate_Photo_focalY_operator
-  id: Candidate_Photo_id_operator
-  AND: [Candidate_Photo_where_and]
-  OR: [Candidate_Photo_where_or]
-}
-
-input Candidate_Photo_where_or {
-  createdBy: Candidate_Photo_createdBy_operator
-  updatedAt: Candidate_Photo_updatedAt_operator
-  createdAt: Candidate_Photo_createdAt_operator
-  url: Candidate_Photo_url_operator
-  thumbnailURL: Candidate_Photo_thumbnailURL_operator
-  filename: Candidate_Photo_filename_operator
-  mimeType: Candidate_Photo_mimeType_operator
-  filesize: Candidate_Photo_filesize_operator
-  width: Candidate_Photo_width_operator
-  height: Candidate_Photo_height_operator
-  focalX: Candidate_Photo_focalX_operator
-  focalY: Candidate_Photo_focalY_operator
-  id: Candidate_Photo_id_operator
-  AND: [Candidate_Photo_where_and]
-  OR: [Candidate_Photo_where_or]
-}
-
-type Cv {
-  id: String
-  job: Job
-  organization: Organization
-  createdBy: User
-  updatedAt: DateTime
-  createdAt: DateTime
-  url: String
-  thumbnailURL: String
-  filename: String
-  mimeType: String
-  filesize: Float
-  width: Float
-  height: Float
-  focalX: Float
-  focalY: Float
-}
-
-input Application_Cv_where {
-  job: Application_Cv_job_operator
-  organization: Application_Cv_organization_operator
-  createdBy: Application_Cv_createdBy_operator
-  updatedAt: Application_Cv_updatedAt_operator
-  createdAt: Application_Cv_createdAt_operator
-  url: Application_Cv_url_operator
-  thumbnailURL: Application_Cv_thumbnailURL_operator
-  filename: Application_Cv_filename_operator
-  mimeType: Application_Cv_mimeType_operator
-  filesize: Application_Cv_filesize_operator
-  width: Application_Cv_width_operator
-  height: Application_Cv_height_operator
-  focalX: Application_Cv_focalX_operator
-  focalY: Application_Cv_focalY_operator
-  id: Application_Cv_id_operator
-  AND: [Application_Cv_where_and]
-  OR: [Application_Cv_where_or]
-}
-
-input Application_Cv_job_operator {
-  equals: JSON
-  not_equals: JSON
-  in: [JSON]
-  not_in: [JSON]
-  all: [JSON]
-  exists: Boolean
-}
-
-input Application_Cv_organization_operator {
-  equals: JSON
-  not_equals: JSON
-  in: [JSON]
-  not_in: [JSON]
-  all: [JSON]
-  exists: Boolean
-}
-
-input Application_Cv_createdBy_operator {
-  equals: JSON
-  not_equals: JSON
-  in: [JSON]
-  not_in: [JSON]
-  all: [JSON]
-  exists: Boolean
-}
-
-input Application_Cv_updatedAt_operator {
-  equals: DateTime
-  not_equals: DateTime
-  greater_than_equal: DateTime
-  greater_than: DateTime
-  less_than_equal: DateTime
-  less_than: DateTime
-  like: DateTime
-  exists: Boolean
-}
-
-input Application_Cv_createdAt_operator {
-  equals: DateTime
-  not_equals: DateTime
-  greater_than_equal: DateTime
-  greater_than: DateTime
-  less_than_equal: DateTime
-  less_than: DateTime
-  like: DateTime
-  exists: Boolean
-}
-
-input Application_Cv_url_operator {
-  equals: String
-  not_equals: String
-  like: String
-  contains: String
-  in: [String]
-  not_in: [String]
-  all: [String]
-  exists: Boolean
-}
-
-input Application_Cv_thumbnailURL_operator {
-  equals: String
-  not_equals: String
-  like: String
-  contains: String
-  in: [String]
-  not_in: [String]
-  all: [String]
-  exists: Boolean
-}
-
-input Application_Cv_filename_operator {
-  equals: String
-  not_equals: String
-  like: String
-  contains: String
-  in: [String]
-  not_in: [String]
-  all: [String]
-  exists: Boolean
-}
-
-input Application_Cv_mimeType_operator {
-  equals: String
-  not_equals: String
-  like: String
-  contains: String
-  in: [String]
-  not_in: [String]
-  all: [String]
-  exists: Boolean
-}
-
-input Application_Cv_filesize_operator {
-  equals: Float
-  not_equals: Float
-  greater_than_equal: Float
-  greater_than: Float
-  less_than_equal: Float
-  less_than: Float
-  exists: Boolean
-}
-
-input Application_Cv_width_operator {
-  equals: Float
-  not_equals: Float
-  greater_than_equal: Float
-  greater_than: Float
-  less_than_equal: Float
-  less_than: Float
-  exists: Boolean
-}
-
-input Application_Cv_height_operator {
-  equals: Float
-  not_equals: Float
-  greater_than_equal: Float
-  greater_than: Float
-  less_than_equal: Float
-  less_than: Float
-  exists: Boolean
-}
-
-input Application_Cv_focalX_operator {
-  equals: Float
-  not_equals: Float
-  greater_than_equal: Float
-  greater_than: Float
-  less_than_equal: Float
-  less_than: Float
-  exists: Boolean
-}
-
-input Application_Cv_focalY_operator {
-  equals: Float
-  not_equals: Float
-  greater_than_equal: Float
-  greater_than: Float
-  less_than_equal: Float
-  less_than: Float
-  exists: Boolean
-}
-
-input Application_Cv_id_operator {
-  equals: String
-  not_equals: String
-  like: String
-  contains: String
-  in: [String]
-  not_in: [String]
-  all: [String]
-  exists: Boolean
-}
-
-input Application_Cv_where_and {
-  job: Application_Cv_job_operator
-  organization: Application_Cv_organization_operator
-  createdBy: Application_Cv_createdBy_operator
-  updatedAt: Application_Cv_updatedAt_operator
-  createdAt: Application_Cv_createdAt_operator
-  url: Application_Cv_url_operator
-  thumbnailURL: Application_Cv_thumbnailURL_operator
-  filename: Application_Cv_filename_operator
-  mimeType: Application_Cv_mimeType_operator
-  filesize: Application_Cv_filesize_operator
-  width: Application_Cv_width_operator
-  height: Application_Cv_height_operator
-  focalX: Application_Cv_focalX_operator
-  focalY: Application_Cv_focalY_operator
-  id: Application_Cv_id_operator
-  AND: [Application_Cv_where_and]
-  OR: [Application_Cv_where_or]
-}
-
-input Application_Cv_where_or {
-  job: Application_Cv_job_operator
-  organization: Application_Cv_organization_operator
-  createdBy: Application_Cv_createdBy_operator
-  updatedAt: Application_Cv_updatedAt_operator
-  createdAt: Application_Cv_createdAt_operator
-  url: Application_Cv_url_operator
-  thumbnailURL: Application_Cv_thumbnailURL_operator
-  filename: Application_Cv_filename_operator
-  mimeType: Application_Cv_mimeType_operator
-  filesize: Application_Cv_filesize_operator
-  width: Application_Cv_width_operator
-  height: Application_Cv_height_operator
-  focalX: Application_Cv_focalX_operator
-  focalY: Application_Cv_focalY_operator
-  id: Application_Cv_id_operator
-  AND: [Application_Cv_where_and]
-  OR: [Application_Cv_where_or]
-}
-
-type Agreement {
-  id: String
-  title: String!
-  richText(depth: Int): JSON!
-  slug: String
-  updatedAt: DateTime
-  createdAt: DateTime
-}
-
-enum Application_status {
-  pending
-  accepted
-  rejected
+type Job_SuitableFor {
+  students: Boolean
+  disabledPeople: Boolean
+  mothersOnMaternityLeave: Boolean
+  retirees: Boolean
 }
 
 type Jobs {
@@ -1147,6 +1159,8 @@ type Jobs {
 input Job_where {
   status: Job_status_operator
   title: Job_title_operator
+  categories: Job_categories_operator
+  organization: Job_organization_operator
   employmentType: Job_employmentType_operator
   location: Job_location_operator
   locationType: Job_locationType_operator
@@ -1168,15 +1182,12 @@ input Job_where {
   benefits: Job_benefits_operator
   suitableFor__students: Job_suitableFor__students_operator
   suitableFor__disabledPeople: Job_suitableFor__disabledPeople_operator
-  suitableFor__pregnantWomen: Job_suitableFor__pregnantWomen_operator
   suitableFor__mothersOnMaternityLeave: Job_suitableFor__mothersOnMaternityLeave_operator
   suitableFor__retirees: Job_suitableFor__retirees_operator
   applications: Job_applications_operator
   featured: Job_featured_operator
   hasEndDate: Job_hasEndDate_operator
   endDate: Job_endDate_operator
-  categories: Job_categories_operator
-  organization: Job_organization_operator
   slug: Job_slug_operator
   customApplyUrl: Job_customApplyUrl_operator
   createdBy: Job_createdBy_operator
@@ -1206,6 +1217,22 @@ input Job_title_operator {
   in: [String]
   not_in: [String]
   all: [String]
+}
+
+input Job_categories_operator {
+  equals: JSON
+  not_equals: JSON
+  in: [JSON]
+  not_in: [JSON]
+  all: [JSON]
+}
+
+input Job_organization_operator {
+  equals: JSON
+  not_equals: JSON
+  in: [JSON]
+  not_in: [JSON]
+  all: [JSON]
 }
 
 input Job_employmentType_operator {
@@ -1403,7 +1430,6 @@ input Job_description_operator {
   not_equals: String
   like: String
   contains: String
-  exists: Boolean
 }
 
 input Job_richText_operator {
@@ -1415,42 +1441,46 @@ input Job_richText_operator {
 }
 
 input Job_skills_operator {
-  equals: JSON
-  not_equals: JSON
-  like: JSON
-  contains: JSON
-  within: JSON
-  intersects: JSON
+  equals: String
+  not_equals: String
+  like: String
+  contains: String
+  in: [String]
+  not_in: [String]
+  all: [String]
   exists: Boolean
 }
 
 input Job_certifications_operator {
-  equals: JSON
-  not_equals: JSON
-  like: JSON
-  contains: JSON
-  within: JSON
-  intersects: JSON
+  equals: String
+  not_equals: String
+  like: String
+  contains: String
+  in: [String]
+  not_in: [String]
+  all: [String]
   exists: Boolean
 }
 
 input Job_responsibilities_operator {
-  equals: JSON
-  not_equals: JSON
-  like: JSON
-  contains: JSON
-  within: JSON
-  intersects: JSON
+  equals: String
+  not_equals: String
+  like: String
+  contains: String
+  in: [String]
+  not_in: [String]
+  all: [String]
   exists: Boolean
 }
 
 input Job_benefits_operator {
-  equals: JSON
-  not_equals: JSON
-  like: JSON
-  contains: JSON
-  within: JSON
-  intersects: JSON
+  equals: String
+  not_equals: String
+  like: String
+  contains: String
+  in: [String]
+  not_in: [String]
+  all: [String]
   exists: Boolean
 }
 
@@ -1461,12 +1491,6 @@ input Job_suitableFor__students_operator {
 }
 
 input Job_suitableFor__disabledPeople_operator {
-  equals: Boolean
-  not_equals: Boolean
-  exists: Boolean
-}
-
-input Job_suitableFor__pregnantWomen_operator {
   equals: Boolean
   not_equals: Boolean
   exists: Boolean
@@ -1515,22 +1539,6 @@ input Job_endDate_operator {
   like: DateTime
 }
 
-input Job_categories_operator {
-  equals: JSON
-  not_equals: JSON
-  in: [JSON]
-  not_in: [JSON]
-  all: [JSON]
-}
-
-input Job_organization_operator {
-  equals: JSON
-  not_equals: JSON
-  in: [JSON]
-  not_in: [JSON]
-  all: [JSON]
-}
-
 input Job_slug_operator {
   equals: String
   not_equals: String
@@ -1569,7 +1577,6 @@ input Job_publicId_operator {
   greater_than: Float
   less_than_equal: Float
   less_than: Float
-  exists: Boolean
 }
 
 input Job_updatedAt_operator {
@@ -1608,6 +1615,8 @@ input Job_id_operator {
 input Job_where_and {
   status: Job_status_operator
   title: Job_title_operator
+  categories: Job_categories_operator
+  organization: Job_organization_operator
   employmentType: Job_employmentType_operator
   location: Job_location_operator
   locationType: Job_locationType_operator
@@ -1629,15 +1638,12 @@ input Job_where_and {
   benefits: Job_benefits_operator
   suitableFor__students: Job_suitableFor__students_operator
   suitableFor__disabledPeople: Job_suitableFor__disabledPeople_operator
-  suitableFor__pregnantWomen: Job_suitableFor__pregnantWomen_operator
   suitableFor__mothersOnMaternityLeave: Job_suitableFor__mothersOnMaternityLeave_operator
   suitableFor__retirees: Job_suitableFor__retirees_operator
   applications: Job_applications_operator
   featured: Job_featured_operator
   hasEndDate: Job_hasEndDate_operator
   endDate: Job_endDate_operator
-  categories: Job_categories_operator
-  organization: Job_organization_operator
   slug: Job_slug_operator
   customApplyUrl: Job_customApplyUrl_operator
   createdBy: Job_createdBy_operator
@@ -1652,6 +1658,8 @@ input Job_where_and {
 input Job_where_or {
   status: Job_status_operator
   title: Job_title_operator
+  categories: Job_categories_operator
+  organization: Job_organization_operator
   employmentType: Job_employmentType_operator
   location: Job_location_operator
   locationType: Job_locationType_operator
@@ -1673,15 +1681,12 @@ input Job_where_or {
   benefits: Job_benefits_operator
   suitableFor__students: Job_suitableFor__students_operator
   suitableFor__disabledPeople: Job_suitableFor__disabledPeople_operator
-  suitableFor__pregnantWomen: Job_suitableFor__pregnantWomen_operator
   suitableFor__mothersOnMaternityLeave: Job_suitableFor__mothersOnMaternityLeave_operator
   suitableFor__retirees: Job_suitableFor__retirees_operator
   applications: Job_applications_operator
   featured: Job_featured_operator
   hasEndDate: Job_hasEndDate_operator
   endDate: Job_endDate_operator
-  categories: Job_categories_operator
-  organization: Job_organization_operator
   slug: Job_slug_operator
   customApplyUrl: Job_customApplyUrl_operator
   createdBy: Job_createdBy_operator
@@ -1708,6 +1713,8 @@ type jobsDocAccess {
 type JobsDocAccessFields {
   status: JobsDocAccessFields_status
   title: JobsDocAccessFields_title
+  categories: JobsDocAccessFields_categories
+  organization: JobsDocAccessFields_organization
   employmentType: JobsDocAccessFields_employmentType
   location: JobsDocAccessFields_location
   locationType: JobsDocAccessFields_locationType
@@ -1726,8 +1733,6 @@ type JobsDocAccessFields {
   featured: JobsDocAccessFields_featured
   hasEndDate: JobsDocAccessFields_hasEndDate
   endDate: JobsDocAccessFields_endDate
-  categories: JobsDocAccessFields_categories
-  organization: JobsDocAccessFields_organization
   slug: JobsDocAccessFields_slug
   customApplyUrl: JobsDocAccessFields_customApplyUrl
   createdBy: JobsDocAccessFields_createdBy
@@ -1779,6 +1784,52 @@ type JobsDocAccessFields_title_Update {
 }
 
 type JobsDocAccessFields_title_Delete {
+  permission: Boolean!
+}
+
+type JobsDocAccessFields_categories {
+  create: JobsDocAccessFields_categories_Create
+  read: JobsDocAccessFields_categories_Read
+  update: JobsDocAccessFields_categories_Update
+  delete: JobsDocAccessFields_categories_Delete
+}
+
+type JobsDocAccessFields_categories_Create {
+  permission: Boolean!
+}
+
+type JobsDocAccessFields_categories_Read {
+  permission: Boolean!
+}
+
+type JobsDocAccessFields_categories_Update {
+  permission: Boolean!
+}
+
+type JobsDocAccessFields_categories_Delete {
+  permission: Boolean!
+}
+
+type JobsDocAccessFields_organization {
+  create: JobsDocAccessFields_organization_Create
+  read: JobsDocAccessFields_organization_Read
+  update: JobsDocAccessFields_organization_Update
+  delete: JobsDocAccessFields_organization_Delete
+}
+
+type JobsDocAccessFields_organization_Create {
+  permission: Boolean!
+}
+
+type JobsDocAccessFields_organization_Read {
+  permission: Boolean!
+}
+
+type JobsDocAccessFields_organization_Update {
+  permission: Boolean!
+}
+
+type JobsDocAccessFields_organization_Delete {
   permission: Boolean!
 }
 
@@ -2280,7 +2331,6 @@ type JobsDocAccessFields_suitableFor_Delete {
 type JobsDocAccessFields_suitableFor_Fields {
   students: JobsDocAccessFields_suitableFor_students
   disabledPeople: JobsDocAccessFields_suitableFor_disabledPeople
-  pregnantWomen: JobsDocAccessFields_suitableFor_pregnantWomen
   mothersOnMaternityLeave: JobsDocAccessFields_suitableFor_mothersOnMaternityLeave
   retirees: JobsDocAccessFields_suitableFor_retirees
 }
@@ -2328,29 +2378,6 @@ type JobsDocAccessFields_suitableFor_disabledPeople_Update {
 }
 
 type JobsDocAccessFields_suitableFor_disabledPeople_Delete {
-  permission: Boolean!
-}
-
-type JobsDocAccessFields_suitableFor_pregnantWomen {
-  create: JobsDocAccessFields_suitableFor_pregnantWomen_Create
-  read: JobsDocAccessFields_suitableFor_pregnantWomen_Read
-  update: JobsDocAccessFields_suitableFor_pregnantWomen_Update
-  delete: JobsDocAccessFields_suitableFor_pregnantWomen_Delete
-}
-
-type JobsDocAccessFields_suitableFor_pregnantWomen_Create {
-  permission: Boolean!
-}
-
-type JobsDocAccessFields_suitableFor_pregnantWomen_Read {
-  permission: Boolean!
-}
-
-type JobsDocAccessFields_suitableFor_pregnantWomen_Update {
-  permission: Boolean!
-}
-
-type JobsDocAccessFields_suitableFor_pregnantWomen_Delete {
   permission: Boolean!
 }
 
@@ -2489,52 +2516,6 @@ type JobsDocAccessFields_endDate_Update {
 }
 
 type JobsDocAccessFields_endDate_Delete {
-  permission: Boolean!
-}
-
-type JobsDocAccessFields_categories {
-  create: JobsDocAccessFields_categories_Create
-  read: JobsDocAccessFields_categories_Read
-  update: JobsDocAccessFields_categories_Update
-  delete: JobsDocAccessFields_categories_Delete
-}
-
-type JobsDocAccessFields_categories_Create {
-  permission: Boolean!
-}
-
-type JobsDocAccessFields_categories_Read {
-  permission: Boolean!
-}
-
-type JobsDocAccessFields_categories_Update {
-  permission: Boolean!
-}
-
-type JobsDocAccessFields_categories_Delete {
-  permission: Boolean!
-}
-
-type JobsDocAccessFields_organization {
-  create: JobsDocAccessFields_organization_Create
-  read: JobsDocAccessFields_organization_Read
-  update: JobsDocAccessFields_organization_Update
-  delete: JobsDocAccessFields_organization_Delete
-}
-
-type JobsDocAccessFields_organization_Create {
-  permission: Boolean!
-}
-
-type JobsDocAccessFields_organization_Read {
-  permission: Boolean!
-}
-
-type JobsDocAccessFields_organization_Update {
-  permission: Boolean!
-}
-
-type JobsDocAccessFields_organization_Delete {
   permission: Boolean!
 }
 
@@ -2946,10 +2927,13 @@ type Organizations {
 
 input Organization_where {
   title: Organization_title_operator
+  slug: Organization_slug_operator
+  featured: Organization_featured_operator
   email: Organization_email_operator
   phone: Organization_phone_operator
   location: Organization_location_operator
   vatId: Organization_vatId_operator
+  categories: Organization_categories_operator
   logo: Organization_logo_operator
   imageCover: Organization_imageCover_operator
   description: Organization_description_operator
@@ -2957,9 +2941,6 @@ input Organization_where {
   url: Organization_url_operator
   jobsPublished: Organization_jobsPublished_operator
   jobsUnpublished: Organization_jobsUnpublished_operator
-  featured: Organization_featured_operator
-  categories: Organization_categories_operator
-  slug: Organization_slug_operator
   createdBy: Organization_createdBy_operator
   updatedAt: Organization_updatedAt_operator
   createdAt: Organization_createdAt_operator
@@ -2976,6 +2957,23 @@ input Organization_title_operator {
   in: [String]
   not_in: [String]
   all: [String]
+}
+
+input Organization_slug_operator {
+  equals: String
+  not_equals: String
+  like: String
+  contains: String
+  in: [String]
+  not_in: [String]
+  all: [String]
+  exists: Boolean
+}
+
+input Organization_featured_operator {
+  equals: Boolean
+  not_equals: Boolean
+  exists: Boolean
 }
 
 input Organization_email_operator {
@@ -3018,6 +3016,15 @@ input Organization_vatId_operator {
   in: [String]
   not_in: [String]
   all: [String]
+  exists: Boolean
+}
+
+input Organization_categories_operator {
+  equals: JSON
+  not_equals: JSON
+  in: [JSON]
+  not_in: [JSON]
+  all: [JSON]
   exists: Boolean
 }
 
@@ -3078,32 +3085,6 @@ input Organization_jobsUnpublished_operator {
   exists: Boolean
 }
 
-input Organization_featured_operator {
-  equals: Boolean
-  not_equals: Boolean
-  exists: Boolean
-}
-
-input Organization_categories_operator {
-  equals: JSON
-  not_equals: JSON
-  in: [JSON]
-  not_in: [JSON]
-  all: [JSON]
-  exists: Boolean
-}
-
-input Organization_slug_operator {
-  equals: String
-  not_equals: String
-  like: String
-  contains: String
-  in: [String]
-  not_in: [String]
-  all: [String]
-  exists: Boolean
-}
-
 input Organization_createdBy_operator {
   equals: JSON
   not_equals: JSON
@@ -3148,10 +3129,13 @@ input Organization_id_operator {
 
 input Organization_where_and {
   title: Organization_title_operator
+  slug: Organization_slug_operator
+  featured: Organization_featured_operator
   email: Organization_email_operator
   phone: Organization_phone_operator
   location: Organization_location_operator
   vatId: Organization_vatId_operator
+  categories: Organization_categories_operator
   logo: Organization_logo_operator
   imageCover: Organization_imageCover_operator
   description: Organization_description_operator
@@ -3159,9 +3143,6 @@ input Organization_where_and {
   url: Organization_url_operator
   jobsPublished: Organization_jobsPublished_operator
   jobsUnpublished: Organization_jobsUnpublished_operator
-  featured: Organization_featured_operator
-  categories: Organization_categories_operator
-  slug: Organization_slug_operator
   createdBy: Organization_createdBy_operator
   updatedAt: Organization_updatedAt_operator
   createdAt: Organization_createdAt_operator
@@ -3172,10 +3153,13 @@ input Organization_where_and {
 
 input Organization_where_or {
   title: Organization_title_operator
+  slug: Organization_slug_operator
+  featured: Organization_featured_operator
   email: Organization_email_operator
   phone: Organization_phone_operator
   location: Organization_location_operator
   vatId: Organization_vatId_operator
+  categories: Organization_categories_operator
   logo: Organization_logo_operator
   imageCover: Organization_imageCover_operator
   description: Organization_description_operator
@@ -3183,9 +3167,6 @@ input Organization_where_or {
   url: Organization_url_operator
   jobsPublished: Organization_jobsPublished_operator
   jobsUnpublished: Organization_jobsUnpublished_operator
-  featured: Organization_featured_operator
-  categories: Organization_categories_operator
-  slug: Organization_slug_operator
   createdBy: Organization_createdBy_operator
   updatedAt: Organization_updatedAt_operator
   createdAt: Organization_createdAt_operator
@@ -3208,10 +3189,13 @@ type organizationsDocAccess {
 
 type OrganizationsDocAccessFields {
   title: OrganizationsDocAccessFields_title
+  slug: OrganizationsDocAccessFields_slug
+  featured: OrganizationsDocAccessFields_featured
   email: OrganizationsDocAccessFields_email
   phone: OrganizationsDocAccessFields_phone
   location: OrganizationsDocAccessFields_location
   vatId: OrganizationsDocAccessFields_vatId
+  categories: OrganizationsDocAccessFields_categories
   logo: OrganizationsDocAccessFields_logo
   imageCover: OrganizationsDocAccessFields_imageCover
   description: OrganizationsDocAccessFields_description
@@ -3219,9 +3203,6 @@ type OrganizationsDocAccessFields {
   url: OrganizationsDocAccessFields_url
   jobsPublished: OrganizationsDocAccessFields_jobsPublished
   jobsUnpublished: OrganizationsDocAccessFields_jobsUnpublished
-  featured: OrganizationsDocAccessFields_featured
-  categories: OrganizationsDocAccessFields_categories
-  slug: OrganizationsDocAccessFields_slug
   createdBy: OrganizationsDocAccessFields_createdBy
   updatedAt: OrganizationsDocAccessFields_updatedAt
   createdAt: OrganizationsDocAccessFields_createdAt
@@ -3247,6 +3228,52 @@ type OrganizationsDocAccessFields_title_Update {
 }
 
 type OrganizationsDocAccessFields_title_Delete {
+  permission: Boolean!
+}
+
+type OrganizationsDocAccessFields_slug {
+  create: OrganizationsDocAccessFields_slug_Create
+  read: OrganizationsDocAccessFields_slug_Read
+  update: OrganizationsDocAccessFields_slug_Update
+  delete: OrganizationsDocAccessFields_slug_Delete
+}
+
+type OrganizationsDocAccessFields_slug_Create {
+  permission: Boolean!
+}
+
+type OrganizationsDocAccessFields_slug_Read {
+  permission: Boolean!
+}
+
+type OrganizationsDocAccessFields_slug_Update {
+  permission: Boolean!
+}
+
+type OrganizationsDocAccessFields_slug_Delete {
+  permission: Boolean!
+}
+
+type OrganizationsDocAccessFields_featured {
+  create: OrganizationsDocAccessFields_featured_Create
+  read: OrganizationsDocAccessFields_featured_Read
+  update: OrganizationsDocAccessFields_featured_Update
+  delete: OrganizationsDocAccessFields_featured_Delete
+}
+
+type OrganizationsDocAccessFields_featured_Create {
+  permission: Boolean!
+}
+
+type OrganizationsDocAccessFields_featured_Read {
+  permission: Boolean!
+}
+
+type OrganizationsDocAccessFields_featured_Update {
+  permission: Boolean!
+}
+
+type OrganizationsDocAccessFields_featured_Delete {
   permission: Boolean!
 }
 
@@ -3339,6 +3366,29 @@ type OrganizationsDocAccessFields_vatId_Update {
 }
 
 type OrganizationsDocAccessFields_vatId_Delete {
+  permission: Boolean!
+}
+
+type OrganizationsDocAccessFields_categories {
+  create: OrganizationsDocAccessFields_categories_Create
+  read: OrganizationsDocAccessFields_categories_Read
+  update: OrganizationsDocAccessFields_categories_Update
+  delete: OrganizationsDocAccessFields_categories_Delete
+}
+
+type OrganizationsDocAccessFields_categories_Create {
+  permission: Boolean!
+}
+
+type OrganizationsDocAccessFields_categories_Read {
+  permission: Boolean!
+}
+
+type OrganizationsDocAccessFields_categories_Update {
+  permission: Boolean!
+}
+
+type OrganizationsDocAccessFields_categories_Delete {
   permission: Boolean!
 }
 
@@ -3500,75 +3550,6 @@ type OrganizationsDocAccessFields_jobsUnpublished_Update {
 }
 
 type OrganizationsDocAccessFields_jobsUnpublished_Delete {
-  permission: Boolean!
-}
-
-type OrganizationsDocAccessFields_featured {
-  create: OrganizationsDocAccessFields_featured_Create
-  read: OrganizationsDocAccessFields_featured_Read
-  update: OrganizationsDocAccessFields_featured_Update
-  delete: OrganizationsDocAccessFields_featured_Delete
-}
-
-type OrganizationsDocAccessFields_featured_Create {
-  permission: Boolean!
-}
-
-type OrganizationsDocAccessFields_featured_Read {
-  permission: Boolean!
-}
-
-type OrganizationsDocAccessFields_featured_Update {
-  permission: Boolean!
-}
-
-type OrganizationsDocAccessFields_featured_Delete {
-  permission: Boolean!
-}
-
-type OrganizationsDocAccessFields_categories {
-  create: OrganizationsDocAccessFields_categories_Create
-  read: OrganizationsDocAccessFields_categories_Read
-  update: OrganizationsDocAccessFields_categories_Update
-  delete: OrganizationsDocAccessFields_categories_Delete
-}
-
-type OrganizationsDocAccessFields_categories_Create {
-  permission: Boolean!
-}
-
-type OrganizationsDocAccessFields_categories_Read {
-  permission: Boolean!
-}
-
-type OrganizationsDocAccessFields_categories_Update {
-  permission: Boolean!
-}
-
-type OrganizationsDocAccessFields_categories_Delete {
-  permission: Boolean!
-}
-
-type OrganizationsDocAccessFields_slug {
-  create: OrganizationsDocAccessFields_slug_Create
-  read: OrganizationsDocAccessFields_slug_Read
-  update: OrganizationsDocAccessFields_slug_Update
-  delete: OrganizationsDocAccessFields_slug_Delete
-}
-
-type OrganizationsDocAccessFields_slug_Create {
-  permission: Boolean!
-}
-
-type OrganizationsDocAccessFields_slug_Read {
-  permission: Boolean!
-}
-
-type OrganizationsDocAccessFields_slug_Update {
-  permission: Boolean!
-}
-
-type OrganizationsDocAccessFields_slug_Delete {
   permission: Boolean!
 }
 
@@ -4865,6 +4846,7 @@ input Cv_where {
   job: Cv_job_operator
   organization: Cv_organization_operator
   createdBy: Cv_createdBy_operator
+  prefix: Cv_prefix_operator
   updatedAt: Cv_updatedAt_operator
   createdAt: Cv_createdAt_operator
   url: Cv_url_operator
@@ -4905,6 +4887,17 @@ input Cv_createdBy_operator {
   in: [JSON]
   not_in: [JSON]
   all: [JSON]
+  exists: Boolean
+}
+
+input Cv_prefix_operator {
+  equals: String
+  not_equals: String
+  like: String
+  contains: String
+  in: [String]
+  not_in: [String]
+  all: [String]
   exists: Boolean
 }
 
@@ -5039,6 +5032,7 @@ input Cv_where_and {
   job: Cv_job_operator
   organization: Cv_organization_operator
   createdBy: Cv_createdBy_operator
+  prefix: Cv_prefix_operator
   updatedAt: Cv_updatedAt_operator
   createdAt: Cv_createdAt_operator
   url: Cv_url_operator
@@ -5059,6 +5053,7 @@ input Cv_where_or {
   job: Cv_job_operator
   organization: Cv_organization_operator
   createdBy: Cv_createdBy_operator
+  prefix: Cv_prefix_operator
   updatedAt: Cv_updatedAt_operator
   createdAt: Cv_createdAt_operator
   url: Cv_url_operator
@@ -5091,6 +5086,7 @@ type CvsDocAccessFields {
   job: CvsDocAccessFields_job
   organization: CvsDocAccessFields_organization
   createdBy: CvsDocAccessFields_createdBy
+  prefix: CvsDocAccessFields_prefix
   updatedAt: CvsDocAccessFields_updatedAt
   createdAt: CvsDocAccessFields_createdAt
   url: CvsDocAccessFields_url
@@ -5170,6 +5166,29 @@ type CvsDocAccessFields_createdBy_Update {
 }
 
 type CvsDocAccessFields_createdBy_Delete {
+  permission: Boolean!
+}
+
+type CvsDocAccessFields_prefix {
+  create: CvsDocAccessFields_prefix_Create
+  read: CvsDocAccessFields_prefix_Read
+  update: CvsDocAccessFields_prefix_Update
+  delete: CvsDocAccessFields_prefix_Delete
+}
+
+type CvsDocAccessFields_prefix_Create {
+  permission: Boolean!
+}
+
+type CvsDocAccessFields_prefix_Read {
+  permission: Boolean!
+}
+
+type CvsDocAccessFields_prefix_Update {
+  permission: Boolean!
+}
+
+type CvsDocAccessFields_prefix_Delete {
   permission: Boolean!
 }
 
@@ -6943,103 +6962,6 @@ type PayloadPreferencesDeleteDocAccess {
   where: JSONObject
 }
 
-type Dashboard {
-  invalidIds: JSON
-  updatedAt: DateTime
-  createdAt: DateTime
-}
-
-type dashboardDocAccess {
-  fields: DashboardDocAccessFields
-  read: DashboardReadDocAccess
-  update: DashboardUpdateDocAccess
-}
-
-type DashboardDocAccessFields {
-  invalidIds: DashboardDocAccessFields_invalidIds
-  updatedAt: DashboardDocAccessFields_updatedAt
-  createdAt: DashboardDocAccessFields_createdAt
-}
-
-type DashboardDocAccessFields_invalidIds {
-  create: DashboardDocAccessFields_invalidIds_Create
-  read: DashboardDocAccessFields_invalidIds_Read
-  update: DashboardDocAccessFields_invalidIds_Update
-  delete: DashboardDocAccessFields_invalidIds_Delete
-}
-
-type DashboardDocAccessFields_invalidIds_Create {
-  permission: Boolean!
-}
-
-type DashboardDocAccessFields_invalidIds_Read {
-  permission: Boolean!
-}
-
-type DashboardDocAccessFields_invalidIds_Update {
-  permission: Boolean!
-}
-
-type DashboardDocAccessFields_invalidIds_Delete {
-  permission: Boolean!
-}
-
-type DashboardDocAccessFields_updatedAt {
-  create: DashboardDocAccessFields_updatedAt_Create
-  read: DashboardDocAccessFields_updatedAt_Read
-  update: DashboardDocAccessFields_updatedAt_Update
-  delete: DashboardDocAccessFields_updatedAt_Delete
-}
-
-type DashboardDocAccessFields_updatedAt_Create {
-  permission: Boolean!
-}
-
-type DashboardDocAccessFields_updatedAt_Read {
-  permission: Boolean!
-}
-
-type DashboardDocAccessFields_updatedAt_Update {
-  permission: Boolean!
-}
-
-type DashboardDocAccessFields_updatedAt_Delete {
-  permission: Boolean!
-}
-
-type DashboardDocAccessFields_createdAt {
-  create: DashboardDocAccessFields_createdAt_Create
-  read: DashboardDocAccessFields_createdAt_Read
-  update: DashboardDocAccessFields_createdAt_Update
-  delete: DashboardDocAccessFields_createdAt_Delete
-}
-
-type DashboardDocAccessFields_createdAt_Create {
-  permission: Boolean!
-}
-
-type DashboardDocAccessFields_createdAt_Read {
-  permission: Boolean!
-}
-
-type DashboardDocAccessFields_createdAt_Update {
-  permission: Boolean!
-}
-
-type DashboardDocAccessFields_createdAt_Delete {
-  permission: Boolean!
-}
-
-type DashboardReadDocAccess {
-  permission: Boolean!
-  where: JSONObject
-}
-
-type DashboardUpdateDocAccess {
-  permission: Boolean!
-  where: JSONObject
-}
-
 type Data {
   lastPublicJobId: Float
   lastApplicationTrackingId: Float
@@ -7174,7 +7096,6 @@ type Access {
   agreements: agreementsAccess
   users: usersAccess
   payload_preferences: payload_preferencesAccess
-  dashboard: dashboardAccess
   data: dataAccess
 }
 
@@ -7189,6 +7110,8 @@ type jobsAccess {
 type JobsFields {
   status: JobsFields_status
   title: JobsFields_title
+  categories: JobsFields_categories
+  organization: JobsFields_organization
   employmentType: JobsFields_employmentType
   location: JobsFields_location
   locationType: JobsFields_locationType
@@ -7207,8 +7130,6 @@ type JobsFields {
   featured: JobsFields_featured
   hasEndDate: JobsFields_hasEndDate
   endDate: JobsFields_endDate
-  categories: JobsFields_categories
-  organization: JobsFields_organization
   slug: JobsFields_slug
   customApplyUrl: JobsFields_customApplyUrl
   createdBy: JobsFields_createdBy
@@ -7260,6 +7181,52 @@ type JobsFields_title_Update {
 }
 
 type JobsFields_title_Delete {
+  permission: Boolean!
+}
+
+type JobsFields_categories {
+  create: JobsFields_categories_Create
+  read: JobsFields_categories_Read
+  update: JobsFields_categories_Update
+  delete: JobsFields_categories_Delete
+}
+
+type JobsFields_categories_Create {
+  permission: Boolean!
+}
+
+type JobsFields_categories_Read {
+  permission: Boolean!
+}
+
+type JobsFields_categories_Update {
+  permission: Boolean!
+}
+
+type JobsFields_categories_Delete {
+  permission: Boolean!
+}
+
+type JobsFields_organization {
+  create: JobsFields_organization_Create
+  read: JobsFields_organization_Read
+  update: JobsFields_organization_Update
+  delete: JobsFields_organization_Delete
+}
+
+type JobsFields_organization_Create {
+  permission: Boolean!
+}
+
+type JobsFields_organization_Read {
+  permission: Boolean!
+}
+
+type JobsFields_organization_Update {
+  permission: Boolean!
+}
+
+type JobsFields_organization_Delete {
   permission: Boolean!
 }
 
@@ -7761,7 +7728,6 @@ type JobsFields_suitableFor_Delete {
 type JobsFields_suitableFor_Fields {
   students: JobsFields_suitableFor_students
   disabledPeople: JobsFields_suitableFor_disabledPeople
-  pregnantWomen: JobsFields_suitableFor_pregnantWomen
   mothersOnMaternityLeave: JobsFields_suitableFor_mothersOnMaternityLeave
   retirees: JobsFields_suitableFor_retirees
 }
@@ -7809,29 +7775,6 @@ type JobsFields_suitableFor_disabledPeople_Update {
 }
 
 type JobsFields_suitableFor_disabledPeople_Delete {
-  permission: Boolean!
-}
-
-type JobsFields_suitableFor_pregnantWomen {
-  create: JobsFields_suitableFor_pregnantWomen_Create
-  read: JobsFields_suitableFor_pregnantWomen_Read
-  update: JobsFields_suitableFor_pregnantWomen_Update
-  delete: JobsFields_suitableFor_pregnantWomen_Delete
-}
-
-type JobsFields_suitableFor_pregnantWomen_Create {
-  permission: Boolean!
-}
-
-type JobsFields_suitableFor_pregnantWomen_Read {
-  permission: Boolean!
-}
-
-type JobsFields_suitableFor_pregnantWomen_Update {
-  permission: Boolean!
-}
-
-type JobsFields_suitableFor_pregnantWomen_Delete {
   permission: Boolean!
 }
 
@@ -7970,52 +7913,6 @@ type JobsFields_endDate_Update {
 }
 
 type JobsFields_endDate_Delete {
-  permission: Boolean!
-}
-
-type JobsFields_categories {
-  create: JobsFields_categories_Create
-  read: JobsFields_categories_Read
-  update: JobsFields_categories_Update
-  delete: JobsFields_categories_Delete
-}
-
-type JobsFields_categories_Create {
-  permission: Boolean!
-}
-
-type JobsFields_categories_Read {
-  permission: Boolean!
-}
-
-type JobsFields_categories_Update {
-  permission: Boolean!
-}
-
-type JobsFields_categories_Delete {
-  permission: Boolean!
-}
-
-type JobsFields_organization {
-  create: JobsFields_organization_Create
-  read: JobsFields_organization_Read
-  update: JobsFields_organization_Update
-  delete: JobsFields_organization_Delete
-}
-
-type JobsFields_organization_Create {
-  permission: Boolean!
-}
-
-type JobsFields_organization_Read {
-  permission: Boolean!
-}
-
-type JobsFields_organization_Update {
-  permission: Boolean!
-}
-
-type JobsFields_organization_Delete {
   permission: Boolean!
 }
 
@@ -8314,10 +8211,13 @@ type organizationsAccess {
 
 type OrganizationsFields {
   title: OrganizationsFields_title
+  slug: OrganizationsFields_slug
+  featured: OrganizationsFields_featured
   email: OrganizationsFields_email
   phone: OrganizationsFields_phone
   location: OrganizationsFields_location
   vatId: OrganizationsFields_vatId
+  categories: OrganizationsFields_categories
   logo: OrganizationsFields_logo
   imageCover: OrganizationsFields_imageCover
   description: OrganizationsFields_description
@@ -8325,9 +8225,6 @@ type OrganizationsFields {
   url: OrganizationsFields_url
   jobsPublished: OrganizationsFields_jobsPublished
   jobsUnpublished: OrganizationsFields_jobsUnpublished
-  featured: OrganizationsFields_featured
-  categories: OrganizationsFields_categories
-  slug: OrganizationsFields_slug
   createdBy: OrganizationsFields_createdBy
   updatedAt: OrganizationsFields_updatedAt
   createdAt: OrganizationsFields_createdAt
@@ -8353,6 +8250,52 @@ type OrganizationsFields_title_Update {
 }
 
 type OrganizationsFields_title_Delete {
+  permission: Boolean!
+}
+
+type OrganizationsFields_slug {
+  create: OrganizationsFields_slug_Create
+  read: OrganizationsFields_slug_Read
+  update: OrganizationsFields_slug_Update
+  delete: OrganizationsFields_slug_Delete
+}
+
+type OrganizationsFields_slug_Create {
+  permission: Boolean!
+}
+
+type OrganizationsFields_slug_Read {
+  permission: Boolean!
+}
+
+type OrganizationsFields_slug_Update {
+  permission: Boolean!
+}
+
+type OrganizationsFields_slug_Delete {
+  permission: Boolean!
+}
+
+type OrganizationsFields_featured {
+  create: OrganizationsFields_featured_Create
+  read: OrganizationsFields_featured_Read
+  update: OrganizationsFields_featured_Update
+  delete: OrganizationsFields_featured_Delete
+}
+
+type OrganizationsFields_featured_Create {
+  permission: Boolean!
+}
+
+type OrganizationsFields_featured_Read {
+  permission: Boolean!
+}
+
+type OrganizationsFields_featured_Update {
+  permission: Boolean!
+}
+
+type OrganizationsFields_featured_Delete {
   permission: Boolean!
 }
 
@@ -8445,6 +8388,29 @@ type OrganizationsFields_vatId_Update {
 }
 
 type OrganizationsFields_vatId_Delete {
+  permission: Boolean!
+}
+
+type OrganizationsFields_categories {
+  create: OrganizationsFields_categories_Create
+  read: OrganizationsFields_categories_Read
+  update: OrganizationsFields_categories_Update
+  delete: OrganizationsFields_categories_Delete
+}
+
+type OrganizationsFields_categories_Create {
+  permission: Boolean!
+}
+
+type OrganizationsFields_categories_Read {
+  permission: Boolean!
+}
+
+type OrganizationsFields_categories_Update {
+  permission: Boolean!
+}
+
+type OrganizationsFields_categories_Delete {
   permission: Boolean!
 }
 
@@ -8606,75 +8572,6 @@ type OrganizationsFields_jobsUnpublished_Update {
 }
 
 type OrganizationsFields_jobsUnpublished_Delete {
-  permission: Boolean!
-}
-
-type OrganizationsFields_featured {
-  create: OrganizationsFields_featured_Create
-  read: OrganizationsFields_featured_Read
-  update: OrganizationsFields_featured_Update
-  delete: OrganizationsFields_featured_Delete
-}
-
-type OrganizationsFields_featured_Create {
-  permission: Boolean!
-}
-
-type OrganizationsFields_featured_Read {
-  permission: Boolean!
-}
-
-type OrganizationsFields_featured_Update {
-  permission: Boolean!
-}
-
-type OrganizationsFields_featured_Delete {
-  permission: Boolean!
-}
-
-type OrganizationsFields_categories {
-  create: OrganizationsFields_categories_Create
-  read: OrganizationsFields_categories_Read
-  update: OrganizationsFields_categories_Update
-  delete: OrganizationsFields_categories_Delete
-}
-
-type OrganizationsFields_categories_Create {
-  permission: Boolean!
-}
-
-type OrganizationsFields_categories_Read {
-  permission: Boolean!
-}
-
-type OrganizationsFields_categories_Update {
-  permission: Boolean!
-}
-
-type OrganizationsFields_categories_Delete {
-  permission: Boolean!
-}
-
-type OrganizationsFields_slug {
-  create: OrganizationsFields_slug_Create
-  read: OrganizationsFields_slug_Read
-  update: OrganizationsFields_slug_Update
-  delete: OrganizationsFields_slug_Delete
-}
-
-type OrganizationsFields_slug_Create {
-  permission: Boolean!
-}
-
-type OrganizationsFields_slug_Read {
-  permission: Boolean!
-}
-
-type OrganizationsFields_slug_Update {
-  permission: Boolean!
-}
-
-type OrganizationsFields_slug_Delete {
   permission: Boolean!
 }
 
@@ -9513,6 +9410,7 @@ type CvsFields {
   job: CvsFields_job
   organization: CvsFields_organization
   createdBy: CvsFields_createdBy
+  prefix: CvsFields_prefix
   updatedAt: CvsFields_updatedAt
   createdAt: CvsFields_createdAt
   url: CvsFields_url
@@ -9592,6 +9490,29 @@ type CvsFields_createdBy_Update {
 }
 
 type CvsFields_createdBy_Delete {
+  permission: Boolean!
+}
+
+type CvsFields_prefix {
+  create: CvsFields_prefix_Create
+  read: CvsFields_prefix_Read
+  update: CvsFields_prefix_Update
+  delete: CvsFields_prefix_Delete
+}
+
+type CvsFields_prefix_Create {
+  permission: Boolean!
+}
+
+type CvsFields_prefix_Read {
+  permission: Boolean!
+}
+
+type CvsFields_prefix_Update {
+  permission: Boolean!
+}
+
+type CvsFields_prefix_Delete {
   permission: Boolean!
 }
 
@@ -10742,97 +10663,6 @@ type PayloadPreferencesDeleteAccess {
   where: JSONObject
 }
 
-type dashboardAccess {
-  fields: DashboardFields
-  read: DashboardReadAccess
-  update: DashboardUpdateAccess
-}
-
-type DashboardFields {
-  invalidIds: DashboardFields_invalidIds
-  updatedAt: DashboardFields_updatedAt
-  createdAt: DashboardFields_createdAt
-}
-
-type DashboardFields_invalidIds {
-  create: DashboardFields_invalidIds_Create
-  read: DashboardFields_invalidIds_Read
-  update: DashboardFields_invalidIds_Update
-  delete: DashboardFields_invalidIds_Delete
-}
-
-type DashboardFields_invalidIds_Create {
-  permission: Boolean!
-}
-
-type DashboardFields_invalidIds_Read {
-  permission: Boolean!
-}
-
-type DashboardFields_invalidIds_Update {
-  permission: Boolean!
-}
-
-type DashboardFields_invalidIds_Delete {
-  permission: Boolean!
-}
-
-type DashboardFields_updatedAt {
-  create: DashboardFields_updatedAt_Create
-  read: DashboardFields_updatedAt_Read
-  update: DashboardFields_updatedAt_Update
-  delete: DashboardFields_updatedAt_Delete
-}
-
-type DashboardFields_updatedAt_Create {
-  permission: Boolean!
-}
-
-type DashboardFields_updatedAt_Read {
-  permission: Boolean!
-}
-
-type DashboardFields_updatedAt_Update {
-  permission: Boolean!
-}
-
-type DashboardFields_updatedAt_Delete {
-  permission: Boolean!
-}
-
-type DashboardFields_createdAt {
-  create: DashboardFields_createdAt_Create
-  read: DashboardFields_createdAt_Read
-  update: DashboardFields_createdAt_Update
-  delete: DashboardFields_createdAt_Delete
-}
-
-type DashboardFields_createdAt_Create {
-  permission: Boolean!
-}
-
-type DashboardFields_createdAt_Read {
-  permission: Boolean!
-}
-
-type DashboardFields_createdAt_Update {
-  permission: Boolean!
-}
-
-type DashboardFields_createdAt_Delete {
-  permission: Boolean!
-}
-
-type DashboardReadAccess {
-  permission: Boolean!
-  where: JSONObject
-}
-
-type DashboardUpdateAccess {
-  permission: Boolean!
-  where: JSONObject
-}
-
 type dataAccess {
   fields: DataFields
   read: DataReadAccess
@@ -10993,13 +10823,14 @@ type Mutation {
   updatePayloadPreference(id: String!, autosave: Boolean, data: mutationPayloadPreferenceUpdateInput!, draft: Boolean): PayloadPreference
   deletePayloadPreference(id: String!): PayloadPreference
   duplicatePayloadPreference(id: String!): PayloadPreference
-  updateDashboard(data: mutationDashboardInput!, draft: Boolean): Dashboard
   updateData(data: mutationDataInput!, draft: Boolean): Data
 }
 
 input mutationJobInput {
   status: String!
   title: String!
+  categories: [String]
+  organization: String
   employmentType: [Job_employmentType_MutationInput]!
   location: String
   locationType: [Job_locationType_MutationInput]
@@ -11007,19 +10838,17 @@ input mutationJobInput {
   experience: [Job_experience_MutationInput]
   language: [Job_language_MutationInput]
   salary: mutationJob_SalaryInput
-  description: String
+  description: String!
   richText: JSON
-  skills: JSON
-  certifications: JSON
-  responsibilities: JSON
-  benefits: JSON
+  skills: [String]
+  certifications: [String]
+  responsibilities: [String]
+  benefits: [String]
   suitableFor: mutationJob_SuitableForInput
   applications: [String]
   featured: Boolean
   hasEndDate: Boolean
   endDate: String
-  categories: [String]
-  organization: String
   slug: String
   customApplyUrl: String
   createdBy: String
@@ -11121,7 +10950,6 @@ enum Job_Salary_salaryType_MutationInput {
 input mutationJob_SuitableForInput {
   students: Boolean
   disabledPeople: Boolean
-  pregnantWomen: Boolean
   mothersOnMaternityLeave: Boolean
   retirees: Boolean
 }
@@ -11129,6 +10957,8 @@ input mutationJob_SuitableForInput {
 input mutationJobUpdateInput {
   status: String
   title: String
+  categories: [String]
+  organization: String
   employmentType: [JobUpdate_employmentType_MutationInput]
   location: String
   locationType: [JobUpdate_locationType_MutationInput]
@@ -11138,17 +10968,15 @@ input mutationJobUpdateInput {
   salary: mutationJobUpdate_SalaryInput
   description: String
   richText: JSON
-  skills: JSON
-  certifications: JSON
-  responsibilities: JSON
-  benefits: JSON
+  skills: [String]
+  certifications: [String]
+  responsibilities: [String]
+  benefits: [String]
   suitableFor: mutationJobUpdate_SuitableForInput
   applications: [String]
   featured: Boolean
   hasEndDate: Boolean
   endDate: String
-  categories: [String]
-  organization: String
   slug: String
   customApplyUrl: String
   createdBy: String
@@ -11250,7 +11078,6 @@ enum JobUpdate_Salary_salaryType_MutationInput {
 input mutationJobUpdate_SuitableForInput {
   students: Boolean
   disabledPeople: Boolean
-  pregnantWomen: Boolean
   mothersOnMaternityLeave: Boolean
   retirees: Boolean
 }
@@ -11271,10 +11098,13 @@ input mutationJobCategoryUpdateInput {
 
 input mutationOrganizationInput {
   title: String!
+  slug: String
+  featured: Boolean
   email: String!
   phone: String
   location: String
   vatId: String
+  categories: [String]
   logo: String
   imageCover: String
   description: String
@@ -11282,9 +11112,6 @@ input mutationOrganizationInput {
   url: String
   jobsPublished: [String]
   jobsUnpublished: [String]
-  featured: Boolean
-  categories: [String]
-  slug: String
   createdBy: String
   updatedAt: String
   createdAt: String
@@ -11292,10 +11119,13 @@ input mutationOrganizationInput {
 
 input mutationOrganizationUpdateInput {
   title: String
+  slug: String
+  featured: Boolean
   email: String
   phone: String
   location: String
   vatId: String
+  categories: [String]
   logo: String
   imageCover: String
   description: String
@@ -11303,9 +11133,6 @@ input mutationOrganizationUpdateInput {
   url: String
   jobsPublished: [String]
   jobsUnpublished: [String]
-  featured: Boolean
-  categories: [String]
-  slug: String
   createdBy: String
   updatedAt: String
   createdAt: String
@@ -11395,6 +11222,7 @@ input mutationCvInput {
   job: String
   organization: String
   createdBy: String
+  prefix: String
   updatedAt: String
   createdAt: String
   url: String
@@ -11412,6 +11240,7 @@ input mutationCvUpdateInput {
   job: String
   organization: String
   createdBy: String
+  prefix: String
   updatedAt: String
   createdAt: String
   url: String
@@ -11596,12 +11425,6 @@ input PayloadPreferenceUpdate_UserRelationshipInput {
 
 enum PayloadPreferenceUpdate_UserRelationshipInputRelationTo {
   users
-}
-
-input mutationDashboardInput {
-  invalidIds: JSON
-  updatedAt: String
-  createdAt: String
 }
 
 input mutationDataInput {

@@ -3,10 +3,10 @@ import type { CollectionBeforeChangeHook } from 'payload'
 export const createProfile: CollectionBeforeChangeHook = async ({
   data,
   req,
-  req: { payload, body = {} },
+  req: { payload },
   operation,
 }) => {
-  const { email, role, title, firstName, lastName } = body as {
+  const { email, role, title, firstName, lastName } = data as {
     email: string
     role: string
     title: string

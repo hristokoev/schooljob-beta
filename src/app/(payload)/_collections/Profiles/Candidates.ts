@@ -1,6 +1,7 @@
 import { CollectionConfig } from 'payload'
 
 import { SA, SA_A, SA_A_C_Self_createdBy, SA_C } from '@/payload/access'
+import { createdBy } from '@/payload/fields'
 import SA_A_O_C_Self from './access/SA_A_O_C_Self'
 
 export const Candidates: CollectionConfig = {
@@ -9,7 +10,7 @@ export const Candidates: CollectionConfig = {
     group: 'SchoolJob',
     useAsTitle: 'fullName',
     defaultColumns: ['firstName', 'lastName', 'email', 'phone', 'location'],
-    hidden: ({ user }) => user?.role === 'organization' || user?.role === 'candidate',
+    // hidden: ({ user }) => user?.role === 'organization' || user?.role === 'candidate',
   },
   access: {
     /*
@@ -89,7 +90,7 @@ export const Candidates: CollectionConfig = {
           ],
         },
         {
-          label: 'Applications & Saved Jobs',
+          label: 'Applications',
           fields: [
             {
               name: 'applications',
@@ -97,37 +98,28 @@ export const Candidates: CollectionConfig = {
               relationTo: 'applications',
               hasMany: true,
               access: {
-                update: SA,
-              },
+                update: SA
+              }
             },
+          ],
+        },
+        {
+          label: 'Saved Jobs',
+          fields: [
             {
               name: 'jobsSaved',
               type: 'relationship',
               relationTo: 'jobs',
               hasMany: true,
               access: {
-                update: SA_C,
+                update: SA_C
               },
             },
           ],
-        },
+        }
       ],
     },
-    {
-      name: 'createdBy',
-      type: 'relationship',
-      relationTo: 'users',
-      hasMany: false,
-      access: {
-        read: SA,
-        update: SA,
-      },
-      admin: {
-        readOnly: true,
-        position: 'sidebar',
-        condition: (data) => Boolean(data?.createdBy),
-      },
-    },
+    createdBy,
     {
       name: 'fullName',
       type: 'text',

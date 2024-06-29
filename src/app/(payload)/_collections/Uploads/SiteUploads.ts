@@ -1,10 +1,9 @@
 import type { CollectionConfig } from 'payload'
 
-import path from 'path'
-
-import { SA, SA_A } from '@/payload/access'
+import { SA_A } from '@/payload/access'
 import { obfuscateFilename } from './hooks/obfuscateFilename'
 import { populateCreatedBy } from '@/payload/hooks'
+import { createdBy } from '@/payload/fields'
 
 export const SiteUploads: CollectionConfig = {
   slug: 'site-uploads',
@@ -15,7 +14,7 @@ export const SiteUploads: CollectionConfig = {
   admin: {
     group: 'SchoolJob',
     useAsTitle: 'filename',
-    hidden: ({ user }) => user?.role === 'organization' || user?.role === 'candidate',
+    // hidden: ({ user }) => user?.role === 'organization' || user?.role === 'candidate',
   },
   hooks: {
     beforeChange: [obfuscateFilename, populateCreatedBy],
@@ -29,24 +28,12 @@ export const SiteUploads: CollectionConfig = {
     delete: SA_A,
   },
   upload: {
+
     staticDir: '/site-uploads',
     mimeTypes: ['image/jpeg', 'image/png'],
     crop: false,
   },
   fields: [
-    {
-      name: 'createdBy',
-      type: 'relationship',
-      relationTo: 'users',
-      hasMany: false,
-      access: {
-        read: SA,
-        update: SA,
-      },
-      admin: {
-        readOnly: true,
-        condition: (data) => Boolean(data?.createdBy),
-      },
-    },
+    createdBy
   ],
 }

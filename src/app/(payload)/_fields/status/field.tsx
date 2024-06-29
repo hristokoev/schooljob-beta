@@ -4,6 +4,8 @@ import { useField } from '@payloadcms/ui'
 import { CustomComponent } from 'payload'
 import React from 'react'
 
+import './index.scss'
+
 export const StatusSelectComponentField: CustomComponent = ({ path, readOnly }) => {
   const { value, setValue } = useField<string>(path)
 
@@ -18,7 +20,7 @@ export const StatusSelectComponentField: CustomComponent = ({ path, readOnly }) 
       className={`${baseClass} ${className}`}
       onClick={() => setValue(value === 'published' ? 'unpublished' : 'published')}
     >
-      <p className="text-center font-bold text-lg leading-none m-0 p-4">
+      <p className="m-0 p-4 text-center text-lg font-bold leading-none">
         {value === 'published' ? 'Published. Set to Unpublish' : 'Not Published. Set to Publish'}
       </p>
     </div>

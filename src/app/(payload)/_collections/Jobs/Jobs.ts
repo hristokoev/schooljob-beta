@@ -1,8 +1,9 @@
 import { CollectionConfig } from 'payload'
-import { lexicalEditor } from '@payloadcms/richtext-lexical'
 
 import { SA, SA_A, SA_A_O, SA_A_O_Self_createdBy, SA_O } from '@/payload/access'
+import { createdBy } from '@/payload/fields'
 import { cleanupOrganizationsAfterJobDelete } from './hooks/cleanupOrganizationsAfterJobDelete'
+import { currencyOptions, educationOptions, employmentTypeOptions, experienceOptions, locationTypeOptions, salaryTypeOptions } from '@/payload/data'
 import { languageField } from '@/payload/fields'
 import { organizationFilter } from './filters/organizationFilter'
 import { populateCreatedBy } from '@/payload/hooks'
@@ -23,7 +24,7 @@ export const Jobs: CollectionConfig = {
     group: 'SchoolJob',
     useAsTitle: 'title',
     defaultColumns: ['title', 'organization', 'featured', 'status'],
-    hidden: ({ user }) => user?.role === 'candidate',
+    // hidden: ({ user }) => user?.role === 'candidate',
   },
   hooks: {
     beforeChange: [populateCreatedBy, populatePublicId],
@@ -46,6 +47,39 @@ export const Jobs: CollectionConfig = {
     {
       name: 'title',
       type: 'text',
+      defaultValue: '',
+      required: true,
+    },
+    {
+      name: 'categories',
+      type: 'relationship',
+      relationTo: 'job-categories',
+      hasMany: true,
+      required: true,
+    },
+    {
+      name: 'organization',
+      type: 'relationship',
+      relationTo: 'organizations',
+      hasMany: false,
+      filterOptions: organizationFilter,
+      access: {
+        create: SA_A_O,
+        update: SA,
+      },
+      defaultValue: ({ user }: { user: User }) => {
+        /*
+          super-admins can create jobs for any organization
+          admins can't create jobs as per colleciton access control
+          organizations can create jobs for themselves
+        */
+        if (user.profile && user?.role === 'organization') {
+          return typeof user.profile.value === 'string' ? user.profile.value : user.profile.value.id
+        }
+
+        // super-admins
+        return undefined
+      },
       required: true,
     },
     {
@@ -57,44 +91,8 @@ export const Jobs: CollectionConfig = {
             {
               name: 'employmentType',
               type: 'select',
-              options: [
-                {
-                  label: 'Full Time',
-                  value: 'fulltime',
-                },
-                {
-                  label: 'Part Time',
-                  value: 'parttime',
-                },
-                {
-                  label: 'Contract',
-                  value: 'contract',
-                },
-                {
-                  label: 'Temporary',
-                  value: 'temporary',
-                },
-                {
-                  label: 'Internship',
-                  value: 'internship',
-                },
-                {
-                  label: 'Freelance',
-                  value: 'freelance',
-                },
-                {
-                  label: 'Apprenticeship',
-                  value: 'apprenticeship',
-                },
-                {
-                  label: 'Volunteer',
-                  value: 'volunteer',
-                },
-                {
-                  label: 'Seasonal',
-                  value: 'seasonal',
-                },
-              ],
+              defaultValue: [],
+              options: employmentTypeOptions,
               hasMany: true,
               required: true,
             },
@@ -104,6 +102,7 @@ export const Jobs: CollectionConfig = {
                 {
                   name: 'location',
                   type: 'text',
+                  defaultValue: '',
                   admin: {
                     width: '50%',
                   },
@@ -111,20 +110,8 @@ export const Jobs: CollectionConfig = {
                 {
                   name: 'locationType',
                   type: 'select',
-                  options: [
-                    {
-                      label: 'On-site',
-                      value: 'onsite',
-                    },
-                    {
-                      label: 'Remote',
-                      value: 'remote',
-                    },
-                    {
-                      label: 'Hybrid',
-                      value: 'hybrid',
-                    },
-                  ],
+                  defaultValue: [],
+                  options: locationTypeOptions,
                   hasMany: true,
                   admin: {
                     width: '50%',
@@ -138,36 +125,8 @@ export const Jobs: CollectionConfig = {
                 {
                   name: 'education',
                   type: 'select',
-                  options: [
-                    {
-                      label: 'No education',
-                      value: 'noEducation',
-                    },
-                    {
-                      label: 'High school',
-                      value: 'highSchool',
-                    },
-                    {
-                      label: 'Associate degree',
-                      value: 'associateDegree',
-                    },
-                    {
-                      label: "Bachelor's degree",
-                      value: 'bachelorsDegree',
-                    },
-                    {
-                      label: "Master's degree",
-                      value: 'mastersDegree',
-                    },
-                    {
-                      label: 'Doctoral degree',
-                      value: 'doctoralDegree',
-                    },
-                    {
-                      label: 'Professional degree',
-                      value: 'professionalDegree',
-                    },
-                  ],
+                  defaultValue: [],
+                  options: educationOptions,
                   admin: {
                     width: '50%',
                   },
@@ -176,36 +135,8 @@ export const Jobs: CollectionConfig = {
                 {
                   name: 'experience',
                   type: 'select',
-                  options: [
-                    {
-                      label: 'No experience',
-                      value: 'noExperience',
-                    },
-                    {
-                      label: 'Less than 1 year',
-                      value: 'lessThanOneYear',
-                    },
-                    {
-                      label: '1-2 years',
-                      value: 'oneTwoYears',
-                    },
-                    {
-                      label: '2-3 years',
-                      value: 'twoThreeYears',
-                    },
-                    {
-                      label: '3-5 years',
-                      value: 'threeFiveYears',
-                    },
-                    {
-                      label: '5-10 years',
-                      value: 'fiveTenYears',
-                    },
-                    {
-                      label: '10+ years',
-                      value: 'tenPlusYears',
-                    },
-                  ],
+                  defaultValue: [],
+                  options: experienceOptions,
                   admin: {
                     width: '50%',
                   },
@@ -240,7 +171,13 @@ export const Jobs: CollectionConfig = {
                       defaultValue: 0,
                       admin: {
                         width: '50%',
-                        condition: (data) => data?.salary?.enabled && data?.salary?.range,
+                        condition: (data) => data?.salary?.enabled && !data?.salary?.range,
+                      },
+                      validate: (value, { data }) => {
+                        if (value < 1) {
+                          return 'Number must be greater than or equal to 1'
+                        }
+                        return true
                       },
                       required: true,
                     },
@@ -282,16 +219,7 @@ export const Jobs: CollectionConfig = {
                       name: 'currency',
                       type: 'select',
                       defaultValue: 'czk',
-                      options: [
-                        {
-                          label: 'CZK',
-                          value: 'czk',
-                        },
-                        {
-                          label: 'EUR',
-                          value: 'eur',
-                        },
-                      ],
+                      options: currencyOptions,
                       admin: {
                         width: '25%',
                         condition: (data) => Boolean(data?.salary?.enabled),
@@ -302,32 +230,7 @@ export const Jobs: CollectionConfig = {
                       name: 'salaryType',
                       type: 'select',
                       defaultValue: 'monthly',
-                      options: [
-                        {
-                          label: 'Hourly',
-                          value: 'hourly',
-                        },
-                        {
-                          label: 'Daily',
-                          value: 'daily',
-                        },
-                        {
-                          label: 'Weekly',
-                          value: 'weekly',
-                        },
-                        {
-                          label: 'Bi-weekly',
-                          value: 'biweekly',
-                        },
-                        {
-                          label: 'Monthly',
-                          value: 'monthly',
-                        },
-                        {
-                          label: 'Annually',
-                          value: 'annually',
-                        },
-                      ],
+                      options: salaryTypeOptions,
                       admin: {
                         width: '25%',
                         condition: (data) => Boolean(data?.salary?.enabled),
@@ -341,27 +244,32 @@ export const Jobs: CollectionConfig = {
             {
               name: 'description',
               type: 'textarea',
+              defaultValue: 'Lorem ipsum',
+              required: true,
             },
             {
               name: 'richText',
               type: 'richText',
-              editor: lexicalEditor(),
             },
             {
               name: 'skills',
-              type: 'json',
+              type: 'text',
+              hasMany: true,
             },
             {
               name: 'certifications',
-              type: 'json',
+              type: 'text',
+              hasMany: true,
             },
             {
               name: 'responsibilities',
-              type: 'json',
+              type: 'text',
+              hasMany: true,
             },
             {
               name: 'benefits',
-              type: 'json',
+              type: 'text',
+              hasMany: true,
             },
             {
               name: 'suitableFor',
@@ -375,7 +283,7 @@ export const Jobs: CollectionConfig = {
                       type: 'checkbox',
                       defaultValue: false,
                       admin: {
-                        width: '20%',
+                        width: '25%',
                       },
                     },
                     {
@@ -383,15 +291,7 @@ export const Jobs: CollectionConfig = {
                       type: 'checkbox',
                       defaultValue: false,
                       admin: {
-                        width: '20%',
-                      },
-                    },
-                    {
-                      name: 'pregnantWomen',
-                      type: 'checkbox',
-                      defaultValue: false,
-                      admin: {
-                        width: '20%',
+                        width: '25%',
                       },
                     },
                     {
@@ -399,7 +299,7 @@ export const Jobs: CollectionConfig = {
                       type: 'checkbox',
                       defaultValue: false,
                       admin: {
-                        width: '20%',
+                        width: '25%',
                       },
                     },
                     {
@@ -407,7 +307,7 @@ export const Jobs: CollectionConfig = {
                       type: 'checkbox',
                       defaultValue: false,
                       admin: {
-                        width: '20%',
+                        width: '25%',
                       },
                     },
                   ],
@@ -439,15 +339,18 @@ export const Jobs: CollectionConfig = {
         },
       ],
     },
-    // Sidebar fields
     {
       type: 'row',
+      admin: {
+        position: 'sidebar',
+      },
       fields: [
         {
           name: 'featured',
           type: 'checkbox',
           defaultValue: false,
           admin: {
+            width: '50%',
             components: {
               Cell: ({ cellData }) => {
                 return cellData ? 'Yes' : 'No'
@@ -463,11 +366,11 @@ export const Jobs: CollectionConfig = {
           name: 'hasEndDate',
           type: 'checkbox',
           defaultValue: false,
+          admin: {
+            width: '50%',
+          },
         },
       ],
-      admin: {
-        position: 'sidebar',
-      },
     },
     {
       name: 'endDate',
@@ -478,44 +381,6 @@ export const Jobs: CollectionConfig = {
       },
       required: true,
     },
-    {
-      name: 'categories',
-      type: 'relationship',
-      relationTo: 'job-categories',
-      hasMany: true,
-      admin: {
-        position: 'sidebar',
-      },
-      required: true,
-    },
-    {
-      name: 'organization',
-      type: 'relationship',
-      relationTo: 'organizations',
-      hasMany: false,
-      filterOptions: organizationFilter,
-      admin: {
-        position: 'sidebar',
-      },
-      access: {
-        create: SA_A_O,
-        update: SA,
-      },
-      defaultValue: ({ user }: { user: User }) => {
-        /*
-          super-admins can create jobs for any organization
-          admins can't create jobs as per colleciton access control
-          organizations can create jobs for themselves
-        */
-        if (user.profile && user?.role === 'organization') {
-          return typeof user.profile.value === 'string' ? user.profile.value : user.profile.value.id
-        }
-
-        // super-admins
-        return undefined
-      },
-      required: true,
-    },
     slugField(),
     {
       name: 'customApplyUrl',
@@ -523,34 +388,20 @@ export const Jobs: CollectionConfig = {
       defaultValue: 'https://',
       type: 'text',
       admin: {
-        position: 'sidebar',
-      },
+        position: 'sidebar'
+      }
     },
-    {
-      name: 'createdBy',
-      type: 'relationship',
-      relationTo: 'users',
-      hasMany: false,
-      access: {
-        read: SA,
-        update: SA,
-      },
-      admin: {
-        readOnly: true,
-        position: 'sidebar',
-        condition: (data) => Boolean(data?.createdBy),
-      },
-    },
+    createdBy,
     {
       name: 'publicId',
       type: 'number',
+      required: true,
       access: {
         read: () => true,
         update: () => false,
       },
       admin: {
         readOnly: true,
-        position: 'sidebar',
         condition: (data) => Boolean(data?.publicId),
       },
     },

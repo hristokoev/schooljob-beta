@@ -21,7 +21,6 @@ export interface Config {
     'payload-migrations': PayloadMigration;
   };
   globals: {
-    dashboard: Dashboard;
     data: Data;
   };
   locale: null;
@@ -37,6 +36,8 @@ export interface Job {
   id: string;
   status: string;
   title: string;
+  categories: (string | JobCategory)[];
+  organization: string | Organization;
   employmentType: (
     | 'fulltime'
     | 'parttime'
@@ -110,6 +111,70 @@ export interface Job {
     currency?: ('czk' | 'eur') | null;
     salaryType?: ('hourly' | 'daily' | 'weekly' | 'biweekly' | 'monthly' | 'annually') | null;
   };
+  description: string;
+  richText?: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  skills?: string[] | null;
+  certifications?: string[] | null;
+  responsibilities?: string[] | null;
+  benefits?: string[] | null;
+  suitableFor?: {
+    students?: boolean | null;
+    disabledPeople?: boolean | null;
+    mothersOnMaternityLeave?: boolean | null;
+    retirees?: boolean | null;
+  };
+  applications?: (string | Application)[] | null;
+  featured?: boolean | null;
+  hasEndDate?: boolean | null;
+  endDate?: string | null;
+  slug?: string | null;
+  customApplyUrl?: string | null;
+  createdBy?: (string | null) | User;
+  publicId?: number | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "job-categories".
+ */
+export interface JobCategory {
+  id: string;
+  title: string;
+  slug?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "organizations".
+ */
+export interface Organization {
+  id: string;
+  title: string;
+  slug?: string | null;
+  featured?: boolean | null;
+  email: string;
+  phone?: string | null;
+  location?: string | null;
+  vatId?: string | null;
+  categories?: (string | JobCategory)[] | null;
+  logo?: string | SiteUpload | null;
+  imageCover?: string | SiteUpload | null;
   description?: string | null;
   richText?: {
     root: {
@@ -126,101 +191,10 @@ export interface Job {
     };
     [k: string]: unknown;
   } | null;
-  skills?:
-    | {
-        [k: string]: unknown;
-      }
-    | unknown[]
-    | string
-    | number
-    | boolean
-    | null;
-  certifications?:
-    | {
-        [k: string]: unknown;
-      }
-    | unknown[]
-    | string
-    | number
-    | boolean
-    | null;
-  responsibilities?:
-    | {
-        [k: string]: unknown;
-      }
-    | unknown[]
-    | string
-    | number
-    | boolean
-    | null;
-  benefits?:
-    | {
-        [k: string]: unknown;
-      }
-    | unknown[]
-    | string
-    | number
-    | boolean
-    | null;
-  suitableFor?: {
-    students?: boolean | null;
-    disabledPeople?: boolean | null;
-    pregnantWomen?: boolean | null;
-    mothersOnMaternityLeave?: boolean | null;
-    retirees?: boolean | null;
-  };
-  applications?: (string | Application)[] | null;
-  featured?: boolean | null;
-  hasEndDate?: boolean | null;
-  endDate?: string | null;
-  categories: (string | JobCategory)[];
-  organization: string | Organization;
-  slug?: string | null;
-  customApplyUrl?: string | null;
+  url?: string | null;
+  jobsPublished?: (string | Job)[] | null;
+  jobsUnpublished?: (string | Job)[] | null;
   createdBy?: (string | null) | User;
-  publicId?: number | null;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "applications".
- */
-export interface Application {
-  id: string;
-  job: string | Job;
-  candidate?: (string | null) | Candidate;
-  firstName?: string | null;
-  lastName?: string | null;
-  email?: string | null;
-  phone?: string | null;
-  location?: string | null;
-  coverLetter?: string | null;
-  cv: string | Cv;
-  agreements?: (string | Agreement)[] | null;
-  status: 'pending' | 'accepted' | 'rejected';
-  fullName?: string | null;
-  trackingId?: number | null;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "candidates".
- */
-export interface Candidate {
-  id: string;
-  firstName: string;
-  lastName: string;
-  email: string;
-  phone?: string | null;
-  location?: string | null;
-  photo?: string | SiteUpload | null;
-  bio?: string | null;
-  applications?: (string | Application)[] | null;
-  jobsSaved?: (string | Job)[] | null;
-  createdBy?: (string | null) | User;
-  fullName?: string | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -275,51 +249,43 @@ export interface User {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "organizations".
+ * via the `definition` "candidates".
  */
-export interface Organization {
+export interface Candidate {
   id: string;
-  title: string;
+  firstName: string;
+  lastName: string;
   email: string;
   phone?: string | null;
   location?: string | null;
-  vatId?: string | null;
-  logo?: string | SiteUpload | null;
-  imageCover?: string | SiteUpload | null;
-  description?: string | null;
-  richText?: {
-    root: {
-      type: string;
-      children: {
-        type: string;
-        version: number;
-        [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
-    };
-    [k: string]: unknown;
-  } | null;
-  url?: string | null;
-  jobsPublished?: (string | Job)[] | null;
-  jobsUnpublished?: (string | Job)[] | null;
-  featured?: boolean | null;
-  categories?: (string | JobCategory)[] | null;
-  slug?: string | null;
+  photo?: string | SiteUpload | null;
+  bio?: string | null;
+  applications?: (string | Application)[] | null;
+  jobsSaved?: (string | Job)[] | null;
   createdBy?: (string | null) | User;
+  fullName?: string | null;
   updatedAt: string;
   createdAt: string;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "job-categories".
+ * via the `definition` "applications".
  */
-export interface JobCategory {
+export interface Application {
   id: string;
-  title: string;
-  slug?: string | null;
+  job: string | Job;
+  candidate?: (string | null) | Candidate;
+  firstName?: string | null;
+  lastName?: string | null;
+  email?: string | null;
+  phone?: string | null;
+  location?: string | null;
+  coverLetter?: string | null;
+  cv: string | Cv;
+  agreements?: (string | Agreement)[] | null;
+  status: 'pending' | 'accepted' | 'rejected';
+  fullName?: string | null;
+  trackingId?: number | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -332,6 +298,7 @@ export interface Cv {
   job?: (string | null) | Job;
   organization?: (string | null) | Organization;
   createdBy?: (string | null) | User;
+  prefix?: string | null;
   updatedAt: string;
   createdAt: string;
   url?: string | null;
@@ -403,24 +370,6 @@ export interface PayloadMigration {
   batch?: number | null;
   updatedAt: string;
   createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "dashboard".
- */
-export interface Dashboard {
-  id: string;
-  invalidIds?:
-    | {
-        [k: string]: unknown;
-      }
-    | unknown[]
-    | string
-    | number
-    | boolean
-    | null;
-  updatedAt?: string | null;
-  createdAt?: string | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

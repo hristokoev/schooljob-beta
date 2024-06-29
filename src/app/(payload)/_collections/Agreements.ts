@@ -14,7 +14,7 @@ export const Agreements: CollectionConfig = {
     group: 'SchoolJob',
     useAsTitle: 'title',
     defaultColumns: ['title', 'slug'],
-    hidden: ({ user }) => user?.role === 'organization' || user?.role === 'candidate',
+    // hidden: ({ user }) => user?.role === 'organization' || user?.role === 'candidate',
   },
   access: {
     create: SA_A,
@@ -31,7 +31,6 @@ export const Agreements: CollectionConfig = {
     {
       name: 'richText',
       type: 'richText',
-      editor: lexicalEditor(),
       required: true,
     },
     slugField(),

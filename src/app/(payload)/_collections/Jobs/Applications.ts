@@ -1,6 +1,7 @@
 import { CollectionConfig, User } from 'payload'
 
 import { SA, SA_A, SA_A_O, SA_C, SA_C_U } from '@/payload/access'
+import { applicationStatusOptions } from '@/payload/data'
 import { cleanupCandidateAfterApplicationDelete } from './hooks/cleanupCandidateAfterApplicationDelete'
 import { cleanupJobAfterApplicationDelete } from './hooks/cleanupJobAfterApplicationDelete'
 import { populateCandidateApplications } from './hooks/populateCandidateApplications'
@@ -210,20 +211,7 @@ export const Applications: CollectionConfig = {
       name: 'status',
       type: 'select',
       defaultValue: 'pending',
-      options: [
-        {
-          label: 'Pending',
-          value: 'pending',
-        },
-        {
-          label: 'Accepted',
-          value: 'accepted',
-        },
-        {
-          label: 'Rejected',
-          value: 'rejected',
-        },
-      ],
+      options: applicationStatusOptions,
       admin: {
         position: 'sidebar',
         components: {

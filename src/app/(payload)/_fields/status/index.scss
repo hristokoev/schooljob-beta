@@ -1,0 +1,36 @@
+@import "~@payloadcms/ui/scss";
+
+.status {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  padding: 16px;
+  border-radius: 2px;
+  text-transform: capitalize;
+
+  &.margin {
+    margin-block-end: 16px;
+  }
+
+  &.published,
+  &.accepted {
+    background-color: var(--theme-success-500);
+    color: var(--color-base-800);
+  }
+
+  &.unpublished,
+  &.rejected {
+    background-color: var(--theme-error-500);
+    color: var(--color-base-800);
+  }
+
+  &.pending {
+    background-color: var(--theme-warning-500);
+    color: var(--color-base-800);
+  }
+
+  &.readonly {
+    background-color: var(--theme-elevation-200);
+    color: var(--theme-elevation-450);
+  }
+}

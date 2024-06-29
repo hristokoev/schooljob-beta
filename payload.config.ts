@@ -1,23 +1,15 @@
 import path from 'path'
 import { en } from 'payload/i18n/en'
 import {
-  AlignFeature,
-  BlockquoteFeature,
-  BlocksFeature,
   BoldFeature,
-  ChecklistFeature,
-  HeadingFeature,
-  IndentFeature,
-  InlineCodeFeature,
   ItalicFeature,
+  UnderlineFeature,
+  StrikethroughFeature,
+  AlignFeature,
   lexicalEditor,
-  LinkFeature,
-  OrderedListFeature,
-  ParagraphFeature,
-  RelationshipFeature,
-  UnorderedListFeature,
-  UploadFeature,
+  FixedToolbarFeature,
 } from '@payloadcms/richtext-lexical'
+import { s3Storage } from '@payloadcms/storage-s3'
 import { mongooseAdapter } from '@payloadcms/db-mongodb'
 import { buildConfig } from 'payload'
 import sharp from 'sharp'
@@ -34,19 +26,22 @@ import {
   SiteUploads,
   Users,
 } from '@/payload/collections'
-import { Data, Dashboard } from '@/payload/globals'
-import { Provider } from '@/app/(payload)/_components/Provider'
+import { Data } from '@/payload/globals'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
 
 export default buildConfig({
-  editor: lexicalEditor(),
-  admin: {
-    components: {
-      providers: [Provider],
-    },
-  },
+  editor: lexicalEditor({
+    features: ({ defaultFeatures, rootFeatures }) => [
+      BoldFeature(),
+      ItalicFeature(),
+      UnderlineFeature(),
+      StrikethroughFeature(),
+      AlignFeature(),
+      FixedToolbarFeature()
+    ],
+  }),
   collections: [
     Jobs,
     JobCategories,
@@ -58,14 +53,19 @@ export default buildConfig({
     Agreements,
     Users,
   ],
-  globals: [Dashboard, Data],
+  globals: [Data],
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {
     outputFile: path.resolve(dirname, 'payload-types.ts'),
   },
   db: mongooseAdapter({
     url: process.env.MONGODB_URI || '',
+    connectOptions: {
+      dbName: process.env.MONGODB_NAME || '',
+    },
   }),
+  cors: [process.env.PAYLOAD_PUBLIC_SERVER_URL || ''].filter(Boolean),
+  csrf: [process.env.PAYLOAD_PUBLIC_SERVER_URL || ''].filter(Boolean),
 
   /**
    * Payload can now accept specific translations from 'payload/i18n/en'
@@ -82,4 +82,25 @@ export default buildConfig({
   // This is temporary - we may make an adapter pattern
   // for this before reaching 3.0 stable
   sharp,
+  plugins: [
+    s3Storage({
+      enabled: true,
+      config: {
+        credentials: {
+          accessKeyId: process.env.R2_ACCESS_KEY_ID || '',
+          secretAccessKey: process.env.R2_SECRET_ACCESS_KEY || '',
+        },
+        region: process.env.R2_REGION,
+        endpoint: `https://${process.env.CLOUDFLARE_ACCOUNT_ID}.eu.r2.cloudflarestorage.com`,
+      },
+      bucket: process.env.R2_SITE_UPLOADS_BUCKET || '',
+      collections: {
+        'site-uploads': {
+        },
+        cvs: {
+          prefix: 'cvs',
+        },
+      },
+    }),
+  ],
 })

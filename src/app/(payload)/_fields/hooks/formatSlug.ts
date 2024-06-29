@@ -51,11 +51,11 @@ export const formatSlug: FieldHook = async ({
   originalDoc,
   req: { payload },
 }) => {
-  const { title } = data as { title: string }
-  const id = originalDoc?.id || ''
-  const collectionSlug = (collection as CollectionType | { slug?: string }).slug as CollectionType
-
   if (operation === 'create') {
+    const { title } = data as { title: string }
+    const id = originalDoc?.id || ''
+    const collectionSlug = (collection as CollectionType | { slug?: string }).slug as CollectionType
+
     return getUniqueSlug(format(title), collectionSlug, id, payload)
   }
   return value

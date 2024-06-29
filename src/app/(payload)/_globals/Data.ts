@@ -2,9 +2,6 @@ import type { GlobalConfig } from 'payload'
 
 export const Data: GlobalConfig = {
   slug: 'data',
-  admin: {
-    hidden: true,
-  },
   typescript: {
     interface: 'Data',
   },
@@ -22,6 +19,7 @@ export const Data: GlobalConfig = {
           name: 'lastPublicJobId',
           type: 'number',
           label: 'Last Public Job ID',
+          defaultValue: 10000,
           access: {
             read: () => true,
             update: () => false,
@@ -34,6 +32,7 @@ export const Data: GlobalConfig = {
           name: 'lastApplicationTrackingId',
           type: 'number',
           label: 'Last Application Tracking ID',
+          defaultValue: 10000,
           access: {
             read: () => true,
             update: () => false,

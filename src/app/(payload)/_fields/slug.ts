@@ -11,14 +11,14 @@ export const slugField: Slug = () => {
     label: 'Slug',
     type: 'text',
     index: true,
-    admin: {
-      position: 'sidebar',
-    },
     hooks: {
       beforeValidate: [formatSlug],
     },
     access: {
       update: SA,
     },
+    admin: {
+      position: 'sidebar',
+    }
   }
 }

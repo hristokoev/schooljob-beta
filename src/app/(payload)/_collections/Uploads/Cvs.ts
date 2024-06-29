@@ -4,6 +4,7 @@ import { SA, SA_A, SA_C_U } from '@/payload/access'
 import { obfuscateFilename } from './hooks/obfuscateFilename'
 import { populateCreatedBy } from '@/payload/hooks'
 import SA_A_O_Some_C_Self from './access/SA_A_O_Some_C_Self'
+import { createdBy } from '@/payload/fields'
 
 export const Cvs: CollectionConfig = {
   slug: 'cvs',
@@ -15,7 +16,7 @@ export const Cvs: CollectionConfig = {
     group: 'SchoolJob',
     useAsTitle: 'filename',
     defaultColumns: ['filename', 'filesize', 'createdBy', 'createdAt'],
-    hidden: ({ user }) => user?.role === 'organization' || user?.role === 'candidate',
+    // hidden: ({ user }) => user?.role === 'organization' || user?.role === 'candidate',
   },
   upload: {
     staticDir: '/cvs',
@@ -65,19 +66,6 @@ export const Cvs: CollectionConfig = {
         condition: (data) => Boolean(data?.organization),
       },
     },
-    {
-      name: 'createdBy',
-      type: 'relationship',
-      relationTo: 'users',
-      hasMany: false,
-      access: {
-        read: SA,
-        update: SA,
-      },
-      admin: {
-        readOnly: true,
-        condition: (data) => Boolean(data?.createdBy),
-      },
-    },
+    createdBy
   ],
 }
