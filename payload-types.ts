@@ -9,7 +9,6 @@
 export interface Config {
   collections: {
     jobs: Job;
-    'job-categories': JobCategory;
     organizations: Organization;
     candidates: Candidate;
     applications: Application;
@@ -36,7 +35,7 @@ export interface Job {
   id: string;
   status: string;
   title: string;
-  categories: (string | JobCategory)[];
+  categories: ('category-1' | 'category-2' | 'category-3')[];
   organization: string | Organization;
   employmentType: (
     | 'fulltime'
@@ -150,17 +149,6 @@ export interface Job {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "job-categories".
- */
-export interface JobCategory {
-  id: string;
-  title: string;
-  slug?: string | null;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "organizations".
  */
 export interface Organization {
@@ -172,7 +160,7 @@ export interface Organization {
   phone?: string | null;
   location?: string | null;
   vatId?: string | null;
-  categories?: (string | JobCategory)[] | null;
+  categories?: ('category-1' | 'category-2' | 'category-3')[] | null;
   logo?: string | SiteUpload | null;
   imageCover?: string | SiteUpload | null;
   description?: string | null;

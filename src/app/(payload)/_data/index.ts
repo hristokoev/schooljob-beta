@@ -1,4 +1,5 @@
 export { applicationStatusOptions } from './applicationStatusOptions'
+export { categoriesOptions } from './categoriesOptions'
 export { currencyOptions } from './currencyOptions'
 export { cz } from './cz'
 export { educationOptions } from './educationOptions'

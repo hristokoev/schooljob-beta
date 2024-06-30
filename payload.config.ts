@@ -20,7 +20,6 @@ import {
   Applications,
   Candidates,
   Cvs,
-  JobCategories,
   Jobs,
   Organizations,
   SiteUploads,
@@ -44,7 +43,6 @@ export default buildConfig({
   }),
   collections: [
     Jobs,
-    JobCategories,
     Organizations,
     Candidates,
     Applications,

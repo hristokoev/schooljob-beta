@@ -1,11 +1,11 @@
 import { CollectionConfig } from 'payload'
-import { lexicalEditor } from '@payloadcms/richtext-lexical'
 
 import { SA, SA_A, SA_A_O_Self_createdBy } from '@/payload/access'
 import { createdBy } from '@/payload/fields'
 import { revalidateOrganizationAfterChange } from './hooks/revalidateOrganizationAfterChange'
 import { revalidateOrganizationAfterDelete } from './hooks/revalidateOrganizationAfterDelete'
 import { slugField } from '@/payload/fields'
+import { categoriesOptions } from '@/payload/data'
 
 export const Organizations: CollectionConfig = {
   slug: 'organizations',
@@ -106,8 +106,8 @@ export const Organizations: CollectionConfig = {
             },
             {
               name: 'categories',
-              type: 'relationship',
-              relationTo: 'job-categories',
+              type: 'select',
+              options: categoriesOptions,
               hasMany: true,
             },
             {

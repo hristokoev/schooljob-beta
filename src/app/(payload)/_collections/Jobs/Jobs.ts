@@ -3,7 +3,7 @@ import { CollectionConfig } from 'payload'
 import { SA, SA_A, SA_A_O, SA_A_O_Self_createdBy, SA_O } from '@/payload/access'
 import { createdBy } from '@/payload/fields'
 import { cleanupOrganizationsAfterJobDelete } from './hooks/cleanupOrganizationsAfterJobDelete'
-import { currencyOptions, educationOptions, employmentTypeOptions, experienceOptions, locationTypeOptions, salaryTypeOptions } from '@/payload/data'
+import { categoriesOptions, currencyOptions, educationOptions, employmentTypeOptions, experienceOptions, locationTypeOptions, salaryTypeOptions } from '@/payload/data'
 import { languageField } from '@/payload/fields'
 import { organizationFilter } from './filters/organizationFilter'
 import { populateCreatedBy } from '@/payload/hooks'
@@ -52,8 +52,8 @@ export const Jobs: CollectionConfig = {
     },
     {
       name: 'categories',
-      type: 'relationship',
-      relationTo: 'job-categories',
+      type: 'select',
+      options: categoriesOptions,
       hasMany: true,
       required: true,
     },
