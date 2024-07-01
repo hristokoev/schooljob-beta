@@ -41,7 +41,7 @@ export const Organizations: CollectionConfig = {
         update: SA_A,
       },
     },
-    slugField(),
+    slugField,
     {
       name: 'featured',
       type: 'checkbox',

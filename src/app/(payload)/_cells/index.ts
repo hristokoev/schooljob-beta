@@ -1,0 +1,1 @@
+export { FeaturedCell } from './featured'

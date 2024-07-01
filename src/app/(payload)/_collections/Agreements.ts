@@ -33,6 +33,6 @@ export const Agreements: CollectionConfig = {
       type: 'richText',
       required: true,
     },
-    slugField(),
+    slugField
   ],
 }

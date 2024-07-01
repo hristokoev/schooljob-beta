@@ -17,6 +17,7 @@ import { slugField } from '@/payload/fields'
 import { statusField } from '@/payload/fields'
 import { updateOrganizationJobs } from './hooks/updateOrganizationJobs'
 import { User } from '@payload-types'
+import { FeaturedCell } from '@/payload/cells'
 
 export const Jobs: CollectionConfig = {
   slug: 'jobs',
@@ -352,9 +353,7 @@ export const Jobs: CollectionConfig = {
           admin: {
             width: '50%',
             components: {
-              Cell: ({ cellData }) => {
-                return cellData ? 'Yes' : 'No'
-              },
+              Cell: FeaturedCell,
             },
           },
           access: {
@@ -381,7 +380,7 @@ export const Jobs: CollectionConfig = {
       },
       required: true,
     },
-    slugField(),
+    slugField,
     {
       name: 'customApplyUrl',
       label: 'Custom Apply URL',

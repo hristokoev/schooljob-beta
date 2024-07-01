@@ -1,7 +1,9 @@
-import * as React from 'react'
+'use client'
 
-export const StatusSelectComponentCell: React.FC<{
-  cellData: string
-}> = ({ cellData }) => {
+import { CustomComponent } from 'payload'
+import { useTableCell } from '@payloadcms/ui'
+
+export const StatusSelectComponentCell: CustomComponent = () => {
+  const { cellData } = useTableCell()
   return <div className={`status ${cellData}`}>{cellData}</div>
 }
