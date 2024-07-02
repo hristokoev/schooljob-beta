@@ -14,6 +14,7 @@ import { mongooseAdapter } from '@payloadcms/db-mongodb'
 import { buildConfig } from 'payload'
 import sharp from 'sharp'
 import { fileURLToPath } from 'url'
+import { AccessNavLink, AccessView } from '@/payload/views'
 
 import {
   Agreements,
@@ -41,6 +42,18 @@ export default buildConfig({
       FixedToolbarFeature()
     ],
   }),
+  admin: {
+    components: {
+      afterNavLinks: [AccessNavLink],
+      views: {
+        'access': {
+          Component: AccessView,
+          path: '/access',
+          exact: true,
+        }
+      }
+    }
+  },
   collections: [
     Jobs,
     Organizations,
