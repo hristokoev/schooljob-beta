@@ -1,8 +1,7 @@
 import { CollectionConfig } from 'payload'
-import { lexicalEditor } from '@payloadcms/richtext-lexical'
 
-import { SA_A } from '@/payload/access'
-import { slugField } from '@/payload/fields'
+import { ARCHIVED, SA, SA_A } from '@/payload/access'
+import { archived, slugField } from '@/payload/fields'
 
 export const Agreements: CollectionConfig = {
   slug: 'agreements',
@@ -20,17 +19,24 @@ export const Agreements: CollectionConfig = {
     create: SA_A,
     read: () => true,
     update: SA_A,
-    delete: SA_A,
+    delete: () => false,
   },
   fields: [
+    archived,
     {
       name: 'title',
       type: 'text',
+      access: {
+        read: ARCHIVED,
+      },
       required: true,
     },
     {
       name: 'richText',
       type: 'richText',
+      access: {
+        read: ARCHIVED,
+      },
       required: true,
     },
     slugField

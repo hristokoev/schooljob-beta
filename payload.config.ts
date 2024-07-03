@@ -33,7 +33,7 @@ const dirname = path.dirname(filename)
 
 export default buildConfig({
   editor: lexicalEditor({
-    features: ({ defaultFeatures, rootFeatures }) => [
+    features: () => [
       BoldFeature(),
       ItalicFeature(),
       UnderlineFeature(),

@@ -1,6 +1,6 @@
 import type { Field } from 'payload'
 
-import { SA } from '@/payload/access'
+import { archived, SA } from '@/payload/access'
 import { formatSlug } from './hooks/formatSlug'
 
 const slugField: Field = {

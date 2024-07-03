@@ -1,3 +1,4 @@
+export { archived } from './archived'
 export { createdBy } from './createdBy'
 export { languageField } from './language'
 export { slugField } from './slug'

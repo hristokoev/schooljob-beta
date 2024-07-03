@@ -33,6 +33,7 @@ export interface Config {
  */
 export interface Job {
   id: string;
+  archived?: boolean | null;
   status: string;
   title: string;
   categories: ('category-1' | 'category-2' | 'category-3')[];
@@ -153,6 +154,7 @@ export interface Job {
  */
 export interface Organization {
   id: string;
+  archived?: boolean | null;
   title: string;
   slug?: string | null;
   featured?: boolean | null;
@@ -192,6 +194,7 @@ export interface Organization {
  */
 export interface SiteUpload {
   id: string;
+  archived?: boolean | null;
   createdBy?: (string | null) | User;
   updatedAt: string;
   createdAt: string;
@@ -241,6 +244,7 @@ export interface User {
  */
 export interface Candidate {
   id: string;
+  archived?: boolean | null;
   firstName: string;
   lastName: string;
   email: string;
@@ -261,6 +265,7 @@ export interface Candidate {
  */
 export interface Application {
   id: string;
+  archived?: boolean | null;
   job: string | Job;
   candidate?: (string | null) | Candidate;
   firstName?: string | null;
@@ -283,6 +288,7 @@ export interface Application {
  */
 export interface Cv {
   id: string;
+  archived?: boolean | null;
   job?: (string | null) | Job;
   organization?: (string | null) | Organization;
   createdBy?: (string | null) | User;
@@ -305,6 +311,7 @@ export interface Cv {
  */
 export interface Agreement {
   id: string;
+  archived?: boolean | null;
   title: string;
   richText: {
     root: {

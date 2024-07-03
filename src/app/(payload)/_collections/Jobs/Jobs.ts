@@ -1,6 +1,6 @@
 import { CollectionConfig } from 'payload'
 
-import { SA, SA_A, SA_A_O, SA_A_O_Self_createdBy, SA_O } from '@/payload/access'
+import { ARCHIVED, SA, SA_A, SA_A_O, SA_A_O_Self_createdBy, SA_O } from '@/payload/access'
 import { createdBy } from '@/payload/fields'
 import { cleanupOrganizationsAfterJobDelete } from './hooks/cleanupOrganizationsAfterJobDelete'
 import { categoriesOptions, currencyOptions, educationOptions, employmentTypeOptions, experienceOptions, locationTypeOptions, salaryTypeOptions } from '@/payload/data'
@@ -13,11 +13,12 @@ import { populatePublicId } from './hooks/populatePublicId'
 import { revalidateJobAfterChange } from './hooks/revalidateJobAfterChange'
 import { revalidateJobAfterDelete } from './hooks/revalidateJobAfterDelete'
 import SA_A_O_Some_U from './access/SA_A_O_Some_U'
-import { slugField } from '@/payload/fields'
+import { archived, slugField } from '@/payload/fields'
 import { statusField } from '@/payload/fields'
 import { updateOrganizationJobs } from './hooks/updateOrganizationJobs'
 import { User } from '@payload-types'
 import { FeaturedCell } from '@/payload/cells'
+import { Archived } from '@/payload/components'
 
 export const Jobs: CollectionConfig = {
   slug: 'jobs',
@@ -25,6 +26,9 @@ export const Jobs: CollectionConfig = {
     group: 'SchoolJob',
     useAsTitle: 'title',
     defaultColumns: ['title', 'organization', 'featured', 'status'],
+    components: {
+      BeforeListTable: [Archived],
+    }
     // hidden: ({ user }) => user?.role === 'candidate',
   },
   hooks: {
@@ -41,9 +45,10 @@ export const Jobs: CollectionConfig = {
     create: SA_O,
     read: SA_A_O_Some_U,
     update: SA_A_O_Self_createdBy,
-    delete: SA_A_O_Self_createdBy,
+    delete: () => false,
   },
   fields: [
+    archived,
     statusField,
     {
       name: 'title',
@@ -56,16 +61,21 @@ export const Jobs: CollectionConfig = {
       type: 'select',
       options: categoriesOptions,
       hasMany: true,
+      access: {
+        read: ARCHIVED,
+      },
       required: true,
     },
     {
       name: 'organization',
       type: 'relationship',
       relationTo: 'organizations',
+      maxDepth: 0,
       hasMany: false,
       filterOptions: organizationFilter,
       access: {
         create: SA_A_O,
+        read: ARCHIVED,
         update: SA,
       },
       defaultValue: ({ user }: { user: User }) => {
@@ -95,6 +105,9 @@ export const Jobs: CollectionConfig = {
               defaultValue: [],
               options: employmentTypeOptions,
               hasMany: true,
+              access: {
+                read: ARCHIVED,
+              },
               required: true,
             },
             {
@@ -107,6 +120,9 @@ export const Jobs: CollectionConfig = {
                   admin: {
                     width: '50%',
                   },
+                  access: {
+                    read: ARCHIVED,
+                  },
                 },
                 {
                   name: 'locationType',
@@ -116,6 +132,9 @@ export const Jobs: CollectionConfig = {
                   hasMany: true,
                   admin: {
                     width: '50%',
+                  },
+                  access: {
+                    read: ARCHIVED,
                   },
                 },
               ],
@@ -132,6 +151,9 @@ export const Jobs: CollectionConfig = {
                     width: '50%',
                   },
                   hasMany: true,
+                  access: {
+                    read: ARCHIVED,
+                  },
                 },
                 {
                   name: 'experience',
@@ -142,6 +164,9 @@ export const Jobs: CollectionConfig = {
                     width: '50%',
                   },
                   hasMany: true,
+                  access: {
+                    read: ARCHIVED,
+                  },
                 },
               ],
             },
@@ -241,36 +266,57 @@ export const Jobs: CollectionConfig = {
                   ],
                 },
               ],
+              access: {
+                read: ARCHIVED,
+              },
             },
             {
               name: 'description',
               type: 'textarea',
               defaultValue: 'Lorem ipsum',
+              access: {
+                read: ARCHIVED,
+              },
               required: true,
             },
             {
               name: 'richText',
               type: 'richText',
+              access: {
+                read: ARCHIVED,
+              },
             },
             {
               name: 'skills',
               type: 'text',
               hasMany: true,
+              access: {
+                read: ARCHIVED,
+              },
             },
             {
               name: 'certifications',
               type: 'text',
               hasMany: true,
+              access: {
+                read: ARCHIVED,
+              },
             },
             {
               name: 'responsibilities',
               type: 'text',
               hasMany: true,
+              access: {
+                read: ARCHIVED,
+              },
             },
             {
               name: 'benefits',
               type: 'text',
               hasMany: true,
+              access: {
+                read: ARCHIVED,
+              },
             },
             {
               name: 'suitableFor',
@@ -314,6 +360,9 @@ export const Jobs: CollectionConfig = {
                   ],
                 },
               ],
+              access: {
+                read: ARCHIVED,
+              },
             },
           ],
         },
@@ -323,6 +372,7 @@ export const Jobs: CollectionConfig = {
             {
               name: 'applications',
               type: 'relationship',
+              maxDepth: 0,
               relationTo: 'applications',
               hasMany: true,
               access: {
@@ -358,6 +408,7 @@ export const Jobs: CollectionConfig = {
           },
           access: {
             create: SA_A,
+            read: ARCHIVED,
             update: SA_A,
           },
         },
@@ -367,6 +418,9 @@ export const Jobs: CollectionConfig = {
           defaultValue: false,
           admin: {
             width: '50%',
+          },
+          access: {
+            read: ARCHIVED,
           },
         },
       ],
@@ -378,6 +432,9 @@ export const Jobs: CollectionConfig = {
         position: 'sidebar',
         condition: (data) => Boolean(data?.hasEndDate),
       },
+      access: {
+        read: ARCHIVED,
+      },
       required: true,
     },
     slugField,
@@ -388,7 +445,10 @@ export const Jobs: CollectionConfig = {
       type: 'text',
       admin: {
         position: 'sidebar'
-      }
+      },
+      access: {
+        read: ARCHIVED,
+      },
     },
     createdBy,
     {

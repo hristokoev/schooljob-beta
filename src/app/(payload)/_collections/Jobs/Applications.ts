@@ -1,6 +1,6 @@
 import { CollectionConfig, User } from 'payload'
 
-import { SA, SA_A, SA_A_O, SA_C, SA_C_U } from '@/payload/access'
+import { ARCHIVED, SA, SA_A, SA_A_O, SA_C, SA_C_U } from '@/payload/access'
 import { applicationStatusOptions } from '@/payload/data'
 import { cleanupCandidateAfterApplicationDelete } from './hooks/cleanupCandidateAfterApplicationDelete'
 import { cleanupJobAfterApplicationDelete } from './hooks/cleanupJobAfterApplicationDelete'
@@ -12,6 +12,7 @@ import { populateTrackingId } from './hooks/populateTrackingId'
 import { preventMultipleApplications } from './hooks/preventMultipleApplications'
 import SA_A_O_Some from './access/SA_A_O_Some'
 import SA_A_O_Some_C_Self from './access/SA_A_O_Some_C_Self'
+import { archived } from '@/payload/fields'
 // import { StatusSelectComponentCell } from '../../fields/status/cell'
 
 export const Applications: CollectionConfig = {
@@ -25,7 +26,7 @@ export const Applications: CollectionConfig = {
     create: SA_C_U,
     read: SA_A_O_Some_C_Self,
     update: SA_A_O_Some,
-    delete: SA_A,
+    delete: () => false,
   },
   hooks: {
     beforeValidate: [preventMultipleApplications],
@@ -39,6 +40,7 @@ export const Applications: CollectionConfig = {
     afterDelete: [cleanupJobAfterApplicationDelete, cleanupCandidateAfterApplicationDelete],
   },
   fields: [
+    archived,
     {
       type: 'row',
       fields: [
@@ -51,6 +53,7 @@ export const Applications: CollectionConfig = {
             width: '50%',
           },
           access: {
+            read: ARCHIVED,
             update: SA,
           },
           required: true,
@@ -67,6 +70,7 @@ export const Applications: CollectionConfig = {
           },
           access: {
             create: SA_C,
+            read: ARCHIVED,
             update: SA,
           },
           defaultValue: ({ user }: { user: User }) => {
@@ -89,6 +93,7 @@ export const Applications: CollectionConfig = {
             condition: (data) => !data?.candidate,
           },
           access: {
+            read: ARCHIVED,
             update: SA,
           },
           defaultValue: ({ user }: { user: User }) => {
@@ -107,6 +112,7 @@ export const Applications: CollectionConfig = {
             condition: (data) => !data?.candidate,
           },
           access: {
+            read: ARCHIVED,
             update: SA,
           },
           defaultValue: ({ user }: { user: User }) => {
@@ -133,6 +139,7 @@ export const Applications: CollectionConfig = {
             condition: (data) => !data?.candidate,
           },
           access: {
+            read: ARCHIVED,
             update: SA,
           },
           defaultValue: ({ user }: { user: User }) => {
@@ -151,6 +158,7 @@ export const Applications: CollectionConfig = {
             condition: (data) => !data?.candidate,
           },
           access: {
+            read: ARCHIVED,
             update: SA,
           },
           defaultValue: ({ user }: { user: User }) => {
@@ -169,6 +177,7 @@ export const Applications: CollectionConfig = {
       label: 'Location',
       type: 'text',
       access: {
+        read: ARCHIVED,
         update: SA,
       },
       admin: {
@@ -184,6 +193,7 @@ export const Applications: CollectionConfig = {
       name: 'coverLetter',
       type: 'textarea',
       access: {
+        read: ARCHIVED,
         update: SA,
       },
     },
@@ -193,6 +203,7 @@ export const Applications: CollectionConfig = {
       type: 'upload',
       relationTo: 'cvs',
       access: {
+        read: ARCHIVED,
         update: SA,
       },
       required: true,
@@ -203,6 +214,7 @@ export const Applications: CollectionConfig = {
       relationTo: 'agreements',
       hasMany: true,
       access: {
+        read: ARCHIVED,
         update: SA_C,
       },
     },
@@ -220,6 +232,7 @@ export const Applications: CollectionConfig = {
       },
       access: {
         create: SA,
+        read: ARCHIVED,
         update: SA_A_O,
       },
       required: true,
@@ -243,6 +256,9 @@ export const Applications: CollectionConfig = {
           },
         ],
       },
+      access: {
+        read: ARCHIVED,
+      }
     },
     {
       name: 'trackingId',

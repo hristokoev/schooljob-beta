@@ -17,3 +17,5 @@ export { SA_A_O_Self as SA_A_O_Self_createdBy } from './query/createdBy/SA_A_O_S
 // id
 export { SA_A_O_Self_C_Self as SA_A_O_Self_C_Self_id } from './query/id/SA_A_O_Self_C_Self'
 export { SA_A_Self as SA_A_Self_id } from './query/id/SA_A_Self'
+
+export { ARCHIVED } from './archived'

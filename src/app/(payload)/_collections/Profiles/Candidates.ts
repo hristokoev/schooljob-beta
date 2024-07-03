@@ -1,7 +1,7 @@
 import { CollectionConfig } from 'payload'
 
-import { SA, SA_A, SA_A_C_Self_createdBy, SA_C } from '@/payload/access'
-import { createdBy } from '@/payload/fields'
+import { ARCHIVED, SA, SA_A, SA_A_C_Self_createdBy, SA_C } from '@/payload/access'
+import { archived, createdBy } from '@/payload/fields'
 import SA_A_O_C_Self from './access/SA_A_O_C_Self'
 
 export const Candidates: CollectionConfig = {
@@ -23,9 +23,10 @@ export const Candidates: CollectionConfig = {
     create: SA,
     read: SA_A_O_C_Self,
     update: SA_A_C_Self_createdBy,
-    delete: SA_A,
+    delete: () => false,
   },
   fields: [
+    archived,
     {
       type: 'tabs',
       tabs: [
@@ -41,6 +42,9 @@ export const Candidates: CollectionConfig = {
                   admin: {
                     width: '50%',
                   },
+                  access: {
+                    read: ARCHIVED
+                  },
                   required: true,
                 },
                 {
@@ -48,6 +52,9 @@ export const Candidates: CollectionConfig = {
                   type: 'text',
                   admin: {
                     width: '50%',
+                  },
+                  access: {
+                    read: ARCHIVED
                   },
                   required: true,
                 },
@@ -63,6 +70,9 @@ export const Candidates: CollectionConfig = {
                     width: '50%',
                   },
                   unique: true,
+                  access: {
+                    read: ARCHIVED
+                  },
                   required: true,
                 },
                 {
@@ -71,21 +81,33 @@ export const Candidates: CollectionConfig = {
                   admin: {
                     width: '50%',
                   },
+                  access: {
+                    read: ARCHIVED
+                  }
                 },
               ],
             },
             {
               name: 'location',
               type: 'text',
+              access: {
+                read: ARCHIVED
+              }
             },
             {
               name: 'photo',
               type: 'upload',
               relationTo: 'site-uploads',
+              access: {
+                read: ARCHIVED
+              }
             },
             {
               name: 'bio',
               type: 'textarea',
+              access: {
+                read: ARCHIVED
+              }
             },
           ],
         },
@@ -98,6 +120,7 @@ export const Candidates: CollectionConfig = {
               relationTo: 'applications',
               hasMany: true,
               access: {
+                read: ARCHIVED,
                 update: SA
               }
             },
@@ -112,6 +135,7 @@ export const Candidates: CollectionConfig = {
               relationTo: 'jobs',
               hasMany: true,
               access: {
+                read: ARCHIVED,
                 update: SA_C
               },
             },
@@ -139,6 +163,9 @@ export const Candidates: CollectionConfig = {
           },
         ],
       },
+      access: {
+        read: ARCHIVED
+      }
     },
   ],
 }

@@ -1,10 +1,10 @@
 import { CollectionConfig } from 'payload'
 
-import { SA, SA_A, SA_C_U } from '@/payload/access'
+import { ARCHIVED, SA, SA_C_U } from '@/payload/access'
 import { obfuscateFilename } from './hooks/obfuscateFilename'
 import { populateCreatedBy } from '@/payload/hooks'
 import SA_A_O_Some_C_Self from './access/SA_A_O_Some_C_Self'
-import { createdBy } from '@/payload/fields'
+import { archived, createdBy } from '@/payload/fields'
 
 export const Cvs: CollectionConfig = {
   slug: 'cvs',
@@ -33,9 +33,10 @@ export const Cvs: CollectionConfig = {
     create: SA_C_U,
     read: SA_A_O_Some_C_Self,
     update: SA,
-    delete: SA_A,
+    delete: () => false,
   },
   fields: [
+    archived,
     {
       name: 'job',
       type: 'relationship',
@@ -43,7 +44,7 @@ export const Cvs: CollectionConfig = {
       hasMany: false,
       maxDepth: 0,
       access: {
-        read: SA_A,
+        read: ARCHIVED,
         update: SA,
       },
       admin: {
@@ -58,7 +59,7 @@ export const Cvs: CollectionConfig = {
       hasMany: false,
       maxDepth: 0,
       access: {
-        read: SA_A,
+        read: ARCHIVED,
         update: SA,
       },
       admin: {

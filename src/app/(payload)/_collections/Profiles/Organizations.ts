@@ -1,11 +1,12 @@
 import { CollectionConfig } from 'payload'
 
-import { SA, SA_A, SA_A_O_Self_createdBy } from '@/payload/access'
+import { ARCHIVED, SA, SA_A, SA_A_O_Self_createdBy } from '@/payload/access'
 import { createdBy } from '@/payload/fields'
 import { revalidateOrganizationAfterChange } from './hooks/revalidateOrganizationAfterChange'
 import { revalidateOrganizationAfterDelete } from './hooks/revalidateOrganizationAfterDelete'
-import { slugField } from '@/payload/fields'
+import { archived, slugField } from '@/payload/fields'
 import { categoriesOptions } from '@/payload/data'
+import { Archived } from '@/payload/components'
 
 export const Organizations: CollectionConfig = {
   slug: 'organizations',
@@ -13,6 +14,9 @@ export const Organizations: CollectionConfig = {
     group: 'SchoolJob',
     useAsTitle: 'title',
     defaultColumns: ['title', 'location'],
+    components: {
+      BeforeListTable: [Archived],
+    }
     // hidden: ({ user }) => user?.role === 'organization' || user?.role === 'candidate',
   },
   access: {
@@ -24,15 +28,25 @@ export const Organizations: CollectionConfig = {
       create organization, the Local API has overrideAccess set to true.
     */
     create: SA,
-    read: () => true,
+    read: ({ req: { user } }) => {
+      if (user?.role === 'super-admin') {
+        return true
+      }
+      return {
+        archived: {
+          equals: false
+        }
+      }
+    },
     update: SA_A_O_Self_createdBy,
-    delete: SA_A,
+    delete: () => false,
   },
   hooks: {
     afterChange: [revalidateOrganizationAfterChange],
     afterDelete: [revalidateOrganizationAfterDelete],
   },
   fields: [
+    archived,
     {
       name: 'title',
       type: 'text',
@@ -55,6 +69,7 @@ export const Organizations: CollectionConfig = {
       },
       access: {
         create: SA_A,
+        read: ARCHIVED,
         update: SA_A,
       },
     },
@@ -68,6 +83,9 @@ export const Organizations: CollectionConfig = {
               type: 'row',
               fields: [
                 {
+                  access: {
+                    read: ARCHIVED
+                  },
                   name: 'email',
                   type: 'text',
                   admin: {
@@ -77,6 +95,9 @@ export const Organizations: CollectionConfig = {
                   required: true,
                 },
                 {
+                  access: {
+                    read: ARCHIVED
+                  },
                   name: 'phone',
                   type: 'text',
                   admin: {
@@ -89,6 +110,9 @@ export const Organizations: CollectionConfig = {
               type: 'row',
               fields: [
                 {
+                  access: {
+                    read: ARCHIVED
+                  },
                   name: 'location',
                   type: 'text',
                   admin: {
@@ -96,6 +120,9 @@ export const Organizations: CollectionConfig = {
                   },
                 },
                 {
+                  access: {
+                    read: ARCHIVED
+                  },
                   name: 'vatId',
                   type: 'text',
                   admin: {
@@ -105,6 +132,9 @@ export const Organizations: CollectionConfig = {
               ],
             },
             {
+              access: {
+                read: ARCHIVED
+              },
               name: 'categories',
               type: 'select',
               options: categoriesOptions,
@@ -114,6 +144,9 @@ export const Organizations: CollectionConfig = {
               type: 'row',
               fields: [
                 {
+                  access: {
+                    read: ARCHIVED
+                  },
                   name: 'logo',
                   type: 'upload',
                   relationTo: 'site-uploads',
@@ -123,6 +156,9 @@ export const Organizations: CollectionConfig = {
                   },
                 },
                 {
+                  access: {
+                    read: ARCHIVED
+                  },
                   name: 'imageCover',
                   type: 'upload',
                   relationTo: 'site-uploads',
@@ -133,14 +169,23 @@ export const Organizations: CollectionConfig = {
               ],
             },
             {
+              access: {
+                read: ARCHIVED
+              },
               name: 'description',
               type: 'textarea',
             },
             {
+              access: {
+                read: ARCHIVED
+              },
               name: 'richText',
               type: 'richText',
             },
             {
+              access: {
+                read: ARCHIVED
+              },
               name: 'url',
               type: 'text',
             },
@@ -153,9 +198,11 @@ export const Organizations: CollectionConfig = {
               name: 'jobsPublished',
               type: 'relationship',
               relationTo: 'jobs',
+              maxDepth: 0,
               hasMany: true,
               unique: false,
               access: {
+                read: ARCHIVED,
                 update: SA,
               },
             },
@@ -168,9 +215,11 @@ export const Organizations: CollectionConfig = {
               name: 'jobsUnpublished',
               type: 'relationship',
               relationTo: 'jobs',
+              maxDepth: 0,
               hasMany: true,
               unique: false,
               access: {
+                read: ARCHIVED,
                 update: SA,
               },
             },

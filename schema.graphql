@@ -3,10 +3,6 @@ type Query {
   Jobs(draft: Boolean, where: Job_where, limit: Int, page: Int, sort: String): Jobs
   countJobs(draft: Boolean, where: Job_where): countJobs
   docAccessJob(id: String!): jobsDocAccess
-  JobCategory(id: String!, draft: Boolean): JobCategory
-  JobCategories(draft: Boolean, where: JobCategory_where, limit: Int, page: Int, sort: String): JobCategories
-  countJobCategories(draft: Boolean, where: JobCategory_where): countJobCategories
-  docAccessJobCategory(id: String!): job_categoriesDocAccess
   Organization(id: String!, draft: Boolean): Organization
   Organizations(draft: Boolean, where: Organization_where, limit: Int, page: Int, sort: String): Organizations
   countOrganizations(draft: Boolean, where: Organization_where): countOrganizations
@@ -50,7 +46,7 @@ type Job {
   id: String
   status: String!
   title: String!
-  categories: [JobCategory!]!
+  categories: [Job_categories!]!
   organization: Organization!
   employmentType: [Job_employmentType!]!
   location: String
@@ -78,18 +74,11 @@ type Job {
   createdAt: DateTime
 }
 
-type JobCategory {
-  id: String
-  title: String!
-  slug: String
-  updatedAt: DateTime
-  createdAt: DateTime
+enum Job_categories {
+  category_1
+  category_2
+  category_3
 }
-
-"""
-A date-time string at UTC, such as 2007-12-03T10:15:30Z, compliant with the `date-time` format outlined in section 5.6 of the RFC 3339 profile of the ISO 8601 standard for representation of dates and times using the Gregorian calendar.
-"""
-scalar DateTime
 
 type Organization {
   id: String
@@ -100,7 +89,7 @@ type Organization {
   phone: String
   location: String
   vatId: String
-  categories: [JobCategory!]
+  categories: [Organization_categories!]
   logo(where: Organization_Logo_where): SiteUpload
   imageCover(where: Organization_ImageCover_where): SiteUpload
   description: String
@@ -111,6 +100,12 @@ type Organization {
   createdBy: User
   updatedAt: DateTime
   createdAt: DateTime
+}
+
+enum Organization_categories {
+  category_1
+  category_2
+  category_3
 }
 
 type SiteUpload {
@@ -226,6 +221,11 @@ input Candidate_Photo_updatedAt_operator {
   like: DateTime
   exists: Boolean
 }
+
+"""
+A date-time string at UTC, such as 2007-12-03T10:15:30Z, compliant with the `date-time` format outlined in section 5.6 of the RFC 3339 profile of the ISO 8601 standard for representation of dates and times using the Gregorian calendar.
+"""
+scalar DateTime
 
 input Candidate_Photo_createdAt_operator {
   equals: DateTime
@@ -1220,11 +1220,17 @@ input Job_title_operator {
 }
 
 input Job_categories_operator {
-  equals: JSON
-  not_equals: JSON
-  in: [JSON]
-  not_in: [JSON]
-  all: [JSON]
+  equals: Job_categories_Input
+  not_equals: Job_categories_Input
+  in: [Job_categories_Input]
+  not_in: [Job_categories_Input]
+  all: [Job_categories_Input]
+}
+
+enum Job_categories_Input {
+  category_1
+  category_2
+  category_3
 }
 
 input Job_organization_operator {
@@ -2682,235 +2688,6 @@ type JobsDeleteDocAccess {
   where: JSONObject
 }
 
-type JobCategories {
-  docs: [JobCategory]
-  hasNextPage: Boolean
-  hasPrevPage: Boolean
-  limit: Int
-  nextPage: Int
-  offset: Int
-  page: Int
-  pagingCounter: Int
-  prevPage: Int
-  totalDocs: Int
-  totalPages: Int
-}
-
-input JobCategory_where {
-  title: JobCategory_title_operator
-  slug: JobCategory_slug_operator
-  updatedAt: JobCategory_updatedAt_operator
-  createdAt: JobCategory_createdAt_operator
-  id: JobCategory_id_operator
-  AND: [JobCategory_where_and]
-  OR: [JobCategory_where_or]
-}
-
-input JobCategory_title_operator {
-  equals: String
-  not_equals: String
-  like: String
-  contains: String
-  in: [String]
-  not_in: [String]
-  all: [String]
-}
-
-input JobCategory_slug_operator {
-  equals: String
-  not_equals: String
-  like: String
-  contains: String
-  in: [String]
-  not_in: [String]
-  all: [String]
-  exists: Boolean
-}
-
-input JobCategory_updatedAt_operator {
-  equals: DateTime
-  not_equals: DateTime
-  greater_than_equal: DateTime
-  greater_than: DateTime
-  less_than_equal: DateTime
-  less_than: DateTime
-  like: DateTime
-  exists: Boolean
-}
-
-input JobCategory_createdAt_operator {
-  equals: DateTime
-  not_equals: DateTime
-  greater_than_equal: DateTime
-  greater_than: DateTime
-  less_than_equal: DateTime
-  less_than: DateTime
-  like: DateTime
-  exists: Boolean
-}
-
-input JobCategory_id_operator {
-  equals: String
-  not_equals: String
-  like: String
-  contains: String
-  in: [String]
-  not_in: [String]
-  all: [String]
-  exists: Boolean
-}
-
-input JobCategory_where_and {
-  title: JobCategory_title_operator
-  slug: JobCategory_slug_operator
-  updatedAt: JobCategory_updatedAt_operator
-  createdAt: JobCategory_createdAt_operator
-  id: JobCategory_id_operator
-  AND: [JobCategory_where_and]
-  OR: [JobCategory_where_or]
-}
-
-input JobCategory_where_or {
-  title: JobCategory_title_operator
-  slug: JobCategory_slug_operator
-  updatedAt: JobCategory_updatedAt_operator
-  createdAt: JobCategory_createdAt_operator
-  id: JobCategory_id_operator
-  AND: [JobCategory_where_and]
-  OR: [JobCategory_where_or]
-}
-
-type countJobCategories {
-  totalDocs: Int
-}
-
-type job_categoriesDocAccess {
-  fields: JobCategoriesDocAccessFields
-  create: JobCategoriesCreateDocAccess
-  read: JobCategoriesReadDocAccess
-  update: JobCategoriesUpdateDocAccess
-  delete: JobCategoriesDeleteDocAccess
-}
-
-type JobCategoriesDocAccessFields {
-  title: JobCategoriesDocAccessFields_title
-  slug: JobCategoriesDocAccessFields_slug
-  updatedAt: JobCategoriesDocAccessFields_updatedAt
-  createdAt: JobCategoriesDocAccessFields_createdAt
-}
-
-type JobCategoriesDocAccessFields_title {
-  create: JobCategoriesDocAccessFields_title_Create
-  read: JobCategoriesDocAccessFields_title_Read
-  update: JobCategoriesDocAccessFields_title_Update
-  delete: JobCategoriesDocAccessFields_title_Delete
-}
-
-type JobCategoriesDocAccessFields_title_Create {
-  permission: Boolean!
-}
-
-type JobCategoriesDocAccessFields_title_Read {
-  permission: Boolean!
-}
-
-type JobCategoriesDocAccessFields_title_Update {
-  permission: Boolean!
-}
-
-type JobCategoriesDocAccessFields_title_Delete {
-  permission: Boolean!
-}
-
-type JobCategoriesDocAccessFields_slug {
-  create: JobCategoriesDocAccessFields_slug_Create
-  read: JobCategoriesDocAccessFields_slug_Read
-  update: JobCategoriesDocAccessFields_slug_Update
-  delete: JobCategoriesDocAccessFields_slug_Delete
-}
-
-type JobCategoriesDocAccessFields_slug_Create {
-  permission: Boolean!
-}
-
-type JobCategoriesDocAccessFields_slug_Read {
-  permission: Boolean!
-}
-
-type JobCategoriesDocAccessFields_slug_Update {
-  permission: Boolean!
-}
-
-type JobCategoriesDocAccessFields_slug_Delete {
-  permission: Boolean!
-}
-
-type JobCategoriesDocAccessFields_updatedAt {
-  create: JobCategoriesDocAccessFields_updatedAt_Create
-  read: JobCategoriesDocAccessFields_updatedAt_Read
-  update: JobCategoriesDocAccessFields_updatedAt_Update
-  delete: JobCategoriesDocAccessFields_updatedAt_Delete
-}
-
-type JobCategoriesDocAccessFields_updatedAt_Create {
-  permission: Boolean!
-}
-
-type JobCategoriesDocAccessFields_updatedAt_Read {
-  permission: Boolean!
-}
-
-type JobCategoriesDocAccessFields_updatedAt_Update {
-  permission: Boolean!
-}
-
-type JobCategoriesDocAccessFields_updatedAt_Delete {
-  permission: Boolean!
-}
-
-type JobCategoriesDocAccessFields_createdAt {
-  create: JobCategoriesDocAccessFields_createdAt_Create
-  read: JobCategoriesDocAccessFields_createdAt_Read
-  update: JobCategoriesDocAccessFields_createdAt_Update
-  delete: JobCategoriesDocAccessFields_createdAt_Delete
-}
-
-type JobCategoriesDocAccessFields_createdAt_Create {
-  permission: Boolean!
-}
-
-type JobCategoriesDocAccessFields_createdAt_Read {
-  permission: Boolean!
-}
-
-type JobCategoriesDocAccessFields_createdAt_Update {
-  permission: Boolean!
-}
-
-type JobCategoriesDocAccessFields_createdAt_Delete {
-  permission: Boolean!
-}
-
-type JobCategoriesCreateDocAccess {
-  permission: Boolean!
-  where: JSONObject
-}
-
-type JobCategoriesReadDocAccess {
-  permission: Boolean!
-  where: JSONObject
-}
-
-type JobCategoriesUpdateDocAccess {
-  permission: Boolean!
-  where: JSONObject
-}
-
-type JobCategoriesDeleteDocAccess {
-  permission: Boolean!
-  where: JSONObject
-}
-
 type Organizations {
   docs: [Organization]
   hasNextPage: Boolean
@@ -3020,12 +2797,18 @@ input Organization_vatId_operator {
 }
 
 input Organization_categories_operator {
-  equals: JSON
-  not_equals: JSON
-  in: [JSON]
-  not_in: [JSON]
-  all: [JSON]
+  equals: Organization_categories_Input
+  not_equals: Organization_categories_Input
+  in: [Organization_categories_Input]
+  not_in: [Organization_categories_Input]
+  all: [Organization_categories_Input]
   exists: Boolean
+}
+
+enum Organization_categories_Input {
+  category_1
+  category_2
+  category_3
 }
 
 input Organization_logo_operator {
@@ -7087,7 +6870,6 @@ type DataUpdateDocAccess {
 type Access {
   canAccessAdmin: Boolean!
   jobs: jobsAccess
-  job_categories: job_categoriesAccess
   organizations: organizationsAccess
   candidates: candidatesAccess
   applications: applicationsAccess
@@ -8070,133 +7852,6 @@ type JobsUpdateAccess {
 }
 
 type JobsDeleteAccess {
-  permission: Boolean!
-  where: JSONObject
-}
-
-type job_categoriesAccess {
-  fields: JobCategoriesFields
-  create: JobCategoriesCreateAccess
-  read: JobCategoriesReadAccess
-  update: JobCategoriesUpdateAccess
-  delete: JobCategoriesDeleteAccess
-}
-
-type JobCategoriesFields {
-  title: JobCategoriesFields_title
-  slug: JobCategoriesFields_slug
-  updatedAt: JobCategoriesFields_updatedAt
-  createdAt: JobCategoriesFields_createdAt
-}
-
-type JobCategoriesFields_title {
-  create: JobCategoriesFields_title_Create
-  read: JobCategoriesFields_title_Read
-  update: JobCategoriesFields_title_Update
-  delete: JobCategoriesFields_title_Delete
-}
-
-type JobCategoriesFields_title_Create {
-  permission: Boolean!
-}
-
-type JobCategoriesFields_title_Read {
-  permission: Boolean!
-}
-
-type JobCategoriesFields_title_Update {
-  permission: Boolean!
-}
-
-type JobCategoriesFields_title_Delete {
-  permission: Boolean!
-}
-
-type JobCategoriesFields_slug {
-  create: JobCategoriesFields_slug_Create
-  read: JobCategoriesFields_slug_Read
-  update: JobCategoriesFields_slug_Update
-  delete: JobCategoriesFields_slug_Delete
-}
-
-type JobCategoriesFields_slug_Create {
-  permission: Boolean!
-}
-
-type JobCategoriesFields_slug_Read {
-  permission: Boolean!
-}
-
-type JobCategoriesFields_slug_Update {
-  permission: Boolean!
-}
-
-type JobCategoriesFields_slug_Delete {
-  permission: Boolean!
-}
-
-type JobCategoriesFields_updatedAt {
-  create: JobCategoriesFields_updatedAt_Create
-  read: JobCategoriesFields_updatedAt_Read
-  update: JobCategoriesFields_updatedAt_Update
-  delete: JobCategoriesFields_updatedAt_Delete
-}
-
-type JobCategoriesFields_updatedAt_Create {
-  permission: Boolean!
-}
-
-type JobCategoriesFields_updatedAt_Read {
-  permission: Boolean!
-}
-
-type JobCategoriesFields_updatedAt_Update {
-  permission: Boolean!
-}
-
-type JobCategoriesFields_updatedAt_Delete {
-  permission: Boolean!
-}
-
-type JobCategoriesFields_createdAt {
-  create: JobCategoriesFields_createdAt_Create
-  read: JobCategoriesFields_createdAt_Read
-  update: JobCategoriesFields_createdAt_Update
-  delete: JobCategoriesFields_createdAt_Delete
-}
-
-type JobCategoriesFields_createdAt_Create {
-  permission: Boolean!
-}
-
-type JobCategoriesFields_createdAt_Read {
-  permission: Boolean!
-}
-
-type JobCategoriesFields_createdAt_Update {
-  permission: Boolean!
-}
-
-type JobCategoriesFields_createdAt_Delete {
-  permission: Boolean!
-}
-
-type JobCategoriesCreateAccess {
-  permission: Boolean!
-  where: JSONObject
-}
-
-type JobCategoriesReadAccess {
-  permission: Boolean!
-  where: JSONObject
-}
-
-type JobCategoriesUpdateAccess {
-  permission: Boolean!
-  where: JSONObject
-}
-
-type JobCategoriesDeleteAccess {
   permission: Boolean!
   where: JSONObject
 }
@@ -10783,10 +10438,6 @@ type Mutation {
   updateJob(id: String!, autosave: Boolean, data: mutationJobUpdateInput!, draft: Boolean): Job
   deleteJob(id: String!): Job
   duplicateJob(id: String!): Job
-  createJobCategory(data: mutationJobCategoryInput!, draft: Boolean): JobCategory
-  updateJobCategory(id: String!, autosave: Boolean, data: mutationJobCategoryUpdateInput!, draft: Boolean): JobCategory
-  deleteJobCategory(id: String!): JobCategory
-  duplicateJobCategory(id: String!): JobCategory
   createOrganization(data: mutationOrganizationInput!, draft: Boolean): Organization
   updateOrganization(id: String!, autosave: Boolean, data: mutationOrganizationUpdateInput!, draft: Boolean): Organization
   deleteOrganization(id: String!): Organization
@@ -10829,7 +10480,7 @@ type Mutation {
 input mutationJobInput {
   status: String!
   title: String!
-  categories: [String]
+  categories: [Job_categories_MutationInput]!
   organization: String
   employmentType: [Job_employmentType_MutationInput]!
   location: String
@@ -10855,6 +10506,12 @@ input mutationJobInput {
   publicId: Float
   updatedAt: String
   createdAt: String
+}
+
+enum Job_categories_MutationInput {
+  category_1
+  category_2
+  category_3
 }
 
 enum Job_employmentType_MutationInput {
@@ -10957,7 +10614,7 @@ input mutationJob_SuitableForInput {
 input mutationJobUpdateInput {
   status: String
   title: String
-  categories: [String]
+  categories: [JobUpdate_categories_MutationInput]
   organization: String
   employmentType: [JobUpdate_employmentType_MutationInput]
   location: String
@@ -10983,6 +10640,12 @@ input mutationJobUpdateInput {
   publicId: Float
   updatedAt: String
   createdAt: String
+}
+
+enum JobUpdate_categories_MutationInput {
+  category_1
+  category_2
+  category_3
 }
 
 enum JobUpdate_employmentType_MutationInput {
@@ -11082,20 +10745,6 @@ input mutationJobUpdate_SuitableForInput {
   retirees: Boolean
 }
 
-input mutationJobCategoryInput {
-  title: String!
-  slug: String
-  updatedAt: String
-  createdAt: String
-}
-
-input mutationJobCategoryUpdateInput {
-  title: String
-  slug: String
-  updatedAt: String
-  createdAt: String
-}
-
 input mutationOrganizationInput {
   title: String!
   slug: String
@@ -11104,7 +10753,7 @@ input mutationOrganizationInput {
   phone: String
   location: String
   vatId: String
-  categories: [String]
+  categories: [Organization_categories_MutationInput]
   logo: String
   imageCover: String
   description: String
@@ -11115,6 +10764,12 @@ input mutationOrganizationInput {
   createdBy: String
   updatedAt: String
   createdAt: String
+}
+
+enum Organization_categories_MutationInput {
+  category_1
+  category_2
+  category_3
 }
 
 input mutationOrganizationUpdateInput {
@@ -11125,7 +10780,7 @@ input mutationOrganizationUpdateInput {
   phone: String
   location: String
   vatId: String
-  categories: [String]
+  categories: [OrganizationUpdate_categories_MutationInput]
   logo: String
   imageCover: String
   description: String
@@ -11136,6 +10791,12 @@ input mutationOrganizationUpdateInput {
   createdBy: String
   updatedAt: String
   createdAt: String
+}
+
+enum OrganizationUpdate_categories_MutationInput {
+  category_1
+  category_2
+  category_3
 }
 
 input mutationCandidateInput {

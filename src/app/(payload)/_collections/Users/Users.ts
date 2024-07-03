@@ -4,7 +4,6 @@ import { SA, SA_A_O_Self_C_Self_id, SA_U } from '@/payload/access'
 import { createProfile } from './hooks/createProfile'
 import { ensureFirstUserIsSuperAdmin } from './hooks/ensureFirstUserIsSuperAdmin'
 import { populateCreatedBy } from './hooks/populateCreatedBy'
-import { SA_A_role } from './access'
 
 export const Users: CollectionConfig = {
   slug: 'users',
@@ -22,7 +21,7 @@ export const Users: CollectionConfig = {
     create: SA_U,
     read: SA_A_O_Self_C_Self_id,
     update: SA_A_O_Self_C_Self_id,
-    delete: SA_A_role,
+    delete: () => false,
   },
   fields: [
     {

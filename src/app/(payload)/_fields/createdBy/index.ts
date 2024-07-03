@@ -6,6 +6,7 @@ export const createdBy: Field = {
     name: 'createdBy',
     type: 'relationship',
     relationTo: 'users',
+    maxDepth: 0,
     hasMany: false,
     access: {
         read: SA,
