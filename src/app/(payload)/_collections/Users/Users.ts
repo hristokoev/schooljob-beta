@@ -63,6 +63,7 @@ export const Users: CollectionConfig = {
       type: 'text',
       admin: {
         position: 'sidebar',
+        condition: (doc) => doc.role === 'organization',
       },
     },
     {
@@ -70,6 +71,7 @@ export const Users: CollectionConfig = {
       type: 'text',
       admin: {
         position: 'sidebar',
+        condition: (doc) => doc.role === 'candidate',
       },
     },
     {
@@ -77,6 +79,7 @@ export const Users: CollectionConfig = {
       type: 'text',
       admin: {
         position: 'sidebar',
+        condition: (doc) => doc.role === 'candidate',
       },
     },
     {
@@ -85,6 +88,7 @@ export const Users: CollectionConfig = {
       relationTo: ['organizations', 'candidates'],
       hasMany: false,
       access: {
+        create: () => false,
         update: SA,
       },
       admin: {
