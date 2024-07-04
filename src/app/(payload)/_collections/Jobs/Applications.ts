@@ -23,7 +23,7 @@ export const Applications: CollectionConfig = {
     create: SA_C_U,
     read: SA_A_O_Some_C_Self,
     update: SA_A_O_Some,
-    delete: () => false,
+    delete: SA,
   },
   hooks: {
     beforeValidate: [preventMultipleApplications],

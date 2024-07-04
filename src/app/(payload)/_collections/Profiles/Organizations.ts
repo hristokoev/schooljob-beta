@@ -38,7 +38,7 @@ export const Organizations: CollectionConfig = {
       }
     },
     update: SA_A_O_Self_createdBy,
-    delete: () => false,
+    delete: SA,
   },
   hooks: {
     afterChange: [revalidateOrganizationAfterChange],

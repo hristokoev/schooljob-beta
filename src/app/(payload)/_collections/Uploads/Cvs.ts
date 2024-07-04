@@ -33,7 +33,7 @@ export const Cvs: CollectionConfig = {
     create: SA_C_U,
     read: SA_A_O_Some_C_Self,
     update: SA,
-    delete: () => false,
+    delete: SA,
   },
   fields: [
     archived,

@@ -21,7 +21,7 @@ export const Users: CollectionConfig = {
     create: SA_U,
     read: SA_A_O_Self_C_Self_id,
     update: SA_A_O_Self_C_Self_id,
-    delete: () => false,
+    delete: SA,
   },
   fields: [
     {

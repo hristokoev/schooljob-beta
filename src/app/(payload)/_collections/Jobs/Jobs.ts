@@ -42,7 +42,7 @@ export const Jobs: CollectionConfig = {
     create: SA_O,
     read: SA_A_O_Some_U,
     update: SA_A_O_Self_createdBy,
-    delete: () => false,
+    delete: SA,
   },
   fields: [
     archived,

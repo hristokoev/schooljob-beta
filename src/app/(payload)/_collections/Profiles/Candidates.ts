@@ -23,7 +23,7 @@ export const Candidates: CollectionConfig = {
     create: SA,
     read: SA_A_O_C_Self,
     update: SA_A_C_Self_createdBy,
-    delete: () => false,
+    delete: SA,
   },
   fields: [
     archived,

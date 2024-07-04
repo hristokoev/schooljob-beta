@@ -19,7 +19,7 @@ export const Agreements: CollectionConfig = {
     create: SA_A,
     read: () => true,
     update: SA_A,
-    delete: () => false,
+    delete: SA,
   },
   fields: [
     archived,

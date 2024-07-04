@@ -1,6 +1,6 @@
 import type { CollectionConfig } from 'payload'
 
-import { SA_A } from '@/payload/access'
+import { SA, SA_A } from '@/payload/access'
 import { obfuscateFilename } from './hooks/obfuscateFilename'
 import { populateCreatedBy } from '@/payload/hooks'
 import { archived, createdBy } from '@/payload/fields'
@@ -25,7 +25,7 @@ export const SiteUploads: CollectionConfig = {
     },
     read: () => true,
     update: SA_A,
-    delete: () => false,
+    delete: SA,
   },
   upload: {
 
