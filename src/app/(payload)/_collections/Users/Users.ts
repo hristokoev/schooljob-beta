@@ -62,7 +62,6 @@ export const Users: CollectionConfig = {
       name: 'title',
       type: 'text',
       admin: {
-        hidden: true,
         position: 'sidebar',
       },
     },
@@ -70,7 +69,6 @@ export const Users: CollectionConfig = {
       name: 'firstName',
       type: 'text',
       admin: {
-        hidden: true,
         position: 'sidebar',
       },
     },
@@ -78,7 +76,6 @@ export const Users: CollectionConfig = {
       name: 'lastName',
       type: 'text',
       admin: {
-        hidden: true,
         position: 'sidebar',
       },
     },

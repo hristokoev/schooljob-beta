@@ -5,5 +5,5 @@ import { useTableCell } from '@payloadcms/ui'
 
 export const StatusSelectComponentCell: CustomComponent = () => {
   const { cellData } = useTableCell()
-  return <div className={`status ${cellData}`}>{cellData}</div>
+  return cellData === 'published' ? 'Published' : 'Unpublished'
 }

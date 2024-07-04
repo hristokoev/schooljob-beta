@@ -1,9 +1,7 @@
 import { CollectionConfig, User } from 'payload'
 
-import { ARCHIVED, SA, SA_A, SA_A_O, SA_C, SA_C_U } from '@/payload/access'
+import { ARCHIVED, SA, SA_A_O, SA_C, SA_C_U } from '@/payload/access'
 import { applicationStatusOptions } from '@/payload/data'
-import { cleanupCandidateAfterApplicationDelete } from './hooks/cleanupCandidateAfterApplicationDelete'
-import { cleanupJobAfterApplicationDelete } from './hooks/cleanupJobAfterApplicationDelete'
 import { populateCandidateApplications } from './hooks/populateCandidateApplications'
 import { populateCv } from './hooks/populateCv'
 import { populateGlobalsDataApplications } from './hooks/populateGlobalsData'
@@ -13,7 +11,6 @@ import { preventMultipleApplications } from './hooks/preventMultipleApplications
 import SA_A_O_Some from './access/SA_A_O_Some'
 import SA_A_O_Some_C_Self from './access/SA_A_O_Some_C_Self'
 import { archived } from '@/payload/fields'
-// import { StatusSelectComponentCell } from '../../fields/status/cell'
 
 export const Applications: CollectionConfig = {
   slug: 'applications',
@@ -37,7 +34,6 @@ export const Applications: CollectionConfig = {
       populateCandidateApplications,
       populateJobApplications,
     ],
-    afterDelete: [cleanupJobAfterApplicationDelete, cleanupCandidateAfterApplicationDelete],
   },
   fields: [
     archived,
@@ -226,9 +222,6 @@ export const Applications: CollectionConfig = {
       options: applicationStatusOptions,
       admin: {
         position: 'sidebar',
-        components: {
-          // Cell: StatusSelectComponentCell
-        },
       },
       access: {
         create: SA,

@@ -1,0 +1,1 @@
+export { updateDocument } from './updateDocument'

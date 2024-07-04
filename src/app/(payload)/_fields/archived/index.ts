@@ -1,6 +1,5 @@
 import { type Field } from 'payload'
 
-import { SA } from '@/payload/access'
 import { ArchivedCell } from './cell'
 
 export const archived: Field = {
@@ -8,6 +7,7 @@ export const archived: Field = {
     type: 'checkbox',
     defaultValue: false,
     admin: {
+        hidden: true,
         components: {
             Cell: ArchivedCell
         }

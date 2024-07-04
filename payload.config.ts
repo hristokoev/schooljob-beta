@@ -50,9 +50,9 @@ export default buildConfig({
           Component: AccessView,
           path: '/access',
           exact: true,
-        }
+        },
       }
-    }
+    },
   },
   collections: [
     Jobs,

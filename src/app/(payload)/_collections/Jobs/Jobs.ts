@@ -2,7 +2,6 @@ import { CollectionConfig } from 'payload'
 
 import { ARCHIVED, SA, SA_A, SA_A_O, SA_A_O_Self_createdBy, SA_O } from '@/payload/access'
 import { createdBy } from '@/payload/fields'
-import { cleanupOrganizationsAfterJobDelete } from './hooks/cleanupOrganizationsAfterJobDelete'
 import { categoriesOptions, currencyOptions, educationOptions, employmentTypeOptions, experienceOptions, locationTypeOptions, salaryTypeOptions } from '@/payload/data'
 import { languageField } from '@/payload/fields'
 import { organizationFilter } from './filters/organizationFilter'
@@ -11,7 +10,6 @@ import { populateGlobalsDataJobs } from './hooks/populateGlobalsData'
 import { populateOrganizationJobs } from './hooks/populateOrganizationJobs'
 import { populatePublicId } from './hooks/populatePublicId'
 import { revalidateJobAfterChange } from './hooks/revalidateJobAfterChange'
-import { revalidateJobAfterDelete } from './hooks/revalidateJobAfterDelete'
 import SA_A_O_Some_U from './access/SA_A_O_Some_U'
 import { archived, slugField } from '@/payload/fields'
 import { statusField } from '@/payload/fields'
@@ -39,7 +37,6 @@ export const Jobs: CollectionConfig = {
       updateOrganizationJobs,
       revalidateJobAfterChange,
     ],
-    afterDelete: [cleanupOrganizationsAfterJobDelete, revalidateJobAfterDelete],
   },
   access: {
     create: SA_O,

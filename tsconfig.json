@@ -30,6 +30,7 @@
       "@/types": ["./src/app/(app)/_types/"],
       "@/utilities": ["./src/app/(app)/_utilities/"],
       "@/utilities/*": ["./src/app/(app)/_utilities/*"],
+      "@/payload/actions": ["./src/app/(payload)/_actions/"],
       "@/payload/access": ["./src/app/(payload)/_access/"],
       "@/payload/cells": ["./src/app/(payload)/_cells/"],
       "@/payload/collections": ["./src/app/(payload)/_collections/"],

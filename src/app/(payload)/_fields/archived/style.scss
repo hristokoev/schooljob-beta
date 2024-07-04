@@ -1,8 +1,19 @@
-.archived-cell {
-    width: 24px;
-    height: 24px;
+.cell-archived {
+    color: var(--theme-base-500);
+    
+    .btn {
+        width: '100%';
+    }
 
-    &.icon--active {
-        background-color: var(--theme-error-500);
+    .archived {
+    }
+
+    .archived:hover {
+    }
+
+    .published {
+    }
+
+    .published:hover {
     }
 }
