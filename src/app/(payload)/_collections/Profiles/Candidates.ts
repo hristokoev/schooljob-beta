@@ -120,7 +120,6 @@ export const Candidates: CollectionConfig = {
               relationTo: 'applications',
               hasMany: true,
               access: {
-                read: ARCHIVED,
                 update: SA
               }
             },
@@ -135,7 +134,6 @@ export const Candidates: CollectionConfig = {
               relationTo: 'jobs',
               hasMany: true,
               access: {
-                read: ARCHIVED,
                 update: SA_C
               },
             },

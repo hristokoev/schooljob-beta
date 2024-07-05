@@ -200,7 +200,6 @@ export const Organizations: CollectionConfig = {
               hasMany: true,
               unique: false,
               access: {
-                read: ARCHIVED,
                 update: SA,
               },
             },
@@ -217,7 +216,6 @@ export const Organizations: CollectionConfig = {
               hasMany: true,
               unique: false,
               access: {
-                read: ARCHIVED,
                 update: SA,
               },
             },

@@ -49,7 +49,6 @@ export const Applications: CollectionConfig = {
             width: '50%',
           },
           access: {
-            read: ARCHIVED,
             update: SA,
           },
           required: true,

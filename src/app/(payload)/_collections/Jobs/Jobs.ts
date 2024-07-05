@@ -72,7 +72,6 @@ export const Jobs: CollectionConfig = {
       filterOptions: organizationFilter,
       access: {
         create: SA_A_O,
-        read: ARCHIVED,
         update: SA,
       },
       defaultValue: ({ user }: { user: User }) => {
