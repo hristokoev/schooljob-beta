@@ -89,7 +89,7 @@ export const Users: CollectionConfig = {
       hasMany: false,
       access: {
         create: () => false,
-        update: SA,
+        update: () => false,
       },
       admin: {
         position: 'sidebar',

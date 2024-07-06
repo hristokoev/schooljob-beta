@@ -99,7 +99,8 @@ export const Candidates: CollectionConfig = {
               type: 'upload',
               relationTo: 'site-uploads',
               access: {
-                read: ARCHIVED
+                read: ARCHIVED,
+                update: () => false
               }
             },
             {
@@ -120,7 +121,7 @@ export const Candidates: CollectionConfig = {
               relationTo: 'applications',
               hasMany: true,
               access: {
-                update: SA
+                update: () => false
               }
             },
           ],
@@ -134,7 +135,7 @@ export const Candidates: CollectionConfig = {
               relationTo: 'jobs',
               hasMany: true,
               access: {
-                update: SA_C
+                update: () => false
               },
             },
           ],

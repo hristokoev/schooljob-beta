@@ -49,7 +49,7 @@ export const Applications: CollectionConfig = {
             width: '50%',
           },
           access: {
-            update: SA,
+            update: () => false,
           },
           required: true,
         },
@@ -66,7 +66,7 @@ export const Applications: CollectionConfig = {
           access: {
             create: SA_C,
             read: ARCHIVED,
-            update: SA,
+            update: () => false,
           },
           defaultValue: ({ user }: { user: User }) => {
             if (user?.role === 'candidate') {
@@ -199,7 +199,7 @@ export const Applications: CollectionConfig = {
       relationTo: 'cvs',
       access: {
         read: ARCHIVED,
-        update: SA,
+        update: () => false,
       },
       required: true,
     },
@@ -210,7 +210,7 @@ export const Applications: CollectionConfig = {
       hasMany: true,
       access: {
         read: ARCHIVED,
-        update: SA_C,
+        update: () => false,
       },
     },
     // Sidebar fields

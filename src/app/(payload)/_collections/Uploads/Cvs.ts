@@ -44,7 +44,7 @@ export const Cvs: CollectionConfig = {
       hasMany: false,
       maxDepth: 0,
       access: {
-        update: SA,
+        update: () => false,
       },
       admin: {
         readOnly: true,
@@ -58,7 +58,7 @@ export const Cvs: CollectionConfig = {
       hasMany: false,
       maxDepth: 0,
       access: {
-        update: SA,
+        update: () => false,
       },
       admin: {
         readOnly: true,
