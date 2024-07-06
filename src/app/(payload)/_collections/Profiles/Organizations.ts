@@ -12,7 +12,7 @@ export const Organizations: CollectionConfig = {
   admin: {
     group: 'SchoolJob',
     useAsTitle: 'title',
-    defaultColumns: ['title', 'location'],
+    defaultColumns: ['title', 'location', 'archived'],
     components: {
       BeforeListTable: [Archived],
     }

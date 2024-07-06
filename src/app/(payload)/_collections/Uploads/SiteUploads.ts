@@ -3,7 +3,7 @@ import type { CollectionConfig } from 'payload'
 import { SA, SA_A } from '@/payload/access'
 import { obfuscateFilename } from './hooks/obfuscateFilename'
 import { populateCreatedBy } from '@/payload/hooks'
-import { archived, createdBy } from '@/payload/fields'
+import { createdBy } from '@/payload/fields'
 
 export const SiteUploads: CollectionConfig = {
   slug: 'site-uploads',
@@ -34,7 +34,6 @@ export const SiteUploads: CollectionConfig = {
     crop: false,
   },
   fields: [
-    archived,
     createdBy
   ],
 }

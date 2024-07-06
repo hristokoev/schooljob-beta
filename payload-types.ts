@@ -194,7 +194,6 @@ export interface Organization {
  */
 export interface SiteUpload {
   id: string;
-  archived?: boolean | null;
   createdBy?: (string | null) | User;
   updatedAt: string;
   createdAt: string;
@@ -288,7 +287,6 @@ export interface Application {
  */
 export interface Cv {
   id: string;
-  archived?: boolean | null;
   job?: (string | null) | Job;
   organization?: (string | null) | Organization;
   createdBy?: (string | null) | User;

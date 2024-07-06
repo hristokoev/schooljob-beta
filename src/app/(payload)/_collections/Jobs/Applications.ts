@@ -17,7 +17,7 @@ export const Applications: CollectionConfig = {
   admin: {
     group: 'SchoolJob',
     useAsTitle: `fullName`,
-    defaultColumns: ['candidate', 'job', 'status'],
+    defaultColumns: ['candidate', 'job', 'status', 'archived'],
   },
   access: {
     create: SA_C_U,

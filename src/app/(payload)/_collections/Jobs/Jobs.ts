@@ -23,7 +23,7 @@ export const Jobs: CollectionConfig = {
   admin: {
     group: 'SchoolJob',
     useAsTitle: 'title',
-    defaultColumns: ['title', 'organization', 'featured', 'status'],
+    defaultColumns: ['title', 'organization', 'featured', 'status', 'archived'],
     components: {
       BeforeListTable: [Archived],
     }
