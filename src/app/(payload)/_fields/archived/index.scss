@@ -17,3 +17,9 @@
     .published:hover {
     }
 }
+
+.document-fields.document-fields--has-sidebar {
+    &.archived {
+        display: none !important;
+    }
+}

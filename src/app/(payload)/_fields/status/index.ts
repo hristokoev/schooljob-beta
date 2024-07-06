@@ -1,8 +1,8 @@
 import { Field } from 'payload'
 
-import { SA_A } from '@/payload/access'
-import { StatusSelectComponentCell } from './cell'
-import { StatusSelectComponentField } from './field'
+import { ARCHIVED, SA_A } from '@/payload/access'
+import { StatusSelectCell } from './cell'
+import { StatusSelectField } from './field'
 
 export const statusField: Field = {
   name: 'status',
@@ -10,12 +10,13 @@ export const statusField: Field = {
   type: 'text',
   admin: {
     components: {
-      Field: StatusSelectComponentField,
-      Cell: StatusSelectComponentCell,
+      Field: StatusSelectField,
+      Cell: StatusSelectCell,
     },
   },
   access: {
     create: SA_A,
+    read: ARCHIVED,
     update: SA_A,
   },
   defaultValue: 'unpublished',
