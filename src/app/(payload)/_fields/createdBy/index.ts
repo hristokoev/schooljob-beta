@@ -13,7 +13,6 @@ export const createdBy: Field = {
         update: () => false,
     },
     admin: {
-        readOnly: true,
         position: 'sidebar',
     },
 }

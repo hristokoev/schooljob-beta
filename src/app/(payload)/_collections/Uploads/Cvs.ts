@@ -46,7 +46,6 @@ export const Cvs: CollectionConfig = {
         update: () => false,
       },
       admin: {
-        readOnly: true,
         condition: (data) => Boolean(data?.job),
       },
     },
@@ -60,7 +59,6 @@ export const Cvs: CollectionConfig = {
         update: () => false,
       },
       admin: {
-        readOnly: true,
         condition: (data) => Boolean(data?.organization),
       },
     },

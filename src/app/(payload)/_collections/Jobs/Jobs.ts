@@ -456,7 +456,6 @@ export const Jobs: CollectionConfig = {
         update: () => false,
       },
       admin: {
-        readOnly: true,
         condition: (data) => Boolean(data?.publicId),
       },
     },

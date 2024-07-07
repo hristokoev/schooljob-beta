@@ -60,7 +60,6 @@ export const Applications: CollectionConfig = {
           hasMany: false,
           admin: {
             width: '50%',
-            readOnly: true,
             condition: (data) => data?.candidate,
           },
           access: {
@@ -260,7 +259,6 @@ export const Applications: CollectionConfig = {
         update: () => false,
       },
       admin: {
-        readOnly: true,
         position: 'sidebar',
         condition: (data) => Boolean(data?.trackingId),
       },

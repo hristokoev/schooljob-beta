@@ -151,7 +151,6 @@ export const Organizations: CollectionConfig = {
                   },
                   access: {
                     read: ARCHIVED,
-                    update: () => false
                   },
                 },
                 {
@@ -163,7 +162,6 @@ export const Organizations: CollectionConfig = {
                   },
                   access: {
                     read: ARCHIVED,
-                    update: () => false
                   },
                 },
               ],
@@ -201,9 +199,9 @@ export const Organizations: CollectionConfig = {
               maxDepth: 0,
               hasMany: true,
               unique: false,
-              access: {
-                update: () => false,
-              },
+              admin: {
+                readOnly: true,
+              }
             },
           ],
         },
@@ -217,9 +215,9 @@ export const Organizations: CollectionConfig = {
               maxDepth: 0,
               hasMany: true,
               unique: false,
-              access: {
-                update: () => false,
-              },
+              admin: {
+                readOnly: true,
+              }
             },
           ],
         },

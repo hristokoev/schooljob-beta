@@ -100,7 +100,6 @@ export const Candidates: CollectionConfig = {
               relationTo: 'site-uploads',
               access: {
                 read: ARCHIVED,
-                update: () => false
               }
             },
             {
@@ -134,9 +133,9 @@ export const Candidates: CollectionConfig = {
               type: 'relationship',
               relationTo: 'jobs',
               hasMany: true,
-              access: {
-                update: () => false
-              },
+              admin: {
+                readOnly: true,
+              }
             },
           ],
         }

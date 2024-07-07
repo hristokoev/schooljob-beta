@@ -6,7 +6,7 @@ import React from 'react'
 
 import './index.scss'
 
-export const StatusSelectField: CustomComponent = ({ path, readOnly }) => {
+export const StatusSelectField: CustomComponent = ({ path }) => {
   const { value, setValue } = useField<string>(path)
 
   const baseClass =
