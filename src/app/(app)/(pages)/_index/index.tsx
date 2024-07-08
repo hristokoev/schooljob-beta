@@ -12,6 +12,8 @@ import {
   SearchBlock,
 } from '@/blocks'
 
+export const dynamic = 'force-static'
+
 export default function Index() {
   return (
     <Fragment>
