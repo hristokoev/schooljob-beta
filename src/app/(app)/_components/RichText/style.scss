@@ -1,0 +1,41 @@
+.prose {
+    & p {
+        @apply text-slate-700;
+    }
+
+    & blockquote {
+        @apply p-4 my-4 border-s-4 border-royal-blue-300 bg-slate-50;
+    }
+
+    & ul {
+        @apply max-w-md space-y-1 text-slate-700 list-disc list-inside;
+    }
+
+    & ol { 
+        @apply max-w-md space-y-1 text-slate-700 list-decimal list-inside;
+    }
+
+    & h1 {
+        @apply text-5xl font-extrabold;
+    }
+
+    & h2 {
+        @apply text-4xl font-bold;
+    }
+
+    & h3 {
+        @apply text-3xl font-semibold;
+    }
+
+    & h4 {
+        @apply text-2xl font-medium;
+    }
+
+    & h5 {
+        @apply text-xl font-semibold;
+    }
+
+    & h6 {
+        @apply text-lg font-semibold;
+    }
+}

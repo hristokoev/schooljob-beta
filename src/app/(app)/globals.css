@@ -1,0 +1,97 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.no-scrollbar {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+/* Switch */
+
+.form-switch {
+  @apply relative select-none;
+  width: 44px;
+}
+
+.form-switch label {
+  @apply block overflow-hidden cursor-pointer h-6 rounded-full;
+}
+
+.form-switch label > span:first-child {
+  @apply absolute block rounded-full;
+  width: 20px;
+  height: 20px;
+  top: 2px;
+  left: 2px;
+  right: 50%;
+  transition: all .15s ease-out;
+}
+
+.form-switch input[type="checkbox"] + label {
+  @apply bg-slate-400;
+}
+
+.form-switch input[type="checkbox"]:checked + label {
+  @apply bg-royal-blue-500;
+}
+
+.form-switch input[type="checkbox"]:checked + label > span:first-child {
+  left: 22px;
+}
+
+.form-switch input[type="checkbox"]:disabled + label {
+  @apply cursor-not-allowed bg-slate-100 border border-slate-200;
+}
+
+.form-switch input[type="checkbox"]:disabled + label > span:first-child {
+  @apply bg-slate-400;
+}
+
+/* Checkbox */
+
+.form-checkbox {
+  @apply relative select-none overflow-hidden;
+  width: 24px;
+}
+
+.form-checkbox label {
+  @apply block overflow-hidden cursor-pointer h-6 rounded-md;
+}
+
+.form-checkbox label > span:first-child {
+  @apply absolute inline-flex justify-center items-center rounded-md;
+  opacity: 0;
+  width: 24px;
+  height: 24px;
+  top: 0px;
+  left: 0px;
+  transition: all .15s ease-out;
+}
+
+.form-checkbox input[type="checkbox"] + label {
+  @apply bg-slate-200;
+}
+
+.form-checkbox input[type="checkbox"]:checked + label {
+  @apply bg-royal-blue-500;
+}
+
+.form-checkbox input[type="checkbox"]:checked + label > span:first-child {
+  @apply text-white;
+  opacity: 1;
+}
+
+.form-checkbox input[type="checkbox"]:disabled + label {
+  @apply cursor-not-allowed bg-slate-100 border border-slate-200;
+}
+
+.form-checkbox input[type="checkbox"]:disabled + label > span:first-child {
+  @apply bg-slate-300;
+}
