@@ -1,23 +1,18 @@
-import React from "react"
-import { FieldPermissions } from "payload"
+import React from 'react'
+import { FieldPermissions } from 'payload'
 
 interface PermissionTableProps {
   fields: {
     [fieldName: string]: FieldPermissions
   }
-  layout?: "fixed" | "auto"
+  layout?: 'fixed' | 'auto'
 }
 
-const PermissionTable: React.FC<PermissionTableProps> = ({
-  fields,
-  layout,
-}) => {
-  const hasCreate = Object.values(fields).some(
-    (field) => field.create !== undefined
-  )
+const PermissionTable: React.FC<PermissionTableProps> = ({ fields, layout }) => {
+  const hasCreate = Object.values(fields).some(field => field.create !== undefined)
 
   return (
-    <table className="table" style={{ tableLayout: layout, width: "100%" }}>
+    <table className="table" style={{ tableLayout: layout, width: '100%' }}>
       <thead>
         <tr>
           <td>Field</td>
@@ -31,9 +26,9 @@ const PermissionTable: React.FC<PermissionTableProps> = ({
           <React.Fragment key={fieldName}>
             <tr>
               <td>{fieldName}</td>
-              {field.create && <td>{field.create ? "✅" : "❌"}</td>}
-              <td>{field.read ? "✅" : "❌"}</td>
-              <td>{field.update ? "✅" : "❌"}</td>
+              {field.create && <td>{field.create.permission ? '✅' : '❌'}</td>}
+              <td>{field.read.permission ? '✅' : '❌'}</td>
+              <td>{field.update.permission ? '✅' : '❌'}</td>
             </tr>
             {field.fields && (
               <tr>

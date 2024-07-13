@@ -1,17 +1,17 @@
-"use client"
+'use client'
 
-import { DocumentPermissions, Permissions } from "payload"
-import React, { Fragment, useState } from "react"
-import { Collapsible } from "@payloadcms/ui"
-import Link from "next/link"
+import { DocumentPermissions, Permissions } from 'payload'
+import React, { Fragment, useState } from 'react'
+import { Collapsible } from '@payloadcms/ui'
+import Link from 'next/link'
 
-import PermissionTable from "../Table"
+import PermissionTable from '../Table'
 
 type DocumentCollapsibleProps = DocumentPermissions & {
   documentName: string
 }
 
-const DocumentCollapsible: React.FC<DocumentCollapsibleProps> = (props) => {
+const DocumentCollapsible: React.FC<DocumentCollapsibleProps> = props => {
   const {
     documentName,
     fields,
@@ -21,8 +21,8 @@ const DocumentCollapsible: React.FC<DocumentCollapsibleProps> = (props) => {
   } = props
 
   // Optionally check for create and delete props
-  const createPermission = "create" in props ? props.create : undefined
-  const deletePermission = "delete" in props ? props.delete : undefined
+  const createPermission = 'create' in props ? props.create : undefined
+  const deletePermission = 'delete' in props ? props.delete : undefined
 
   const [open, setOpen] = useState(false)
   return (
@@ -32,7 +32,7 @@ const DocumentCollapsible: React.FC<DocumentCollapsibleProps> = (props) => {
       onToggle={() => setOpen(!open)}
       className="field-type"
     >
-      <table className="table" style={{ tableLayout: "fixed", width: "100%" }}>
+      <table className="table" style={{ tableLayout: 'fixed', width: '100%' }}>
         <thead>
           <tr>
             <td>Collection</td>
@@ -45,10 +45,10 @@ const DocumentCollapsible: React.FC<DocumentCollapsibleProps> = (props) => {
         <tbody>
           <tr>
             <td>{documentName}</td>
-            {createPermission && <td>{createPermission ? "✅" : "❌"}</td>}
-            <td>{readPermission ? "✅" : "❌"}</td>
-            <td>{updatePermission ? "✅" : "❌"}</td>
-            {deletePermission && <td>{deletePermission ? "✅" : "❌"}</td>}
+            {createPermission && <td>{createPermission.permission ? '✅' : '❌'}</td>}
+            <td>{readPermission.permission ? '✅' : '❌'}</td>
+            <td>{updatePermission.permission ? '✅' : '❌'}</td>
+            {deletePermission && <td>{deletePermission.permission ? '✅' : '❌'}</td>}
           </tr>
         </tbody>
       </table>
@@ -57,20 +57,14 @@ const DocumentCollapsible: React.FC<DocumentCollapsibleProps> = (props) => {
   )
 }
 
-const Container: React.FC<Permissions> = ({
-  canAccessAdmin,
-  collections = {},
-  globals = {},
-}) => {
+const Container: React.FC<Permissions> = ({ canAccessAdmin, collections = {}, globals = {} }) => {
   return (
     <Fragment>
       <div className="doc-controls__wrapper">
         <div className="doc-controls__content">
           <ul className="doc-controls__meta">
             <li className="doc-controls__list-item">
-              <p className="doc-controls__value">
-                canAccessAdmin: {canAccessAdmin ? "✅" : "❌"}
-              </p>
+              <p className="doc-controls__value">canAccessAdmin: {canAccessAdmin ? '✅' : '❌'}</p>
             </li>
           </ul>
         </div>
