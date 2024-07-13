@@ -42,6 +42,7 @@
       "@/payload/hooks": ["./src/app/(payload)/_hooks/"],
       "@/payload/utilities": ["./src/app/(payload)/_utilities/"],
       "@/payload/views": ["./src/app/(payload)/_views/"],
+      "@cached-local-api": ["./cached-local-api.ts"],
       "@payload-types": ["./payload-types.ts"],
       "@payload-config": ["./payload.config.ts"]
     },

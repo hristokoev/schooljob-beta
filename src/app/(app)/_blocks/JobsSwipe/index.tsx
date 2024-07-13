@@ -11,6 +11,7 @@ import {
   FeaturedJobCard,
 } from '@/components'
 import { EmptyBlock } from '../EmptyBlock'
+import { getCachedPayload } from '@cached-local-api'
 
 interface JobsSwipeProps {
   limit?: number
@@ -23,8 +24,11 @@ const JobsSwipe: React.FC<JobsSwipeProps> = async ({ limit, sort, featured }) =>
     config: configPromise,
   })
 
-  const result = await payload.find({
+  const cachedPayload = getCachedPayload(payload)
+
+  const result = await cachedPayload.find({
     collection: 'jobs',
+    depth: 1,
     limit,
     sort,
     where: {

@@ -15,6 +15,7 @@ import { buildConfig } from 'payload'
 import sharp from 'sharp'
 import { fileURLToPath } from 'url'
 import { AccessNavLink, AccessView } from '@/payload/views'
+import { cachedPayloadPlugin } from './cached-local-api'
 
 import {
   Agreements,
@@ -94,6 +95,7 @@ export default buildConfig({
   // for this before reaching 3.0 stable
   sharp,
   plugins: [
+    cachedPayloadPlugin,
     s3Storage({
       enabled: true,
       config: {
