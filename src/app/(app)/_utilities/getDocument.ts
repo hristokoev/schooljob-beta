@@ -4,13 +4,16 @@ import { getPayloadHMR } from '@payloadcms/next/utilities'
 import { unstable_cache } from 'next/cache'
 
 import type { Config } from '@payload-types'
+import { getCachedPayload } from '@cached-local-api'
 
 type Collection = keyof Config['collections']
 
 async function getDocument(collection: Collection, slug: string, depth = 0, publicId?: string,) {
   const payload = await getPayloadHMR({ config: configPromise })
 
-  const page = await payload.find({
+  const cachedPayload = getCachedPayload(payload)
+
+  const page = await cachedPayload.find({
     collection,
     depth,
     where: {
@@ -24,10 +27,4 @@ async function getDocument(collection: Collection, slug: string, depth = 0, publ
   return page.docs[0]
 }
 
-/*
-  Returns a unstable_cache function mapped with the cache tag for the slug
-*/
-export const getCachedDocument = (collection: Collection, slug: string, depth?: number, publicId?: string,) =>
-  unstable_cache(async () => getDocument(collection, slug, depth, publicId), [collection, slug], {
-    tags: [`${collection}_${slug}`],
-  })
+export { getDocument }

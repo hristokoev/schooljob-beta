@@ -28,6 +28,7 @@
     "@lexical/react": "0.16.0",
     "@lexical/rich-text": "0.16.0",
     "@lexical/utils": "0.16.0",
+    "@payload-enchants/cached-local-api": "^1.2.1",
     "@payloadcms/db-mongodb": "3.0.0-beta.55",
     "@payloadcms/db-postgres": "3.0.0-beta.55",
     "@payloadcms/next": "3.0.0-beta.55",

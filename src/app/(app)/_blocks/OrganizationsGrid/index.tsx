@@ -6,6 +6,7 @@ import { LoadMore } from './LoadMore'
 import { OrganizationCard } from '@/components'
 import { OrganizationSearchParams } from '@/types'
 import { EmptyBlock } from '../EmptyBlock'
+import { getCachedPayload } from '@cached-local-api'
 
 const OrganizationsGrid: React.FC<OrganizationSearchParams> = async props => {
   const { limit = 6, page = 1, sort, featured, loadMore = false } = props
@@ -14,7 +15,9 @@ const OrganizationsGrid: React.FC<OrganizationSearchParams> = async props => {
     config: configPromise,
   })
 
-  const result = await payload.find({
+  const cachedPayload = getCachedPayload(payload)
+
+  const result = await cachedPayload.find({
     collection: 'organizations',
     limit,
     page,

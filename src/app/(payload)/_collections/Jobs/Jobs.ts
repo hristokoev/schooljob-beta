@@ -9,7 +9,6 @@ import { populateCreatedBy } from '@/payload/hooks'
 import { populateGlobalsDataJobs } from './hooks/populateGlobalsData'
 import { populateOrganizationJobs } from './hooks/populateOrganizationJobs'
 import { populatePublicId } from './hooks/populatePublicId'
-import { revalidateJobAfterChange } from './hooks/revalidateJobAfterChange'
 import SA_A_O_Some_U from './access/SA_A_O_Some_U'
 import { archived, slugField } from '@/payload/fields'
 import { statusField } from '@/payload/fields'
@@ -35,7 +34,6 @@ export const Jobs: CollectionConfig = {
       populateGlobalsDataJobs,
       populateOrganizationJobs,
       updateOrganizationJobs,
-      revalidateJobAfterChange,
     ],
   },
   access: {
@@ -67,7 +65,7 @@ export const Jobs: CollectionConfig = {
       name: 'organization',
       type: 'relationship',
       relationTo: 'organizations',
-      maxDepth: 0,
+      maxDepth: 1,
       hasMany: false,
       filterOptions: organizationFilter,
       access: {

@@ -6,6 +6,7 @@ import { EmptyBlock } from '../EmptyBlock'
 import { JobSearchParams } from '@/types'
 import { LoadMore } from './LoadMore'
 import { SimpleJobCard } from '@/components'
+import { getCachedPayload } from '@cached-local-api'
 
 const JobsList: React.FC<JobSearchParams> = async props => {
   const {
@@ -33,8 +34,11 @@ const JobsList: React.FC<JobSearchParams> = async props => {
     config: configPromise,
   })
 
-  const result = await payload.find({
+  const cachedPayload = getCachedPayload(payload)
+
+  const result = await cachedPayload.find({
     collection: 'jobs',
+    depth: 1,
     limit,
     page,
     sort,
