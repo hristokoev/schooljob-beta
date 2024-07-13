@@ -17,3 +17,8 @@ export const { cachedPayloadPlugin, getCachedPayload } = buildCachedPayload({
     options: {},
     unstable_cache,
 });
+
+/*
+    TODO: Update when a fix is released for this issue:
+    https://github.com/r1tsuu/payload-enchants/issues/86
+*/
