@@ -9,8 +9,8 @@ import {
   JobsSwipeSkeleton,
   OrganizationsGrid,
   OrganizationsGridSkeleton,
-  SearchBlock,
 } from '@/blocks'
+import { SearchBlock } from './SearchBlock'
 
 export const dynamic = 'force-static'
 
