@@ -9,7 +9,7 @@ import React, { Fragment } from 'react'
 import { Gutter, Media, VerticalPadding } from '@/components'
 import { getDocument } from '@/utilities/getDocument'
 import { Organization } from '@payload-types'
-import { GlobeEuropeAfricaIcon, LinkIcon } from '@heroicons/react/24/solid'
+import { GlobeEuropeAfricaIcon, LinkIcon, PhoneIcon } from '@heroicons/react/24/solid'
 
 const NoAvatar: React.FC<{ letter: string }> = ({ letter }) => (
   <div className="-ml-1 -mt-1 mb-4 inline-flex rounded-md border-2 md:mb-0">
@@ -32,18 +32,21 @@ const ProfileBlock: React.FC<{ slug: string }> = async ({ slug }) => {
     <Fragment>
       <div className="relative h-56 bg-slate-200">
         {organization.imageCover ? (
-          <Media
-            resource={organization.imageCover}
-            className="h-full w-full"
-            imgClassName="h-full w-full object-cover object-center"
-          />
+          <Fragment>
+            <div className="absolute left-0 top-0 z-10 h-full w-full bg-gradient-to-b from-transparent via-transparent via-70% to-slate-300/30"></div>
+            <Media
+              resource={organization.imageCover}
+              className="h-full w-full"
+              imgClassName="h-full w-full object-cover object-center "
+            />
+          </Fragment>
         ) : (
           <div className="relative h-56 bg-royal-blue-200" />
         )}
       </div>
-      <VerticalPadding top="none" className="bg-slate-100">
+      <VerticalPadding top="none" bottom="sm" className="bg-slate-100">
         <Gutter>
-          <div className="relative">
+          <div className="relative z-10">
             <div className="-mt-16 mb-6 flex justify-center md:mb-3 md:justify-start">
               <Fragment>
                 {organization.logo ? (
@@ -62,12 +65,20 @@ const ProfileBlock: React.FC<{ slug: string }> = async ({ slug }) => {
                 <div className="mb-2 inline-flex items-start">
                   <h1 className="text-2xl font-bold text-slate-800">{organization.title}</h1>
                 </div>
-                <div className="flex flex-wrap justify-center space-x-4 md:justify-start">
+                <div className="mb-2 flex flex-wrap justify-center space-x-4 md:justify-start">
                   {organization.location && (
                     <div className="flex items-center">
                       <GlobeEuropeAfricaIcon className="h-4 w-4 shrink-0 fill-current text-slate-400" />
                       <span className="ml-2 whitespace-nowrap text-sm font-medium text-slate-500">
                         {organization.location}
+                      </span>
+                    </div>
+                  )}
+                  {organization.phone && (
+                    <div className="flex items-center">
+                      <PhoneIcon className="h-4 w-4 shrink-0 fill-current text-slate-400" />
+                      <span className="ml-2 whitespace-nowrap text-sm font-medium text-slate-500">
+                        {organization.phone}
                       </span>
                     </div>
                   )}
@@ -83,6 +94,11 @@ const ProfileBlock: React.FC<{ slug: string }> = async ({ slug }) => {
                     </div>
                   )}
                 </div>
+                {!organization.vatId && (
+                  <span className="whitespace-nowrap text-sm font-medium text-slate-500">
+                    VAT ID: 1234
+                  </span>
+                )}
               </header>
             </div>
           </div>

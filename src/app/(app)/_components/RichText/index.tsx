@@ -19,7 +19,7 @@ const RichText: React.FC<Props> = ({ className, content, enableProse = true }) =
     <div
       className={cn(
         {
-          'prose mx-auto space-y-3': enableProse,
+          'prose max-w-5xl space-y-1': enableProse,
         },
         className,
       )}

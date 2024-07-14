@@ -29,6 +29,7 @@ const convertValue = (type: string): string => {
     mastersDegree: "Master's Degree",
     doctoralDegree: 'Doctoral Degree',
     professionalDegree: 'Professional Degree',
+    noEducation: 'No education',
     // experience
     noExperience: 'No experience',
     lessThanOneYear: 'Less than 1 year',

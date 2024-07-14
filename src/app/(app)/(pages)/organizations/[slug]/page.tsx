@@ -23,7 +23,7 @@ export default async function Organization({ params: { slug } }: Props) {
         <Suspense fallback={<ProfileBlockSkeleton />}>
           <ProfileBlock slug={slug} />
         </Suspense>
-        <VerticalPadding top="lg" bottom="lg" className="bg-white">
+        <VerticalPadding className="bg-white">
           <Gutter>
             <Suspense fallback={<DescriptionSkeleton />}>
               <Description slug={slug} />

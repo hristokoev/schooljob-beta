@@ -65,7 +65,7 @@ export const Jobs: CollectionConfig = {
       name: 'organization',
       type: 'relationship',
       relationTo: 'organizations',
-      maxDepth: 1,
+      maxDepth: 2,
       hasMany: false,
       filterOptions: organizationFilter,
       access: {

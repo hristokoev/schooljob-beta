@@ -25,6 +25,7 @@ const MultiSelect = React.forwardRef<
         noOptionsMessage: () => {
           return 'bg-white py-2 text-slate-400 text-sm font-medium'
         },
+        placeholder: () => 'line-clamp-1',
         valueContainer: () => 'flex flex-nowrap gap-2',
       }}
       isDisabled={isDisabled}

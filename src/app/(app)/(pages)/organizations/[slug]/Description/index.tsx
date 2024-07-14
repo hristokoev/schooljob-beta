@@ -14,14 +14,14 @@ const Description: React.FC<{ slug: string }> = async ({ slug }) => {
   if (organization.richText)
     return (
       <Fragment>
-        <h4 className="mb-2 text-xl font-bold leading-snug text-slate-800">About Us</h4>
+        <h4 className="mb-6 text-xl font-bold leading-snug text-slate-800">About Us</h4>
         <RichText content={organization.richText} />
       </Fragment>
     )
 
   return (
     <Fragment>
-      <h4 className="mb-2 text-xl font-bold leading-snug text-slate-800">About Us</h4>
+      <h4 className="mb-6 text-xl font-bold leading-snug text-slate-800">About Us</h4>
       <p>
         Oh, it appears that <strong>{organization.title}</strong> has not provided any information
         about themselves yet.

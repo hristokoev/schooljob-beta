@@ -5,14 +5,14 @@ import { Gutter, Hr, MinHeight, TopLabel, VerticalPadding } from '@/components'
 import { JobSearchParams } from '@/types'
 import { JobsList, JobsListSkeleton } from '@/blocks'
 import { parseSearchParams } from '@/utilities'
-import { SearchBlock } from '@/blocks'
+import { SearchBlock } from './SearchBlock'
 
 export default function Jobs({ searchParams }: { searchParams: JobSearchParams }) {
   const parsedSearchParams = parseSearchParams(searchParams as Record<string, string | number>)
 
   return (
     <MinHeight className="bg-slate-100">
-      <VerticalPadding top="lg" bottom="lg" className="bg-white">
+      <VerticalPadding className="bg-white">
         <Gutter>
           <SearchBlock />
         </Gutter>

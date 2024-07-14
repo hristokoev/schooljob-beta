@@ -8,8 +8,8 @@ import {
   OrganizationsGridSkeleton,
   OrganizationsSwipe,
   OrganizationsSwipeSkeleton,
-  SearchBlock,
 } from '@/blocks'
+import { SearchBlock } from './SearchBlock'
 
 export const dynamic = 'force-static'
 
@@ -20,7 +20,7 @@ export default function Organizations({
 }) {
   return (
     <Fragment>
-      <VerticalPadding top="lg" bottom="lg" className="bg-white">
+      <VerticalPadding className="bg-white">
         <Gutter>
           <SearchBlock />
         </Gutter>

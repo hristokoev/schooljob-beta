@@ -17,7 +17,7 @@ const Header: React.FC = () => {
   return (
     <header className="bg-royal-blue-500">
       <Gutter>
-        <div className="flex items-center justify-between">
+        <div className="flex min-h-16 items-center justify-between">
           <Link href="/" className="md:hidden">
             <Image src={LogoSmall} alt="Schooljob" className="h-6 w-6" />
           </Link>

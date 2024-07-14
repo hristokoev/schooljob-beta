@@ -22,7 +22,7 @@ import { Job, Organization } from '@payload-types'
 import { JobsList } from '@/blocks'
 
 const JobBlock: React.FC<{ publicId: string; slug: string }> = async ({ publicId, slug }) => {
-  const job = (await getDocument('jobs', slug, 1, publicId)) as Job
+  const job = (await getDocument('jobs', slug, 2, publicId)) as Job
 
   if (!job) {
     redirect('/404')
