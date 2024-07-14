@@ -5,10 +5,9 @@
 */
 
 import React, { Fragment } from 'react'
-import { redirect } from 'next/navigation'
 
-import { fetchDoc } from '@/api'
 import { Gutter, Media, VerticalPadding } from '@/components'
+import { getDocument } from '@/utilities/getDocument'
 import { Organization } from '@payload-types'
 import { GlobeEuropeAfricaIcon, LinkIcon } from '@heroicons/react/24/solid'
 
@@ -23,19 +22,10 @@ const NoAvatar: React.FC<{ letter: string }> = ({ letter }) => (
 )
 
 const ProfileBlock: React.FC<{ slug: string }> = async ({ slug }) => {
-  let organization: Organization | null = null
-
-  try {
-    organization = await fetchDoc<Organization>({
-      collection: 'organizations',
-      slug,
-    })
-  } catch (error) {
-    console.error(error)
-  }
+  const organization = (await getDocument('organizations', slug, 1)) as Organization
 
   if (!organization) {
-    redirect('/404')
+    return <p>Organization not found</p>
   }
 
   return (

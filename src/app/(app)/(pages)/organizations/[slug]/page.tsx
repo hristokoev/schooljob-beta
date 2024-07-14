@@ -1,12 +1,12 @@
 import React, { Fragment, Suspense } from 'react'
+import configPromise from '@payload-config'
+import { getPayloadHMR } from '@payloadcms/next/utilities'
 
 import { Description } from './Description'
 import { DescriptionSkeleton } from './Description/Skeleton'
-import { fetchStaticParams } from '@/api'
 import { Gutter, MinHeight, VerticalPadding } from '@/components'
 import { JobsBlock } from '@/pages/organizations/[slug]/JobsBlock'
 import { JobsListSkeleton } from '@/blocks'
-import { Organization as OrganizationType } from '@payload-types'
 import { ProfileBlock } from './Profile'
 import { ProfileBlockSkeleton } from './Profile/Skeleton'
 
@@ -43,13 +43,14 @@ export default async function Organization({ params: { slug } }: Props) {
 }
 
 export async function generateStaticParams() {
-  try {
-    const pages = await fetchStaticParams<OrganizationType>('organizations')
+  const payload = await getPayloadHMR({ config: configPromise })
+  const pages = await payload.find({
+    collection: 'organizations',
+    limit: 100,
+    overrideAccess: false,
+  })
 
-    return pages.map(({ slug }) => ({
-      slug,
-    }))
-  } catch (error) {
-    return []
-  }
+  return pages.docs?.map(({ slug }) => ({
+    slug,
+  }))
 }

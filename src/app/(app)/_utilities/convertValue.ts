@@ -1,5 +1,13 @@
+/*
+  TODO: Reuse data from ./src/app/(payload)/_data/ instead of duplicating it here.
+*/
+
 const convertValue = (type: string): string => {
   const typeMapping: { [key: string]: string } = {
+    // categories
+    'category-1': 'Category 1',
+    'category-2': 'Category 2',
+    'category-3': 'Category 3',
     // employmentType
     fulltime: 'Full Time',
     parttime: 'Part Time',

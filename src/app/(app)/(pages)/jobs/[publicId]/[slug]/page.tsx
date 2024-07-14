@@ -1,10 +1,10 @@
 import React, { Fragment, Suspense } from 'react'
+import configPromise from '@payload-config'
+import { getPayloadHMR } from '@payloadcms/next/utilities'
 
 import { JobBlock, JobBlockSkeleton } from './JobBlock'
 import { BreadcrumbBlock } from '@/blocks'
-import { fetchStaticParams } from '@/api'
 import { Gutter, VerticalPadding } from '@/components'
-import { Job as JobType } from '@payload-types'
 
 interface Props {
   params: {
@@ -29,7 +29,7 @@ export default async function Job({ params: { publicId, slug } }: Props) {
     <Fragment>
       <VerticalPadding className="bg-slate-100">
         <Gutter>
-          <BreadcrumbBlock links={links} current="Current Job" />
+          <BreadcrumbBlock links={links} current="Job" />
           <Suspense fallback={<JobBlockSkeleton />}>
             <JobBlock publicId={publicId} slug={slug} />
           </Suspense>
@@ -40,14 +40,19 @@ export default async function Job({ params: { publicId, slug } }: Props) {
 }
 
 export async function generateStaticParams() {
-  try {
-    const pages = await fetchStaticParams<JobType>('jobs')
+  const payload = await getPayloadHMR({ config: configPromise })
+  const pages = await payload.find({
+    collection: 'jobs',
+    limit: 100,
+    where: {
+      status: {
+        equals: 'published',
+      },
+    },
+  })
 
-    return pages.map(({ publicId, slug }) => ({
-      publicId: publicId?.toString() ?? '',
-      slug,
-    }))
-  } catch (error) {
-    return []
-  }
+  return pages.docs?.map(({ publicId, slug }) => ({
+    publicId: publicId?.toString() || 'job',
+    slug,
+  }))
 }

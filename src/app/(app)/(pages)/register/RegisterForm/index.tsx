@@ -13,7 +13,6 @@ import { useAuth } from '@/providers'
 
 const RegisterForm: React.FC = () => {
   const searchParams = useSearchParams()
-  const allParams = searchParams.toString() ? `?${searchParams.toString()}` : ''
   const redirect = useRef(searchParams.get('redirect'))
   const { loading, create } = useAuth()
   const router = useRouter()
@@ -37,13 +36,12 @@ const RegisterForm: React.FC = () => {
       try {
         await create(data)
         if (redirect?.current) router.push(redirect.current as string)
-        else
-          router.push(`/login?success=${encodeURIComponent('Registration successful')}${allParams}`)
+        else router.push(`/login?success=${encodeURIComponent('Registration successful')}`)
       } catch (e) {
         toast.error('Something went wrong. Please try again.')
       }
     },
-    [create, router, allParams],
+    [create, router],
   )
 
   const [tab, setTab] = React.useState<'candidate' | 'organization'>('candidate')
@@ -65,6 +63,7 @@ const RegisterForm: React.FC = () => {
                 setTab('candidate')
                 setValue('role', 'candidate')
               }}
+              type="button"
             >
               Candidate
             </button>
@@ -75,6 +74,7 @@ const RegisterForm: React.FC = () => {
                 setTab('organization')
                 setValue('role', 'organization')
               }}
+              type="button"
             >
               <StarIcon className="mr-1 h-4 w-4 text-royal-blue-500" /> Organization
             </button>

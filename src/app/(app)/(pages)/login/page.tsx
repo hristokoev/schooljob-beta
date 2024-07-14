@@ -5,8 +5,12 @@ import { Metadata } from 'next'
 import { BreadcrumbBlock } from '@/blocks'
 import { Gutter, MinHeight, RenderParams, VerticalPadding } from '@/components'
 import { LoginForm } from './LoginForm'
+import { getMeUser } from '@/utilities/getMeUser'
 
 export default async function Login() {
+  await getMeUser({
+    validUserRedirect: `/account?warning=${encodeURIComponent('You are already logged in.')}`,
+  })
   const links = [{ text: 'Home', href: '/' }]
 
   return (

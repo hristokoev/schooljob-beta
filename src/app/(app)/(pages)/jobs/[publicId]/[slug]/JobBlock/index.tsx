@@ -17,22 +17,12 @@ import {
   TopLabel,
 } from '@/components'
 import { convertValue, formatDate, renderSalary } from '@/utilities'
-import { Job, JobCategory, Organization } from '@payload-types'
-import { fetchDoc } from '@/api'
+import { getDocument } from '@/utilities/getDocument'
+import { Job, Organization } from '@payload-types'
 import { JobsList } from '@/blocks'
 
 const JobBlock: React.FC<{ publicId: string; slug: string }> = async ({ publicId, slug }) => {
-  let job: Job | null = null
-
-  try {
-    job = await fetchDoc<Job>({
-      collection: 'jobs',
-      publicId,
-      slug,
-    })
-  } catch (error) {
-    console.error(error)
-  }
+  const job = (await getDocument('jobs', slug, 1, publicId)) as Job
 
   if (!job) {
     redirect('/404')
@@ -63,6 +53,7 @@ const JobBlock: React.FC<{ publicId: string; slug: string }> = async ({ publicId
   const salaryText = renderSalary(salary)
 
   const formattedDate = formatDate(createdAt)
+  const transformedCategories = categories.map(convertValue)
   const transformedEmploymentType = employmentType.map(convertValue)
   const transformedLocationType = locationType?.map(convertValue) ?? []
   const transformedEducation = education?.map(convertValue) ?? []
@@ -112,22 +103,26 @@ const JobBlock: React.FC<{ publicId: string; slug: string }> = async ({ publicId
               {job.richText && <Hr />}
             </Fragment>
 
-            <RichText content={richText} />
+            {richText && (
+              <Fragment>
+                <RichText content={richText} />
+                <Hr />
+              </Fragment>
+            )}
 
-            <Hr />
-            {skills && (
+            {skills && skills.length > 0 && (
               <Fragment>
                 <List label="Skills" items={skills as string[]} />
                 <Hr />
               </Fragment>
             )}
-            {certifications && (
+            {certifications && certifications.length > 0 && (
               <Fragment>
                 <List label="Certifications" items={certifications as string[]} />
                 <Hr />
               </Fragment>
             )}
-            {responsibilities && (
+            {responsibilities && responsibilities.length > 0 && (
               <Fragment>
                 <List label="Responsibilities" items={responsibilities as string[]} />
                 <Hr />
@@ -143,12 +138,7 @@ const JobBlock: React.FC<{ publicId: string; slug: string }> = async ({ publicId
             <div className="col-span-full overflow-hidden rounded-md border border-slate-200 bg-white sm:col-span-6 xl:col-span-4">
               <div className="flex flex-col gap-4 justify-self-end p-5">
                 {categories.length > 0 && (
-                  <PillsWithLabel
-                    label="Categories"
-                    items={categories.map((category: string | JobCategory) =>
-                      typeof category === 'string' ? category : category.title,
-                    )}
-                  />
+                  <PillsWithLabel label="Categories" items={transformedCategories} />
                 )}
                 {transformedEmploymentType.length > 0 && (
                   <PillsWithLabel label="Employment" items={transformedEmploymentType} />
@@ -165,7 +155,7 @@ const JobBlock: React.FC<{ publicId: string; slug: string }> = async ({ publicId
                 {transformedLanguage.length > 0 && (
                   <PillsWithLabel label="Language" items={transformedLanguage} />
                 )}
-                {benefits && (
+                {benefits && benefits.length > 0 && (
                   <Fragment>
                     <PillsWithLabel label="Benefits" items={benefits as string[]} />
                   </Fragment>
@@ -178,7 +168,6 @@ const JobBlock: React.FC<{ publicId: string; slug: string }> = async ({ publicId
                       {suitableFor?.mothersOnMaternityLeave && (
                         <Pill size="lg">Mothers on maternity leave</Pill>
                       )}
-                      {suitableFor?.pregnantWomen && <Pill size="lg">Pregnant women</Pill>}
                       {suitableFor?.disabledPeople && <Pill size="lg">Disabled people</Pill>}
                       {suitableFor?.retirees && <Pill size="lg">Retirees</Pill>}
                     </div>

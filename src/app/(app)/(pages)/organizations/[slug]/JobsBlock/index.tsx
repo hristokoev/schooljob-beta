@@ -1,20 +1,11 @@
 import React, { Fragment } from 'react'
 
-import { fetchDoc } from '@/api'
 import { JobsList } from '@/blocks'
 import { Organization } from '@payload-types'
+import { getDocument } from '@/utilities/getDocument'
 
 const JobsBlock: React.FC<{ slug: string }> = async ({ slug }) => {
-  let organization: Organization | null = null
-
-  try {
-    organization = await fetchDoc<Organization>({
-      collection: 'organizations',
-      slug,
-    })
-  } catch (error) {
-    console.error(error)
-  }
+  const organization = (await getDocument('organizations', slug, 1)) as Organization
 
   if (!organization) {
     return <p>Organization not found</p>
