@@ -94,9 +94,9 @@ const ProfileBlock: React.FC<{ slug: string }> = async ({ slug }) => {
                     </div>
                   )}
                 </div>
-                {!organization.vatId && (
+                {organization.vatId && (
                   <span className="whitespace-nowrap text-sm font-medium text-slate-500">
-                    VAT ID: 1234
+                    VAT ID: {organization.vatId}
                   </span>
                 )}
               </header>
