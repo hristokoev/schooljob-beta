@@ -7,44 +7,42 @@ import { toast } from 'sonner'
 import { useRouter } from 'next/navigation'
 import { zodResolver } from '@hookform/resolvers/zod'
 
-import { Button, Input, Label, Select, Textarea } from '@/components'
+import { Button, FormInputField, Label, Select, Textarea } from '@/components'
 import { LexicalEditor } from '@/components'
 import { Option, OrganizationFieldSchema, OrganizationFormData } from '@/types'
-import { JobCategory, Organization } from '@payload-types'
-import { fetchDocs } from '@/api'
+import { Organization, User } from '@payload-types'
 import { updateOrganization } from '@/actions'
 import { useAuth } from '@/providers'
-import { transformToFrontend } from '@/utilities/transformFields'
+import { transformToFrontend, transformToPayload } from '@/utilities/transformFields'
+import { categoriesOptions } from '@/payload/data'
 
-const OrganizationPanel: React.FC = () => {
-  const { user } = useAuth()
+const OrganizationPanel: React.FC<{ user: User }> = ({ user }) => {
   const organization = user?.profile?.value as Organization
   const router = useRouter()
-  const [jobCategories, setJobCategories] = useState<JobCategory[] | null>(null)
 
   const {
     handleSubmit,
+    register,
     reset,
-    formState: { errors },
+    formState: { errors, isDirty },
     control,
   } = useForm<OrganizationFormData>({
     resolver: zodResolver(OrganizationFieldSchema),
     defaultValues: {
       richText: {
         root: {
-          type: 'root', // Root type, typically 'root'
+          type: 'root',
           children: [
             {
-              type: 'paragraph', // Default child node type
-              version: 1, // Node version
-              children: [], // Default children array
-              // Any additional properties required by your schema
+              type: 'paragraph',
+              version: 1,
+              children: [],
             },
           ],
-          direction: 'ltr', // Default text direction
-          format: 'left', // Default text alignment
-          indent: 0, // Default indentation level
-          version: 1, // Version number for the root node
+          direction: 'ltr',
+          format: 'left',
+          indent: 0,
+          version: 1,
         },
       },
     },
@@ -59,18 +57,11 @@ const OrganizationPanel: React.FC = () => {
       )
     }
 
-    const categories = organization?.categories?.map((category: JobCategory | string) => {
-      if (typeof category === 'string') {
-        return category
-      }
-      return category.id
-    })
-
     if (organization) {
       reset({
         title: organization?.title || '',
         vatId: organization?.vatId || '',
-        categories: transformToFrontend(categories as string[]) as Option[],
+        categories: transformToFrontend(organization?.categories || []) as Option[],
         location: organization?.location || '',
         phone: organization?.phone || '',
         url: organization?.url || '',
@@ -82,20 +73,23 @@ const OrganizationPanel: React.FC = () => {
     }
   }, [reset, organization, router])
 
-  const onSubmit = useCallback(async (data: OrganizationFormData) => {
-    try {
-      await toast.promise(updateOrganization(data), {
-        loading: 'Submitting...',
-        success: message => {
-          return 'Changes saved'
-        },
-        error: message => `${message}`,
-        richColors: true,
-      })
-    } catch (e) {
-      toast.error('Error submitting job')
-    }
-  }, [])
+  const onSubmit = useCallback(
+    async (data: OrganizationFormData) => {
+      try {
+        await toast.promise(updateOrganization(data, user), {
+          loading: 'Submitting...',
+          success: message => {
+            return 'Changes saved'
+          },
+          error: message => `${message}`,
+          richColors: true,
+        })
+      } catch (e) {
+        toast.error('Error submitting job')
+      }
+    },
+    [user],
+  )
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="grow">
@@ -112,18 +106,23 @@ const OrganizationPanel: React.FC = () => {
           <div className="mt-4 grid-cols-3 sm:grid sm:items-center sm:gap-4">
             <div>
               <Label>Organization Name</Label>
-              <Controller
+              <FormInputField
+                type="text"
                 name="title"
-                control={control}
-                render={({ field }) => <Input className="w-full" {...field} />}
+                register={register}
+                error={errors.title}
+                className="w-full"
+                disabled
               />
             </div>
             <div>
               <Label>Organization Vat ID</Label>
-              <Controller
+              <FormInputField
+                type="text"
                 name="vatId"
-                control={control}
-                render={({ field }) => <Input className="w-full" {...field} />}
+                register={register}
+                error={errors.vatId}
+                className="w-full"
               />
             </div>
             <div>
@@ -136,38 +135,40 @@ const OrganizationPanel: React.FC = () => {
                     {...field}
                     isMulti
                     placeholder="Select categories"
-                    options={jobCategories?.map(category => ({
-                      value: category.id,
-                      label: category.title,
-                    }))}
+                    options={categoriesOptions}
                     className={`w-full ${errors.categories ? 'border-red-300 bg-red-300/10 hover:border-red-400 focus:border-red-500 focus:shadow-red-700/25' : ''}`}
-                    isDisabled={!jobCategories}
                   />
                 )}
               />
             </div>
             <div>
               <Label>Location</Label>
-              <Controller
+              <FormInputField
+                type="text"
                 name="location"
-                control={control}
-                render={({ field }) => <Input className="w-full" {...field} />}
+                register={register}
+                error={errors.location}
+                className="w-full"
               />
             </div>
             <div>
               <Label>Phone</Label>
-              <Controller
+              <FormInputField
+                type="text"
                 name="phone"
-                control={control}
-                render={({ field }) => <Input className="w-full" {...field} />}
+                register={register}
+                error={errors.phone}
+                className="w-full"
               />
             </div>
             <div>
               <Label>URL</Label>
-              <Controller
+              <FormInputField
+                type="text"
                 name="url"
-                control={control}
-                render={({ field }) => <Input className="w-full" {...field} />}
+                register={register}
+                error={errors.url}
+                className="w-full"
               />
             </div>
           </div>
@@ -207,7 +208,7 @@ const OrganizationPanel: React.FC = () => {
                 Cancel
               </Button>
             </Link>
-            <Button>Save Changes</Button>
+            <Button disabled={!isDirty}>Save Changes</Button>
           </div>
         </div>
       </footer>

@@ -1,13 +1,13 @@
 'use client'
 
-import { GlobeEuropeAfricaIcon, LinkIcon } from '@heroicons/react/24/solid'
+import { GlobeEuropeAfricaIcon, LinkIcon, PhoneIcon } from '@heroicons/react/24/solid'
 import React, { Fragment, useEffect, useState } from 'react'
 
 import { isCandidate, isOrganization } from '@/utilities'
 import { useAuth } from '@/providers'
 import { User } from '@payload-types'
 import Link from 'next/link'
-import { RichText } from '@/components'
+import { Button, RichText } from '@/components'
 
 const HeaderContent: React.FC<{ user: User }> = ({ user }) => {
   if (isCandidate(user)) {
@@ -18,7 +18,27 @@ const HeaderContent: React.FC<{ user: User }> = ({ user }) => {
             {user.profile.value.firstName} {user.profile.value.lastName}
           </h1>
         </div>
-        <div className="mb-3 text-sm">
+        <div className="mb-3 flex flex-wrap justify-center space-x-4 md:justify-start">
+          {user.profile.value.location && (
+            <div className="flex flex-wrap justify-center space-x-4 md:justify-start">
+              <div className="flex items-center">
+                <GlobeEuropeAfricaIcon className="h-4 w-4 shrink-0 fill-current text-slate-400" />
+                <span className="ml-2 whitespace-nowrap text-sm font-medium text-slate-500">
+                  {user.profile.value.location}
+                </span>
+              </div>
+            </div>
+          )}
+          {user.profile.value.phone && (
+            <div className="flex items-center">
+              <PhoneIcon className="h-4 w-4 shrink-0 fill-current text-slate-400" />
+              <span className="ml-2 whitespace-nowrap text-sm font-medium text-slate-500">
+                {user.profile.value.phone}
+              </span>
+            </div>
+          )}
+        </div>
+        <div className="text-sm">
           {user.profile.value.bio ? (
             <p>{user.profile.value.bio}</p>
           ) : (
@@ -33,16 +53,6 @@ const HeaderContent: React.FC<{ user: User }> = ({ user }) => {
             </p>
           )}
         </div>
-        {user.profile.value.location && (
-          <div className="flex flex-wrap justify-center space-x-4 md:justify-start">
-            <div className="flex items-center">
-              <GlobeEuropeAfricaIcon className="h-4 w-4 shrink-0 fill-current text-slate-400" />
-              <span className="ml-2 whitespace-nowrap text-sm font-medium text-slate-500">
-                {user.profile.value.location}
-              </span>
-            </div>
-          </div>
-        )}
       </Fragment>
     )
   } else if (isOrganization(user)) {
@@ -76,6 +86,14 @@ const HeaderContent: React.FC<{ user: User }> = ({ user }) => {
               </span>
             </div>
           )}
+          {user.profile.value.phone && (
+            <div className="flex items-center">
+              <PhoneIcon className="h-4 w-4 shrink-0 fill-current text-slate-400" />
+              <span className="ml-2 whitespace-nowrap text-sm font-medium text-slate-500">
+                {user.profile.value.phone}
+              </span>
+            </div>
+          )}
           {user.profile.value.url && (
             <div className="flex items-center">
               <LinkIcon className="h-4 w-4 shrink-0 fill-current text-slate-400" />
@@ -88,6 +106,11 @@ const HeaderContent: React.FC<{ user: User }> = ({ user }) => {
             </div>
           )}
         </div>
+        {user.profile.value.vatId && (
+          <span className="whitespace-nowrap text-sm font-medium text-slate-500">
+            VAT ID: {user.profile.value.vatId}
+          </span>
+        )}
       </Fragment>
     )
   } else {

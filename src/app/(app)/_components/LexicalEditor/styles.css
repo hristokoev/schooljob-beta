@@ -38,12 +38,12 @@ h1 {
   @apply bg-slate-100 border border-slate-300 rounded overflow-x-auto;
 }
 
-.editor-inner {
-  @apply bg-slate-100 relative;
+.editor-container:has(.editor-input[aria-readonly="true"]) {
+  @apply opacity-50;
 }
 
 .editor-input {
-  @apply min-h-[150px] resize-none text-[15px] relative outline-0 p-3.5 caret-gray-700;
+  @apply min-h-[150px] resize-none text-[15px] relative outline-0 p-3.5 caret-gray-700 aria-[readonly="true"]:cursor-not-allowed;
 }
 
 .editor-placeholder {

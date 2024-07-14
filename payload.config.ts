@@ -5,7 +5,6 @@ import {
   ItalicFeature,
   UnderlineFeature,
   StrikethroughFeature,
-  AlignFeature,
   lexicalEditor,
   FixedToolbarFeature,
 } from '@payloadcms/richtext-lexical'
@@ -39,7 +38,6 @@ export default buildConfig({
       ItalicFeature(),
       UnderlineFeature(),
       StrikethroughFeature(),
-      AlignFeature(),
       FixedToolbarFeature()
     ],
   }),

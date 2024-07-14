@@ -9,7 +9,6 @@ import { getMeUser } from '@/utilities/getMeUser'
 import { transformToFrontend } from '@/utilities/transformFields'
 import { JobFormData } from 'src/app/(app)/_types'
 import { type Option } from '@/types'
-import { JobCategory } from '@payload-types'
 
 interface Props {
   params: { id: string }
@@ -29,20 +28,11 @@ export default async function EditJob({ params: { id } }: Props) {
     depth: 2,
   })
 
-  const jobCategories = await payload.find({
-    collection: 'job-categories',
-    user,
-    depth: 0,
-  })
-
   const frontEndData: JobFormData = {
     status: data.status as JobFormData['status'],
     title: data.title,
     employmentType: transformToFrontend(data.employmentType || []) as Option[],
-    categories: (data.categories as JobCategory[]).map(category => ({
-      label: category.title,
-      value: category.id,
-    })),
+    categories: transformToFrontend(data.categories || []) as Option[],
     location: data.location || '',
     locationType: transformToFrontend(data.locationType || []) as Option[],
     education: transformToFrontend(data.education || []) as Option[],
@@ -88,7 +78,7 @@ export default async function EditJob({ params: { id } }: Props) {
         <BreadcrumbBlock links={links} current="Edit Job" />
       </Gutter>
       <Main>
-        <JobsEditView {...frontEndData} id={id} jobCategories={jobCategories.docs} />
+        <JobsEditView {...frontEndData} id={id} />
       </Main>
     </Fragment>
   )

@@ -16,7 +16,7 @@ const MultiSelect = React.forwardRef<
       classNames={{
         menu: () => 'my-2 rounded-sm overflow-hidden shadow-lg border',
         control: () =>
-          `px-3 py-2 border border-slate-300 bg-slate-50 hover:border-royal-blue-300 focus:border-royal-blue-500 focus:shadow-sm focus:shadow-royal-blue-500/25 focus:ring-1 focus:ring-offset-0 text-sm leading-5 text-slate-800 !outline-none rounded transition-all duration-150 ease-in-out ${isDisabled && 'cursor-not-allowed opacity-50'}`,
+          `px-3 py-2 border border-slate-300 bg-slate-50 hover:border-royal-blue-300 focus:border-royal-blue-500 focus:shadow-sm focus:shadow-royal-blue-500/25 focus:ring-1 focus:ring-offset-0 text-sm leading-5 text-slate-800 !outline-none rounded transition-all duration-150 ease-in-out aria-[disabled="true"]:opacity-50`,
         option: () =>
           'flex items-center w-full py-2 px-3 bg-white hover:bg-slate-100 text-slate-600 hover:text-slate-700 cursor-pointer',
         multiValue: () => {

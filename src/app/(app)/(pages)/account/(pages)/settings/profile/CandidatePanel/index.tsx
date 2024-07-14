@@ -11,10 +11,9 @@ import { Button, Input, Label, Textarea } from '@/components'
 import { CandidateFieldSchema, CandidateFormData } from '@/types'
 import { updateCandidate } from 'src/app/(app)/_actions'
 import { useAuth } from '@/providers'
-import { Candidate } from '@payload-types'
+import { Candidate, User } from '@payload-types'
 
-const CandidatePanel: React.FC = () => {
-  const { user } = useAuth()
+const CandidatePanel: React.FC<{ user: User }> = ({ user }) => {
   const candidate = user?.profile?.value as Candidate
   const router = useRouter()
 

@@ -35,23 +35,30 @@ function OnChangePlugin({ onChange }: { onChange: (editorState: any) => void }) 
 type LexicalEditorProps = {
   onChange: (value: any) => void
   value: any
+  editable?: boolean
 }
 
-const EditorContent: React.FC<LexicalEditorProps> = ({ onChange, value }) => {
+const EditorContent: React.FC<LexicalEditorProps> = ({ onChange, value, editable = true }) => {
   const [editor] = useLexicalComposerContext()
   const initializedRef = useRef(false)
+  const previousValueRef = useRef(value)
 
   useEffect(() => {
-    if (!initializedRef.current && value) {
-      initializedRef.current = true
-      try {
-        const parsedState = editor.parseEditorState(JSON.stringify(value))
-        editor.setEditorState(parsedState)
-      } catch (error) {
-        console.error('Failed to parse editor state:', error)
+    if (previousValueRef.current !== value) {
+      previousValueRef.current = value
+
+      if (!initializedRef.current && value) {
+        try {
+          initializedRef.current = true
+          const parsedState = editor.parseEditorState(JSON.stringify(value))
+          editor.setEditorState(parsedState)
+        } catch (error) {
+          console.error('Failed to parse editor state:', error)
+        }
       }
     }
-  }, [editor, value])
+    editor.setEditable(editable)
+  }, [editor, value, editable])
 
   return (
     <div className="editor-container">
@@ -70,10 +77,10 @@ const EditorContent: React.FC<LexicalEditorProps> = ({ onChange, value }) => {
   )
 }
 
-const LexicalEditor: React.FC<LexicalEditorProps> = ({ onChange, value }) => {
+const LexicalEditor: React.FC<LexicalEditorProps> = ({ onChange, value, editable }) => {
   return (
     <LexicalComposer initialConfig={editorConfig}>
-      <EditorContent onChange={onChange} value={value} />
+      <EditorContent onChange={onChange} value={value} editable={editable} />
     </LexicalComposer>
   )
 }

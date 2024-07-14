@@ -49,6 +49,7 @@ export default async function Application({ params, searchParams }: Props) {
         data: {
           status,
         },
+        overrideAccess: false,
         user,
       })
     } catch (error) {

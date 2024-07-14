@@ -3,16 +3,11 @@
 import configPromise from '@payload-config'
 import { getPayloadHMR } from '@payloadcms/next/utilities'
 
+import { Organization, User } from '@payload-types'
 import { transformToPayload } from '@/utilities'
-import { getMeUser } from '@/utilities/getMeUser'
 
-export const updateOrganization = async (data: any, id?: string) => {
-  const { user } = await getMeUser()
-
-  const organizationData = {
-    ...data,
-    categories: transformToPayload(data.categories),
-  }
+export const updateOrganization = async (data: any, user: User | null | undefined) => {
+  const id = (user?.profile?.value as Organization).id as string
 
   const payload = await getPayloadHMR({
     config: configPromise,
@@ -22,7 +17,11 @@ export const updateOrganization = async (data: any, id?: string) => {
     const doc = await payload.update({
       collection: 'organizations',
       id,
-      data: organizationData,
+      data: {
+        ...data,
+        categories: transformToPayload(data.categories),
+      },
+      overrideAccess: false,
       user
     })
 

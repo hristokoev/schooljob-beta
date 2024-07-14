@@ -28,7 +28,7 @@ const JobsSwipe: React.FC<JobsSwipeProps> = async ({ limit, sort, featured }) =>
 
   const result = await cachedPayload.find({
     collection: 'jobs',
-    depth: 1,
+    depth: 2,
     limit,
     sort,
     where: {

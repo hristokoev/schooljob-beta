@@ -29,7 +29,11 @@ export default async function ProfileSettings() {
       <div className="rounded-md border border-slate-300 bg-white">
         <div className="flex flex-col md:-mr-px md:flex-row">
           <SettingsSidebar />
-          {user.role === 'organization' ? <OrganizationPanel /> : <CandidatePanel />}
+          {user.role === 'organization' ? (
+            <OrganizationPanel user={user} />
+          ) : (
+            <CandidatePanel user={user} />
+          )}
         </div>
       </div>
     </Fragment>
