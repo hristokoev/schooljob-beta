@@ -13,8 +13,10 @@ export interface Config {
     candidates: Candidate;
     applications: Application;
     cvs: Cv;
-    'site-uploads': SiteUpload;
     agreements: Agreement;
+    logos: Logo;
+    'image-covers': ImageCover;
+    photos: Photo;
     users: User;
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
@@ -163,8 +165,8 @@ export interface Organization {
   location?: string | null;
   vatId?: string | null;
   categories?: ('category-1' | 'category-2' | 'category-3')[] | null;
-  logo?: string | SiteUpload | null;
-  imageCover?: string | SiteUpload | null;
+  logo?: string | Logo | null;
+  imageCover?: string | ImageCover | null;
   description?: string | null;
   richText?: {
     root: {
@@ -190,11 +192,12 @@ export interface Organization {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "site-uploads".
+ * via the `definition` "logos".
  */
-export interface SiteUpload {
+export interface Logo {
   id: string;
   createdBy?: (string | null) | User;
+  prefix?: string | null;
   updatedAt: string;
   createdAt: string;
   url?: string | null;
@@ -249,7 +252,7 @@ export interface Candidate {
   email: string;
   phone?: string | null;
   location?: string | null;
-  photo?: string | SiteUpload | null;
+  photo?: string | Photo | null;
   bio?: string | null;
   applications?: (string | Application)[] | null;
   jobsSaved?: (string | Job)[] | null;
@@ -257,6 +260,26 @@ export interface Candidate {
   fullName?: string | null;
   updatedAt: string;
   createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "photos".
+ */
+export interface Photo {
+  id: string;
+  createdBy?: (string | null) | User;
+  prefix?: string | null;
+  updatedAt: string;
+  createdAt: string;
+  url?: string | null;
+  thumbnailURL?: string | null;
+  filename?: string | null;
+  mimeType?: string | null;
+  filesize?: number | null;
+  width?: number | null;
+  height?: number | null;
+  focalX?: number | null;
+  focalY?: number | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -329,6 +352,26 @@ export interface Agreement {
   slug?: string | null;
   updatedAt: string;
   createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "image-covers".
+ */
+export interface ImageCover {
+  id: string;
+  createdBy?: (string | null) | User;
+  prefix?: string | null;
+  updatedAt: string;
+  createdAt: string;
+  url?: string | null;
+  thumbnailURL?: string | null;
+  filename?: string | null;
+  mimeType?: string | null;
+  filesize?: number | null;
+  width?: number | null;
+  height?: number | null;
+  focalX?: number | null;
+  focalY?: number | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

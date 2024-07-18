@@ -119,14 +119,7 @@ const HeaderContent: React.FC<{ user: User }> = ({ user }) => {
 }
 
 const Header: React.FC = () => {
-  const { user: loggedUser } = useAuth()
-  const [user, setUser] = useState<User | null | undefined>(loggedUser)
-
-  useEffect(() => {
-    if (loggedUser) {
-      setUser(loggedUser)
-    }
-  }, [loggedUser])
+  const { user } = useAuth()
 
   if (!user) {
     return (

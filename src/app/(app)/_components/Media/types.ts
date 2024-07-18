@@ -1,12 +1,12 @@
 import type { ElementType, Ref } from 'react'
 import type { StaticImageData } from 'next/image'
 
-import type { SiteUpload as MediaType } from '@payload-types'
+import type { Logo, ImageCover, Photo } from '@payload-types'
 
 export interface Props {
   src?: StaticImageData // for static media
   alt?: string
-  resource?: string | MediaType // for Payload media
+  resource?: string | Logo | ImageCover | Photo // for Payload media
   size?: string // for NextImage only
   priority?: boolean // for NextImage only
   fill?: boolean // for NextImage only

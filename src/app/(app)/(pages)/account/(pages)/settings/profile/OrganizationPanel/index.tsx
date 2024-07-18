@@ -1,23 +1,26 @@
 'use client'
 
 import { Controller, useForm } from 'react-hook-form'
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { Fragment, useCallback, useEffect, useState } from 'react'
 import Link from 'next/link'
 import { toast } from 'sonner'
 import { useRouter } from 'next/navigation'
 import { zodResolver } from '@hookform/resolvers/zod'
 
-import { Button, FormInputField, Label, Select, Textarea } from '@/components'
-import { LexicalEditor } from '@/components'
+import { Button, EditUpload, FormInputField, Label, Select, Textarea } from '@/components'
 import { Option, OrganizationFieldSchema, OrganizationFormData } from '@/types'
-import { Organization, User } from '@payload-types'
-import { updateOrganization } from '@/actions'
-import { useAuth } from '@/providers'
-import { transformToFrontend, transformToPayload } from '@/utilities/transformFields'
 import { categoriesOptions } from '@/payload/data'
+import { LexicalEditor } from '@/components'
+import { Organization, Logo, ImageCover, User } from '@payload-types'
+import { transformToFrontend } from '@/utilities/transformFields'
+import { uploadImage, updateOrganization } from '@/actions'
+import { useAuth } from '@/providers'
 
 const OrganizationPanel: React.FC<{ user: User }> = ({ user }) => {
+  const { setUser } = useAuth()
   const organization = user?.profile?.value as Organization
+  const organizationLogo = (organization?.logo as Logo) || null
+  const organizationImageCover = (organization?.imageCover as ImageCover) || null
   const router = useRouter()
 
   const {
@@ -26,6 +29,8 @@ const OrganizationPanel: React.FC<{ user: User }> = ({ user }) => {
     reset,
     formState: { errors, isDirty },
     control,
+    setValue,
+    watch,
   } = useForm<OrganizationFormData>({
     resolver: zodResolver(OrganizationFieldSchema),
     defaultValues: {
@@ -48,6 +53,17 @@ const OrganizationPanel: React.FC<{ user: User }> = ({ user }) => {
     },
   })
 
+  const logo = watch('logo') || organizationLogo
+  const imageCover = watch('imageCover') || organizationImageCover
+  const setLogo = useCallback(
+    (value: Logo | null) => setValue('logo', value, { shouldDirty: true }),
+    [setValue],
+  )
+  const setImageCover = useCallback(
+    (value: ImageCover | null) => setValue('imageCover', value, { shouldDirty: true }),
+    [setValue],
+  )
+
   useEffect(() => {
     if (organization === null) {
       router.push(
@@ -69,26 +85,79 @@ const OrganizationPanel: React.FC<{ user: User }> = ({ user }) => {
         richText: organization?.richText || {
           root: { type: '', children: [], direction: null, format: '', indent: 0, version: 0 },
         },
+        logo: organizationLogo || null || undefined,
+        imageCover: organizationImageCover || null || undefined,
       })
     }
-  }, [reset, organization, router])
+  }, [reset, organization, organizationLogo, organizationImageCover, router])
 
   const onSubmit = useCallback(
     async (data: OrganizationFormData) => {
       try {
-        await toast.promise(updateOrganization(data, user), {
-          loading: 'Submitting...',
-          success: message => {
-            return 'Changes saved'
+        await toast.promise(
+          async () => {
+            let logoDoc: Logo | null = null
+            let imageCoverDoc: ImageCover | null = null
+
+            // Check if logo has changed
+            if (logo && logo.id !== organizationLogo?.id) {
+              if (logo.url?.startsWith('data:')) {
+                // Only upload if it's a new base64 image
+                logoDoc = await uploadImage(logo, user, 'logos')
+              }
+            }
+
+            // Check if imageCover has changed
+            if (imageCover && imageCover.id !== organizationImageCover?.id) {
+              if (imageCover.url?.startsWith('data:')) {
+                // Only upload if it's a new base64 image
+                imageCoverDoc = await uploadImage(imageCover, user, 'image-covers')
+              }
+            }
+
+            const updatedData = {
+              ...data,
+              ...(logoDoc ? { logo: logoDoc } : {}),
+              ...(imageCoverDoc ? { imageCover: imageCoverDoc } : {}),
+            }
+
+            await updateOrganization(updatedData, user)
+
+            setUser({
+              ...user,
+              profile: {
+                relationTo: 'organizations',
+                value: {
+                  ...(user.profile?.value as Organization),
+                  title: data.title,
+                  description: data.description,
+                  richText: data.richText,
+                  location: data.location,
+                  phone: data.phone,
+                  url: data.url,
+                  vatId: data.vatId,
+                  logo: logo && logo.id !== organizationLogo?.id ? logoDoc : organizationLogo,
+                  imageCover:
+                    imageCover && imageCover.id !== organizationImageCover?.id
+                      ? imageCoverDoc
+                      : organizationImageCover,
+                },
+              },
+            })
+
+            router.push('/account')
           },
-          error: message => `${message}`,
-          richColors: true,
-        })
+          {
+            loading: 'Updating organization...',
+            success: 'Organization updated successfully',
+            error: 'Error updating organization',
+          },
+        )
       } catch (e) {
-        toast.error('Error submitting job')
+        console.error('Error in onSubmit:', e)
       }
     },
-    [user],
+    [user, setUser, logo, imageCover, organizationLogo, organizationImageCover, router],
   )
 
   return (
@@ -99,11 +168,28 @@ const OrganizationPanel: React.FC<{ user: User }> = ({ user }) => {
           <h2 className="mb-1 text-xl font-bold leading-snug text-slate-800">
             Organization Profile
           </h2>
-          <div className="text-sm">
+          <div className="mt-4 space-y-4 sm:grid sm:items-center sm:gap-2 sm:space-y-0 lg:grid-cols-3">
+            <EditUpload
+              name="logo"
+              image={logo}
+              setImage={setLogo}
+              minWidth={160}
+              minHeight={160}
+            />
+            <EditUpload
+              name="image cover"
+              image={imageCover}
+              setImage={setImageCover}
+              minWidth={1200}
+              minHeight={224}
+              className="lg:col-span-2"
+            />
+          </div>
+          <div className="mt-4 text-sm">
             Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt
             mollit.
           </div>
-          <div className="mt-4 grid-cols-3 sm:grid sm:items-center sm:gap-4">
+          <div className="mt-4 grid-cols-3 space-y-4 sm:grid sm:items-center sm:gap-2 sm:space-y-0">
             <div>
               <Label>Organization Name</Label>
               <FormInputField
@@ -202,7 +288,7 @@ const OrganizationPanel: React.FC<{ user: User }> = ({ user }) => {
       </div>
       <footer>
         <div className="flex flex-col border-t border-slate-200 px-6 py-5">
-          <div className="flex gap-4 self-end">
+          <div className="flex gap-2 space-y-4 self-end sm:space-y-0">
             <Link href="/account">
               <Button type="button" variant="outline">
                 Cancel

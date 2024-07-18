@@ -419,6 +419,7 @@ const JobsEditView: React.FC<Partial<JobFormData> & JobsEditViewProps> = formDat
                         {...field}
                         rows={3}
                         maxLength={140}
+                        disabled={published}
                       />
                     )}
                   />

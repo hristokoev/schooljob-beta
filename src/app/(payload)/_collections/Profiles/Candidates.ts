@@ -97,7 +97,7 @@ export const Candidates: CollectionConfig = {
             {
               name: 'photo',
               type: 'upload',
-              relationTo: 'site-uploads',
+              relationTo: 'photos',
               access: {
                 read: ARCHIVED,
               }

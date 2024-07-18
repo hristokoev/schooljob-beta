@@ -1,6 +1,5 @@
 export * from './applications'
 export * from './candidates'
-export * from './jobCategories'
 export * from './jobs'
 export * from './media'
 export * from './organizations'

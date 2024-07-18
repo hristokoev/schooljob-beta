@@ -25,7 +25,7 @@ export const Image: React.FC<MediaProps> = props => {
   let src: StaticImageData | string = srcFromProps || ''
 
   if (!src && resource && typeof resource !== 'string') {
-    const { width: fullWidth, height: fullHeight, filename: fullFilename } = resource
+    const { width: fullWidth, height: fullHeight, filename: fullFilename, url: fullUrl } = resource
 
     width = fullWidth ?? undefined
     height = fullHeight ?? undefined
@@ -33,7 +33,7 @@ export const Image: React.FC<MediaProps> = props => {
 
     const filename = fullFilename
 
-    src = `${process.env.NEXT_PUBLIC_SERVER_URL}/api/site-uploads/file/${filename}`
+    src = `${process.env.NEXT_PUBLIC_SERVER_URL}${fullUrl}`
   }
 
   return (

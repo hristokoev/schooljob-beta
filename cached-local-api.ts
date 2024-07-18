@@ -16,9 +16,10 @@ export const { cachedPayloadPlugin, getCachedPayload } = buildCachedPayload({
     revalidateTag,
     options: {},
     unstable_cache,
+    /*
+        Temporarily enable the simple cache strategy
+        TODO: Update when a fix is released for this issue:
+        https://github.com/r1tsuu/payload-enchants/issues/86
+    */
+    useSimpleCacheStrategy: true,
 });
-
-/*
-    TODO: Update when a fix is released for this issue:
-    https://github.com/r1tsuu/payload-enchants/issues/86
-*/

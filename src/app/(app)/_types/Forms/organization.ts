@@ -1,9 +1,30 @@
+import { ImageCover, Logo } from "@payload-types"
 import { z, ZodType } from "zod"
 
 type Option = {
     label: string
     value: string
 }
+
+const ImageSchema = z.object({
+    id: z.string(),
+    createdBy: z.string().optional(),
+    prefix: z.string().nullable().optional(),
+    updatedAt: z.string(),
+    createdAt: z.string(),
+    url: z.string().nullable().optional(),
+    thumbnailURL: z.string().nullable().optional(),
+    filename: z.string().nullable().optional(),
+    mimeType: z.string().nullable().optional(),
+    filesize: z.number().nullable().optional(),
+    width: z.number().nullable().optional(),
+    height: z.number().nullable().optional(),
+    focalX: z.number().nullable().optional(),
+    focalY: z.number().nullable().optional(),
+})
+
+const LogoSchema = ImageSchema
+const ImageCoverSchema = ImageSchema
 
 type OrganizationFormData = {
     title: string
@@ -15,19 +36,21 @@ type OrganizationFormData = {
     description?: string
     richText?: {
         root: {
-            type: string
+            type: string;
             children: {
-                type: string
-                version: number
-                [k: string]: unknown
-            }[]
-            direction: ('ltr' | 'rtl') | null
-            format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | ''
-            indent: number
-            version: number
-        }
-        [k: string]: unknown
-    }
+                type: string;
+                version: number;
+                [k: string]: unknown;
+            }[];
+            direction: ('ltr' | 'rtl') | null;
+            format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+            indent: number;
+            version: number;
+        };
+        [k: string]: unknown;
+    } | null,
+    logo?: Logo | null
+    imageCover?: ImageCover | null
 }
 
 const OrganizationFieldSchema: ZodType<OrganizationFormData> = z
@@ -61,6 +84,8 @@ const OrganizationFieldSchema: ZodType<OrganizationFormData> = z
                 version: z.coerce.number(),
             }).passthrough(),
         }).optional(),
+        logo: LogoSchema.optional(),
+        imageCover: ImageCoverSchema.optional(),
     })
 
 

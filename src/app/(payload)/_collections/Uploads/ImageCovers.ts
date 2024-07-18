@@ -5,14 +5,14 @@ import { obfuscateFilename } from './hooks/obfuscateFilename'
 import { populateCreatedBy } from '@/payload/hooks'
 import { createdBy } from '@/payload/fields'
 
-export const SiteUploads: CollectionConfig = {
-  slug: 'site-uploads',
+export const ImageCovers: CollectionConfig = {
+  slug: 'image-covers',
   labels: {
-    singular: 'File',
-    plural: 'Files',
+    singular: 'Image Cover',
+    plural: 'Image Covers',
   },
   admin: {
-    group: 'SchoolJob',
+    group: 'Files',
     useAsTitle: 'filename',
     // hidden: ({ user }) => user?.role === 'organization' || user?.role === 'candidate',
   },
@@ -28,10 +28,14 @@ export const SiteUploads: CollectionConfig = {
     delete: SA,
   },
   upload: {
-
-    staticDir: '/site-uploads',
-    mimeTypes: ['image/jpeg', 'image/png'],
+    adminThumbnail: 'thumbnail',
+    mimeTypes: ['image/*'],
     crop: false,
+    resizeOptions: {
+      fit: 'cover',
+      width: 1200,
+      height: 224,
+    }
   },
   fields: [
     createdBy

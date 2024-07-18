@@ -21,9 +21,11 @@ import {
   Applications,
   Candidates,
   Cvs,
+  ImageCovers,
   Jobs,
+  Logos,
   Organizations,
-  SiteUploads,
+  Photos,
   Users,
 } from '@/payload/collections'
 import { Data } from '@/payload/globals'
@@ -59,8 +61,10 @@ export default buildConfig({
     Candidates,
     Applications,
     Cvs,
-    SiteUploads,
     Agreements,
+    Logos,
+    ImageCovers,
+    Photos,
     Users,
   ],
   globals: [Data],
@@ -106,11 +110,10 @@ export default buildConfig({
       },
       bucket: process.env.R2_SITE_UPLOADS_BUCKET || '',
       collections: {
-        'site-uploads': {
-        },
-        cvs: {
-          prefix: 'cvs',
-        },
+        cvs: { prefix: 'cvs' },
+        logos: { prefix: 'logos' },
+        'image-covers': { prefix: 'covers' },
+        photos: { prefix: 'photos' },
       },
     }),
   ],

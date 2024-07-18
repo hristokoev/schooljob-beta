@@ -1,7 +1,7 @@
 import React from 'react'
 import Link from 'next/link'
 
-import { Application, SiteUpload } from '@payload-types'
+import { Application, Cv } from '@payload-types'
 import { Button } from '@/components'
 import { convertFilesize } from '@/utilities/convertFilesize'
 
@@ -68,12 +68,12 @@ const ApplicationsEditView: React.FC<Application> = application => {
                   <div className="text-left font-medium text-slate-800">Curriculum Vitae (CV)</div>
                 </td>
                 <td className="block w-full py-0.5 md:table-cell md:w-auto md:py-2">
-                  {application && <div className="text-left">{(cv as SiteUpload).filename}</div>}
+                  {application && <div className="text-left">{(cv as Cv).filename}</div>}
                 </td>
                 <td className="block w-full py-0.5 md:table-cell md:w-auto md:py-2">
                   {application && (
                     <div className="text-left font-medium">
-                      {convertFilesize((cv as SiteUpload).filesize ?? 0)}
+                      {convertFilesize((cv as Cv).filesize ?? 0)}
                     </div>
                   )}
                 </td>
@@ -85,7 +85,7 @@ const ApplicationsEditView: React.FC<Application> = application => {
                         variant="link"
                       >
                         <a
-                          href={`/api/cvs/file/${(cv as SiteUpload).filename}`}
+                          href={`/api/cvs/file/${(cv as Cv).filename}`}
                           target="_blank"
                           rel="noreferrer"
                         >

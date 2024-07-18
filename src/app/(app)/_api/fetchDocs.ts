@@ -1,4 +1,4 @@
-import { APPLICATIONS, JOB_CATEGORIES, JOBS, ORGANIZATIONS } from '@/graphql'
+import { JOBS, ORGANIZATIONS } from '@/graphql'
 import { type Config } from '@payload-types'
 import { GRAPHQL_API_URL } from './shared'
 
@@ -9,50 +9,14 @@ const queryMap = {
     query: JOBS,
     key: 'Jobs',
   },
-  'job-categories': {
-    query: JOB_CATEGORIES,
-    key: 'JobCategories',
-  },
   organizations: {
     query: ORGANIZATIONS,
     key: 'Organizations',
   },
-  applications: {
-    query: APPLICATIONS,
-    key: 'Applications',
-  },
-  candidates: {
-    query: '',
-    key: 'Candidates'
-  },
-  cvs: {
-    query: '',
-    key: 'Cvs'
-  },
-  'site-uploads': {
-    query: '',
-    key: 'SiteUploads'
-  },
-  agreements: {
-    query: '',
-    key: 'Agreements'
-  },
-  users: {
-    query: '',
-    key: 'Users'
-  },
-  'payload-preferences': {
-    query: '',
-    key: 'PayloadPreferences'
-  },
-  'payload-migrations': {
-    query: '',
-    key: 'PayloadMigrations'
-  },
 }
 
 export const fetchDocs = async <T>(
-  collection: keyof Config['collections'],
+  collection: 'jobs' | 'organizations',
   variables?: Record<string, unknown>,
 ): Promise<T[]> => {
   if (!queryMap[collection]) throw new Error(`Collection ${collection} not found`)

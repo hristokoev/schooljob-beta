@@ -1,2 +1,4 @@
 export { Cvs } from './Cvs'
-export { SiteUploads } from './SiteUploads'
+export { Logos } from './Logos'
+export { Photos } from './Photos'
+export { ImageCovers } from './ImageCovers'
