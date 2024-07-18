@@ -20,6 +20,7 @@ import { convertValue, formatDate, renderSalary } from '@/utilities'
 import { getDocument } from '@/utilities/getDocument'
 import { Job, Organization } from '@payload-types'
 import { JobsList } from '@/blocks'
+import { ApplyForm } from './ApplyForm'
 
 const JobBlock: React.FC<{ publicId: string; slug: string }> = async ({ publicId, slug }) => {
   const depth = 2
@@ -95,7 +96,7 @@ const JobBlock: React.FC<{ publicId: string; slug: string }> = async ({ publicId
             <Fragment>
               <div className="mt-6">
                 <div className="flex items-center justify-between">
-                  {/* <ApplyForm jobId={id} organizationId={organization.id} /> */}
+                  <ApplyForm jobId={id} organizationId={organization.id} />
                   <div className="flex items-center">
                     <div className="mb-2 text-sm italic text-slate-500">{formattedDate}</div>
                   </div>

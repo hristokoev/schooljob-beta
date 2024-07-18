@@ -10,7 +10,6 @@ const InputFile = React.forwardRef<HTMLInputElement, InputFileProps>(
   ({ id, file, ...props }, ref) => {
     return (
       <Fragment>
-        <input type="file" accept=".pdf" className="hidden" id={id} ref={ref} {...props} />
         <label htmlFor={id} className="cursor-pointer">
           <div className="rounded-md border border-slate-300 bg-white transition duration-100 ease-in-out hover:border-slate-300 hover:bg-slate-50">
             <div className="flex h-full gap-5 p-5">
@@ -19,9 +18,16 @@ const InputFile = React.forwardRef<HTMLInputElement, InputFileProps>(
               </div>
               <div className="flex grow flex-col justify-center overflow-x-hidden">
                 <p className="inline font-semibold leading-snug">
-                  {file ? file.name.replace(/C:\\fakepath\\/i, '') : 'Upload your CV'}
+                  <input
+                    type="file"
+                    accept=".pdf"
+                    id={id}
+                    ref={ref}
+                    {...props}
+                    className="w-full cursor-pointer text-sm text-slate-500 file:hidden"
+                  />
                 </p>
-                <p>Click to upload your CV</p>
+                {!file && <span className="text-slate-400">Click to upload</span>}
               </div>
             </div>
           </div>
