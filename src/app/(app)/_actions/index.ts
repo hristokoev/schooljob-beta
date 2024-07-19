@@ -1,5 +1,6 @@
 export { createApplication } from './createApplication'
 export { createOrUpdateJob } from './createOrUpdateJob'
+export { uploadCv } from './uploadCv'
 export { uploadImage } from './uploadImage'
 export { updateCandidate } from './updateCandidate'
 export { updateOrganization } from './updateOrganization'

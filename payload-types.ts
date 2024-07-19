@@ -296,7 +296,7 @@ export interface Application {
   phone?: string | null;
   location?: string | null;
   coverLetter?: string | null;
-  cv?: string | Cv | null;
+  cv: string | Cv;
   agreements?: (string | Agreement)[] | null;
   status: 'pending' | 'accepted' | 'rejected';
   fullName?: string | null;

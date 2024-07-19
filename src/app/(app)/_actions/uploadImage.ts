@@ -6,7 +6,7 @@ import { Organization, Candidate, User, Logo, ImageCover, Photo, Config } from '
 import { File as PayloadFile } from 'payload'
 import sharp from 'sharp'
 
-export const uploadImage = async (file: Logo | ImageCover, user: User | null | undefined, collection: keyof Config['collections']): Promise<Logo | ImageCover | Photo | null> => {
+export const uploadImage = async (imageDoc: Logo | ImageCover, user: User | null | undefined, collection: keyof Config['collections']): Promise<Logo | ImageCover | Photo | null> => {
     const id = (user?.profile?.value as Organization | Candidate).id as string
 
     const payload = await getPayloadHMR({
@@ -14,7 +14,7 @@ export const uploadImage = async (file: Logo | ImageCover, user: User | null | u
     })
 
     // Decode base64 string
-    const matches = file.url?.match(/^data:([A-Za-z-+\/]+);base64,(.+)$/);
+    const matches = imageDoc.url?.match(/^data:([A-Za-z-+\/]+);base64,(.+)$/);
     if (!matches || matches.length !== 3) {
         throw new Error('Invalid base64 string');
     }
@@ -24,18 +24,18 @@ export const uploadImage = async (file: Logo | ImageCover, user: User | null | u
 
     // Use sharp to resize and convert the image to JPEG
     const resizedBuffer = await sharp(buffer)
-        .resize(file.width, file.height)
+        .resize(imageDoc.width, imageDoc.height)
         .jpeg()
         .toBuffer();
 
     // Create a File object with the resized JPEG image
-    const fileFile = new File([resizedBuffer], 'file.jpg', { type: 'image/jpeg' });
+    const file = new File([resizedBuffer], 'image.jpg', { type: 'image/jpeg' });
 
     const fileData: PayloadFile = {
         data: resizedBuffer,
-        mimetype: fileFile.type,
-        name: fileFile.name,
-        size: fileFile.size,
+        mimetype: file.type,
+        name: file.name,
+        size: file.size,
     };
 
 
@@ -44,7 +44,7 @@ export const uploadImage = async (file: Logo | ImageCover, user: User | null | u
             collection: collection as ('image-covers' | 'logos' | 'photos'),
             file: fileData,
             data: {
-                createdBy: id
+                createdBy: user?.id
             },
             overrideAccess: false,
             user

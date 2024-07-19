@@ -200,7 +200,7 @@ export const Applications: CollectionConfig = {
         read: ARCHIVED,
         update: () => false,
       },
-      // required: true,
+      required: true,
     },
     {
       name: 'agreements',

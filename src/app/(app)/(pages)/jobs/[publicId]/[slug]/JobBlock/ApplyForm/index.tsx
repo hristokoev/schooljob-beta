@@ -9,9 +9,9 @@ import { Controller, useForm } from 'react-hook-form'
 import { ApplicationFieldSchema, ApplicationFormData } from '@/types'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { toast } from 'sonner'
-import { Cv } from '@payload-types'
+import { Candidate, Cv } from '@payload-types'
 import { useAuth } from '@/providers'
-import { createApplication } from '@/actions'
+import { createApplication, uploadCv } from '@/actions'
 
 interface ApplyFormProps {
   jobId: string
@@ -33,12 +33,22 @@ const ApplyForm = ({ jobId, organizationId }: ApplyFormProps) => {
     resolver: zodResolver(ApplicationFieldSchema),
   })
 
+  const profile = (user?.profile?.value as Candidate) || {}
+
   const onSubmit = useCallback(
     async (data: ApplicationFormData) => {
       try {
         toast.promise(
           async () => {
-            createApplication(data, user)
+            const cvDoc = await uploadCv(data.cv, data.job, data.organization, user)
+
+            createApplication(
+              {
+                ...data,
+                cv: cvDoc?.id,
+              },
+              user,
+            )
           },
           {
             loading: 'Sending...',
@@ -57,8 +67,13 @@ const ApplyForm = ({ jobId, organizationId }: ApplyFormProps) => {
     reset({
       job: jobId,
       organization: organizationId,
+      firstName: profile.firstName || '',
+      lastName: profile.lastName || '',
+      email: profile.email || '',
+      location: profile.location || '',
+      phone: profile.phone || '',
     })
-  }, [jobId, organizationId, reset])
+  }, [jobId, organizationId, profile, reset])
 
   return (
     <Fragment>
@@ -90,7 +105,7 @@ const ApplyForm = ({ jobId, organizationId }: ApplyFormProps) => {
             </DialogTitle>
             <form className="mt-4 grid w-full gap-4" onSubmit={handleSubmit(onSubmit)}>
               <div className="grid gap-2 md:grid-cols-2">
-                <div className="flex flex-col gap-2">
+                <div className="flex flex-col">
                   <Label className="text-md font-bold">
                     Name <span className="text-red-500">*</span>
                   </Label>
@@ -102,7 +117,7 @@ const ApplyForm = ({ jobId, organizationId }: ApplyFormProps) => {
                     className="w-full"
                   />
                 </div>
-                <div className="flex flex-col gap-2">
+                <div className="flex flex-col">
                   <Label className="text-md font-bold">
                     Surname <span className="text-red-500">*</span>
                   </Label>
@@ -116,7 +131,7 @@ const ApplyForm = ({ jobId, organizationId }: ApplyFormProps) => {
                 </div>
               </div>
               <div className="grid gap-2 md:grid-cols-2">
-                <div className="flex flex-col gap-2">
+                <div className="flex flex-col">
                   <Label className="text-md font-bold">
                     Email <span className="text-red-500">*</span>
                   </Label>
@@ -129,7 +144,7 @@ const ApplyForm = ({ jobId, organizationId }: ApplyFormProps) => {
                   />
                 </div>
 
-                <div className="flex flex-col gap-2">
+                <div className="flex flex-col">
                   <Label className="text-md font-bold">
                     <span>Phone</span>
                   </Label>
@@ -143,7 +158,7 @@ const ApplyForm = ({ jobId, organizationId }: ApplyFormProps) => {
                 </div>
               </div>
 
-              <div className="flex flex-col gap-2">
+              <div className="flex flex-col">
                 <Label className="text-md font-bold">
                   <span>Location</span>
                 </Label>
@@ -156,7 +171,7 @@ const ApplyForm = ({ jobId, organizationId }: ApplyFormProps) => {
                 />
               </div>
 
-              <div className="flex flex-col gap-2">
+              <div className="flex flex-col">
                 <Label className="text-md font-bold">
                   <span>Cover Letter</span>
                 </Label>
@@ -169,11 +184,21 @@ const ApplyForm = ({ jobId, organizationId }: ApplyFormProps) => {
                 />
               </div>
 
-              {/* <Label className="text-md font-bold">
+              <Label className="text-md font-bold">
                 Curriculum Vitae (CV) <span className="text-red-500">*</span>
-              </Label> */}
-              {/* <InputFile /> */}
-
+              </Label>
+              <Controller
+                name="cv"
+                control={control}
+                render={({ field: { onChange, value, ...fieldProps } }) => (
+                  <InputFile
+                    {...fieldProps}
+                    file={value}
+                    error={errors.cv}
+                    onChange={event => onChange(event.target.files && event.target.files[0])}
+                  />
+                )}
+              />
               <Button type="submit" className="h-12">
                 Submit
                 {/* {loading && <LoadingIcon className="ml-2 size-4" />} */}

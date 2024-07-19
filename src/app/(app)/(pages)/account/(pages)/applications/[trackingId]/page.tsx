@@ -41,6 +41,10 @@ export default async function Application({ params, searchParams }: Props) {
     depth: 1,
   })
 
+  if (!data.docs[0]) {
+    return <Message error message="Application not found" />
+  }
+
   const handleAction = async (status: 'pending' | 'accepted' | 'rejected' | undefined) => {
     try {
       await payload.update({

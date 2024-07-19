@@ -1,13 +1,17 @@
 import { ArrowUpTrayIcon } from '@heroicons/react/24/solid'
 import React, { Fragment } from 'react'
 
+import { GenericFormData } from '@/types'
+import { FieldError } from 'react-hook-form'
+
 interface InputFileProps extends React.InputHTMLAttributes<HTMLInputElement> {
   id?: string
   file?: File
+  error?: FieldError
 }
 
 const InputFile = React.forwardRef<HTMLInputElement, InputFileProps>(
-  ({ id, file, ...props }, ref) => {
+  ({ id, file, error, ...props }, ref) => {
     return (
       <Fragment>
         <label htmlFor={id} className="cursor-pointer">
@@ -32,6 +36,7 @@ const InputFile = React.forwardRef<HTMLInputElement, InputFileProps>(
             </div>
           </div>
         </label>
+        <span className="text-sm text-red-500">{error?.message}</span>
       </Fragment>
     )
   },
