@@ -1,14 +1,15 @@
 'use server'
 
-import configPromise from '@payload-config'
 import { getPayloadHMR } from '@payloadcms/next/utilities'
 
-import { getMeUser } from '@/utilities/getMeUser'
 import { Candidate, User } from '@payload-types'
+import configPromise from '@payload-config'
 
-export const updateCandidate = async (data: any) => {
-  const { user } = await getMeUser()
-  const { id } = user?.profile?.value as Candidate
+import { CandidateFormData } from '@/types'
+
+export const updateCandidate = async (data: CandidateFormData, user: User | null | undefined) => {
+  const id = (user?.profile?.value as Candidate).id as string
+
   const payload = await getPayloadHMR({
     config: configPromise,
   })
@@ -17,15 +18,20 @@ export const updateCandidate = async (data: any) => {
     const doc = await payload.update({
       collection: 'candidates',
       id,
-      data,
+      data: {
+        location: data.location,
+        phone: data.phone,
+        bio: data.bio,
+        photo: data.photo?.id,
+      },
+      overrideAccess: false,
       user
     })
 
     if (!doc) {
-      throw new Error('Error updating candidate')
+      throw new Error('Error updating organization')
     }
 
     return doc
   }
-
 }

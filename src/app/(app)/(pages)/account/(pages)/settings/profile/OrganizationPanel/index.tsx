@@ -1,7 +1,7 @@
 'use client'
 
 import { Controller, useForm } from 'react-hook-form'
-import React, { Fragment, useCallback, useEffect, useState } from 'react'
+import React, { useCallback, useEffect } from 'react'
 import Link from 'next/link'
 import { toast } from 'sonner'
 import { useRouter } from 'next/navigation'
@@ -148,9 +148,9 @@ const OrganizationPanel: React.FC<{ user: User }> = ({ user }) => {
             router.push('/account')
           },
           {
-            loading: 'Updating organization...',
-            success: 'Organization updated successfully',
-            error: 'Error updating organization',
+            loading: 'Updating profile...',
+            success: 'Profile updated successfully',
+            error: 'Error updating profile',
           },
         )
       } catch (e) {

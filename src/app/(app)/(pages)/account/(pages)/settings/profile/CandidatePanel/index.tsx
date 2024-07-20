@@ -7,24 +7,35 @@ import { toast } from 'sonner'
 import { useRouter } from 'next/navigation'
 import { zodResolver } from '@hookform/resolvers/zod'
 
-import { Button, Input, Label, Textarea } from '@/components'
+import { Button, EditUpload, FormInputField, Label, Textarea } from '@/components'
 import { CandidateFieldSchema, CandidateFormData } from '@/types'
-import { updateCandidate } from 'src/app/(app)/_actions'
+import { User, Candidate, Photo } from '@payload-types'
+import { uploadImage, updateCandidate } from '@/actions'
 import { useAuth } from '@/providers'
-import { Candidate, User } from '@payload-types'
 
 const CandidatePanel: React.FC<{ user: User }> = ({ user }) => {
+  const { setUser } = useAuth()
   const candidate = user?.profile?.value as Candidate
+  const candidatePhoto = (candidate?.photo as Photo) || null
   const router = useRouter()
 
   const {
     handleSubmit,
+    register,
     reset,
     formState: { errors, isDirty },
     control,
+    setValue,
+    watch,
   } = useForm<CandidateFormData>({
     resolver: zodResolver(CandidateFieldSchema),
   })
+
+  const photo = watch('photo') || candidatePhoto
+  const setPhoto = useCallback(
+    (value: Photo | null) => setValue('photo', value, { shouldDirty: true }),
+    [setValue],
+  )
 
   useEffect(() => {
     if (candidate === null) {
@@ -37,79 +48,155 @@ const CandidatePanel: React.FC<{ user: User }> = ({ user }) => {
 
     if (candidate) {
       reset({
-        phone: candidate.phone || '',
-        location: candidate.location || '',
+        firstName: candidate.firstName,
+        lastName: candidate.lastName,
         bio: candidate.bio || '',
+        location: candidate.location || '',
+        phone: candidate.phone || '',
+        photo: candidatePhoto || null || undefined,
       })
     }
-  }, [reset, candidate, router])
+  }, [reset, candidate, candidatePhoto, router])
 
-  const onSubmit = useCallback(async (data: CandidateFormData) => {
-    try {
-      await toast.promise(updateCandidate(data), {
-        loading: 'Submitting...',
-        success: message => {
-          return 'Changes saved'
-        },
-        error: message => `${message}`,
-        richColors: true,
-      })
-    } catch (e) {
-      toast.error('Error saving changes')
-    }
-  }, [])
+  const onSubmit = useCallback(
+    async (data: CandidateFormData) => {
+      try {
+        await toast.promise(
+          async () => {
+            let photoDoc: Photo | null = null
+
+            // Check if logo has changed
+            if (photo && photo.id !== candidatePhoto?.id) {
+              if (photo.url?.startsWith('data:')) {
+                // Only upload if it's a new base64 image
+                photoDoc = await uploadImage(photo, user, 'photos')
+              }
+            }
+
+            const updatedData = {
+              ...data,
+              ...(photoDoc ? { photo: photoDoc } : {}),
+            }
+
+            await updateCandidate(updatedData, user)
+
+            setUser({
+              ...user,
+              profile: {
+                relationTo: 'candidates',
+                value: {
+                  ...(user.profile?.value as Candidate),
+                  firstName: data.firstName,
+                  lastName: data.lastName,
+                  bio: data.bio,
+                  location: data.location,
+                  phone: data.phone,
+                  photo: photo && photo.id !== candidatePhoto?.id ? photoDoc : candidatePhoto,
+                },
+              },
+            })
+
+            router.push('/account')
+          },
+          {
+            loading: 'Updating profile...',
+            success: 'Profile updated successfully',
+            error: 'Error updating profile',
+          },
+        )
+      } catch (e) {
+        console.error('Error in onSubmit:', e)
+      }
+    },
+    [user, setUser, photo, candidatePhoto, router],
+  )
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="grow">
       <div className="space-y-6 p-6">
         <h2 className="mb-5 text-2xl font-bold text-slate-800">My Profile</h2>
         <section>
-          <h2 className="mb-1 text-xl font-bold leading-snug text-slate-800">Candidate Profile</h2>
-          <div className="text-sm">
+          <h2 className="mb-1 text-xl font-bold leading-snug text-slate-800">
+            Organization Profile
+          </h2>
+          <div className="mt-4 space-y-4 sm:grid sm:items-center sm:gap-2 sm:space-y-0 lg:grid-cols-3">
+            <EditUpload
+              name="photo"
+              image={photo}
+              setImage={setPhoto}
+              minWidth={160}
+              minHeight={160}
+            />
+          </div>
+          <div className="mt-4 text-sm">
             Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt
             mollit.
           </div>
-          <div className="mt-4 grid-cols-3 sm:grid sm:items-center sm:gap-4">
+          <div className="mt-4 grid-cols-2 space-y-4 sm:grid sm:items-center sm:gap-2 sm:space-y-0">
             <div>
-              <Label>Phone</Label>
-              <Controller
-                name="phone"
-                control={control}
-                render={({ field }) => <Input className="w-full" {...field} />}
+              <Label>First Name</Label>
+              <FormInputField
+                type="text"
+                name="firstName"
+                register={register}
+                error={errors.firstName}
+                className="w-full"
+                disabled
+              />
+            </div>
+            <div>
+              <Label>Last Name</Label>
+              <FormInputField
+                type="text"
+                name="lastName"
+                register={register}
+                error={errors.lastName}
+                className="w-full"
+                disabled
               />
             </div>
             <div>
               <Label>Location</Label>
-              <Controller
+              <FormInputField
+                type="text"
                 name="location"
-                control={control}
-                render={({ field }) => <Input className="w-full" {...field} />}
+                register={register}
+                error={errors.location}
+                className="w-full"
+              />
+            </div>
+            <div>
+              <Label>Phone</Label>
+              <FormInputField
+                type="text"
+                name="phone"
+                register={register}
+                error={errors.phone}
+                className="w-full"
               />
             </div>
           </div>
-          <div className="mt-4 grid-cols-3 sm:grid sm:items-center sm:gap-4">
-            <div className="col-span-2">
-              <Label>Bio</Label>
-              <Controller
-                name="bio"
-                control={control}
-                render={({ field }) => (
-                  <Textarea className="w-full" {...field} rows={5} maxLength={500} />
-                )}
-              />
-            </div>
+          <div className="mt-4">
+            <Label>Bio</Label>
+            <Controller
+              name="bio"
+              control={control}
+              render={({ field }) => (
+                <Textarea className="w-full" {...field} rows={3} maxLength={140} />
+              )}
+            />
           </div>
         </section>
       </div>
       <footer>
         <div className="flex flex-col border-t border-slate-200 px-6 py-5">
-          <div className="flex gap-4 self-end">
+          <div className="flex gap-2 space-y-4 self-end sm:space-y-0">
             <Link href="/account">
               <Button type="button" variant="outline">
                 Cancel
               </Button>
             </Link>
-            <Button disabled={!isDirty}>Save Changes</Button>{' '}
+            <Button disabled={!isDirty}>Save Changes</Button>
           </div>
         </div>
       </footer>

@@ -10,6 +10,7 @@ const sizeInMB = (sizeInBytes: number, decimalsNum = 2) => {
 }
 
 type ApplicationFormData = {
+    status: 'pending' | 'approved' | 'rejected',
     job: string
     organization: string
     firstName: string
@@ -24,6 +25,7 @@ type ApplicationFormData = {
 
 const ApplicationFieldSchema: ZodType<ApplicationFormData> = z
     .object({
+        status: z.enum(['pending', 'approved', 'rejected']),
         job: z.string(),
         organization: z.string(),
         firstName: z.string().min(2, { message: 'First name is required' }),
