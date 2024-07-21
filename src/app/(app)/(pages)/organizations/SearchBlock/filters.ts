@@ -5,6 +5,7 @@ const filters: Filter[] = [
     {
         slug: 'categories',
         text: 'Category',
+        searchable: true,
         options: categoriesOptions,
     },
 ]

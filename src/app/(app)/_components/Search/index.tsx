@@ -7,6 +7,7 @@ import { Button, Hr, Input, Select } from '@/components'
 type Filter = {
   slug: string
   text: string
+  searchable: boolean
   options: { label: string; value: string }[]
 }
 
@@ -20,13 +21,7 @@ const Search: React.FC<{ filters: Filter[]; path: any }> = ({ filters, path }) =
 
   return (
     <form className="flex flex-col gap-4 bg-white" onSubmit={handleSubmit}>
-      <div className="flex w-full items-center">
-        <Input
-          onClick={() => setIsOpen(true)}
-          placeholder="Search For..."
-          className="w-full border-2 border-slate-200 bg-slate-100 transition-all duration-150 ease-in-out focus:border-2 focus:border-royal-blue-500 focus:bg-white focus:shadow-xl focus:shadow-royal-blue-500/25"
-        />
-      </div>
+      <Input className="flex w-full cursor-pointer flex-row items-center rounded-sm border border-slate-300 bg-slate-200 py-3 pl-3 text-sm font-semibold text-slate-500 transition-colors hover:bg-slate-300/40" />
       <div className="grid gap-2 lg:grid-cols-6">
         <div className="grid gap-2 md:grid-cols-5 lg:col-span-5">
           {filtersToDisplay.map(filter => (
@@ -37,7 +32,7 @@ const Search: React.FC<{ filters: Filter[]; path: any }> = ({ filters, path }) =
                 options={filter.options}
                 placeholder={filter.text}
                 isClearable
-                isSearchable={false}
+                isSearchable={filter.searchable}
               />
             </div>
           ))}
