@@ -33,8 +33,6 @@ const ApplyForm = ({ jobId, organizationId }: ApplyFormProps) => {
     resolver: zodResolver(ApplicationFieldSchema),
   })
 
-  const profile = (user?.profile?.value as Candidate) || {}
-
   const onSubmit = useCallback(
     async (data: ApplicationFormData) => {
       try {
@@ -64,7 +62,9 @@ const ApplyForm = ({ jobId, organizationId }: ApplyFormProps) => {
   )
 
   useEffect(() => {
+    const profile = (user?.profile?.value as Candidate) || {}
     reset({
+      status: 'pending',
       job: jobId,
       organization: organizationId,
       firstName: profile.firstName || '',
@@ -73,7 +73,7 @@ const ApplyForm = ({ jobId, organizationId }: ApplyFormProps) => {
       location: profile.location || '',
       phone: profile.phone || '',
     })
-  }, [jobId, organizationId, profile, reset])
+  }, [jobId, organizationId, user, reset])
 
   return (
     <Fragment>
