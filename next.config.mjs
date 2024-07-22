@@ -15,8 +15,18 @@ const nextConfig = {
       },
       {
         protocol: 'https',
-        hostname: 'schooljob.coolify.koev.cz',
-        pathname: '/site-uploads/**',
+        hostname: 'schooljob-beta.coolify.koev.cz',
+        pathname: '/logos/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'schooljob-beta.coolify.koev.cz',
+        pathname: '/image-covers/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'schooljob-beta.coolify.koev.cz',
+        pathname: '/photos/**',
       },
     ],
   },
