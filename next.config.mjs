@@ -2,7 +2,6 @@ import { withPayload } from '@payloadcms/next/withPayload'
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // Your Next.js config here
   experimental: {
     reactCompiler: false,
   },
@@ -16,17 +15,17 @@ const nextConfig = {
       {
         protocol: 'https',
         hostname: 'schooljob-beta.coolify.koev.cz',
-        pathname: '/logos/**',
+        pathname: '/api/logos/file/**',
       },
       {
         protocol: 'https',
         hostname: 'schooljob-beta.coolify.koev.cz',
-        pathname: '/image-covers/**',
+        pathname: '/api/image-covers/file/**',
       },
       {
         protocol: 'https',
         hostname: 'schooljob-beta.coolify.koev.cz',
-        pathname: '/photos/**',
+        pathname: '/api/photos/file/**',
       },
     ],
   },
