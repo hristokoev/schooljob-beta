@@ -1,6 +1,7 @@
 'use client'
 
 import React, { Fragment, useState } from 'react'
+import { useTranslations } from 'next-intl'
 
 import { Button, LoadingIcon, OrganizationCard } from '@/components'
 import { fetchDocs } from '@/api'
@@ -8,6 +9,7 @@ import { Organization } from '@payload-types'
 import { OrganizationSearchParams } from '@/types'
 
 const LoadMore: React.FC<OrganizationSearchParams> = props => {
+  const t = useTranslations()
   const { page: initialPage = 1, limit = 6, ...OrganizationProps } = props
   const [organizations, setOrganizaions] = useState<Organization[] | null>(null)
   const [page, setPage] = useState<number>(initialPage)
@@ -47,7 +49,7 @@ const LoadMore: React.FC<OrganizationSearchParams> = props => {
             {loading && <LoadingIcon className="ml-2 size-4" />}
           </Button>
         ) : (
-          <div className="text-neutral-400">No more organizations</div>
+          <div className="text-neutral-400">{t('noMoreOrganizations')}</div>
         )}
       </div>
     </Fragment>

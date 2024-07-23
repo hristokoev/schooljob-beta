@@ -1,5 +1,6 @@
 import path from 'path'
 import { en } from 'payload/i18n/en'
+import { cs } from 'payload/i18n/cs'
 import {
   BoldFeature,
   ItalicFeature,
@@ -68,6 +69,10 @@ export default buildConfig({
     Users,
   ],
   globals: [Data],
+  localization: {
+    locales: ['cs'],
+    defaultLocale: 'cs',
+  },
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {
     outputFile: path.resolve(dirname, 'payload-types.ts'),
@@ -86,7 +91,8 @@ export default buildConfig({
    * This is completely optional and will default to English if not provided
    */
   i18n: {
-    supportedLanguages: { en },
+    supportedLanguages: { cs },
+    fallbackLanguage: 'cs',
   },
 
   // Sharp is now an optional dependency -

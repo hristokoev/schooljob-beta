@@ -2,6 +2,7 @@ import React, { Fragment } from 'react'
 import configPromise from '@payload-config'
 import { redirect } from 'next/navigation'
 import { getPayloadHMR } from '@payloadcms/next/utilities'
+import { useTranslations } from 'next-intl'
 
 import { ApplicationsEditView } from '../edit-view'
 import { BreadcrumbBlock } from '@/blocks'
@@ -16,11 +17,12 @@ interface Props {
 }
 
 export default async function Application({ params, searchParams }: Props) {
+  const t = useTranslations()
   const { trackingId } = params
   const { action } = searchParams
   const { user } = await getMeUser({
     nullUserRedirect: `/login?error=${encodeURIComponent(
-      'You must be logged in to access your account.',
+      t('authentication.unauthorized'),
     )}&redirect=${encodeURIComponent('/account')}`,
   })
 
@@ -72,9 +74,9 @@ export default async function Application({ params, searchParams }: Props) {
   }
 
   const links = [
-    { href: '/', text: 'Home' },
-    { href: '/account', text: 'Account' },
-    { href: '/account/applications', text: 'Applications' },
+    { href: '/', text: t('home') },
+    { href: '/account', text: t('account') },
+    { href: '/account/applications', text: t('applications') },
   ]
 
   const status = data.docs[0].status
@@ -84,15 +86,15 @@ export default async function Application({ params, searchParams }: Props) {
       <BreadcrumbBlock links={links} current="Application Details" />
       <div className="mb-8 sm:flex sm:items-center sm:justify-between">
         <div className="mb-4 flex items-center gap-2 sm:mb-0">
-          <h1 className="text-2xl font-bold text-slate-800 md:text-3xl">Applications</h1>
+          <h1 className="text-2xl font-bold text-slate-800 md:text-3xl">{t('applications')}</h1>
         </div>
         {user.role === 'organization' && (
           <div className="grid grid-flow-col justify-start gap-2 sm:auto-cols-max sm:justify-end">
             <Link href={`/account/applications/${trackingId}?action=approve`}>
-              <Button className="bg-emerald-500 hover:bg-emerald-500/90">Approve</Button>
+              <Button className="bg-emerald-500 hover:bg-emerald-500/90">{t('approve')}</Button>
             </Link>
             <Link href={`/account/applications/${trackingId}?action=reject`}>
-              <Button variant="destructive">Reject</Button>
+              <Button variant="destructive">{t('reject')}</Button>
             </Link>
           </div>
         )}

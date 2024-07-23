@@ -10,9 +10,10 @@ interface CtaProps {
   title: string
   content: string
   items?: string[]
+  button: string
 }
 
-const CtaBlock: React.FC<CtaProps> = ({ title, content, items }) => {
+const CtaBlock: React.FC<CtaProps> = ({ title, content, items, button }) => {
   return (
     <div className="mx-auto max-w-6xl px-4 sm:px-6">
       <div className="py-12 md:py-20">
@@ -49,7 +50,7 @@ const CtaBlock: React.FC<CtaProps> = ({ title, content, items }) => {
                 )}
               </div>
               <Button className="group">
-                Let&apos;s get started
+                {button}
                 <ChevronRightIcon className="ml-2 h-5 w-5 transition-transform duration-150 ease-in-out group-hover:translate-x-1" />
               </Button>
             </div>

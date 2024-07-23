@@ -1,15 +1,18 @@
 'use client'
 
 import React from 'react'
+import { useTranslations } from 'next-intl'
 
 import { InfiniteScrollLogo } from '@/components'
 import { logos } from './logos'
 
 const InfiniteScroll: React.FC = () => {
+  const t = useTranslations()
+
   return (
     <div className="overflow-hidden">
       <div className="pb-24 text-center">
-        <h2 className="mb-4 font-medium text-slate-800">Our Partners</h2>
+        <h2 className="mb-4 font-medium text-slate-800">{t('ourPartners')}</h2>
       </div>
       <div className="group mx-auto space-y-6">
         <div className="inline-flex w-full flex-nowrap">

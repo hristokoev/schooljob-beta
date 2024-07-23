@@ -8,8 +8,11 @@ import { Grid } from './Grid'
 import { Header } from './Header'
 import { PencilIcon } from '@heroicons/react/24/solid'
 import Link from 'next/link'
+import { useTranslations } from 'next-intl'
 
 export default function Account() {
+  const t = useTranslations()
+
   return (
     <MinHeight className="bg-slate-100">
       <Cover />
@@ -22,7 +25,7 @@ export default function Account() {
                 <Link href="/account/settings/profile">
                   <Button type="button" size="sm" variant="outline">
                     <PencilIcon className="h-4 w-4 shrink-0 fill-current text-slate-400" />
-                    <span className="ml-2">Edit Profile</span>
+                    <span className="ml-2">{t('editProfile')}</span>
                   </Button>
                 </Link>
               </div>

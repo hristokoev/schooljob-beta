@@ -27,6 +27,7 @@
       "@/pages/*": ["./src/app/(app)/(pages)/*"],
       "@/providers": ["./src/app/(app)/_providers/"],
       "@/public/*": ["./public/*"],
+      "@/translations": ["./src/app/(app)/_translations/"],
       "@/types": ["./src/app/(app)/_types/"],
       "@/utilities": ["./src/app/(app)/_utilities/"],
       "@/utilities/*": ["./src/app/(app)/_utilities/*"],

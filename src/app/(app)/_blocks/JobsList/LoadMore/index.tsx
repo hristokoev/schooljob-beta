@@ -1,6 +1,7 @@
 'use client'
 
 import React, { Fragment, useState } from 'react'
+import { useTranslations } from 'next-intl'
 
 import { Button } from '@/components'
 import { fetchDocs } from '@/api'
@@ -9,7 +10,8 @@ import { JobSearchParams } from '@/types'
 import { LoadingIcon } from '@/components'
 import { SimpleJobCard } from '@/components'
 
-const LoadMore: React.FC<JobSearchParams> = (props) => {
+const LoadMore: React.FC<JobSearchParams> = props => {
+  const t = useTranslations()
   const { page: initialPage = 1, limit = 8, ...JobsProps } = props
   const [jobs, setJobs] = useState<Job[] | null>(null)
   const [page, setPage] = useState<number>(initialPage)
@@ -22,9 +24,9 @@ const LoadMore: React.FC<JobSearchParams> = (props) => {
       page: page + 1,
       limit,
       ...JobsProps,
-    }).then((newJobs) => {
-      setJobs((prevJobs) => (prevJobs ? [...prevJobs, ...newJobs] : newJobs))
-      setPage((prevPage) => prevPage + 1)
+    }).then(newJobs => {
+      setJobs(prevJobs => (prevJobs ? [...prevJobs, ...newJobs] : newJobs))
+      setPage(prevPage => prevPage + 1)
       setHasMore(newJobs.length === limit)
       setLoading(false)
     })
@@ -33,16 +35,16 @@ const LoadMore: React.FC<JobSearchParams> = (props) => {
   return (
     <Fragment>
       <div className="mb-8 space-y-2">
-        {jobs && jobs.map((job) => <SimpleJobCard key={job.id} {...job} />)}
+        {jobs && jobs.map(job => <SimpleJobCard key={job.id} {...job} />)}
       </div>
       <div className="flex justify-center">
         {hasMore ? (
           <Button onClick={handleLoadMore} className="px-12">
-            Load More
+            {t('loadMore')}
             {loading && <LoadingIcon className="ml-2 size-4" />}
           </Button>
         ) : (
-          <div className="text-neutral-400">No more jobs</div>
+          <div className="text-neutral-400">{t('noMoreJobs')}</div>
         )}
       </div>
     </Fragment>

@@ -70,7 +70,7 @@ const JobsTableView: React.FC<JobsTableViewProps> = ({ docs }) => {
               '0 Applications'
             ) : (
               <>
-                <Link href="/admin/applications" className="underline hover:no-underline">
+                <Link href="/account/applications" className="underline hover:no-underline">
                   {applicationCount} {applicationCount === 1 ? 'Application' : 'Applications'}
                 </Link>
               </>

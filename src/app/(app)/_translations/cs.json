@@ -1,0 +1,94 @@
+{
+  "authentication": {
+    "unauthorized": "You must be logged in to access your account."
+  },
+  "CTA": {
+    "title": "Ready to get started?",
+    "items": {
+      "item01": "Create account",
+      "item02": "Browse jobs"
+    },
+    "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+    "button": "Let's get started"
+  },
+  "HomePage": {
+    "title": "Hello world!"
+  },
+  "profile": {
+    "candidate": {
+      "cards": {
+        "card01": {
+          "header": "Saved Jobs",
+          "title": "Lorem ipsum dolor sit.",
+          "content": "Lorem ipsum dolor sit amet consectetur adipiscing elit Ut et massa mi."
+        },
+        "card02": {
+          "header": "Applications",
+          "title": "Lorem ipsum dolor sit.",
+          "content": "Lorem ipsum dolor sit amet consectetur adipiscing elit Ut et massa mi."
+        },
+        "card03": {
+          "header": "Account Settings",
+          "title": "Lorem ipsum dolor sit.",
+          "content": "Lorem ipsum dolor sit amet consectetur adipiscing elit Ut et massa mi."
+        }
+      },
+      "noDescription": "You don't have any description yet. How about writing something about yourself?"
+    },
+    "organization": {
+      "cards": {
+        "card01": {
+          "header": "Create a Job",
+          "title": "Lorem ipsum dolor sit.",
+          "content": "Lorem ipsum dolor sit amet consectetur adipiscing elit Ut et massa mi."
+        },
+        "card02": {
+          "header": "Active Jobs",
+          "title": "Lorem ipsum dolor sit.",
+          "content": "Lorem ipsum dolor sit amet consectetur adipiscing elit Ut et massa mi."
+        },
+        "card03": {
+          "header": "Drafts",
+          "title": "Lorem ipsum dolor sit.",
+          "content": "Lorem ipsum dolor sit amet consectetur adipiscing elit Ut et massa mi."
+        },
+        "card04": {
+          "header": "Applications",
+          "title": "Lorem ipsum dolor sit.",
+          "content": "Lorem ipsum dolor sit amet consectetur adipiscing elit Ut et massa mi."
+        },
+        "card05": {
+          "header": "Account Settings",
+          "title": "Lorem ipsum dolor sit.",
+          "content": "Lorem ipsum dolor sit amet consectetur adipiscing elit Ut et massa mi."
+        },
+        "card06": {
+          "header": "Profile Settings",
+          "title": "Lorem ipsum dolor sit.",
+          "content": "Lorem ipsum dolor sit amet consectetur adipiscing elit Ut et massa mi."
+        }
+      },
+      "noDescription": "You don't have any description yet. How about writing something about your company?",
+      "vatId": "VAT ID"
+    }
+  },
+  "account": "Accont",
+  "approve": "Approve",
+  "applications": "Applications",
+  "edit": "Edit",
+  "editProfile": "Edit Profile",
+  "home": "Home",
+  "jobs": "Jobs",
+  "loadMore": "Load More",
+  "noJobsFound": "No Jobs Found",
+  "noOrganizationsFound": "Nejsou organizace",
+  "noMoreJobs": "No More Jobs",
+  "noMoreOrganizations": "No More Organizations",
+  "organizations": "Organizations",
+  "ourPartners": "Our Partners",
+  "mostRecentJobs": "Most recent jobs",
+  "recommendedJobs": "Recommended Jobs",
+  "reject": "Reject",
+  "viewAllJobs": "View All Jobs",
+  "viewAllOrganizations": "View All Organizations"
+}

@@ -1,6 +1,7 @@
 import React from 'react'
 import configPromise from '@payload-config'
 import { getPayloadHMR } from '@payloadcms/next/utilities'
+import { useTranslations } from 'next-intl'
 
 import {
   Carousel,
@@ -15,6 +16,7 @@ import { EmptyBlock } from '../EmptyBlock'
 import { getCachedPayload } from '@cached-local-api'
 
 const OrganizationsSwipe: React.FC<OrganizationSearchParams> = async props => {
+  const t = useTranslations()
   const { limit = 6, page = 1, sort, featured } = props
 
   const payload = await getPayloadHMR({
@@ -40,7 +42,7 @@ const OrganizationsSwipe: React.FC<OrganizationSearchParams> = async props => {
   const organizations = result.docs
 
   if (organizations.length === 0) {
-    return <EmptyBlock text="No Organizations Found" />
+    return <EmptyBlock text={t('noOrganizationsFound')} />
   }
 
   return (

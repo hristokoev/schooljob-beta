@@ -2,6 +2,7 @@
 
 import { GlobeEuropeAfricaIcon, LinkIcon, PhoneIcon } from '@heroicons/react/24/solid'
 import React, { Fragment, useEffect, useState } from 'react'
+import { useTranslations } from 'next-intl'
 
 import { isCandidate, isOrganization } from '@/utilities'
 import { useAuth } from '@/providers'
@@ -10,6 +11,8 @@ import Link from 'next/link'
 import { Button, RichText } from '@/components'
 
 const HeaderContent: React.FC<{ user: User }> = ({ user }) => {
+  const t = useTranslations()
+
   if (isCandidate(user)) {
     return (
       <Fragment>
@@ -43,12 +46,12 @@ const HeaderContent: React.FC<{ user: User }> = ({ user }) => {
             <p>{user.profile.value.bio}</p>
           ) : (
             <p>
-              You don&apos;t have any description yet. How about writing something about yourself?
+              {t('profile.candidate.noDescription')}
               <Link
                 href="/account/settings/profile"
                 className="ml-2 font-semibold text-royal-blue-500 underline hover:no-underline"
               >
-                Edit
+                {t('edit')}
               </Link>
             </p>
           )}
@@ -66,13 +69,12 @@ const HeaderContent: React.FC<{ user: User }> = ({ user }) => {
             <RichText content={user.profile.value.richText} />
           ) : (
             <p>
-              You don&apos;t have any description yet. How about writing something about your
-              company?
+              {t('profile.organization.noDescription')}
               <Link
                 href="/account/settings/profile"
                 className="ml-2 font-semibold text-royal-blue-500 underline hover:no-underline"
               >
-                Edit
+                {t('edit')}
               </Link>
             </p>
           )}
@@ -108,7 +110,7 @@ const HeaderContent: React.FC<{ user: User }> = ({ user }) => {
         </div>
         {user.profile.value.vatId && (
           <span className="whitespace-nowrap text-sm font-medium text-slate-500">
-            VAT ID: {user.profile.value.vatId}
+            {t('profile.organization.vatId')}: {user.profile.value.vatId}
           </span>
         )}
       </Fragment>

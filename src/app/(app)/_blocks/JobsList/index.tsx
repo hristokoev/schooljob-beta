@@ -1,6 +1,7 @@
 import React, { Fragment } from 'react'
 import configPromise from '@payload-config'
 import { getPayloadHMR } from '@payloadcms/next/utilities'
+import { useTranslations } from 'next-intl'
 
 import { EmptyBlock } from '../EmptyBlock'
 import { JobSearchParams } from '@/types'
@@ -9,6 +10,7 @@ import { SimpleJobCard } from '@/components'
 import { getCachedPayload } from '@cached-local-api'
 
 const JobsList: React.FC<JobSearchParams> = async props => {
+  const t = useTranslations()
   const {
     loadMore = false,
     limit = 8,
@@ -112,7 +114,7 @@ const JobsList: React.FC<JobSearchParams> = async props => {
   const jobs = result.docs
 
   if (jobs.length === 0) {
-    return <EmptyBlock text="No Jobs Found" />
+    return <EmptyBlock text={t('noJobsFound')} />
   }
 
   return (
@@ -127,7 +129,7 @@ const JobsList: React.FC<JobSearchParams> = async props => {
           {jobs.length >= limit ? (
             <LoadMore {...props} />
           ) : (
-            <div className="mt-8 text-center text-neutral-400">No more jobs</div>
+            <div className="mt-8 text-center text-neutral-400">{t('noMoreJobs')}</div>
           )}
         </Fragment>
       )}
