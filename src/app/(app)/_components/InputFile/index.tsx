@@ -1,7 +1,7 @@
 import { ArrowUpTrayIcon } from '@heroicons/react/24/solid'
 import React, { Fragment } from 'react'
+import { useTranslations } from 'next-intl'
 
-import { GenericFormData } from '@/types'
 import { FieldError } from 'react-hook-form'
 
 interface InputFileProps extends React.InputHTMLAttributes<HTMLInputElement> {
@@ -12,6 +12,8 @@ interface InputFileProps extends React.InputHTMLAttributes<HTMLInputElement> {
 
 const InputFile = React.forwardRef<HTMLInputElement, InputFileProps>(
   ({ id, file, error, ...props }, ref) => {
+    const t = useTranslations()
+
     return (
       <Fragment>
         <label htmlFor={id} className="cursor-pointer">
@@ -31,7 +33,7 @@ const InputFile = React.forwardRef<HTMLInputElement, InputFileProps>(
                     className="w-full cursor-pointer text-sm text-slate-500 file:hidden"
                   />
                 </p>
-                {!file && <span className="text-slate-400">Click to upload</span>}
+                {!file && <span className="text-slate-400">{t('ui.upload')}</span>}
               </div>
             </div>
           </div>

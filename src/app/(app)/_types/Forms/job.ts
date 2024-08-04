@@ -1,3 +1,5 @@
+// TODO: Error handling
+
 import { z, ZodType } from "zod"
 
 type Option = {

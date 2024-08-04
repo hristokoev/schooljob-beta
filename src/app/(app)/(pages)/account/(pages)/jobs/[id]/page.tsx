@@ -1,20 +1,21 @@
 import React, { Fragment } from 'react'
 import configPromise from '@payload-config'
 import { getPayloadHMR } from '@payloadcms/next/utilities'
+import { getTranslations } from 'next-intl/server'
 
 import { Gutter, Main } from '@/components'
 import { BreadcrumbBlock } from '@/blocks'
 import { JobsEditView } from '../edit-view'
 import { getMeUser } from '@/utilities/getMeUser'
-import { transformToFrontend } from '@/utilities/transformFields'
 import { JobFormData } from 'src/app/(app)/_types'
-import { type Option } from '@/types'
+import { Metadata } from 'next'
 
 interface Props {
-  params: { id: string }
+  params: { id: string; locale: string }
 }
 
 export default async function EditJob({ params: { id } }: Props) {
+  const t = await getTranslations()
   const { user } = await getMeUser()
   const payload = await getPayloadHMR({
     config: configPromise,
@@ -31,21 +32,57 @@ export default async function EditJob({ params: { id } }: Props) {
   const frontEndData: JobFormData = {
     status: data.status as JobFormData['status'],
     title: data.title,
-    employmentType: transformToFrontend(data.employmentType || []) as Option[],
-    categories: transformToFrontend(data.categories || []) as Option[],
+    employmentType: data.employmentType.map(type => {
+      return {
+        label: t(`search.options.${type}`),
+        value: type,
+      }
+    }),
+    categories: data.categories.map(category => {
+      return {
+        label: t(`search.options.${category}`),
+        value: category,
+      }
+    }),
     location: data.location || '',
-    locationType: transformToFrontend(data.locationType || []) as Option[],
-    education: transformToFrontend(data.education || []) as Option[],
-    experience: transformToFrontend(data.experience || []) as Option[],
-    language: transformToFrontend(data.language || []) as Option[],
+    locationType: data.locationType?.map(type => {
+      return {
+        label: t(`search.options.${type}`),
+        value: type,
+      }
+    }),
+    education: data.education?.map(type => {
+      return {
+        label: t(`search.options.${type}`),
+        value: type,
+      }
+    }),
+    experience: data.experience?.map(type => {
+      return {
+        label: t(`search.options.${type}`),
+        value: type,
+      }
+    }),
+    language: data.language?.map(type => {
+      return {
+        label: t(`search.options.${type}`),
+        value: type,
+      }
+    }),
     salary: {
       enabled: data.salary?.enabled || false,
       range: data.salary?.range || false,
       base: data.salary?.base || 0,
       minSalary: data.salary?.minSalary || 0,
       maxSalary: data.salary?.maxSalary || 0,
-      currency: transformToFrontend(data.salary?.currency || '') as Option,
-      salaryType: transformToFrontend(data.salary?.salaryType || '') as Option,
+      currency: {
+        label: t(`search.options.${data.salary?.currency || 'czk'}`),
+        value: data.salary?.currency || 'czk',
+      },
+      salaryType: {
+        label: t(`search.options.${data.salary?.salaryType || 'monthly'}`),
+        value: data.salary?.salaryType || 'monthly',
+      },
     },
     description: data.description || '',
     richText: data.richText || {
@@ -67,15 +104,15 @@ export default async function EditJob({ params: { id } }: Props) {
   }
 
   const links = [
-    { href: '/', text: 'Home' },
-    { href: '/account', text: 'Account' },
-    { href: '/account/jobs', text: 'Jobs' },
+    { href: '/', text: t('home') },
+    { href: '/account', text: t('account') },
+    { href: '/account/jobs', text: t('jobs') },
   ]
 
   return (
     <Fragment>
       <Gutter>
-        <BreadcrumbBlock links={links} current="Edit Job" />
+        <BreadcrumbBlock links={links} current={t('ui.editJob')} />
       </Gutter>
       <Main>
         <JobsEditView {...frontEndData} id={id} />
@@ -84,7 +121,23 @@ export default async function EditJob({ params: { id } }: Props) {
   )
 }
 
-export const metadata = {
-  title: 'Account Settings - Mosaic',
-  description: 'Page description',
+export async function generateMetadata({ params: { locale, id } }: Props): Promise<Metadata> {
+  const t = await getTranslations({ locale, namespace: 'seo.editJob' })
+  const { user } = await getMeUser()
+  const payload = await getPayloadHMR({
+    config: configPromise,
+  })
+
+  const data = await payload.findByID({
+    collection: 'jobs',
+    id,
+    overrideAccess: false,
+    user,
+    depth: 0,
+  })
+
+  return {
+    title: t('title', { title: data.title }),
+    description: t('description'),
+  }
 }

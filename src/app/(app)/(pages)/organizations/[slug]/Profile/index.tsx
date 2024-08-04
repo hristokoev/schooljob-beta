@@ -5,6 +5,7 @@
 */
 
 import React, { Fragment } from 'react'
+import { getTranslations } from 'next-intl/server'
 
 import { Gutter, Media, VerticalPadding } from '@/components'
 import { getDocument } from '@/utilities/getDocument'
@@ -22,10 +23,11 @@ const NoAvatar: React.FC<{ letter: string }> = ({ letter }) => (
 )
 
 const ProfileBlock: React.FC<{ slug: string }> = async ({ slug }) => {
+  const t = await getTranslations()
   const organization = (await getDocument('organizations', slug, 1)) as Organization
 
   if (!organization) {
-    return <p>Organization not found</p>
+    return <p>{t('errors.noOrganization')}</p>
   }
 
   return (
@@ -96,7 +98,7 @@ const ProfileBlock: React.FC<{ slug: string }> = async ({ slug }) => {
                 </div>
                 {organization.vatId && (
                   <span className="whitespace-nowrap text-sm font-medium text-slate-500">
-                    VAT ID: {organization.vatId}
+                    {t('organization.vatId')}: {organization.vatId}
                   </span>
                 )}
               </header>

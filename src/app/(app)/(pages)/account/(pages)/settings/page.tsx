@@ -1,5 +1,5 @@
-import AccountSettings, { metadata } from '@/pages/account/(pages)/settings/_index/page'
+import AccountSettings, { generateMetadata } from '@/pages/account/(pages)/settings/_index/page'
 
 export default AccountSettings
 
-export { metadata }
+export { generateMetadata }

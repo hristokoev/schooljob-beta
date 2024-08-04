@@ -1,5 +1,6 @@
 import { ImageCover, Logo } from "@payload-types"
 import { z, ZodType } from "zod"
+import { useTranslations } from 'next-intl'
 
 import { FileSchema } from "./file"
 
@@ -38,14 +39,16 @@ type OrganizationFormData = {
     imageCover?: ImageCover | null
 }
 
-const OrganizationFieldSchema: ZodType<OrganizationFormData> = z
-    .object({
-        title: z.string().min(2, {
-            message: 'Title must be at least 2 characters',
+const useOrganizationFieldSchema = (): ZodType<OrganizationFormData> => {
+    const t = useTranslations('organizationSettings.validation')
+
+    return z.object({
+        title: z.string({ message: t('title') }).min(2, {
+            message: t('titleLength', { number: 2 }),
         }).regex(/^[a-zA-Z0-9 ]+$/, {
-            message: 'Title can only contain letters, numbers, and spaces',
+            message: t('titleAllowedCharacters'),
         }).regex(/^[^\s].+$/, {
-            message: 'Title cannot contain only spaces',
+            message: t('titleForbiddenCharacters')
         }),
         vatId: z.string().optional(),
         categories: z.array(z.object({
@@ -72,6 +75,7 @@ const OrganizationFieldSchema: ZodType<OrganizationFormData> = z
         logo: LogoSchema.optional(),
         imageCover: ImageCoverSchema.optional(),
     })
+}
 
 
-export { type OrganizationFormData, OrganizationFieldSchema }
+export { type OrganizationFormData, useOrganizationFieldSchema }

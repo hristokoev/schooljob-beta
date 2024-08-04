@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react'
 import configPromise from '@payload-config'
 import { getPayloadHMR } from '@payloadcms/next/utilities'
-import { useTranslations } from 'next-intl'
+import { getTranslations } from 'next-intl/server'
 
 import {
   Carousel,
@@ -21,7 +21,7 @@ interface JobsSwipeProps {
 }
 
 const JobsSwipe: React.FC<JobsSwipeProps> = async ({ limit, sort, featured }) => {
-  const t = useTranslations()
+  const t = await getTranslations()
   const payload = await getPayloadHMR({
     config: configPromise,
   })
@@ -46,7 +46,7 @@ const JobsSwipe: React.FC<JobsSwipeProps> = async ({ limit, sort, featured }) =>
   const jobs = result.docs
 
   if (jobs.length === 0) {
-    return <EmptyBlock text={t('noJobsFound')} />
+    return <EmptyBlock text={t('errors.noJobs')} />
   }
 
   return (

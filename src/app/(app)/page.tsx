@@ -1,5 +1,5 @@
-import Index, { metadata } from '@/pages/_index'
+import Index, { generateMetadata } from '@/pages/_index'
 
 export default Index
 
-export { metadata }
+export { generateMetadata }

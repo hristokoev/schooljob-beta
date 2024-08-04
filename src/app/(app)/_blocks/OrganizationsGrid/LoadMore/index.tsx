@@ -49,7 +49,7 @@ const LoadMore: React.FC<OrganizationSearchParams> = props => {
             {loading && <LoadingIcon className="ml-2 size-4" />}
           </Button>
         ) : (
-          <div className="text-neutral-400">{t('noMoreOrganizations')}</div>
+          <div className="text-neutral-400">{t('errors.noMoreOrganizations')}</div>
         )}
       </div>
     </Fragment>

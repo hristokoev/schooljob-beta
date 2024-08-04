@@ -2,7 +2,8 @@
 
 import React, { Fragment, useState } from 'react'
 import { XCircleIcon } from '@heroicons/react/24/solid'
-import { ControllerProps, ControllerRenderProps, UseFormReturn } from 'react-hook-form'
+import { ControllerRenderProps, UseFormReturn } from 'react-hook-form'
+import { useTranslations } from 'next-intl'
 
 import { Button, Input } from '@/components'
 
@@ -13,7 +14,9 @@ interface InputListProps {
 }
 
 const InputList: React.FC<InputListProps> = ({ field, setValue, disabled }) => {
+  const t = useTranslations()
   const [currentValue, setCurrentValue] = useState<string>('')
+
   return (
     <Fragment>
       <div className="flex gap-5">
@@ -40,7 +43,7 @@ const InputList: React.FC<InputListProps> = ({ field, setValue, disabled }) => {
           <svg className="h-4 w-4 shrink-0 fill-current opacity-50" viewBox="0 0 16 16">
             <path d="M15 7H9V1c0-.6-.4-1-1-1S7 .4 7 1v6H1c-.6 0-1 .4-1 1s.4 1 1 1h6v6c0 .6.4 1 1 1s1-.4 1-1V9h6c.6 0 1-.4 1-1s-.4-1-1-1z" />
           </svg>
-          <span className="ml-2">Add</span>
+          <span className="ml-2">{t('ui.add')}</span>
         </Button>
       </div>
       {field.value && field.value?.length > 0 && (

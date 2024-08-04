@@ -1,6 +1,7 @@
 import React, { Fragment } from 'react'
 import { redirect } from 'next/navigation'
 import StarIcon from '@heroicons/react/24/solid/StarIcon'
+import { getTranslations } from 'next-intl/server'
 
 import {
   Article,
@@ -16,13 +17,14 @@ import {
   Section,
   TopLabel,
 } from '@/components'
-import { convertValue, formatDate, renderSalary } from '@/utilities'
+import { formatDate, renderSalary } from '@/utilities'
 import { getDocument } from '@/utilities/getDocument'
 import { Job, Organization } from '@payload-types'
 import { JobsList } from '@/blocks'
 import { ApplyForm } from './ApplyForm'
 
 const JobBlock: React.FC<{ publicId: string; slug: string }> = async ({ publicId, slug }) => {
+  const t = await getTranslations()
   const depth = 2
   const job = (await getDocument('jobs', slug, depth, publicId)) as Job
 
@@ -55,12 +57,12 @@ const JobBlock: React.FC<{ publicId: string; slug: string }> = async ({ publicId
   const salaryText = renderSalary(salary)
 
   const formattedDate = formatDate(createdAt)
-  const transformedCategories = categories.map(convertValue)
-  const transformedEmploymentType = employmentType.map(convertValue)
-  const transformedLocationType = locationType?.map(convertValue) ?? []
-  const transformedEducation = education?.map(convertValue) ?? []
-  const transformedExperience = experience?.map(convertValue) ?? []
-  const transformedLanguage = language?.map(convertValue) ?? []
+  const transformedCategories = categories.map(value => t(`search.options.${value}`))
+  const transformedEmploymentType = employmentType.map(value => t(`search.options.${value}`))
+  const transformedLocationType = locationType?.map(value => t(`search.options.${value}`)) ?? []
+  const transformedEducation = education?.map(value => t(`search.options.${value}`)) ?? []
+  const transformedExperience = experience?.map(value => t(`search.options.${value}`)) ?? []
+  const transformedLanguage = language?.map(value => t(`search.options.${value}`)) ?? []
 
   return (
     <Main>
@@ -114,19 +116,19 @@ const JobBlock: React.FC<{ publicId: string; slug: string }> = async ({ publicId
 
             {skills && skills.length > 0 && (
               <Fragment>
-                <List label="Skills" items={skills as string[]} />
+                <List label={t('job.skills')} items={skills as string[]} />
                 <Hr />
               </Fragment>
             )}
             {certifications && certifications.length > 0 && (
               <Fragment>
-                <List label="Certifications" items={certifications as string[]} />
+                <List label={t('job.certifications')} items={certifications as string[]} />
                 <Hr />
               </Fragment>
             )}
             {responsibilities && responsibilities.length > 0 && (
               <Fragment>
-                <List label="Responsibilities" items={responsibilities as string[]} />
+                <List label={t('job.responsibilities')} items={responsibilities as string[]} />
                 <Hr />
               </Fragment>
             )}
@@ -140,38 +142,40 @@ const JobBlock: React.FC<{ publicId: string; slug: string }> = async ({ publicId
             <div className="col-span-full overflow-hidden rounded-md border border-slate-200 bg-white sm:col-span-6 xl:col-span-4">
               <div className="flex flex-col gap-4 justify-self-end p-5">
                 {categories.length > 0 && (
-                  <PillsWithLabel label="Categories" items={transformedCategories} />
+                  <PillsWithLabel label={t('job.categories')} items={transformedCategories} />
                 )}
                 {transformedEmploymentType.length > 0 && (
-                  <PillsWithLabel label="Employment" items={transformedEmploymentType} />
+                  <PillsWithLabel label={t('job.employment')} items={transformedEmploymentType} />
                 )}
                 {transformedLocationType.length > 0 && (
-                  <PillsWithLabel label="Location Type" items={transformedLocationType} />
+                  <PillsWithLabel label={t('job.locationType')} items={transformedLocationType} />
                 )}
                 {transformedEducation.length > 0 && (
-                  <PillsWithLabel label="Education" items={transformedEducation} />
+                  <PillsWithLabel label={t('job.education')} items={transformedEducation} />
                 )}
                 {transformedExperience.length > 0 && (
-                  <PillsWithLabel label="Experience" items={transformedExperience} />
+                  <PillsWithLabel label={t('job.experience')} items={transformedExperience} />
                 )}
                 {transformedLanguage.length > 0 && (
-                  <PillsWithLabel label="Language" items={transformedLanguage} />
+                  <PillsWithLabel label={t('job.language')} items={transformedLanguage} />
                 )}
                 {benefits && benefits.length > 0 && (
                   <Fragment>
-                    <PillsWithLabel label="Benefits" items={benefits as string[]} />
+                    <PillsWithLabel label={t('job.benefits')} items={benefits as string[]} />
                   </Fragment>
                 )}
                 {Object.values(suitableFor ?? {}).some(value => value) && (
                   <div>
-                    <Label>Suitable For</Label>
+                    <Label>{t('job.suitableFor')}</Label>
                     <div className="flex flex-wrap gap-2">
-                      {suitableFor?.students && <Pill size="lg">Students</Pill>}
+                      {suitableFor?.students && <Pill size="lg">{t('job.students')}</Pill>}
                       {suitableFor?.mothersOnMaternityLeave && (
-                        <Pill size="lg">Mothers on maternity leave</Pill>
+                        <Pill size="lg">{t('job.mothersOnMaternityLeave')}</Pill>
                       )}
-                      {suitableFor?.disabledPeople && <Pill size="lg">Disabled people</Pill>}
-                      {suitableFor?.retirees && <Pill size="lg">Retirees</Pill>}
+                      {suitableFor?.disabledPeople && (
+                        <Pill size="lg">{t('job.disabledPeople')}</Pill>
+                      )}
+                      {suitableFor?.retirees && <Pill size="lg">{t('job.retirees')}</Pill>}
                     </div>
                   </div>
                 )}
@@ -183,7 +187,7 @@ const JobBlock: React.FC<{ publicId: string; slug: string }> = async ({ publicId
       <Article>
         <Section>
           <Hr />
-          <TopLabel text="Most recent jobs" url="/jobs" urlText="View all jobs" />
+          <TopLabel text={t('ui.mostRecentJobs')} url="/jobs" urlText={t('ui.viewAllJobs')} />
           <JobsList limit={3} />
         </Section>
       </Article>

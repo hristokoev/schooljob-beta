@@ -70,7 +70,7 @@ export default buildConfig({
   ],
   globals: [Data],
   localization: {
-    locales: ['cs'],
+    locales: ['cs', 'sk'],
     defaultLocale: 'cs',
   },
   secret: process.env.PAYLOAD_SECRET || '',
@@ -91,7 +91,7 @@ export default buildConfig({
    * This is completely optional and will default to English if not provided
    */
   i18n: {
-    supportedLanguages: { cs },
+    supportedLanguages: { en, cs },
     fallbackLanguage: 'cs',
   },
 

@@ -8,62 +8,61 @@ import { useRouter } from 'next/navigation'
 
 import './style.scss'
 
+type ArchiveFilter = 'all' | 'active' | 'archived' | undefined
+
 const Archived: CustomComponent = () => {
   const { searchParams, stringifyParams } = useSearchParams()
-  const [selected, setSelected] = useState<'false' | 'true' | undefined>()
+  const [selected, setSelected] = useState<ArchiveFilter>(undefined)
   const router = useRouter()
-  const updateSearchParams = (whereValue: 'false' | 'true' | undefined) => {
-    const newSearchParams = {
-      ...searchParams,
-      where: {
+
+  const updateSearchParams = (filter: ArchiveFilter) => {
+    if (filter !== 'all') {
+      searchParams.where = {
         or: [
           {
             and: [
               {
                 archived: {
-                  equals: whereValue,
+                  equals: filter === 'archived' ? true : false,
                 },
               },
             ],
           },
         ],
-      },
-    }
-
-    if (whereValue === undefined) {
-      delete newSearchParams.where
+      }
+    } else {
+      delete searchParams.where
     }
 
     const newUrl = stringifyParams({
-      params: newSearchParams,
+      params: searchParams,
       replace: true,
     })
 
-    setSelected(whereValue)
-
+    setSelected(filter)
     router.push(newUrl)
   }
 
   return (
     <div className="archived-container">
       <Button
-        buttonStyle={selected === undefined ? 'primary' : 'secondary'}
+        buttonStyle={selected === 'all' ? 'primary' : 'secondary'}
         size="small"
-        onClick={() => updateSearchParams(undefined)}
+        onClick={() => updateSearchParams('all')}
       >
         All
       </Button>
       <Button
-        buttonStyle={selected === 'false' ? 'primary' : 'secondary'}
+        buttonStyle={selected === 'active' ? 'primary' : 'secondary'}
         size="small"
-        onClick={() => updateSearchParams('false')}
+        onClick={() => updateSearchParams('active')}
       >
         Active
       </Button>
       <Button
-        buttonStyle={selected === 'true' ? 'primary' : 'secondary'}
+        buttonStyle={selected === 'archived' ? 'primary' : 'secondary'}
         size="small"
-        onClick={() => updateSearchParams('true')}
+        onClick={() => updateSearchParams('archived')}
       >
         Archived
       </Button>

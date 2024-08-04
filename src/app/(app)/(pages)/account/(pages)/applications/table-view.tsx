@@ -1,9 +1,10 @@
 import React, { Fragment } from 'react'
+import { getTranslations } from 'next-intl/server'
 
 import { type Column, Table, Message } from '@/components'
 import { Application, Job } from '@payload-types'
 import Link from 'next/link'
-import { convertValue, formatDate } from '@/utilities'
+import { formatDate } from '@/utilities'
 
 interface ApplicationsTableViewProps {
   docs: Application[]
@@ -18,11 +19,12 @@ const candidateFullName = (item: Application) => {
     : `${item.candidate.firstName} ${item.candidate.lastName}`
 }
 
-const ApplicationsTableView: React.FC<ApplicationsTableViewProps> = ({ docs }) => {
+const ApplicationsTableView: React.FC<ApplicationsTableViewProps> = async ({ docs }) => {
+  const t = await getTranslations()
   const columns: Column[] = [
     {
       key: 'candidate',
-      label: 'Candidate',
+      label: t('ui.candidate'),
       render: (item: Application) => (
         <div className="text-left font-medium text-sky-500">
           <Link
@@ -34,21 +36,21 @@ const ApplicationsTableView: React.FC<ApplicationsTableViewProps> = ({ docs }) =
         </div>
       ),
     },
-    { key: 'job', label: 'Job', render: (item: Application) => (item.job as Job).title },
+    { key: 'job', label: t('ui.job'), render: (item: Application) => (item.job as Job).title },
     {
       key: 'updatedAt',
-      label: 'Last Updated',
+      label: t('ui.lastUpdated'),
       render: (item: Application) => formatDate(item.updatedAt),
     },
     {
       key: 'status',
-      label: 'Status',
+      label: t('ui.status'),
       render: (item: Application) => (
         <Message
           error={item.status === 'rejected'}
           success={item.status === 'accepted'}
           warning={item.status === 'pending'}
-          message={convertValue(item.status)}
+          message={t(`search.options.${item.status}` as 'search.status')}
           className="w-full"
         />
       ),
@@ -57,7 +59,7 @@ const ApplicationsTableView: React.FC<ApplicationsTableViewProps> = ({ docs }) =
 
   return (
     <Fragment>
-      <Table columns={columns} data={docs} title={`Applications (${docs.length})`} />
+      <Table columns={columns} data={docs} title={t('ui.applications', { count: docs.length })} />
     </Fragment>
   )
 }

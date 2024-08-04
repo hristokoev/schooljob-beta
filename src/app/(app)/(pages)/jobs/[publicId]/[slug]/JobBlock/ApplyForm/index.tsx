@@ -2,11 +2,12 @@
 
 import { Dialog, DialogPanel, DialogTitle } from '@headlessui/react'
 import React, { Fragment, useCallback, useEffect, useState } from 'react'
+import { useTranslations } from 'next-intl'
 
 import { Button, FormInputField, Input, InputFile, Label, Textarea } from '@/components'
 import { XMarkIcon } from '@heroicons/react/24/solid'
 import { Controller, useForm } from 'react-hook-form'
-import { ApplicationFieldSchema, ApplicationFormData } from '@/types'
+import { useApplicationFieldSchema, ApplicationFormData } from '@/types'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { toast } from 'sonner'
 import { Candidate, Cv } from '@payload-types'
@@ -19,6 +20,8 @@ interface ApplyFormProps {
 }
 
 const ApplyForm = ({ jobId, organizationId }: ApplyFormProps) => {
+  const t = useTranslations()
+  const ApplicationFieldSchema = useApplicationFieldSchema()
   const [isOpen, setIsOpen] = useState(false)
   const { user } = useAuth()
   const {
@@ -35,30 +38,26 @@ const ApplyForm = ({ jobId, organizationId }: ApplyFormProps) => {
 
   const onSubmit = useCallback(
     async (data: ApplicationFormData) => {
-      try {
-        toast.promise(
-          async () => {
-            const cvDoc = await uploadCv(data.cv, data.job, data.organization, user)
+      toast.promise(
+        async () => {
+          const cvDoc = await uploadCv(data.cv, data.job, data.organization, user)
 
-            createApplication(
-              {
-                ...data,
-                cv: cvDoc?.id,
-              },
-              user,
-            )
-          },
-          {
-            loading: 'Sending...',
-            success: 'Application successfully sent',
-            error: 'Error sending application',
-          },
-        )
-      } catch (e) {
-        console.error('Error in onSubmit:', e)
-      }
+          createApplication(
+            {
+              ...data,
+              cv: cvDoc?.id,
+            },
+            user,
+          )
+        },
+        {
+          loading: t('applyForm.loading'),
+          success: t('applyForm.success'),
+          error: t('applyForm.error'),
+        },
+      )
     },
-    [user],
+    [user, t],
   )
 
   useEffect(() => {
@@ -80,7 +79,7 @@ const ApplyForm = ({ jobId, organizationId }: ApplyFormProps) => {
       <div className="flex items-center gap-4">
         <div className="flex gap-2">
           <Button type="button" onClick={() => setIsOpen(true)}>
-            Apply Now
+            {t('applyForm.button')}
           </Button>
         </div>
       </div>
@@ -90,7 +89,7 @@ const ApplyForm = ({ jobId, organizationId }: ApplyFormProps) => {
             <DialogTitle className="font-bold">
               <div className="flex items-center justify-between rounded-md border border-slate-200 bg-slate-50 px-4 py-6">
                 <div className="flex w-full items-center justify-between">
-                  <p className="grow text-center">I&apos;m interested in this job</p>
+                  <p className="grow text-center">{t('applyForm.header')}</p>
                   <Button
                     type="button"
                     size="icon"
@@ -107,7 +106,7 @@ const ApplyForm = ({ jobId, organizationId }: ApplyFormProps) => {
               <div className="grid gap-2 md:grid-cols-2">
                 <div className="flex flex-col">
                   <Label className="text-md font-bold">
-                    Name <span className="text-red-500">*</span>
+                    {t('applyForm.firstName')} <span className="text-red-500">*</span>
                   </Label>
                   <FormInputField
                     type="text"
@@ -119,7 +118,7 @@ const ApplyForm = ({ jobId, organizationId }: ApplyFormProps) => {
                 </div>
                 <div className="flex flex-col">
                   <Label className="text-md font-bold">
-                    Surname <span className="text-red-500">*</span>
+                    {t('applyForm.lastName')} <span className="text-red-500">*</span>
                   </Label>
                   <FormInputField
                     type="text"
@@ -133,7 +132,7 @@ const ApplyForm = ({ jobId, organizationId }: ApplyFormProps) => {
               <div className="grid gap-2 md:grid-cols-2">
                 <div className="flex flex-col">
                   <Label className="text-md font-bold">
-                    Email <span className="text-red-500">*</span>
+                    {t('applyForm.email')} <span className="text-red-500">*</span>
                   </Label>
                   <FormInputField
                     type="email"
@@ -146,7 +145,7 @@ const ApplyForm = ({ jobId, organizationId }: ApplyFormProps) => {
 
                 <div className="flex flex-col">
                   <Label className="text-md font-bold">
-                    <span>Phone</span>
+                    <span>{t('applyForm.phone')}</span>
                   </Label>
                   <FormInputField
                     type="phone"
@@ -160,7 +159,7 @@ const ApplyForm = ({ jobId, organizationId }: ApplyFormProps) => {
 
               <div className="flex flex-col">
                 <Label className="text-md font-bold">
-                  <span>Location</span>
+                  <span>{t('applyForm.location')}</span>
                 </Label>
                 <FormInputField
                   type="text"
@@ -173,7 +172,7 @@ const ApplyForm = ({ jobId, organizationId }: ApplyFormProps) => {
 
               <div className="flex flex-col">
                 <Label className="text-md font-bold">
-                  <span>Cover Letter</span>
+                  <span>{t('applyForm.coverLetter')}</span>
                 </Label>
                 <Controller
                   name="coverLetter"
@@ -185,7 +184,7 @@ const ApplyForm = ({ jobId, organizationId }: ApplyFormProps) => {
               </div>
 
               <Label className="text-md font-bold">
-                Curriculum Vitae (CV) <span className="text-red-500">*</span>
+                {t('applyForm.cv')} <span className="text-red-500">*</span>
               </Label>
               <Controller
                 name="cv"
@@ -200,7 +199,7 @@ const ApplyForm = ({ jobId, organizationId }: ApplyFormProps) => {
                 )}
               />
               <Button type="submit" className="h-12">
-                Submit
+                {t('ui.submit')}
                 {/* {loading && <LoadingIcon className="ml-2 size-4" />} */}
               </Button>
             </form>

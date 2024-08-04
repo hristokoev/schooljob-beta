@@ -1,6 +1,7 @@
 'use client'
 
 import React, { useState } from 'react'
+import { useTranslations } from 'next-intl'
 
 import { Button, Hr, Input, Select } from '@/components'
 
@@ -12,8 +13,8 @@ type Filter = {
 }
 
 const Search: React.FC<{ filters: Filter[]; path: any }> = ({ filters, path }) => {
+  const t = useTranslations()
   const [filtersToDisplay, setFiltersToDisplay] = useState<Filter[]>(filters.slice(0, 5))
-  const [isOpen, setIsOpen] = useState<boolean>(false)
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -49,7 +50,7 @@ const Search: React.FC<{ filters: Filter[]; path: any }> = ({ filters, path }) =
               }}
               type="button"
             >
-              {filtersToDisplay.length < filters.length ? 'Show More' : 'Show Less'}
+              {filtersToDisplay.length < filters.length ? t('ui.showMore') : t('ui.showLess')}
               {filtersToDisplay.length < filters.length
                 ? ` (${filters.length - filtersToDisplay.length})`
                 : ''}
@@ -59,7 +60,7 @@ const Search: React.FC<{ filters: Filter[]; path: any }> = ({ filters, path }) =
       </div>
       <Hr className="md:hidden" />
       <Button className="w-full" type="submit">
-        Search
+        {t('ui.search')}
       </Button>
     </form>
   )

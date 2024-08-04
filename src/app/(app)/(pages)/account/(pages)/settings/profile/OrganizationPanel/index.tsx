@@ -6,17 +6,19 @@ import Link from 'next/link'
 import { toast } from 'sonner'
 import { useRouter } from 'next/navigation'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { useTranslations } from 'next-intl'
 
 import { Button, EditUpload, FormInputField, Label, Select, Textarea } from '@/components'
-import { Option, OrganizationFieldSchema, OrganizationFormData } from '@/types'
+import { useOrganizationFieldSchema, OrganizationFormData } from '@/types'
 import { categoriesOptions } from '@/payload/data'
 import { LexicalEditor } from '@/components'
 import { Organization, Logo, ImageCover, User } from '@payload-types'
-import { transformToFrontend } from '@/utilities/transformFields'
 import { uploadImage, updateOrganization } from '@/actions'
 import { useAuth } from '@/providers'
 
 const OrganizationPanel: React.FC<{ user: User }> = ({ user }) => {
+  const t = useTranslations()
+  const OrganizationFieldSchema = useOrganizationFieldSchema()
   const { setUser } = useAuth()
   const organization = user?.profile?.value as Organization
   const organizationLogo = (organization?.logo as Logo) || null
@@ -68,7 +70,7 @@ const OrganizationPanel: React.FC<{ user: User }> = ({ user }) => {
     if (organization === null) {
       router.push(
         `/login?error=${encodeURIComponent(
-          'You must be logged in to view this page.',
+          t('authentication.errors.unauthorized'),
         )}&redirect=${encodeURIComponent('/account')}`,
       )
     }
@@ -77,7 +79,13 @@ const OrganizationPanel: React.FC<{ user: User }> = ({ user }) => {
       reset({
         title: organization?.title || '',
         vatId: organization?.vatId || '',
-        categories: transformToFrontend(organization?.categories || []) as Option[],
+        categories:
+          organization?.categories?.map(category => {
+            return {
+              label: t(`search.options.${category}`),
+              value: category,
+            }
+          }) || [],
         location: organization?.location || '',
         phone: organization?.phone || '',
         url: organization?.url || '',
@@ -89,84 +97,82 @@ const OrganizationPanel: React.FC<{ user: User }> = ({ user }) => {
         imageCover: organizationImageCover || null || undefined,
       })
     }
-  }, [reset, organization, organizationLogo, organizationImageCover, router])
+  }, [reset, organization, organizationLogo, organizationImageCover, router, t])
 
   const onSubmit = useCallback(
-    async (data: OrganizationFormData) => {
-      try {
-        await toast.promise(
-          async () => {
-            let logoDoc: Logo | null = null
-            let imageCoverDoc: ImageCover | null = null
+    (data: OrganizationFormData) => {
+      toast.promise(
+        (async () => {
+          let logoDoc: Logo | null = null
+          let imageCoverDoc: ImageCover | null = null
 
-            // Check if logo has changed
-            if (logo && logo.id !== organizationLogo?.id) {
-              if (logo.url?.startsWith('data:')) {
-                // Only upload if it's a new base64 image
-                logoDoc = await uploadImage(logo, user, 'logos')
-              }
+          // Check if logo has changed
+          if (logo && logo.id !== organizationLogo?.id) {
+            if (logo.url?.startsWith('data:')) {
+              // Only upload if it's a new base64 image
+              logoDoc = await uploadImage(logo, user, 'logos')
             }
+          }
 
-            // Check if imageCover has changed
-            if (imageCover && imageCover.id !== organizationImageCover?.id) {
-              if (imageCover.url?.startsWith('data:')) {
-                // Only upload if it's a new base64 image
-                imageCoverDoc = await uploadImage(imageCover, user, 'image-covers')
-              }
+          // Check if imageCover has changed
+          if (imageCover && imageCover.id !== organizationImageCover?.id) {
+            if (imageCover.url?.startsWith('data:')) {
+              // Only upload if it's a new base64 image
+              imageCoverDoc = await uploadImage(imageCover, user, 'image-covers')
             }
+          }
 
-            const updatedData = {
-              ...data,
-              ...(logoDoc ? { logo: logoDoc } : {}),
-              ...(imageCoverDoc ? { imageCover: imageCoverDoc } : {}),
-            }
+          const updatedData = {
+            ...data,
+            ...(logoDoc ? { logo: logoDoc } : {}),
+            ...(imageCoverDoc ? { imageCover: imageCoverDoc } : {}),
+          }
 
-            await updateOrganization(updatedData, user)
+          await updateOrganization(updatedData, user)
 
-            setUser({
-              ...user,
-              profile: {
-                relationTo: 'organizations',
-                value: {
-                  ...(user.profile?.value as Organization),
-                  title: data.title,
-                  description: data.description,
-                  richText: data.richText,
-                  location: data.location,
-                  phone: data.phone,
-                  url: data.url,
-                  vatId: data.vatId,
-                  logo: logo && logo.id !== organizationLogo?.id ? logoDoc : organizationLogo,
-                  imageCover:
-                    imageCover && imageCover.id !== organizationImageCover?.id
-                      ? imageCoverDoc
-                      : organizationImageCover,
-                },
+          setUser({
+            ...user,
+            profile: {
+              relationTo: 'organizations',
+              value: {
+                ...(user.profile?.value as Organization),
+                title: data.title,
+                description: data.description,
+                richText: data.richText,
+                location: data.location,
+                phone: data.phone,
+                url: data.url,
+                vatId: data.vatId,
+                logo: logo && logo.id !== organizationLogo?.id ? logoDoc : organizationLogo,
+                imageCover:
+                  imageCover && imageCover.id !== organizationImageCover?.id
+                    ? imageCoverDoc
+                    : organizationImageCover,
               },
-            })
+            },
+          })
 
-            router.push('/account')
-          },
-          {
-            loading: 'Updating profile...',
-            success: 'Profile updated successfully',
-            error: 'Error updating profile',
-          },
-        )
-      } catch (e) {
-        console.error('Error in onSubmit:', e)
-      }
+          router.push('/account')
+        })(),
+        {
+          loading: t('organizationSettings.loading'),
+          success: t('organizationSettings.success'),
+          error: t('organizationSettings.error'),
+        },
+      )
     },
-    [user, setUser, logo, imageCover, organizationLogo, organizationImageCover, router],
+    [user, setUser, logo, imageCover, organizationLogo, organizationImageCover, router, t],
   )
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="grow">
       <div className="space-y-6 p-6">
-        <h2 className="mb-5 text-2xl font-bold text-slate-800">My Profile</h2>
+        <h2 className="mb-5 text-2xl font-bold text-slate-800">
+          {t('organizationSettings.header')}
+        </h2>
         <section>
           <h2 className="mb-1 text-xl font-bold leading-snug text-slate-800">
-            Organization Profile
+            {t('organizationSettings.subheader')}
           </h2>
           <div className="mt-4 space-y-4 sm:grid sm:items-center sm:gap-2 sm:space-y-0 lg:grid-cols-3">
             <EditUpload
@@ -185,13 +191,10 @@ const OrganizationPanel: React.FC<{ user: User }> = ({ user }) => {
               className="lg:col-span-2"
             />
           </div>
-          <div className="mt-4 text-sm">
-            Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt
-            mollit.
-          </div>
+          <div className="mt-4 text-sm">{t('organizationSettings.uploadDescription')}</div>
           <div className="mt-4 grid-cols-3 space-y-4 sm:grid sm:items-center sm:gap-2 sm:space-y-0">
             <div>
-              <Label>Organization Name</Label>
+              <Label>{t('organizationSettings.title')}</Label>
               <FormInputField
                 type="text"
                 name="title"
@@ -202,7 +205,7 @@ const OrganizationPanel: React.FC<{ user: User }> = ({ user }) => {
               />
             </div>
             <div>
-              <Label>Organization Vat ID</Label>
+              <Label>{t('organizationSettings.vatId')}</Label>
               <FormInputField
                 type="text"
                 name="vatId"
@@ -212,7 +215,7 @@ const OrganizationPanel: React.FC<{ user: User }> = ({ user }) => {
               />
             </div>
             <div>
-              <Label>Categories</Label>
+              <Label>{t('organizationSettings.categories')}</Label>
               <Controller
                 name="categories"
                 control={control}
@@ -220,15 +223,20 @@ const OrganizationPanel: React.FC<{ user: User }> = ({ user }) => {
                   <Select
                     {...field}
                     isMulti
-                    placeholder="Select categories"
-                    options={categoriesOptions}
+                    placeholder={t('organizationSettings.categoriesPlaceholder')}
+                    options={categoriesOptions.map(category => {
+                      return {
+                        value: category,
+                        label: t(`search.options.${category}` as 'search.category'),
+                      }
+                    })}
                     className={`w-full ${errors.categories ? 'border-red-300 bg-red-300/10 hover:border-red-400 focus:border-red-500 focus:shadow-red-700/25' : ''}`}
                   />
                 )}
               />
             </div>
             <div>
-              <Label>Location</Label>
+              <Label>{t('organizationSettings.location')}</Label>
               <FormInputField
                 type="text"
                 name="location"
@@ -238,7 +246,7 @@ const OrganizationPanel: React.FC<{ user: User }> = ({ user }) => {
               />
             </div>
             <div>
-              <Label>Phone</Label>
+              <Label>{t('organizationSettings.phone')}</Label>
               <FormInputField
                 type="text"
                 name="phone"
@@ -248,7 +256,7 @@ const OrganizationPanel: React.FC<{ user: User }> = ({ user }) => {
               />
             </div>
             <div>
-              <Label>URL</Label>
+              <Label>{t('organizationSettings.url')}</Label>
               <FormInputField
                 type="text"
                 name="url"
@@ -259,7 +267,7 @@ const OrganizationPanel: React.FC<{ user: User }> = ({ user }) => {
             </div>
           </div>
           <div className="mt-4">
-            <Label>Short Description</Label>
+            <Label>{t('organizationSettings.description')}</Label>
             <Controller
               name="description"
               control={control}
@@ -269,7 +277,7 @@ const OrganizationPanel: React.FC<{ user: User }> = ({ user }) => {
             />
           </div>
           <div className="mt-4">
-            <Label>Full Description</Label>
+            <Label>{t('organizationSettings.richText')}</Label>
             <Controller
               name="richText"
               control={control}
@@ -291,10 +299,10 @@ const OrganizationPanel: React.FC<{ user: User }> = ({ user }) => {
           <div className="flex gap-2 space-y-4 self-end sm:space-y-0">
             <Link href="/account">
               <Button type="button" variant="outline">
-                Cancel
+                {t('ui.cancel')}
               </Button>
             </Link>
-            <Button disabled={!isDirty}>Save Changes</Button>
+            <Button disabled={!isDirty}>{t('ui.saveChanges')}</Button>
           </div>
         </div>
       </footer>

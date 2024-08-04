@@ -6,14 +6,17 @@ import Link from 'next/link'
 import { toast } from 'sonner'
 import { useRouter } from 'next/navigation'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { useTranslations } from 'next-intl'
 
 import { Button, EditUpload, FormInputField, Label, Textarea } from '@/components'
-import { CandidateFieldSchema, CandidateFormData } from '@/types'
+import { useCandidateFieldSchema, CandidateFormData } from '@/types'
 import { User, Candidate, Photo } from '@payload-types'
 import { uploadImage, updateCandidate } from '@/actions'
 import { useAuth } from '@/providers'
 
 const CandidatePanel: React.FC<{ user: User }> = ({ user }) => {
+  const t = useTranslations()
+  const CandidateFieldSchema = useCandidateFieldSchema()
   const { setUser } = useAuth()
   const candidate = user?.profile?.value as Candidate
   const candidatePhoto = (candidate?.photo as Photo) || null
@@ -41,7 +44,7 @@ const CandidatePanel: React.FC<{ user: User }> = ({ user }) => {
     if (candidate === null) {
       router.push(
         `/login?error=${encodeURIComponent(
-          'You must be logged in to view this page.',
+          t('authentication.errors.unauthorized'),
         )}&redirect=${encodeURIComponent('/account')}`,
       )
     }
@@ -56,68 +59,64 @@ const CandidatePanel: React.FC<{ user: User }> = ({ user }) => {
         photo: candidatePhoto || null || undefined,
       })
     }
-  }, [reset, candidate, candidatePhoto, router])
+  }, [reset, candidate, candidatePhoto, router, t])
 
   const onSubmit = useCallback(
-    async (data: CandidateFormData) => {
-      try {
-        await toast.promise(
-          async () => {
-            let photoDoc: Photo | null = null
+    (data: CandidateFormData) => {
+      toast.promise(
+        async () => {
+          let photoDoc: Photo | null = null
 
-            // Check if logo has changed
-            if (photo && photo.id !== candidatePhoto?.id) {
-              if (photo.url?.startsWith('data:')) {
-                // Only upload if it's a new base64 image
-                photoDoc = await uploadImage(photo, user, 'photos')
-              }
+          // Check if logo has changed
+          if (photo && photo.id !== candidatePhoto?.id) {
+            if (photo.url?.startsWith('data:')) {
+              // Only upload if it's a new base64 image
+              photoDoc = await uploadImage(photo, user, 'photos')
             }
+          }
 
-            const updatedData = {
-              ...data,
-              ...(photoDoc ? { photo: photoDoc } : {}),
-            }
+          const updatedData = {
+            ...data,
+            ...(photoDoc ? { photo: photoDoc } : {}),
+          }
 
-            await updateCandidate(updatedData, user)
+          await updateCandidate(updatedData, user)
 
-            setUser({
-              ...user,
-              profile: {
-                relationTo: 'candidates',
-                value: {
-                  ...(user.profile?.value as Candidate),
-                  firstName: data.firstName,
-                  lastName: data.lastName,
-                  bio: data.bio,
-                  location: data.location,
-                  phone: data.phone,
-                  photo: photo && photo.id !== candidatePhoto?.id ? photoDoc : candidatePhoto,
-                },
+          setUser({
+            ...user,
+            profile: {
+              relationTo: 'candidates',
+              value: {
+                ...(user.profile?.value as Candidate),
+                firstName: data.firstName,
+                lastName: data.lastName,
+                bio: data.bio,
+                location: data.location,
+                phone: data.phone,
+                photo: photo && photo.id !== candidatePhoto?.id ? photoDoc : candidatePhoto,
               },
-            })
+            },
+          })
 
-            router.push('/account')
-          },
-          {
-            loading: 'Updating profile...',
-            success: 'Profile updated successfully',
-            error: 'Error updating profile',
-          },
-        )
-      } catch (e) {
-        console.error('Error in onSubmit:', e)
-      }
+          router.push('/account')
+        },
+        {
+          loading: t('candidateSettings.loading'),
+          success: t('candidateSettings.success'),
+          error: t('candidateSettings.error'),
+        },
+      )
     },
-    [user, setUser, photo, candidatePhoto, router],
+    [user, setUser, photo, candidatePhoto, router, t],
   )
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="grow">
       <div className="space-y-6 p-6">
-        <h2 className="mb-5 text-2xl font-bold text-slate-800">My Profile</h2>
+        <h2 className="mb-5 text-2xl font-bold text-slate-800">{t('candidateSettings.header')}</h2>
         <section>
           <h2 className="mb-1 text-xl font-bold leading-snug text-slate-800">
-            Organization Profile
+            {t('candidateSettings.subheader')}
           </h2>
           <div className="mt-4 space-y-4 sm:grid sm:items-center sm:gap-2 sm:space-y-0 lg:grid-cols-3">
             <EditUpload
@@ -128,13 +127,10 @@ const CandidatePanel: React.FC<{ user: User }> = ({ user }) => {
               minHeight={160}
             />
           </div>
-          <div className="mt-4 text-sm">
-            Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt
-            mollit.
-          </div>
+          <div className="mt-4 text-sm">{t('candidateSettings.uploadDescription')}</div>
           <div className="mt-4 grid-cols-2 space-y-4 sm:grid sm:items-center sm:gap-2 sm:space-y-0">
             <div>
-              <Label>First Name</Label>
+              <Label>{t('candidateSettings.firstName')}</Label>
               <FormInputField
                 type="text"
                 name="firstName"
@@ -145,7 +141,7 @@ const CandidatePanel: React.FC<{ user: User }> = ({ user }) => {
               />
             </div>
             <div>
-              <Label>Last Name</Label>
+              <Label>{t('candidateSettings.lastName')}</Label>
               <FormInputField
                 type="text"
                 name="lastName"
@@ -156,7 +152,7 @@ const CandidatePanel: React.FC<{ user: User }> = ({ user }) => {
               />
             </div>
             <div>
-              <Label>Location</Label>
+              <Label>{t('candidateSettings.location')}</Label>
               <FormInputField
                 type="text"
                 name="location"
@@ -166,7 +162,7 @@ const CandidatePanel: React.FC<{ user: User }> = ({ user }) => {
               />
             </div>
             <div>
-              <Label>Phone</Label>
+              <Label>{t('candidateSettings.phone')}</Label>
               <FormInputField
                 type="text"
                 name="phone"
@@ -177,7 +173,7 @@ const CandidatePanel: React.FC<{ user: User }> = ({ user }) => {
             </div>
           </div>
           <div className="mt-4">
-            <Label>Bio</Label>
+            <Label>{t('candidateSettings.bio')}</Label>
             <Controller
               name="bio"
               control={control}
@@ -193,10 +189,10 @@ const CandidatePanel: React.FC<{ user: User }> = ({ user }) => {
           <div className="flex gap-2 space-y-4 self-end sm:space-y-0">
             <Link href="/account">
               <Button type="button" variant="outline">
-                Cancel
+                {t('ui.cancel')}
               </Button>
             </Link>
-            <Button disabled={!isDirty}>Save Changes</Button>
+            <Button disabled={!isDirty}>{t('ui.saveChanges')}</Button>
           </div>
         </div>
       </footer>

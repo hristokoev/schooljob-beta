@@ -46,12 +46,12 @@ const HeaderContent: React.FC<{ user: User }> = ({ user }) => {
             <p>{user.profile.value.bio}</p>
           ) : (
             <p>
-              {t('profile.candidate.noDescription')}
+              {t('candidate.noDescriptionPrivate')}
               <Link
                 href="/account/settings/profile"
                 className="ml-2 font-semibold text-royal-blue-500 underline hover:no-underline"
               >
-                {t('edit')}
+                {t('ui.edit')}
               </Link>
             </p>
           )}
@@ -69,12 +69,12 @@ const HeaderContent: React.FC<{ user: User }> = ({ user }) => {
             <RichText content={user.profile.value.richText} />
           ) : (
             <p>
-              {t('profile.organization.noDescription')}
+              {t('organization.noDescriptionPrivate')}
               <Link
                 href="/account/settings/profile"
                 className="ml-2 font-semibold text-royal-blue-500 underline hover:no-underline"
               >
-                {t('edit')}
+                {t('ui.edit')}
               </Link>
             </p>
           )}
@@ -110,7 +110,7 @@ const HeaderContent: React.FC<{ user: User }> = ({ user }) => {
         </div>
         {user.profile.value.vatId && (
           <span className="whitespace-nowrap text-sm font-medium text-slate-500">
-            {t('profile.organization.vatId')}: {user.profile.value.vatId}
+            {t('organization.vatId')}: {user.profile.value.vatId}
           </span>
         )}
       </Fragment>

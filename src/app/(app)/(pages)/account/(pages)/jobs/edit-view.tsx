@@ -5,6 +5,7 @@ import React, { useCallback, useEffect } from 'react'
 import { toast } from 'sonner'
 import { useRouter } from 'next/navigation'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { useTranslations } from 'next-intl'
 
 import {
   Article,
@@ -34,7 +35,6 @@ import {
   salaryTypeOptions,
 } from '@/payload/data'
 import Link from 'next/link'
-import { convertValue } from '@/utilities/convertValue'
 import { StarIcon } from '@heroicons/react/24/solid'
 import { createOrUpdateJob } from '@/actions'
 
@@ -43,6 +43,7 @@ interface JobsEditViewProps {
 }
 
 const JobsEditView: React.FC<Partial<JobFormData> & JobsEditViewProps> = formData => {
+  const t = useTranslations()
   const { id } = formData
 
   const {
@@ -96,21 +97,17 @@ const JobsEditView: React.FC<Partial<JobFormData> & JobsEditViewProps> = formDat
 
   const onSubmit = useCallback(
     async (data: JobFormData) => {
-      try {
-        await toast.promise(createOrUpdateJob(data, id), {
-          loading: 'Submitting...',
-          success: message => {
-            router.push('/account/jobs')
-            return `Job successfully ${id ? 'updated' : 'created'}`
-          },
-          error: message => `${message}`,
-          richColors: true,
-        })
-      } catch (e) {
-        toast.error('Error submitting job')
-      }
+      await toast.promise(createOrUpdateJob(data, id), {
+        loading: t('ui.submitting'),
+        success: () => {
+          router.push('/account/jobs')
+          return id ? t('editJob.successUpdated') : t('editJob.successCreated')
+        },
+        error: message => message,
+        richColors: true,
+      })
     },
-    [id, router],
+    [id, router, t],
   )
 
   const watchSalary = watch('salary.enabled')
@@ -136,7 +133,9 @@ const JobsEditView: React.FC<Partial<JobFormData> & JobsEditViewProps> = formDat
             <div>
               <div className="mb-8 sm:flex sm:items-center sm:justify-between">
                 <div className="mb-4 flex items-center gap-2 sm:mb-0">
-                  <h1 className="text-2xl font-bold text-slate-800 md:text-3xl">Job Details</h1>
+                  <h1 className="text-2xl font-bold text-slate-800 md:text-3xl">
+                    {t('editJob.jobDetails')}
+                  </h1>
                 </div>
               </div>
               <div className="space-y-8 rounded-md border border-slate-200 bg-white p-6">
@@ -144,17 +143,17 @@ const JobsEditView: React.FC<Partial<JobFormData> & JobsEditViewProps> = formDat
                   <Message
                     success={published}
                     warning={!published}
-                    message={`${convertValue(status)}`}
+                    message={t(`search.options.${status}` as 'search.status')}
                     className="w-full"
                   />
                 )}
                 <div>
                   <Label>
-                    Title <span className="text-rose-500">*</span>
+                    {t('editJob.title')} <span className="text-rose-500">*</span>
                   </Label>
                   <FormInputField
                     type="text"
-                    placeholder="Title"
+                    placeholder={t('editJob.titlePlaceholder')}
                     name="title"
                     register={register}
                     error={errors.title}
@@ -164,7 +163,7 @@ const JobsEditView: React.FC<Partial<JobFormData> & JobsEditViewProps> = formDat
 
                 <div className={published ? 'cursor-not-allowed' : ''}>
                   <Label>
-                    Categories <span className="text-rose-500">*</span>
+                    {t('editJob.categories')} <span className="text-rose-500">*</span>
                   </Label>
                   <Controller
                     name="categories"
@@ -173,7 +172,10 @@ const JobsEditView: React.FC<Partial<JobFormData> & JobsEditViewProps> = formDat
                       <Select
                         {...field}
                         isMulti
-                        options={categoriesOptions}
+                        options={categoriesOptions.map(category => ({
+                          value: category,
+                          label: t(`search.options.${category}` as 'search.category'),
+                        }))}
                         className={`w-full ${errors.categories ? 'border-red-300 bg-red-300/10 hover:border-red-400 focus:border-red-500 focus:shadow-red-700/25' : ''}`}
                         isDisabled={published}
                       />
@@ -186,7 +188,7 @@ const JobsEditView: React.FC<Partial<JobFormData> & JobsEditViewProps> = formDat
 
                 <div className={published ? 'cursor-not-allowed' : ''}>
                   <Label>
-                    Employment <span className="text-rose-500">*</span>
+                    {t('editJob.employment')} <span className="text-rose-500">*</span>
                   </Label>
                   <Controller
                     name="employmentType"
@@ -195,7 +197,10 @@ const JobsEditView: React.FC<Partial<JobFormData> & JobsEditViewProps> = formDat
                       <Select
                         {...field}
                         isMulti
-                        options={employmentTypeOptions}
+                        options={employmentTypeOptions.map(employmentType => ({
+                          value: employmentType,
+                          label: t(`search.options.${employmentType}` as 'search.employmentType'),
+                        }))}
                         className={`w-full ${errors.employmentType ? 'border-red-300 bg-red-300/10 hover:border-red-400 focus:border-red-500 focus:shadow-red-700/25' : ''}`}
                         isDisabled={published}
                       />
@@ -208,10 +213,10 @@ const JobsEditView: React.FC<Partial<JobFormData> & JobsEditViewProps> = formDat
 
                 <div className="grid gap-5 md:grid-cols-2">
                   <div>
-                    <Label>Location</Label>
+                    <Label>{t('editJob.location')}</Label>
                     <FormInputField
                       type="text"
-                      placeholder="Location"
+                      placeholder={t('editJob.locationPlaceholder')}
                       name="location"
                       register={register}
                       error={errors.location}
@@ -220,7 +225,7 @@ const JobsEditView: React.FC<Partial<JobFormData> & JobsEditViewProps> = formDat
                   </div>
 
                   <div className={published ? 'cursor-not-allowed' : ''}>
-                    <Label>Location Type</Label>
+                    <Label>{t('editJob.locationType')}</Label>
                     <Controller
                       name="locationType"
                       control={control}
@@ -228,7 +233,10 @@ const JobsEditView: React.FC<Partial<JobFormData> & JobsEditViewProps> = formDat
                         <Select
                           {...field}
                           isMulti
-                          options={locationTypeOptions}
+                          options={locationTypeOptions.map(locationType => ({
+                            value: locationType,
+                            label: t(`search.options.${locationType}` as 'search.locationType'),
+                          }))}
                           className={`w-full ${errors.locationType ? 'border-red-300 bg-red-300/10 hover:border-red-400 focus:border-red-500 focus:shadow-red-700/25' : ''}`}
                           isDisabled={published}
                         />
@@ -239,7 +247,7 @@ const JobsEditView: React.FC<Partial<JobFormData> & JobsEditViewProps> = formDat
 
                 <div className="grid gap-5 md:grid-cols-2">
                   <div className={published ? 'cursor-not-allowed' : ''}>
-                    <Label>Education</Label>
+                    <Label>{t('editJob.education')}</Label>
                     <Controller
                       name="education"
                       control={control}
@@ -247,7 +255,10 @@ const JobsEditView: React.FC<Partial<JobFormData> & JobsEditViewProps> = formDat
                         <Select
                           {...field}
                           isMulti
-                          options={educationOptions}
+                          options={educationOptions.map(education => ({
+                            value: education,
+                            label: t(`search.options.${education}` as 'search.education'),
+                          }))}
                           className={`w-full ${errors.education ? 'border-red-300 bg-red-300/10 hover:border-red-400 focus:border-red-500 focus:shadow-red-700/25' : ''}`}
                           isDisabled={published}
                         />
@@ -256,7 +267,7 @@ const JobsEditView: React.FC<Partial<JobFormData> & JobsEditViewProps> = formDat
                   </div>
 
                   <div className={published ? 'cursor-not-allowed' : ''}>
-                    <Label>Experience</Label>
+                    <Label>{t('editJob.experience')}</Label>
                     <Controller
                       name="experience"
                       control={control}
@@ -264,7 +275,10 @@ const JobsEditView: React.FC<Partial<JobFormData> & JobsEditViewProps> = formDat
                         <Select
                           {...field}
                           isMulti
-                          options={experienceOptions}
+                          options={experienceOptions.map(experience => ({
+                            value: experience,
+                            label: t(`search.options.${experience}` as 'search.experience'),
+                          }))}
                           className={`w-full ${errors.experience ? 'border-red-300 bg-red-300/10 hover:border-red-400 focus:border-red-500 focus:shadow-red-700/25' : ''}`}
                           isDisabled={published}
                         />
@@ -274,7 +288,7 @@ const JobsEditView: React.FC<Partial<JobFormData> & JobsEditViewProps> = formDat
                 </div>
 
                 <div className={published ? 'cursor-not-allowed' : ''}>
-                  <Label>Language(s)</Label>
+                  <Label>{t('editJob.language')}</Label>
                   <Controller
                     name="language"
                     control={control}
@@ -282,7 +296,10 @@ const JobsEditView: React.FC<Partial<JobFormData> & JobsEditViewProps> = formDat
                       <Select
                         {...field}
                         isMulti
-                        options={languageOptions}
+                        options={languageOptions.map(language => ({
+                          value: language,
+                          label: t(`search.options.${language}` as 'search.language'),
+                        }))}
                         className={`w-full ${errors.language ? 'border-red-300 bg-red-300/10 hover:border-red-400 focus:border-red-500 focus:shadow-red-700/25' : ''}`}
                         isDisabled={published}
                       />
@@ -300,8 +317,8 @@ const JobsEditView: React.FC<Partial<JobFormData> & JobsEditViewProps> = formDat
                         onChange={value => {
                           setValue('salary.enabled', !watchSalary)
                         }}
-                        onText="Salary"
-                        offText="Salary"
+                        onText={t('editJob.salaryOn')}
+                        offText={t('editJob.salaryOff')}
                         disabled={published}
                       />
                     )}
@@ -313,8 +330,8 @@ const JobsEditView: React.FC<Partial<JobFormData> & JobsEditViewProps> = formDat
                       <Switch
                         {...field}
                         onChange={value => setValue('salary.range', !watchRange)}
-                        onText="Salary Range"
-                        offText="Salary Range"
+                        onText={t('editJob.salaryRangeOn')}
+                        offText={t('editJob.salaryRangeOff')}
                         disabled={!watchSalary || published}
                       />
                     )}
@@ -325,11 +342,12 @@ const JobsEditView: React.FC<Partial<JobFormData> & JobsEditViewProps> = formDat
                   {!watchRange && (
                     <div className="col-span-2">
                       <Label>
-                        Base Salary {watchSalary && <span className="text-rose-500">*</span>}
+                        {t('editJob.salaryBase')}{' '}
+                        {watchSalary && <span className="text-rose-500">*</span>}
                       </Label>
                       <FormInputField
                         type="number"
-                        placeholder="Base Salary"
+                        placeholder={t('editJob.salaryBasePlaceholder')}
                         name="salary.base"
                         register={register}
                         error={errors.salary?.base}
@@ -342,11 +360,12 @@ const JobsEditView: React.FC<Partial<JobFormData> & JobsEditViewProps> = formDat
                     <>
                       <div>
                         <Label>
-                          Min Salary {watchSalary && <span className="text-rose-500">*</span>}
+                          {t('editJob.salaryMin')}{' '}
+                          {watchSalary && <span className="text-rose-500">*</span>}
                         </Label>
                         <FormInputField
                           type="number"
-                          placeholder="Min Salary"
+                          placeholder={t('editJob.salaryMinPlaceholder')}
                           name="salary.minSalary"
                           register={register}
                           error={errors.salary?.minSalary}
@@ -355,11 +374,12 @@ const JobsEditView: React.FC<Partial<JobFormData> & JobsEditViewProps> = formDat
                       </div>
                       <div>
                         <Label>
-                          Max Salary {watchSalary && <span className="text-rose-500">*</span>}
+                          {t('editJob.salaryMax')}{' '}
+                          {watchSalary && <span className="text-rose-500">*</span>}
                         </Label>
                         <FormInputField
                           type="number"
-                          placeholder="Max Salary"
+                          placeholder={t('editJob.salaryMaxPlaceholder')}
                           name="salary.maxSalary"
                           register={register}
                           error={errors.salary?.maxSalary}
@@ -370,7 +390,8 @@ const JobsEditView: React.FC<Partial<JobFormData> & JobsEditViewProps> = formDat
                   )}
                   <div className={published ? 'cursor-not-allowed' : ''}>
                     <Label>
-                      Currency {watchSalary && <span className="text-rose-500">*</span>}
+                      {t('editJob.salaryCurrency')}{' '}
+                      {watchSalary && <span className="text-rose-500">*</span>}
                     </Label>
                     <Controller
                       name="salary.currency"
@@ -378,7 +399,10 @@ const JobsEditView: React.FC<Partial<JobFormData> & JobsEditViewProps> = formDat
                       render={({ field }) => (
                         <Select
                           {...field}
-                          options={currencyOptions}
+                          options={currencyOptions.map(currency => ({
+                            value: currency,
+                            label: t(`search.options.${currency}` as 'search.currency'),
+                          }))}
                           className={`w-full ${errors.salary?.currency ? 'border-red-300 bg-red-300/10 hover:border-red-400 focus:border-red-500 focus:shadow-red-700/25' : ''}`}
                           isDisabled={!watchSalary || published}
                         />
@@ -388,7 +412,8 @@ const JobsEditView: React.FC<Partial<JobFormData> & JobsEditViewProps> = formDat
 
                   <div className={published ? 'cursor-not-allowed' : ''}>
                     <Label>
-                      Salary Type {watchSalary && <span className="text-rose-500">*</span>}
+                      {t('editJob.salaryType')}{' '}
+                      {watchSalary && <span className="text-rose-500">*</span>}
                     </Label>
                     <Controller
                       name="salary.salaryType"
@@ -396,7 +421,12 @@ const JobsEditView: React.FC<Partial<JobFormData> & JobsEditViewProps> = formDat
                       render={({ field }) => (
                         <Select
                           {...field}
-                          options={salaryTypeOptions}
+                          options={salaryTypeOptions.map(salaryType => {
+                            return {
+                              value: salaryType,
+                              label: t(`search.options.${salaryType}` as 'search.salaryType'),
+                            }
+                          })}
                           className={`w-full ${errors.salary?.salaryType ? 'border-red-300 bg-red-300/10 hover:border-red-400 focus:border-red-500 focus:shadow-red-700/25' : ''}`}
                           isDisabled={!watchSalary || published}
                         />
@@ -409,7 +439,7 @@ const JobsEditView: React.FC<Partial<JobFormData> & JobsEditViewProps> = formDat
             <div>
               <div className="space-y-8 rounded-md border border-slate-200 bg-white p-6">
                 <div>
-                  <Label>Description</Label>
+                  <Label>{t('editJob.description')}</Label>
                   <Controller
                     name="description"
                     control={control}
@@ -426,7 +456,7 @@ const JobsEditView: React.FC<Partial<JobFormData> & JobsEditViewProps> = formDat
                 </div>
 
                 <div>
-                  <Label>Rich Text</Label>
+                  <Label>{t('editJob.richText')}</Label>
                   <Controller
                     name="richText"
                     control={control}
@@ -447,7 +477,7 @@ const JobsEditView: React.FC<Partial<JobFormData> & JobsEditViewProps> = formDat
             <div>
               <div className="space-y-8 rounded-md border border-slate-200 bg-white p-6">
                 <div>
-                  <Label>Skills</Label>
+                  <Label>{t('editJob.skills')}</Label>
                   <Controller
                     control={control}
                     name="skills"
@@ -458,7 +488,7 @@ const JobsEditView: React.FC<Partial<JobFormData> & JobsEditViewProps> = formDat
                 </div>
 
                 <div>
-                  <Label>Certifications</Label>
+                  <Label>{t('editJob.certifications')}</Label>
                   <Controller
                     control={control}
                     name="certifications"
@@ -469,7 +499,7 @@ const JobsEditView: React.FC<Partial<JobFormData> & JobsEditViewProps> = formDat
                 </div>
 
                 <div>
-                  <Label>Respons.</Label>
+                  <Label>{t('editJob.responsibilities')}</Label>
                   <Controller
                     control={control}
                     name="responsibilities"
@@ -480,7 +510,7 @@ const JobsEditView: React.FC<Partial<JobFormData> & JobsEditViewProps> = formDat
                 </div>
 
                 <div>
-                  <Label>Benefits</Label>
+                  <Label>{t('editJob.benefits')}</Label>
                   <Controller
                     control={control}
                     name="benefits"
@@ -495,34 +525,36 @@ const JobsEditView: React.FC<Partial<JobFormData> & JobsEditViewProps> = formDat
           <Aside>
             <div className="mb-8 sm:flex sm:items-center sm:justify-between">
               <div className="mb-4 flex items-center gap-2 sm:mb-0">
-                <h1 className="text-2xl font-bold text-slate-800 md:text-3xl">More</h1>
+                <h1 className="text-2xl font-bold text-slate-800 md:text-3xl">
+                  {t('editJob.aside')}
+                </h1>
               </div>
             </div>
             <div className="sticky top-8 space-y-8">
               <div className="space-y-4 rounded-md border border-yellow-400 bg-white p-6 shadow-lg shadow-yellow-100">
                 <Label className="flex items-center">
                   <StarIcon className="h-6 w-6 fill-yellow-400" />
-                  <span className="ml-2">Featured</span>
+                  <span className="ml-2">{t('editJob.featured')}</span>
                 </Label>
                 <Switch
                   name="featured"
                   value={false}
-                  onText="Featured"
-                  offText="Not Featured"
+                  onText={t('editJob.featuredOn')}
+                  offText={t('editJob.featuredOff')}
                   disabled
                 />
               </div>
 
               <div className="space-y-8 rounded-md border border-slate-200 bg-white p-6">
                 <div>
-                  <Label>Suitable For</Label>
+                  <Label>{t('editJob.suitableFor')}</Label>
                   <div className="space-y-4">
                     <Label>
                       <Controller
                         name="suitableFor.students"
                         control={control}
                         render={({ field }) => (
-                          <Checkbox {...field} label="Students" disabled={published} />
+                          <Checkbox {...field} label={t('editJob.students')} disabled={published} />
                         )}
                       />
                     </Label>
@@ -532,7 +564,11 @@ const JobsEditView: React.FC<Partial<JobFormData> & JobsEditViewProps> = formDat
                         name="suitableFor.disabledPeople"
                         control={control}
                         render={({ field }) => (
-                          <Checkbox {...field} label="Disabled People" disabled={published} />
+                          <Checkbox
+                            {...field}
+                            label={t('editJob.disabledPeople')}
+                            disabled={published}
+                          />
                         )}
                       />
                     </Label>
@@ -542,7 +578,11 @@ const JobsEditView: React.FC<Partial<JobFormData> & JobsEditViewProps> = formDat
                         name="suitableFor.mothersOnMaternityLeave"
                         control={control}
                         render={({ field }) => (
-                          <Checkbox {...field} label="Mothers on ML" disabled={published} />
+                          <Checkbox
+                            {...field}
+                            label={t('editJob.mothersOnMaternityLeave')}
+                            disabled={published}
+                          />
                         )}
                       />
                     </Label>
@@ -552,7 +592,7 @@ const JobsEditView: React.FC<Partial<JobFormData> & JobsEditViewProps> = formDat
                         name="suitableFor.retirees"
                         control={control}
                         render={({ field }) => (
-                          <Checkbox {...field} label="Retirees" disabled={published} />
+                          <Checkbox {...field} label={t('editJob.retirees')} disabled={published} />
                         )}
                       />
                     </Label>
@@ -574,10 +614,10 @@ const JobsEditView: React.FC<Partial<JobFormData> & JobsEditViewProps> = formDat
                 */}
 
                 <div>
-                  <Label>Apply URL</Label>
+                  <Label>{t('editJob.applyUrl')}</Label>
                   <FormInputField
                     type="url"
-                    placeholder="Apply URL"
+                    placeholder={t('editJob.applyUrlPlaceholder')}
                     name="customApplyUrl"
                     register={register}
                     error={errors.customApplyUrl}
@@ -599,7 +639,7 @@ const JobsEditView: React.FC<Partial<JobFormData> & JobsEditViewProps> = formDat
                 className="w-full bg-white shadow-md hover:bg-slate-50/50"
                 type="button"
               >
-                Go Back
+                {t('ui.goBack')}
               </Button>
             </Link>
             {published ? (
@@ -609,14 +649,15 @@ const JobsEditView: React.FC<Partial<JobFormData> & JobsEditViewProps> = formDat
                 type="button"
                 disabled={!canPublish}
                 onClick={() => {
-                  toast.success("Request sent. We'll let you know 😊")
+                  // TODO: Implement this feature
+                  toast.success(t('editJob.askToEditRequested'))
                 }}
               >
-                Ask to Edit
+                {t('editJob.askToEdit')}
               </Button>
             ) : (
               <Button size="lg" className="w-1/2 shadow-md" type="submit" disabled={!canPublish}>
-                Save Job
+                {t('editJob.saveJob')}
               </Button>
             )}
           </div>

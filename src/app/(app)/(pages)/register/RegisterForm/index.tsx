@@ -6,12 +6,15 @@ import StarIcon from '@heroicons/react/24/solid/StarIcon'
 import { toast } from 'sonner'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { useTranslations } from 'next-intl'
 
 import { Button, FormInputField, Label, LoadingIcon } from '@/components'
-import { RegisterFormData, RegisterFieldSchema } from '@/types'
+import { RegisterFormData, useRegisterFieldSchema } from '@/types'
 import { useAuth } from '@/providers'
 
 const RegisterForm: React.FC = () => {
+  const t = useTranslations()
+  const RegisterFieldSchema = useRegisterFieldSchema()
   const searchParams = useSearchParams()
   const redirect = useRef(searchParams.get('redirect'))
   const { loading, create } = useAuth()
@@ -36,12 +39,12 @@ const RegisterForm: React.FC = () => {
       try {
         await create(data)
         if (redirect?.current) router.push(redirect.current as string)
-        else router.push(`/login?success=${encodeURIComponent('Registration successful')}`)
+        else router.push(`/login?success=${encodeURIComponent(t('register.success'))}`)
       } catch (e) {
-        toast.error('Something went wrong. Please try again.')
+        toast.error(t('register.error'))
       }
     },
-    [create, router],
+    [create, router, t],
   )
 
   const [tab, setTab] = React.useState<'candidate' | 'organization'>('candidate')
@@ -65,7 +68,7 @@ const RegisterForm: React.FC = () => {
               }}
               type="button"
             >
-              Candidate
+              {t('register.candidate')}
             </button>
             <button
               className={`relative flex flex-1 items-center justify-center p-1 text-sm font-medium transition duration-150 ease-in-out ${tab === 'organization' ? 'text-royal-blue-500' : 'text-gray-500'}`}
@@ -76,18 +79,18 @@ const RegisterForm: React.FC = () => {
               }}
               type="button"
             >
-              <StarIcon className="mr-1 h-4 w-4 text-royal-blue-500" /> Organization
+              <StarIcon className="mr-1 h-4 w-4 text-royal-blue-500" /> {t('register.organization')}
             </button>
           </div>
         </div>
         <div className="space-y-4">
           <div>
             <Label>
-              Email <span className="text-red-500">*</span>
+              {t('register.email')} <span className="text-red-500">*</span>
             </Label>
             <FormInputField
               type="email"
-              placeholder="Email"
+              placeholder={t('register.emailPlaceholder')}
               name="email"
               register={register}
               error={errors.email}
@@ -95,11 +98,11 @@ const RegisterForm: React.FC = () => {
           </div>
           <div>
             <Label>
-              Password <span className="text-red-500">*</span>
+              {t('register.password')} <span className="text-red-500">*</span>
             </Label>
             <FormInputField
               type="password"
-              placeholder="Enter a password"
+              placeholder={t('register.passwordPlaceholder')}
               name="password"
               register={register}
               error={errors.password}
@@ -107,11 +110,11 @@ const RegisterForm: React.FC = () => {
           </div>
           <div>
             <Label>
-              Repeat Password <span className="text-red-500">*</span>
+              {t('register.confirmPassword')} <span className="text-red-500">*</span>
             </Label>
             <FormInputField
               type="password"
-              placeholder="Repeat password"
+              placeholder={t('register.confirmPasswordPlaceholder')}
               name="passwordConfirm"
               register={register}
               error={errors.passwordConfirm}
@@ -120,11 +123,11 @@ const RegisterForm: React.FC = () => {
           {tab === 'organization' && (
             <div>
               <Label>
-                Title <span className="text-red-500">*</span>
+                {t('register.title')} <span className="text-red-500">*</span>
               </Label>
               <FormInputField
                 type="text"
-                placeholder="Title of your organization"
+                placeholder={t('register.titlePlaceholder')}
                 name="title"
                 register={register}
                 error={errors.title}
@@ -135,11 +138,11 @@ const RegisterForm: React.FC = () => {
             <Fragment>
               <div>
                 <Label>
-                  First Name <span className="text-red-500">*</span>
+                  {t('register.firstName')} <span className="text-red-500">*</span>
                 </Label>
                 <FormInputField
                   type="text"
-                  placeholder="Your first name"
+                  placeholder={t('register.firstNamePlaceholder')}
                   name="firstName"
                   register={register}
                   error={errors.firstName}
@@ -147,11 +150,11 @@ const RegisterForm: React.FC = () => {
               </div>
               <div>
                 <Label>
-                  Last Name <span className="text-red-500">*</span>
+                  {t('register.lastName')} <span className="text-red-500">*</span>
                 </Label>
                 <FormInputField
                   type="tex"
-                  placeholder="Your last name"
+                  placeholder={t('register.lastNamePlaceholder')}
                   name="lastName"
                   register={register}
                   error={errors.lastName}
@@ -161,7 +164,7 @@ const RegisterForm: React.FC = () => {
           )}
           <div className="hidden">
             <Label>
-              Role <span className="text-red-500">*</span>
+              {t('register.role')} <span className="text-red-500">*</span>
             </Label>
             <FormInputField
               type="text"
@@ -175,7 +178,9 @@ const RegisterForm: React.FC = () => {
           </div>
         </div>
         <Button type="submit" disabled={loading} className="mt-6 w-full">
-          Register as {tab === 'candidate' ? 'Candidate' : 'Organization'}
+          {tab === 'candidate'
+            ? t('register.registerCandidate')
+            : t('register.registerOrganization')}
           {loading && <LoadingIcon className="ml-2 size-4" />}
         </Button>
       </form>

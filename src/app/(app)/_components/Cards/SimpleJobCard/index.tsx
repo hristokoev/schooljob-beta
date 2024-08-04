@@ -1,11 +1,12 @@
+import { getTranslations } from 'next-intl/server'
 import Link from 'next/link'
 import React from 'react'
 
-import { formatDate, isWithinLast3Days, convertValue, renderSalary } from '@/utilities'
+import { formatDate, isWithinLast3Days, renderSalary } from '@/utilities'
 import { Favorite, Pill } from '@/components'
 import { type Job, type Organization } from '@payload-types'
 
-export const SimpleJobCard: React.FC<Job> = ({
+export const SimpleJobCard: React.FC<Job> = async ({
   publicId,
   slug,
   title,
@@ -15,10 +16,11 @@ export const SimpleJobCard: React.FC<Job> = ({
   featured,
   ...props
 }: Job) => {
+  const t = await getTranslations()
   const formattedDate = formatDate(createdAt)
   const isNew = isWithinLast3Days(createdAt)
   const salaryText = renderSalary(salary)
-  const transformedEmploymentType = employmentType.map(convertValue)
+  const transformedEmploymentType = employmentType.map(value => t(`search.options.${value}`))
   const organization = props.organization as Organization
 
   return (
@@ -33,9 +35,9 @@ export const SimpleJobCard: React.FC<Job> = ({
               {featured || isNew ? (
                 <span className="mr-2 inline-block md:hidden">
                   {featured ? (
-                    <Pill color="orange">HOT</Pill>
+                    <Pill color="orange">{t('ui.labelHot')}</Pill>
                   ) : isNew ? (
-                    <Pill color="green">New</Pill>
+                    <Pill color="green">{t('ui.labelNew')}</Pill>
                   ) : null}
                 </span>
               ) : null}
@@ -68,9 +70,9 @@ export const SimpleJobCard: React.FC<Job> = ({
           </div>
           <div className="ml-auto hidden md:block">
             {featured ? (
-              <Pill color="orange">Recommended</Pill>
+              <Pill color="orange">{t('ui.labelRecommended')}</Pill>
             ) : isNew ? (
-              <Pill color="green">New</Pill>
+              <Pill color="green">{t('ui.labelNew')}</Pill>
             ) : null}
           </div>
         </div>

@@ -1,20 +1,23 @@
 import React, { Suspense } from 'react'
+import { useTranslations } from 'next-intl'
 
 import { Gutter, Search, UnderlinedText } from '@/components'
-import { filters } from './filters'
+import { useFilters } from './filters'
 
 export const SearchBlock: React.FC = () => {
+  const t = useTranslations()
+
   return (
     <Gutter className="max-w-6xl">
       <div className="relative mx-auto mb-16 flex-col text-center md:flex-row md:text-left">
-        <h1 className="leading-2 text-4xl font-extrabold tracking-tighter">
-          A job board for schools and teachers.
-          <br />
-          We&apos;ll help you find the <UnderlinedText>perfect job</UnderlinedText>.
+        <h1 className="leading-2 whitespace-pre-wrap text-4xl font-extrabold tracking-tighter">
+          {t.rich('search.homeh1', {
+            UnderlinedText: chunks => <UnderlinedText>{chunks}</UnderlinedText>,
+          })}
         </h1>
       </div>
       <Suspense>
-        <Search filters={filters} path="jobs" />
+        <Search filters={useFilters()} path="jobs" />
       </Suspense>
     </Gutter>
   )

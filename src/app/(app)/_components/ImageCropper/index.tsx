@@ -4,6 +4,7 @@ import React, { Fragment, useRef, useState } from 'react'
 import ReactCrop, { centerCrop, convertToPixelCrop, Crop, makeAspectCrop } from 'react-image-crop'
 import 'react-image-crop/dist/ReactCrop.css'
 import { toast } from 'sonner'
+import { useTranslations } from 'next-intl'
 
 import { Button } from '@/components'
 import setCanvasPreview from './utils/setCanvasPreview'
@@ -18,6 +19,7 @@ interface ImageCropperProps {
 }
 
 const ImageCropper = ({ setIsOpen, setImage, minWidth, minHeight }: ImageCropperProps) => {
+  const t = useTranslations()
   const imgRef = useRef<HTMLImageElement | null>(null)
   const previewCanvasRef = useRef<HTMLCanvasElement | null>(null)
   const [imgSrc, setImgSrc] = useState('')
@@ -42,7 +44,7 @@ const ImageCropper = ({ setIsOpen, setImage, minWidth, minHeight }: ImageCropper
       imageElement.addEventListener('load', e => {
         const { naturalWidth, naturalHeight } = e.currentTarget as HTMLImageElement
         if (naturalWidth < minWidth || naturalHeight < minHeight) {
-          toast.error('Image must be at least 160px on each side')
+          toast.error(t('errors.imageResolution', { minWidth, minHeight }))
           setImgSrc('')
           return
         }
@@ -85,7 +87,7 @@ const ImageCropper = ({ setIsOpen, setImage, minWidth, minHeight }: ImageCropper
                     className="w-full cursor-pointer text-sm text-slate-500 file:hidden"
                   />
                 </p>
-                {!imgSrc && <span className="text-slate-400">Click to upload an image</span>}
+                {!imgSrc && <span className="text-slate-400">{t('ui.uploadImage')}</span>}
               </div>
             </div>
           </div>
@@ -113,7 +115,7 @@ const ImageCropper = ({ setIsOpen, setImage, minWidth, minHeight }: ImageCropper
 
         <div className="flex gap-4">
           <Button onClick={() => setIsOpen(false)} type="button" variant="outline">
-            Cancel
+            {t('ui.cancel')}
           </Button>
           <Button
             onClick={() => {
@@ -137,7 +139,7 @@ const ImageCropper = ({ setIsOpen, setImage, minWidth, minHeight }: ImageCropper
             }}
             type="button"
           >
-            Crop Image
+            {t('ui.cropImage')}
           </Button>
         </div>
 

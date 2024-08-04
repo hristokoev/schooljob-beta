@@ -1,26 +1,30 @@
+// TODO: Fix typing and remove 'any'
+
 'use server'
 
 import configPromise from '@payload-config'
 import { getPayloadHMR } from '@payloadcms/next/utilities'
+import { getTranslations } from 'next-intl/server'
 
-import { transformToPayload } from '@/utilities'
 import { getMeUser } from '@/utilities/getMeUser'
+import { JobFormData } from '@/types'
 
-export const createOrUpdateJob = async (data: any, id?: string) => {
+export const createOrUpdateJob = async (data: JobFormData, id?: string) => {
+  const t = await getTranslations()
   const { user } = await getMeUser()
 
   const jobData = {
     ...data,
-    categories: transformToPayload(data.categories),
-    employmentType: transformToPayload(data.employmentType),
-    locationType: transformToPayload(data.locationType),
-    education: transformToPayload(data.education),
-    experience: transformToPayload(data.experience),
-    language: transformToPayload(data.language),
+    categories: data.categories.map(category => category.value),
+    employmentType: data.employmentType.map(type => type.value),
+    locationType: data?.locationType?.map(type => type.value) || [],
+    education: data?.education?.map(education => education.value) || [],
+    experience: data?.experience?.map(experience => experience.value) || [],
+    language: data?.language?.map(language => language.value) || [],
     salary: {
       ...data.salary,
-      currency: data.salary.currency?.value,
-      salaryType: data.salary.salaryType?.value,
+      currency: data?.salary?.currency?.value || [],
+      salaryType: data?.salary?.salaryType?.value || [],
     },
   }
 
@@ -29,30 +33,41 @@ export const createOrUpdateJob = async (data: any, id?: string) => {
   })
 
   if (id) {
-    const doc = await payload.update({
+    try {
+      const doc = await payload.update({
+        collection: 'jobs',
+        id,
+        data: jobData as any,
+        user
+      })
+
+      if (!doc) {
+        throw new Error(t('errors.updateJob'))
+      }
+
+      return doc
+    } catch (error) {
+      throw new Error(t('errors.updateJob'))
+    }
+  }
+
+  try {
+    const doc = await payload.create({
       collection: 'jobs',
-      id,
-      data: jobData,
+      data: {
+        ...jobData as any,
+        applications: []
+      },
       user
     })
 
     if (!doc) {
-      throw new Error('Error updating job')
+      throw new Error(t('errors.createJob'))
     }
 
     return doc
+  } catch (error) {
+    throw new Error(t('errors.createJob'))
   }
-
-  const doc = await payload.create({
-    collection: 'jobs',
-    data: jobData,
-    user
-  })
-
-  if (!doc) {
-    throw new Error('Error creating job')
-  }
-
-  return doc
 
 }

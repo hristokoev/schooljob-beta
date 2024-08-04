@@ -40,11 +40,11 @@ const LoadMore: React.FC<JobSearchParams> = props => {
       <div className="flex justify-center">
         {hasMore ? (
           <Button onClick={handleLoadMore} className="px-12">
-            {t('loadMore')}
+            {t('ui.loadMore')}
             {loading && <LoadingIcon className="ml-2 size-4" />}
           </Button>
         ) : (
-          <div className="text-neutral-400">{t('noMoreJobs')}</div>
+          <div className="text-neutral-400">{t('errors.noMoreJobs')}</div>
         )}
       </div>
     </Fragment>

@@ -1,11 +1,12 @@
+import { getTranslations } from 'next-intl/server'
 import Link from 'next/link'
 import React from 'react'
+import { StarIcon } from '@heroicons/react/24/solid'
 
 import { Media, Pill } from '@/components'
 import { type Organization } from '@payload-types'
-import { StarIcon } from '@heroicons/react/24/solid'
 
-export const OrganizationCard: React.FC<Organization> = ({
+export const OrganizationCard: React.FC<Organization> = async ({
   slug,
   title,
   description,
@@ -15,6 +16,7 @@ export const OrganizationCard: React.FC<Organization> = ({
   jobsPublished,
   featured,
 }: Organization) => {
+  const t = await getTranslations()
   return (
     <div
       className={`h-full bg-white hover:bg-slate-50 sm:col-span-6 xl:col-span-4 ${
@@ -59,13 +61,7 @@ export const OrganizationCard: React.FC<Organization> = ({
             </div>
             <div className="flex space-x-2">
               {jobsPublished && jobsPublished.length > 0 ? (
-                <Pill color="green">{`${
-                  jobsPublished.length === 1
-                    ? '1 job'
-                    : jobsPublished.length < 5
-                    ? `${jobsPublished.length} jobs`
-                    : `${jobsPublished.length} jobs`
-                }`}</Pill>
+                <Pill color="green">{t('ui.jobs', { count: jobsPublished.length })}</Pill>
               ) : (
                 <div>&nbsp;</div>
               )}

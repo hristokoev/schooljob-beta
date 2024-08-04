@@ -2,6 +2,7 @@
 
 import { Dialog, DialogPanel, DialogTitle } from '@headlessui/react'
 import React, { Fragment, useState } from 'react'
+import { useTranslations } from 'next-intl'
 
 import { Button, ImageCropper } from '@/components'
 import { TrashIcon } from '@heroicons/react/24/solid'
@@ -18,6 +19,7 @@ interface EditUploadProps {
 }
 
 const EditUpload = ({ name, image, setImage, minWidth, minHeight, className }: EditUploadProps) => {
+  const t = useTranslations()
   const [isOpen, setIsOpen] = useState(false)
 
   return (
@@ -33,13 +35,13 @@ const EditUpload = ({ name, image, setImage, minWidth, minHeight, className }: E
         ) : (
           <div className="h-28 w-28 rounded-md border bg-slate-200 shadow-md">
             <div className="flex h-full items-center justify-center text-center text-slate-400">
-              No {name}
+              {t('editUpload.none', { name })}
             </div>
           </div>
         )}
         <div className="flex gap-2">
           <Button type="button" onClick={() => setIsOpen(true)}>
-            {image ? `Change ${name}` : `Upload ${name}`}
+            {image ? t('editUpload.change', { name }) : t('editUpload.upload', { name })}
           </Button>
           {image && image.id && (
             <Button
@@ -62,7 +64,7 @@ const EditUpload = ({ name, image, setImage, minWidth, minHeight, className }: E
       <Dialog open={isOpen} onClose={() => setIsOpen(false)} className="relative z-50" transition>
         <div className="fixed inset-0 flex w-screen items-center justify-center bg-black/50 p-4 backdrop-blur-sm">
           <DialogPanel className="max-w-2xl space-y-4 rounded-md border border-slate-300 bg-white/90 p-6">
-            <DialogTitle className="font-bold">Upload image</DialogTitle>
+            <DialogTitle className="font-bold">{t('editUpload.title')}</DialogTitle>
             <ImageCropper
               setIsOpen={setIsOpen}
               setImage={setImage}

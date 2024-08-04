@@ -7,7 +7,7 @@ const NotFound: React.FC = () => {
     <MinHeight>
       <VerticalPadding top="lg" bottom="lg">
         <Gutter>
-          <h1>Not Found</h1>
+          <h1>404</h1>
         </Gutter>
       </VerticalPadding>
     </MinHeight>

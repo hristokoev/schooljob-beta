@@ -1,3 +1,4 @@
+import { useTranslations } from "next-intl";
 import { z, ZodType } from "zod"
 
 type ResetPasswordFormData = {
@@ -5,14 +6,16 @@ type ResetPasswordFormData = {
     passwordConfirm: string;
 }
 
-const ResetPasswordFieldSchema: ZodType<ResetPasswordFormData> = z
-    .object({
-        password: z.string().min(8, 'Password must be at least 8 characters').max(32, {
-            message: 'Password must be less than 32 characters',
-        }).regex(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/, {
-            message: 'Password must contain at least one uppercase letter, one lowercase letter, one number and one special character',
+const useResetPasswordFieldSchema = (): ZodType<ResetPasswordFormData> => {
+    const t = useTranslations('accountSettings.validation')
+
+    return z.object({
+        password: z.string().min(6, t('passwordLength', { number: 6 })).max(32, {
+            message: t('passwordMaxLength', { number: 32 }),
+        }).regex(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{6,}$/, {
+            message: t('passwordAllowedCharacters'),
         }).regex(/^[^\s]+$/, {
-            message: 'Password cannot contain spaces',
+            message: t('passwordForbiddenCharacters'),
         }),
         passwordConfirm: z.string(),
     }).superRefine((data, ctx) => {
@@ -20,10 +23,11 @@ const ResetPasswordFieldSchema: ZodType<ResetPasswordFormData> = z
             ctx.addIssue({
                 code: z.ZodIssueCode.custom,
                 path: ['passwordConfirm'],
-                message: 'Passwords do not match',
+                message: t('passwordConfirm'),
             });
         }
     })
+}
 
 
-export { type ResetPasswordFormData, ResetPasswordFieldSchema }
+export { type ResetPasswordFormData, useResetPasswordFieldSchema }

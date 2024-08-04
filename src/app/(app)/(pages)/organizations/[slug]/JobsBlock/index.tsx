@@ -1,19 +1,25 @@
 import React, { Fragment } from 'react'
+import { getTranslations } from 'next-intl/server'
 
 import { JobsList } from '@/blocks'
 import { Organization } from '@payload-types'
 import { getDocument } from '@/utilities/getDocument'
 
 const JobsBlock: React.FC<{ slug: string }> = async ({ slug }) => {
+  const t = await getTranslations()
   const organization = (await getDocument('organizations', slug, 1)) as Organization
 
   if (!organization) {
-    return <p>Organization not found</p>
+    return <p>{t('errors.noOrganization')}</p>
   }
 
   return (
     <Fragment>
-      <h4 className="mb-6 text-xl font-bold">Currently hiring at {organization.title}</h4>
+      <h4 className="mb-6 text-xl font-bold">
+        {t('organization.jobs', {
+          title: organization.title,
+        })}
+      </h4>
       <JobsList organization={organization.id} />
     </Fragment>
   )

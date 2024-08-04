@@ -1,4 +1,6 @@
-import { cs, enGB } from "date-fns/locale"
+// TODO: Localize
+
+import { cs } from "date-fns/locale"
 import { formatDistance, isAfter, subDays } from "date-fns"
 
 export function formatDate(createdAt: string): string {
@@ -6,7 +8,7 @@ export function formatDate(createdAt: string): string {
 
     return formatDistance(date, new Date(), {
         addSuffix: true,
-        locale: enGB,
+        locale: cs,
     })
 }
 

@@ -24,7 +24,7 @@ export interface Config {
   globals: {
     data: Data;
   };
-  locale: 'cs';
+  locale: 'cs' | 'sk';
   user: User & {
     collection: 'users';
   };

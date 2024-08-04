@@ -5,10 +5,12 @@ import { Metadata } from 'next'
 import { getMeUser } from '@/utilities/getMeUser'
 import { Gutter, MinHeight, VerticalPadding } from '@/components'
 import RegisterForm from './RegisterForm'
+import { getTranslations } from 'next-intl/server'
 
 export default async function Register() {
+  const t = await getTranslations()
   await getMeUser({
-    validUserRedirect: `/account?warning=${encodeURIComponent('You are already logged in.')}`,
+    validUserRedirect: `/account?warning=${encodeURIComponent(t('authentication.errors.alreadyLoggedIn'))}`,
   })
 
   return (
@@ -21,25 +23,24 @@ export default async function Register() {
                 <div className="px-4 sm:px-6">
                   <div className="mx-auto max-w-3xl pb-12 text-center md:pb-10">
                     <h1 className="font-inter-tight pb-4 text-4xl font-bold text-slate-800 md:text-5xl">
-                      Join the Community
+                      {t('register.header')}
                     </h1>
-                    <p className="text-lg text-zinc-500">
-                      Lorem ipsum dolor, sit amet consectetur adipisicing elit. Provident dolorem
-                      voluptatem aliquam corporis deserunt eum quas accusamus.
-                    </p>
+                    <p className="text-lg text-zinc-500">{t('register.description')}</p>
                   </div>
 
                   <div className="mx-auto w-full max-w-md rounded-md border border-royal-blue-300 bg-white px-4 py-8 shadow-lg shadow-royal-blue-300">
-                    <h1 className="mb-6 text-center text-3xl font-bold text-slate-800">Register</h1>
+                    <h1 className="mb-6 text-center text-3xl font-bold text-slate-800">
+                      {t('register.h1')}
+                    </h1>
                     <RegisterForm />
                     <div className="mt-6 border-t border-slate-200 pt-5">
                       <div className="text-sm">
-                        Already have an account?{' '}
+                        {t('register.hasAccount')}
                         <Link
                           className="font-medium text-royal-blue-500 hover:text-royal-blue-600"
                           href="/login"
                         >
-                          Log in
+                          {t('login.button')}
                         </Link>
                       </div>
                     </div>
@@ -53,8 +54,15 @@ export default async function Register() {
     </Fragment>
   )
 }
+export async function generateMetadata({
+  params: { locale },
+}: {
+  params: { locale: string }
+}): Promise<Metadata> {
+  const t = await getTranslations({ locale, namespace: 'seo.register' })
 
-export const metadata: Metadata = {
-  title: 'Register',
-  description: 'Register an account to get started.',
+  return {
+    title: t('title'),
+    description: t('description'),
+  }
 }

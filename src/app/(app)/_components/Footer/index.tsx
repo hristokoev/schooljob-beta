@@ -2,11 +2,13 @@
 
 import React, { Fragment } from 'react'
 import Link from 'next/link'
+import { useTranslations } from 'next-intl'
 
 import { Button } from '@/components'
 import { useAuth } from '@/providers'
 
 const Footer: React.FC = () => {
+  const t = useTranslations()
   const { status, loading } = useAuth()
 
   return (
@@ -24,7 +26,7 @@ const Footer: React.FC = () => {
                 <Fragment>
                   <Link href="/logout">
                     <Button variant="secondary" size="sm">
-                      Log Out
+                      {t('authentication.logout')}
                     </Button>
                   </Link>
                 </Fragment>
@@ -32,12 +34,12 @@ const Footer: React.FC = () => {
                 <Fragment>
                   <Link href="/login">
                     <Button variant="tertiary" size="sm">
-                      Log In
+                      {t('authentication.login')}
                     </Button>
                   </Link>
                   <Link href="/register">
                     <Button size="sm" variant="secondary">
-                      Sign Up
+                      {t('authentication.signup')}
                     </Button>
                   </Link>
                 </Fragment>

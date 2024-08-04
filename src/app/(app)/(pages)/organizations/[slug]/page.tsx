@@ -9,9 +9,12 @@ import { JobsBlock } from '@/pages/organizations/[slug]/JobsBlock'
 import { JobsListSkeleton } from '@/blocks'
 import { ProfileBlock } from './Profile'
 import { ProfileBlockSkeleton } from './Profile/Skeleton'
+import { Metadata } from 'next'
+import { getTranslations } from 'next-intl/server'
 
 interface Props {
   params: {
+    locale: string
     slug: string
   }
 }
@@ -53,4 +56,26 @@ export async function generateStaticParams() {
   return pages.docs?.map(({ slug }) => ({
     slug,
   }))
+}
+
+export async function generateMetadata({ params: { locale, slug } }: Props): Promise<Metadata> {
+  const t = await getTranslations({ locale, namespace: 'seo.organization' })
+  const payload = await getPayloadHMR({
+    config: configPromise,
+  })
+
+  const data = await payload.find({
+    collection: 'organizations',
+    where: {
+      slug: {
+        equals: slug,
+      },
+    },
+    depth: 0,
+  })
+
+  return {
+    title: t('title', { title: data.docs[0].title }),
+    description: t('description'),
+  }
 }

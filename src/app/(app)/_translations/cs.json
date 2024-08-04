@@ -1,94 +1,574 @@
 {
   "authentication": {
-    "unauthorized": "You must be logged in to access your account."
-  },
-  "CTA": {
-    "title": "Ready to get started?",
-    "items": {
-      "item01": "Create account",
-      "item02": "Browse jobs"
-    },
-    "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-    "button": "Let's get started"
-  },
-  "HomePage": {
-    "title": "Hello world!"
-  },
-  "profile": {
-    "candidate": {
-      "cards": {
-        "card01": {
-          "header": "Saved Jobs",
-          "title": "Lorem ipsum dolor sit.",
-          "content": "Lorem ipsum dolor sit amet consectetur adipiscing elit Ut et massa mi."
-        },
-        "card02": {
-          "header": "Applications",
-          "title": "Lorem ipsum dolor sit.",
-          "content": "Lorem ipsum dolor sit amet consectetur adipiscing elit Ut et massa mi."
-        },
-        "card03": {
-          "header": "Account Settings",
-          "title": "Lorem ipsum dolor sit.",
-          "content": "Lorem ipsum dolor sit amet consectetur adipiscing elit Ut et massa mi."
-        }
-      },
-      "noDescription": "You don't have any description yet. How about writing something about yourself?"
-    },
-    "organization": {
-      "cards": {
-        "card01": {
-          "header": "Create a Job",
-          "title": "Lorem ipsum dolor sit.",
-          "content": "Lorem ipsum dolor sit amet consectetur adipiscing elit Ut et massa mi."
-        },
-        "card02": {
-          "header": "Active Jobs",
-          "title": "Lorem ipsum dolor sit.",
-          "content": "Lorem ipsum dolor sit amet consectetur adipiscing elit Ut et massa mi."
-        },
-        "card03": {
-          "header": "Drafts",
-          "title": "Lorem ipsum dolor sit.",
-          "content": "Lorem ipsum dolor sit amet consectetur adipiscing elit Ut et massa mi."
-        },
-        "card04": {
-          "header": "Applications",
-          "title": "Lorem ipsum dolor sit.",
-          "content": "Lorem ipsum dolor sit amet consectetur adipiscing elit Ut et massa mi."
-        },
-        "card05": {
-          "header": "Account Settings",
-          "title": "Lorem ipsum dolor sit.",
-          "content": "Lorem ipsum dolor sit amet consectetur adipiscing elit Ut et massa mi."
-        },
-        "card06": {
-          "header": "Profile Settings",
-          "title": "Lorem ipsum dolor sit.",
-          "content": "Lorem ipsum dolor sit amet consectetur adipiscing elit Ut et massa mi."
-        }
-      },
-      "noDescription": "You don't have any description yet. How about writing something about your company?",
-      "vatId": "VAT ID"
+    "account": "Můj účet",
+    "login": "Přihlásit se",
+    "logout": "Odhlásit se",
+    "register": "Připojte se k nám",
+    "signup": "Zaregistrovat se",
+    "errors": {
+      "alreadyLoggedIn": "Už jste přihlášeni.",
+      "fetch": "Při načítání vašeho účtu došlo k chybě.",
+      "invalidEmailOrPassword": "Neplatný email nebo heslo",
+      "invalidLogin": "Neplatné přihlášení.",
+      "invalidLogout": "Neplatná odpověď ze serveru.",
+      "invalidRegister": "Neplatná odpověď ze serveru.",
+      "login": "Při pokusu o přihlášení došlo k chybě.",
+      "logout": "Při pokusu o odhlášení došlo k chybě.",
+      "register": "Při pokusu o registraci došlo k chybě.",
+      "resetPassword": "Při pokusu o obnovení hesla došlo k chybě.",
+      "unauthorized": "Pro přístup k vašemu účtu musíte být přihlášeni."
     }
   },
-  "account": "Accont",
-  "approve": "Approve",
-  "applications": "Applications",
-  "edit": "Edit",
-  "editProfile": "Edit Profile",
-  "home": "Home",
-  "jobs": "Jobs",
-  "loadMore": "Load More",
-  "noJobsFound": "No Jobs Found",
-  "noOrganizationsFound": "Nejsou organizace",
-  "noMoreJobs": "No More Jobs",
-  "noMoreOrganizations": "No More Organizations",
-  "organizations": "Organizations",
-  "ourPartners": "Our Partners",
-  "mostRecentJobs": "Most recent jobs",
-  "recommendedJobs": "Recommended Jobs",
-  "reject": "Reject",
-  "viewAllJobs": "View All Jobs",
-  "viewAllOrganizations": "View All Organizations"
+  "applyForm": {
+    "button": "Podat žádost",
+    "header": "Mám zájem o tuto práci",
+    "firstName": "Jméno",
+    "lastName": "Příjmení",
+    "email": "Email",
+    "phone": "Telefon",
+    "location": "Místo",
+    "coverLetter": "Motivační dopis",
+    "cv": "Životopis (CV)",
+    "loading": "Odesílání...",
+    "success": "Žádost byla úspěšně odeslána.",
+    "error": "Něco se pokazilo. Zkuste to prosím později.",
+    "validation": {
+      "firstName": "Jméno je povinné.",
+      "firstNameLength": "Jméno musí mít alespoň {number} znaků.",
+      "firstNameAllowedCharacters": "Jméno může obsahovat pouze písmena a mezery.",
+      "lastName": "Příjmení je povinné.",
+      "lastNameLength": "Příjmení musí mít alespoň {number} znaků.",
+      "lastNameAllowedCharacters": "Příjmení může obsahovat pouze písmena a mezery.",
+      "email": "Neplatná emailová adresa.",
+      "cv": "PDF soubor je povinný.",
+      "maxFileSize": "Maximální velikost {size} MB.",
+      "unsupportedFileType": "Tento typ souboru není podporován."
+    }
+  },
+  "CTA": {
+    "title": "Připraveni začít?",
+    "items": {
+      "item01": "Vytvořit účet",
+      "item02": "Procházet pracovní nabídky"
+    },
+    "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+    "button": "Pojďme začít"
+  },
+  "editUpload": {
+    "change": "Změnit {name}",
+    "upload": "Nahrát {name}",
+    "title": "Nahrát obrázek",
+    "none": "Žádné {name}"
+  },
+  "editJob": {
+    "successCreated": "Pracovní nabídka byla úspěšně vytvořena.",
+    "successUpdated": "Pracovní nabídka byla úspěšně aktualizována.",
+    "errorCreating": "Při vytváření pracovní nabídky došlo k chybě. Zkuste to prosím znovu.",
+    "errorUpdating": "Při aktualizaci pracovní nabídky došlo k chybě. Zkuste to prosím znovu.",
+    "jobDetails": "Detaily práce",
+    "title": "Název",
+    "titlePlaceholder": "Název pracovní pozice",
+    "categories": "Kategorie",
+    "employment": "Typ zaměstnání",
+    "location": "Místo",
+    "locationPlaceholder": "Město nebo obec",
+    "locationType": "Typ místa",
+    "education": "Vzdělání",
+    "experience": "Zkušenosti",
+    "language": "Jazyk(y)",
+    "salaryOn": "Plat",
+    "salaryOff": "Plat",
+    "salaryRangeOn": "Platové rozmezí",
+    "salaryRangeOff": "Platové rozmezí",
+    "salaryBase": "Základní plat",
+    "salaryBasePlaceholder": "Základní plat",
+    "salaryMin": "Minimální plat",
+    "salaryMinPlaceholder": "Minimální plat",
+    "salaryMax": "Maximální plat",
+    "salaryMaxPlaceholder": "Maximální plat",
+    "salaryCurrency": "Měna",
+    "salaryType": "Typ platu",
+    "description": "Popis",
+    "richText": "Detaily práce",
+    "skills": "Dovednosti",
+    "certifications": "Certifikace",
+    "responsibilities": "Odpověd.",
+    "benefits": "Výhody",
+    "aside": "Více",
+    "featured": "Zvýrazněno",
+    "featuredOn": "Zvýrazněno",
+    "featuredOff": "Nezvýrazněno",
+    "suitableFor": "Vhodné pro",
+    "students": "Studenty",
+    "disabledPeople": "Osoby se zdravotním postižením",
+    "mothersOnMaternityLeave": "Matky na MD",
+    "retirees": "Důchodce",
+    "applyUrl": "URL pro podání žádosti",
+    "applyUrlPlaceholder": "https://",
+    "applications": "Žádosti",
+    "status": "Stav",
+    "askToEdit": "Požádat o úpravu",
+    "askToEditRequested": "Žádost odeslána. Dáme vám vědět 😊",
+    "saveJob": "Uložit práci"
+  },
+  "errors": {
+    "createApplication": "Při vytváření žádosti došlo k chybě.",
+    "createJob": "Při vytváření pracovní nabídky došlo k chybě.",
+    "imageResolution": "Obrázek musí mít šířku alespoň {width} px nebo výšku {height} px.",
+    "noCandidate": "Nebyl nalezen žádný kandidát.",
+    "noJobs": "Nebyly nalezeny žádné pracovní nabídky.",
+    "noMoreJobs": "Žádné další pracovní nabídky.",
+    "noOrganization": "Nebyla nalezena žádná organizace.",
+    "noOrganizations": "Nebyly nalezeny žádné organizace.",
+    "noMoreOrganizations": "Žádné další organizace.",
+    "noProfile": "Nebyl nalezen žádný profil.",
+    "updateCandidate": "Při aktualizaci kandidáta došlo k chybě.",
+    "updateJob": "Při aktualizaci pracovní nabídky došlo k chybě.",
+    "updateOrganization": "Při aktualizaci organizace došlo k chybě.",
+    "updatePassword": "Při aktualizaci hesla došlo k chybě.",
+    "uploadCv": "Při nahrávání životopisu došlo k chybě.",
+    "uploadImage": "Při nahrávání obrázku došlo k chybě."
+  },
+  "candidate": {
+    "firstName": "Jméno",
+    "lastName": "Příjmení",
+    "email": "Email",
+    "phone": "Telefon",
+    "location": "Místo",
+    "cv": "Životopis (CV)",
+    "information": "Informace o kandidátovi",
+    "cards": {
+      "card01": {
+        "header": "Uložené práce",
+        "title": "Lorem ipsum dolor sit.",
+        "content": "Lorem ipsum dolor sit amet consectetur adipiscing elit Ut et massa mi."
+      },
+      "card02": {
+        "header": "Žádosti",
+        "title": "Lorem ipsum dolor sit.",
+        "content": "Lorem ipsum dolor sit amet consectetur adipiscing elit Ut et massa mi."
+      },
+      "card03": {
+        "header": "Nastavení účtu",
+        "title": "Lorem ipsum dolor sit.",
+        "content": "Lorem ipsum dolor sit amet consectetur adipiscing elit Ut et massa mi."
+      }
+    },
+    "noDescriptionPrivate": "Zatím nemáte žádný popis. Co takhle napsat něco o sobě?"
+  },
+  "organization": {
+    "aboutUs": "O nás",
+    "information": "Informace o organizaci",
+    "jobs": "Aktuálně nabírá v {title}",
+    "cards": {
+      "card01": {
+        "header": "Vytvořit pracovní nabídku",
+        "title": "Lorem ipsum dolor sit.",
+        "content": "Lorem ipsum dolor sit amet consectetur adipiscing elit Ut et massa mi."
+      },
+      "card02": {
+        "header": "Aktivní pracovní nabídky",
+        "title": "Lorem ipsum dolor sit.",
+        "content": "Lorem ipsum dolor sit amet consectetur adipiscing elit Ut et massa mi."
+      },
+      "card03": {
+        "header": "Koncepty",
+        "title": "Lorem ipsum dolor sit.",
+        "content": "Lorem ipsum dolor sit amet consectetur adipiscing elit Ut et massa mi."
+      },
+      "card04": {
+        "header": "Žádosti",
+        "title": "Lorem ipsum dolor sit.",
+        "content": "Lorem ipsum dolor sit amet consectetur adipiscing elit Ut et massa mi."
+      },
+      "card05": {
+        "header": "Nastavení účtu",
+        "title": "Lorem ipsum dolor sit.",
+        "content": "Lorem ipsum dolor sit amet consectetur adipiscing elit Ut et massa mi."
+      },
+      "card06": {
+        "header": "Nastavení profilu",
+        "title": "Lorem ipsum dolor sit.",
+        "content": "Lorem ipsum dolor sit amet consectetur adipiscing elit Ut et massa mi."
+      }
+    },
+    "noDescriptionPrivate": "Zdá se, že <strong>{title}</strong> o sobě zatím neposkytl žádné informace.",
+    "noDescriptionPublic": "Zatím nemáte žádný popis. Co takhle napsat něco o vaší společnosti?",
+    "vatId": "DIČ"
+  },
+  "job": {
+    "skills": "Dovednosti",
+    "certifications": "Certifikace",
+    "responsibilities": "Odpovědnosti",
+    "categories": "Kategorie",
+    "employment": "Zaměstnání",
+    "locationType":"Typ místa",
+    "education": "Vzdělání",
+    "experience": "Zkušenosti",
+    "language": "Jazyk(y)",
+    "benefits": "Výhody",
+    "suitableFor": "Vhodné pro",
+    "students": "Studenty",
+    "mothersOnMaternityLeave": "Matky na MD",
+    "disabledPeople": "Osoby se zdravotním postižením",
+    "retirees": "Důchodce"
+  },
+  "search": {
+    "homeh1": "Pracovní portál pro školy a učitele.\nPomůžeme vám najít <UnderlinedText>perfektní práci</UnderlinedText>.",
+    "category": "Kategorie",
+    "salary": "Plat",
+    "employmentType": "Typ zaměstnání",
+    "education": "Vzdělání",
+    "experience": "Zkušenosti",
+    "language": "Jazyk",
+    "locationType": "Místo",
+    "currency": "Měna",
+    "salaryType":"Typ platu",
+    "status": "Stav",
+    "suitableFor": "Vhodné pro",
+    "options": {
+      "category-1": "Kategorie 1",
+      "category-2": "Kategorie 2",
+      "category-3": "Kategorie 3",
+      "fulltime": "Plný úvazek",
+      "parttime": "Částečný úvazek",
+      "contract": "Smlouva",
+      "temporary": "Dočasné",
+      "internship": "Stáž",
+      "volunteer": "Dobrovolnictví",
+      "apprenticeship": "Učňovství",
+      "seasonal": "Sezónní",
+      "freelance": "Na volné noze",
+      "remote": "Na dálku",
+      "onsite": "Na místě",
+      "hybrid": "Hybridní",
+      "highSchool": "Střední škola",
+      "associateDegree": "Vyšší odborné vzdělání",
+      "bachelorsDegree": "Bakalářský titul",
+      "mastersDegree": "Magisterský titul",
+      "doctoralDegree": "Doktorský titul",
+      "professionalDegree": "Profesní titul",
+      "noEducation": "Bez vzdělání",
+      "noExperience": "Bez zkušeností",
+      "lessThanOneYear": "Méně než 1 rok",
+      "oneTwoYears": "1-2 roky",
+      "twoThreeYears": "2-3 roky",
+      "threeFiveYears": "3-5 let",
+      "fiveTenYears": "5-10 let",
+      "tenPlusYears": "10+ let",
+      "hourly": "Hodinově",
+      "daily": "Denně",
+      "weekly": "Týdně",
+      "biweekly": "Dvoutýdně",
+      "monthly": "Měsíčně",
+      "annually": "Ročně",
+      "czk": "CZK",
+      "eur": "EUR",
+      "pending": "Čeká na schválení",
+      "accepted": "Přijato",
+      "rejected": "Odmítnuto",
+      "published": "Zveřejněno",
+      "unpublished": "Nezveřejněno",
+      "sq": "Albánština",
+      "bg": "Bulharština",
+      "ca": "Katalánština",
+      "hr": "Chorvatština",
+      "cs": "Čeština",
+      "da": "Dánština",
+      "nl": "Nizozemština",
+      "en": "Angličtina",
+      "fi": "Finština",
+      "fr": "Francouzština",
+      "de": "Němčina",
+      "el": "Řečtina",
+      "hu": "Maďarština",
+      "it": "Italština",
+      "no": "Norská",
+      "pl": "Polština",
+      "pt": "Portugalsky",
+      "ro": "Rumunština",
+      "ru": "Ruština",
+      "sr": "Srbská",
+      "sk": "Slovinština",
+      "es": "Španělština",
+      "sv": "Švédština",
+      "tr": "Turečtina",
+      "uk": "Ukrajinská",
+      "students": "Študenti",
+      "mothersOnMaternityLeave": "Matky na MD",
+      "disabledPeople": "Osoby se ZP",
+      "retirees": "Důchodci"
+    }
+  },
+ "login": {
+    "title": "Přihlášení",
+    "header": "Vítejte zpět! ✨",
+    "description": "Nemáte účet? ",
+    "email": "Email",
+    "emailPlaceholder": "Email",
+    "password": "Heslo",
+    "passwordPlaceholder": "Heslo",
+    "button": "Přihlásit se",
+    "validation": {
+      "email": "Zadejte prosím platnou e-mailovou adresu.",
+      "password": "Zadejte prosím platné heslo.",
+      "passwordLength": "Heslo musí mít alespoň {number} znaků.",
+      "passwordMaxLength": "Heslo nesmí být delší než {number} znaků."
+    }
+  },
+  "logout": {
+    "title": "Odhlášení",
+    "header": "Kam byste chtěli jít? ",
+    "success": "Byli jste odhlášeni.",
+    "error": "Už jste odhlášeni."
+  },
+  "register": {
+    "header": "Připojte se ke komunitě",
+    "description": "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Provident dolorem voluptatem aliquam corporis deserunt eum quas accusamus.",
+    "h1": "Registrace",
+    "button": "Registrovat",
+    "hasAccount": "Už máte účet? ",
+    "candidate": "Kandidát",
+    "organization": "Organizace",
+    "email": "Email",
+    "emailPlaceholder": "Email",
+    "password": "Heslo",
+    "passwordPlaceholder": "Zadejte heslo",
+    "confirmPassword": "Potvrďte heslo",
+    "confirmPasswordPlaceholder": "Potvrďte heslo",
+    "title": "Název organizace",
+    "titlePlaceholder": "Název vaší organizace",
+    "firstName":"Jméno",
+    "firstNamePlaceholder": "Vaše jméno",
+    "lastName": "Příjmení",
+    "lastNamePlaceholder": "Vaše příjmení",
+    "role": "Role",
+    "registerCandidate": "Registrovat jako kandidát",
+    "registerOrganization": "Registrovat jako organizace",
+    "success": "Registrace úspěšně dokončena. Nyní se můžete přihlásit.",
+    "error": "Něco se pokazilo. Zkuste to prosím znovu.",
+    "validation": {
+      "firstName": "Jméno je povinné.",
+      "firstNameLength": "Jméno musí mít alespoň {number} znaků.",
+      "firstNameAllowedCharacters": "Jméno může obsahovat pouze písmena a mezery.",
+      "lastName": "Příjmení je povinné.",
+      "lastNameLength": "Příjmení musí mít alespoň {number} znaků.",
+      "lastNameAllowedCharacters": "Příjmení může obsahovat pouze písmena a mezery.",
+      "title": "Název je povinný.",
+      "titleLength": "Název musí mít alespoň {number} znaků.",
+      "titleAllowedCharacters": "Název může obsahovat pouze písmena, čísla a mezery.",
+      "titleForbiddenCharacters": "Název nemůže obsahovat pouze mezery.",
+      "email": "Zadejte prosím platnou e-mailovou adresu.",
+      "password": "Zadejte prosím platné heslo.",
+      "passwordLength": "Heslo musí mít alespoň {number} znaků.",
+      "passwordMaxLength": "Heslo nesmí být delší než {number} znaků.",
+      "passwordAllowedCharacters": "Heslo musí obsahovat alespoň jedno velké písmeno, jedno malé písmeno, jedno číslo a jeden speciální znak.",
+      "passwordForbiddenCharacters": "Heslo nesmí obsahovat mezery.",
+      "passwordConfirm": "Hesla se neshodují."
+    }
+  },
+  "accountSettings": {
+    "header": "Můj účet",
+    "email": "Email",
+    "emailDescription": "E-mailová adresa, kterou používáte k přihlášení. Pro změnu e-mailové adresy nás kontaktujte.",
+    "emailPlaceholder": "Email",
+    "password": "Heslo",
+    "passwordDescription": "Zde můžete aktualizovat své heslo.",
+    "passwordPlaceholder": "Heslo",
+    "newPassword": "Nové heslo",
+    "newPasswordPlaceholder": "Nové heslo",
+    "confirmPassword": "Potvrďte heslo",
+    "confirmPasswordPlaceholder": "Potvrďte nové heslo",
+    "setNewPassword": "Nastavit nové heslo",
+    "loading": "Aktualizace hesla...",
+    "success": "Vaše heslo bylo aktualizováno.",
+    "error": "Něco se pokazilo. Zkuste to prosím později.",
+    "validation": {
+      "password": "Zadejte prosím platné heslo.",
+      "passwordLength": "Heslo musí mít alespoň {number} znaků.",
+      "passwordMaxLength": "Heslo nesmí být delší než {number} znaků.",
+      "passwordAllowedCharacters": "Heslo musí obsahovat alespoň jedno velké písmeno, jedno malé písmeno, jedno číslo a jeden speciální znak.",
+      "passwordForbiddenCharacters": "Heslo nesmí obsahovat mezery.",
+      "passwordConfirm": "Hesla se neshodují."
+    }
+  },
+  "feedbackPanel": {
+    "header": "Poskytněte zpětnou vazbu",
+    "description": "Spoléháme na zpětnou vazbu zákazníků pro zlepšení celkového zážitku!",
+    "rateHeader": "Jak pravděpodobně byste nás doporučili příteli nebo kolegovi?",
+    "rate1": "1",
+    "rate2": "2",
+    "rate3": "3",
+    "rate4": "4",
+    "rate5": "5",
+    "rateLeft": "Vůbec ne",
+    "rateRight": "Určitě ano",
+    "tellUs": "Řekněte nám slovy",
+    "leaveFeedback": "Zanechte zpětnou vazbu",
+    "leaveFeedbackPlaceholder": "Opravdu se mi líbí..."
+  },
+  "sidebarSettings": {
+    "businessSettings": "Nastavení firmy",
+    "experience": "Zkušenosti"
+  },
+  "candidateSettings": {
+    "header": "Můj profil",
+    "subheader": "Profil kandidáta",
+    "uploadDescription": "Zde nahrajte nebo změňte svou profilovou fotku.",
+    "firstName":"Jméno",
+    "lastName":"Příjmení",
+    "location": "Místo",
+    "phone": "Telefon",
+    "bio": "Bio",
+    "loading": "Aktualizace profilu...",
+    "success": "Váš profil byl aktualizován.",
+    "error": "Něco se pokazilo. Zkuste to prosím později.",
+    "validation": {
+      "firstName": "Jméno je povinné.",
+      "firstNameLength": "Jméno musí mít alespoň {number} znaků.",
+      "firstNameAllowedCharacters": "Jméno může obsahovat pouze písmena a mezery.",
+      "lastName": "Příjmení je povinné.",
+      "lastNameLength": "Příjmení musí mít alespoň {number} znaků.",
+      "lastNameAllowedCharacters": "Příjmení může obsahovat pouze písmena a mezery."
+    }
+  },
+  "organizationSettings": {
+    "header": "Můj profil",
+    "subheader": "Profil organizace",
+    "uploadDescription": "Zde nahrajte nebo změňte své logo a úvodní obrázek.",
+    "title": "Název organizace",
+    "vatId": "DIČ organizace",
+    "categories": "Kategorie",
+    "categoriesPlaceholder": "Vyberte kategorie",
+    "location": "Místo",
+    "phone": "Telefon",
+    "url": "URL",
+    "description": "Krátký popis",
+    "richText": "Úplný popis",
+    "loading": "Aktualizace profilu...",
+    "success": "Váš profil byl aktualizován.",
+    "error": "Něco se pokazilo. Zkuste to prosím později.",
+    "validation": {
+      "title": "Název je povinný.",
+      "titleLength": "Název musí mít alespoň {number} znaků.",
+      "titleAllowedCharacters": "Název může obsahovat pouze písmena, čísla a mezery.",
+      "titleForbiddenCharacters": "Název nemůže obsahovat pouze mezery."
+    }
+  },
+  "seo": {
+    "title": "SchoolJob",
+    "description": "Lorem ipsum dolor sit amet consectetur adipiscing elit Ut et massa mi.",
+    "home": {
+      "title": "SchoolJob",
+      "description": "Lorem ipsum dolor sit amet consectetur adipiscing elit Ut et massa mi."
+    },
+    "account": {
+      "title": "Účet - SchoolJob",
+      "description": "Lorem ipsum dolor sit amet consectetur adipiscing elit Ut et massa mi."
+    },
+    "createJob": {
+      "title": "Vytvořit pracovní nabídku - SchoolJob",
+      "description": "Lorem ipsum dolor sit amet consectetur adipiscing elit Ut et massa mi."
+    },
+    "editJob": {
+      "title": "{title} - Vytvořit pracovní nabídku - SchoolJob",
+      "description": "Lorem ipsum dolor sit amet consectetur adipiscing elit Ut et massa mi."
+    },
+    "job": {
+      "title": "{title} - Pracovní nabídky - SchoolJob",
+      "description": "Lorem ipsum dolor sit amet consectetur adipiscing elit Ut et massa mi."
+    },
+    "jobs": {
+      "title": "Pracovní nabídky - SchoolJob",
+      "description": "Lorem ipsum dolor sit amet consectetur adipiscing elit Ut et massa mi."
+    },
+    "login": {
+      "title": "Přihlášení - SchoolJob",
+      "description": "Lorem ipsum dolor sit amet consectetur adipiscing elit Ut et massa mi."
+    },
+    "logout": {
+      "title": "Odhlášení - SchoolJob",
+      "description": "Lorem ipsum dolor sit amet consectetur adipiscing elit Ut et massa mi."
+    },
+    "organization": {
+      "title": "{title} - Organizace - SchoolJob",
+      "description": "Lorem ipsum dolor sit amet consectetur adipiscing elit Ut et massa mi."
+    },
+    "organizations": {
+      "title": "Organizace - SchoolJob",
+      "description": "Lorem ipsum dolor sit amet consectetur adipiscing elit Ut et massa mi."
+    },
+    "register": {
+      "title": "Registrace - SchoolJob",
+      "description": "Lorem ipsum dolor sit amet consectetur adipiscing elit Ut et massa mi."
+    },
+    "applications": {
+      "title": "Žádosti - SchoolJob",
+      "description": "Lorem ipsum dolor sit amet consectetur adipiscing elit Ut et massa mi."
+    },
+    "savedJobs": {
+      "title": "Uložené pracovní nabídky - SchoolJob",
+      "description": "Lorem ipsum dolor sit amet consectetur adipiscing elit Ut et massa mi."
+    },
+    "settings": {
+      "title": "Nastavení účtu - SchoolJob",
+      "description": "Lorem ipsum dolor sit amet consectetur adipiscing elit Ut et massa mi."
+    }
+  },
+  "ui": {
+    "add": "Přidat",
+    "allJobs": "Všechny pracovní nabídky",
+    "allOrganizations": "Všechny organizace",
+    "application": "Žádost",
+    "applications": "{count, plural, =0 {Žádné žádosti} =1 {1 žádost} other {# žádosti}}",
+    "approve": "Schválit",
+    "cancel": "Zrušit",
+    "candidate": "Kandidát",
+    "createJob": "Vytvořit pracovní nabídku",
+    "cropImage": "Oříznout obrázek",
+    "downloadPdf": "Stáhnout PDF",
+    "edit": "Upravit",
+    "editJob": "Upravit pracovní nabídku",
+    "editProfile": "Upravit profil",
+    "files": "Soubory",
+    "filename": "Soubor",
+    "filetype": "Typ",
+    "filesize": "Velikost",
+    "goBack": "Zpět",
+    "job": "Pracovní nabídka",
+    "jobs": "{count, plural, =0 {Žádné pracovní nabídky} =1 {1 pracovní nabídka} other {# pracovní nabídky}}",
+    "labelHot": "ŽHAVÉ",
+    "labelNew": "NOVÉ",
+    "labelRecommended": "Doporučené",
+    "lastUpdated": "Naposledy aktualizováno",
+    "loadMore": "Načíst více",
+    "mostRecentJobs": "Nejnovější pracovní nabídky",
+    "newJob": "Nová pracovní nabídka",
+    "recommendedJobs": "Doporučené pracovní nabídky",
+    "recommendedOrganizations": "Doporučené organizace",
+    "reject": "Odmítnout",
+    "saveChanges": "Uložit změny",
+    "search": "Hledat",
+    "showLess": "Zobrazit méně",
+    "showMore": "Zobrazit více",
+    "slideNext": "Další slide",
+    "slidePrevious": "Předchozí slide",
+    "status": "Stav",
+    "submit": "Odeslat",
+    "submitting": "Odesílání...",
+    "upload": "Klikněte pro nahrání",
+    "uploadImage": "Klikněte pro nahrání obrázku",
+    "viewAllJobs": "Zobrazit všechny pracovní nabídky",
+    "viewAllOrganizations": "Zobrazit všechny organizace"
+  },
+  "account": "Účet",
+  "applications": "Žádosti",
+  "feedback": "Poskytnout zpětnou vazbu",
+  "home": "Domů",
+  "jobs": "Pracovní nabídky",
+  "organizations": "Organizace",
+  "ourPartners": "Naši partneři",
+  "profile": "Profil",
+  "savedJobs": "Uložené pracovní nabídky",
+  "settings": "Nastavení"
 }

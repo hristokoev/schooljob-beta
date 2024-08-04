@@ -1,19 +1,21 @@
-import React, { useState } from 'react'
+import React from 'react'
 import Link from 'next/link'
+import { getTranslations } from 'next-intl/server'
 
 import { type Column, Message, Pill, Table } from '@/components'
-import { renderSalary, convertValue } from '@/utilities'
+import { renderSalary } from '@/utilities'
 import { Job } from '@payload-types'
 
 interface JobsTableViewProps {
   docs: Job[]
 }
 
-const JobsTableView: React.FC<JobsTableViewProps> = ({ docs }) => {
+const JobsTableView: React.FC<JobsTableViewProps> = async ({ docs }) => {
+  const t = await getTranslations()
   const columns: Column[] = [
     {
       key: 'title',
-      label: 'Title',
+      label: t('editJob.title'),
       render: (item: Job) => (
         <div className="text-left font-medium text-sky-500">
           <Link href={`/account/jobs/${item.id}`} className="underline hover:no-underline">
@@ -24,7 +26,7 @@ const JobsTableView: React.FC<JobsTableViewProps> = ({ docs }) => {
     },
     {
       key: 'location',
-      label: 'Location',
+      label: t('editJob.location'),
       render: (item: Job) => (
         <div className="text-left font-medium text-sky-500">
           {item.location ? item.location : '-'}
@@ -33,7 +35,7 @@ const JobsTableView: React.FC<JobsTableViewProps> = ({ docs }) => {
     },
     {
       key: 'salary',
-      label: 'Salary',
+      label: t('editJob.salaryOn'),
       render: (item: Job) => {
         const salary = item.salary
 
@@ -46,12 +48,12 @@ const JobsTableView: React.FC<JobsTableViewProps> = ({ docs }) => {
     },
     {
       key: 'employmentType',
-      label: 'Employment Type',
+      label: t('editJob.employment'),
       render: item => (
         <div className="flex gap-2 text-left font-medium text-sky-500">
           {item.employmentType.map((type: Job['employmentType'], index: string) => (
             <Pill key={index} size="lg" color="blue">
-              {convertValue(type.toString())}
+              {t(`search.options.${type}` as 'search.employmentType')}
             </Pill>
           ))}
         </div>
@@ -59,7 +61,7 @@ const JobsTableView: React.FC<JobsTableViewProps> = ({ docs }) => {
     },
     {
       key: 'applications',
-      label: 'Applications',
+      label: t('editJob.applications'),
       render: item => {
         const applicationCount = item.applications?.length || 0
         const hasApplications = applicationCount > 0
@@ -67,11 +69,11 @@ const JobsTableView: React.FC<JobsTableViewProps> = ({ docs }) => {
         return (
           <div className={`text-left font-medium ${hasApplications ? 'text-sky-500' : ''}`}>
             {applicationCount === 0 ? (
-              '0 Applications'
+              t('ui.applications', { count: applicationCount })
             ) : (
               <>
                 <Link href="/account/applications" className="underline hover:no-underline">
-                  {applicationCount} {applicationCount === 1 ? 'Application' : 'Applications'}
+                  {t('ui.applications', { count: applicationCount })}
                 </Link>
               </>
             )}
@@ -81,19 +83,19 @@ const JobsTableView: React.FC<JobsTableViewProps> = ({ docs }) => {
     },
     {
       key: 'status',
-      label: 'Status',
+      label: t('editJob.status'),
       render: (item: Job) => (
         <Message
           success={item.status === 'published'}
           warning={item.status === 'unpublished'}
-          message={convertValue(item.status)}
+          message={t(`search.options.${item.status}` as 'search.status')}
           className="w-full"
         />
       ),
     },
   ]
 
-  return <Table columns={columns} data={docs} title={`Jobs (${docs.length})`} />
+  return <Table columns={columns} data={docs} title={t('ui.jobs', { count: docs.length })} />
 }
 
 export { JobsTableView }

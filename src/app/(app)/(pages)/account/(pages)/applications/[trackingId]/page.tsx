@@ -2,13 +2,12 @@ import React, { Fragment } from 'react'
 import configPromise from '@payload-config'
 import { redirect } from 'next/navigation'
 import { getPayloadHMR } from '@payloadcms/next/utilities'
-import { useTranslations } from 'next-intl'
+import { getTranslations } from 'next-intl/server'
 
 import { ApplicationsEditView } from '../edit-view'
 import { BreadcrumbBlock } from '@/blocks'
 import { getMeUser } from '@/utilities/getMeUser'
 import { Button, Message } from '@/components'
-import { convertValue } from '@/utilities'
 import Link from 'next/link'
 
 interface Props {
@@ -17,12 +16,12 @@ interface Props {
 }
 
 export default async function Application({ params, searchParams }: Props) {
-  const t = useTranslations()
+  const t = await getTranslations()
   const { trackingId } = params
   const { action } = searchParams
   const { user } = await getMeUser({
     nullUserRedirect: `/login?error=${encodeURIComponent(
-      t('authentication.unauthorized'),
+      t('authentication.errors.unauthorized'),
     )}&redirect=${encodeURIComponent('/account')}`,
   })
 
@@ -91,10 +90,10 @@ export default async function Application({ params, searchParams }: Props) {
         {user.role === 'organization' && (
           <div className="grid grid-flow-col justify-start gap-2 sm:auto-cols-max sm:justify-end">
             <Link href={`/account/applications/${trackingId}?action=approve`}>
-              <Button className="bg-emerald-500 hover:bg-emerald-500/90">{t('approve')}</Button>
+              <Button className="bg-emerald-500 hover:bg-emerald-500/90">{t('ui.approve')}</Button>
             </Link>
             <Link href={`/account/applications/${trackingId}?action=reject`}>
-              <Button variant="destructive">{t('reject')}</Button>
+              <Button variant="destructive">{t('ui.reject')}</Button>
             </Link>
           </div>
         )}
@@ -104,7 +103,7 @@ export default async function Application({ params, searchParams }: Props) {
           success={status === 'accepted'}
           error={status === 'rejected'}
           warning={status === 'pending'}
-          message={convertValue(status)}
+          message={t(`search.options.${status}` as 'search.status')}
         />
       </div>
       <ApplicationsEditView {...data.docs[0]} />

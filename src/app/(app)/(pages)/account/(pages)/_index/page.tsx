@@ -8,10 +8,10 @@ import { Grid } from './Grid'
 import { Header } from './Header'
 import { PencilIcon } from '@heroicons/react/24/solid'
 import Link from 'next/link'
-import { useTranslations } from 'next-intl'
+import { getTranslations } from 'next-intl/server'
 
-export default function Account() {
-  const t = useTranslations()
+export default async function Account() {
+  const t = await getTranslations()
 
   return (
     <MinHeight className="bg-slate-100">
@@ -25,7 +25,7 @@ export default function Account() {
                 <Link href="/account/settings/profile">
                   <Button type="button" size="sm" variant="outline">
                     <PencilIcon className="h-4 w-4 shrink-0 fill-current text-slate-400" />
-                    <span className="ml-2">{t('editProfile')}</span>
+                    <span className="ml-2">{t('ui.editProfile')}</span>
                   </Button>
                 </Link>
               </div>
@@ -43,7 +43,15 @@ export default function Account() {
   )
 }
 
-export const metadata: Metadata = {
-  title: 'Account',
-  description: 'Create an account or log in to your existing account.',
+export async function generateMetadata({
+  params: { locale },
+}: {
+  params: { locale: string }
+}): Promise<Metadata> {
+  const t = await getTranslations({ locale, namespace: 'seo.account' })
+
+  return {
+    title: t('title'),
+    description: t('description'),
+  }
 }

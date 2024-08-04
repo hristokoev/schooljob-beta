@@ -1,12 +1,13 @@
 import Link from 'next/link'
 import React from 'react'
+import { getTranslations } from 'next-intl/server'
 
 import { type Job, type Organization } from '@payload-types'
-import { convertValue, renderSalary } from '@/utilities'
+import { renderSalary } from '@/utilities'
 import { Media, Pill } from '@/components'
 import { StarIcon } from '@heroicons/react/24/solid'
 
-export const FeaturedJobCard: React.FC<Job> = ({
+export const FeaturedJobCard: React.FC<Job> = async ({
   publicId,
   slug,
   title,
@@ -15,10 +16,11 @@ export const FeaturedJobCard: React.FC<Job> = ({
   featured,
   organization,
 }: Job) => {
+  const t = await getTranslations()
   const { title: organizationTitle, logo, imageCover } = organization as Organization
   const salaryText = renderSalary(salary)
 
-  const transformedEmploymentType = employmentType.map(convertValue)
+  const transformedEmploymentType = employmentType.map(value => t(`search.options.${value}`))
 
   return (
     <div className="group col-span-full h-full overflow-hidden rounded-md border border-slate-300 bg-white transition duration-100 ease-in-out hover:border-slate-300 hover:bg-slate-50 sm:col-span-6 xl:col-span-4">
@@ -59,7 +61,7 @@ export const FeaturedJobCard: React.FC<Job> = ({
               <h5 className="line-clamp-1 h-6 font-semibold leading-snug">{title}</h5>
             </div>
             <div className="flex gap-2">
-              {transformedEmploymentType.map((type) => (
+              {transformedEmploymentType.map(type => (
                 <Pill key={type}>{type}</Pill>
               ))}
             </div>

@@ -10,14 +10,17 @@ import {
   OrganizationsSwipeSkeleton,
 } from '@/blocks'
 import { SearchBlock } from './SearchBlock'
+import { getTranslations } from 'next-intl/server'
 
 export const dynamic = 'force-static'
 
-export default function Organizations({
+export default async function Organizations({
   searchParams,
 }: {
   searchParams: OrganizationSearchParams
 }) {
+  const t = await getTranslations()
+
   return (
     <Fragment>
       <VerticalPadding className="bg-white">
@@ -27,7 +30,7 @@ export default function Organizations({
       </VerticalPadding>
       <VerticalPadding className="bg-slate-100">
         <Gutter>
-          <TopLabel text="Recommended organizations" />
+          <TopLabel text={t('ui.recommendedOrganizations')} />
           <Suspense fallback={<OrganizationsSwipeSkeleton />}>
             <OrganizationsSwipe featured />
           </Suspense>
@@ -38,7 +41,7 @@ export default function Organizations({
       </Gutter>
       <VerticalPadding className="bg-slate-100">
         <Gutter>
-          <TopLabel text="All organizations" />
+          <TopLabel text={t('ui.allOrganizations')} />
           <Suspense fallback={<OrganizationsGridSkeleton count={6} />}>
             <OrganizationsGrid featured={false} loadMore {...searchParams} />
           </Suspense>
@@ -48,7 +51,15 @@ export default function Organizations({
   )
 }
 
-export const metadata: Metadata = {
-  title: 'Organizations',
-  description: 'Organizations page.',
+export async function generateMetadata({
+  params: { locale },
+}: {
+  params: { locale: string }
+}): Promise<Metadata> {
+  const t = await getTranslations({ locale, namespace: 'seo.organizations' })
+
+  return {
+    title: t('title'),
+    description: t('description'),
+  }
 }

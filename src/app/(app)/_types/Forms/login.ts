@@ -1,18 +1,22 @@
 import { z, ZodType } from "zod"
+import { useTranslations } from "next-intl"
 
 type LoginFormData = {
     email: string;
     password: string;
 }
 
-const LoginFieldSchema: ZodType<LoginFormData> = z
-    .object({
-        email: z.string().email(),
+const useLoginFieldSchema = (): ZodType<LoginFormData> => {
+    const t = useTranslations("login.validation")
+
+    return z.object({
+        email: z.string().email({ message: t("email") }),
         password: z
-            .string()
-            .min(2, { message: "Password is too short" })
-            .max(20, { message: "Password is too long" }),
+            .string({ message: t("password") })
+            .min(6, { message: t("passwordLength", { number: 6 }) })
+            .max(32, { message: t("passwordLength", { number: 32 }) }),
     })
+}
 
 
-export { type LoginFormData, LoginFieldSchema }
+export { type LoginFormData, useLoginFieldSchema }

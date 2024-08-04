@@ -4,6 +4,7 @@ import React, { Fragment } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
+import { useTranslations } from 'next-intl'
 
 import { Button, Gutter } from '@/components'
 import Logo from '@/public/images/logo.svg'
@@ -11,6 +12,7 @@ import LogoSmall from '@/public/images/logo_s.svg'
 import { useAuth } from '@/providers'
 
 const Header: React.FC = () => {
+  const t = useTranslations()
   const { status, loading } = useAuth()
   const pathname = usePathname()
 
@@ -31,7 +33,7 @@ const Header: React.FC = () => {
                 pathname === '/jobs' && 'bg-royal-blue-600'
               }`}
             >
-              Jobs
+              {t('jobs')}
             </Link>
             <Link
               href="/organizations"
@@ -39,7 +41,7 @@ const Header: React.FC = () => {
                 pathname === '/organizations' && 'bg-royal-blue-600'
               }`}
             >
-              Organizations
+              {t('organizations')}
             </Link>
           </div>
           {loading ? (
@@ -51,18 +53,18 @@ const Header: React.FC = () => {
                   href="/account"
                   className="px-3 py-6 text-white transition-all duration-100 ease-in-out hover:bg-royal-blue-600 hover:text-slate-100"
                 >
-                  My Account
+                  {t('authentication.account')}
                 </Link>
               ) : (
                 <Fragment>
                   <Link href="/login">
                     <Button size="sm" variant="outline" className="text-white">
-                      Log In
+                      {t('authentication.login')}
                     </Button>
                   </Link>
                   <Link href="/register">
                     <Button size="sm" variant="secondary">
-                      Join Us
+                      {t('authentication.register')}
                     </Button>
                   </Link>
                 </Fragment>

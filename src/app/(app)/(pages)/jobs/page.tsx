@@ -1,5 +1,6 @@
 import React, { Fragment, Suspense } from 'react'
 import { Metadata } from 'next'
+import { getTranslations } from 'next-intl/server'
 
 import { Gutter, Hr, MinHeight, TopLabel, VerticalPadding } from '@/components'
 import { JobSearchParams } from '@/types'
@@ -7,7 +8,8 @@ import { JobsList, JobsListSkeleton } from '@/blocks'
 import { parseSearchParams } from '@/utilities'
 import { SearchBlock } from './SearchBlock'
 
-export default function Jobs({ searchParams }: { searchParams: JobSearchParams }) {
+export default async function Jobs({ searchParams }: { searchParams: JobSearchParams }) {
+  const t = await getTranslations()
   const parsedSearchParams = parseSearchParams(searchParams as Record<string, string | number>)
 
   return (
@@ -20,7 +22,6 @@ export default function Jobs({ searchParams }: { searchParams: JobSearchParams }
       {Object.keys(searchParams).length ? (
         <VerticalPadding>
           <Gutter>
-            <TopLabel text="Search results" url="/jobs" urlText="Reset search" />
             <Suspense fallback={<JobsListSkeleton count={8} key={0} />}>
               <JobsList limit={8} page={1} sort="-createdAt" loadMore {...parsedSearchParams} />
             </Suspense>
@@ -30,7 +31,7 @@ export default function Jobs({ searchParams }: { searchParams: JobSearchParams }
         <Fragment>
           <VerticalPadding className="bg-slate-100">
             <Gutter>
-              <TopLabel text="Recommended jobs" />
+              <TopLabel text={t('ui.recommendedJobs')} />
               <Suspense fallback={<JobsListSkeleton count={4} key={0} />}>
                 <JobsList featured />
               </Suspense>
@@ -41,7 +42,7 @@ export default function Jobs({ searchParams }: { searchParams: JobSearchParams }
           </Gutter>
           <VerticalPadding className="bg-slate-100">
             <Gutter>
-              <TopLabel text="All jobs" />
+              <TopLabel text={t('ui.allJobs')} />
               <Suspense fallback={<JobsListSkeleton count={8} key={2} />}>
                 <JobsList limit={8} page={1} featured={false} sort="-createdAt" loadMore />
               </Suspense>
@@ -53,7 +54,15 @@ export default function Jobs({ searchParams }: { searchParams: JobSearchParams }
   )
 }
 
-export const metadata: Metadata = {
-  title: 'Jobs',
-  description: 'Jobs page.',
+export async function generateMetadata({
+  params: { locale },
+}: {
+  params: { locale: string }
+}): Promise<Metadata> {
+  const t = await getTranslations({ locale, namespace: 'seo.jobs' })
+
+  return {
+    title: t('title'),
+    description: t('description'),
+  }
 }

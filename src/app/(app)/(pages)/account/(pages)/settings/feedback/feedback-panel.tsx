@@ -1,19 +1,25 @@
-export default function FeedbackPanel() {
+// TODO: Implement feedback
+
+'use client'
+
+import { useTranslations } from 'next-intl'
+
+const FeedbackPanel = () => {
+  const t = useTranslations()
+
   return (
     <div className="grow">
       {/* Panel body */}
       <div className="space-y-6 p-6">
         <div>
-          <h2 className="mb-4 text-2xl font-bold text-slate-800">Give Feedback</h2>
-          <div className="text-sm">
-            Our product depends on customer feedback to improve the overall experience!
-          </div>
+          <h2 className="mb-4 text-2xl font-bold text-slate-800">{t('feedbackPanel.header')}</h2>
+          <div className="text-sm">{t('feedbackPanel.description')}</div>
         </div>
 
         {/* Rate */}
         <section>
           <h3 className="mb-6 text-xl font-bold leading-snug text-slate-800">
-            How likely would you recommend us to a friend or colleague?
+            {t('feedbackPanel.rateHeader')}
           </h3>
           <div className="w-full max-w-xl">
             <div className="relative">
@@ -24,53 +30,57 @@ export default function FeedbackPanel() {
               <ul className="relative flex w-full justify-between">
                 <li className="flex">
                   <button className="h-3 w-3 rounded-full border-2 border-slate-400 bg-white">
-                    <span className="sr-only">1</span>
+                    <span className="sr-only">{t('feedbackPanel.rate1')}</span>
                   </button>
                 </li>
                 <li className="flex">
                   <button className="h-3 w-3 rounded-full border-2 border-slate-400 bg-white">
-                    <span className="sr-only">2</span>
+                    <span className="sr-only">{t('feedbackPanel.rate2')}</span>
                   </button>
                 </li>
                 <li className="flex">
                   <button className="h-3 w-3 rounded-full border-2 border-indigo-500 bg-indigo-500">
-                    <span className="sr-only">3</span>
+                    <span className="sr-only">{t('feedbackPanel.rate3')}</span>
                   </button>
                 </li>
                 <li className="flex">
                   <button className="h-3 w-3 rounded-full border-2 border-slate-400 bg-white">
-                    <span className="sr-only">4</span>
+                    <span className="sr-only">{t('feedbackPanel.rate4')}</span>
                   </button>
                 </li>
                 <li className="flex">
                   <button className="h-3 w-3 rounded-full border-2 border-slate-400 bg-white">
-                    <span className="sr-only">5</span>
+                    <span className="sr-only">{t('feedbackPanel.rate5')}</span>
                   </button>
                 </li>
               </ul>
             </div>
             <div className="mt-3 flex w-full justify-between text-sm italic text-slate-500">
-              <div>Not at all</div>
-              <div>Extremely likely</div>
+              <div>{t('feedbackPanel.rateLeft')}</div>
+              <div>{t('feedbackPanel.rateRight')}</div>
             </div>
           </div>
         </section>
 
         {/* Tell us in words */}
         <section>
-          <h3 className="mb-5 text-xl font-bold leading-snug text-slate-800">Tell us in words</h3>
+          <h3 className="mb-5 text-xl font-bold leading-snug text-slate-800">
+            {t('feedbackPanel.tellUs')}
+          </h3>
           {/* Form */}
           <label className="sr-only" htmlFor="feedback">
-            Leave a feedback
+            {t('feedbackPanel.leaveFeedback')}
           </label>
           <textarea
             id="feedback"
             className="form-textarea w-full focus:border-slate-300"
             rows={4}
-            placeholder="I really enjoy…"
+            placeholder={t('feedbackPanel.leaveFeedbackPlaceholder')}
           ></textarea>
         </section>
       </div>
     </div>
   )
 }
+
+export { FeedbackPanel }
