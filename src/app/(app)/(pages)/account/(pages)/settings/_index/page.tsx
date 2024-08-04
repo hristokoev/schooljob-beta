@@ -1,10 +1,10 @@
 import React, { Fragment } from 'react'
-
-import SettingsSidebar from '../settings-sidebar'
-import { AccountPanel } from './AccountPanel'
-import { BreadcrumbBlock } from 'src/app/(app)/_blocks'
-import { Metadata } from 'next'
 import { getTranslations } from 'next-intl/server'
+import { Metadata } from 'next'
+
+import { AccountPanel } from './AccountPanel'
+import { BreadcrumbBlock } from '@/blocks'
+import SettingsSidebar from '../settings-sidebar'
 
 export default async function AccountSettings() {
   const t = await getTranslations()

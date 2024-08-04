@@ -2,11 +2,11 @@ import React, { Fragment, Suspense } from 'react'
 import configPromise from '@payload-config'
 import { getPayloadHMR } from '@payloadcms/next/utilities'
 import { getTranslations } from 'next-intl/server'
+import { Metadata } from 'next'
 
+import { Gutter, VerticalPadding } from '@/components'
 import { JobBlock, JobBlockSkeleton } from './JobBlock'
 import { BreadcrumbBlock } from '@/blocks'
-import { Gutter, VerticalPadding } from '@/components'
-import { Metadata } from 'next'
 
 interface Props {
   params: {
@@ -64,7 +64,7 @@ export async function generateStaticParams() {
 export async function generateMetadata({
   params: { locale, publicId, slug },
 }: Props): Promise<Metadata> {
-  const t = await getTranslations({ locale, namespace: 'seo.job' })
+  const t = await getTranslations({ locale })
   const payload = await getPayloadHMR({
     config: configPromise,
   })
@@ -85,8 +85,14 @@ export async function generateMetadata({
     depth: 0,
   })
 
+  if (!data.docs.length) {
+    return {
+      title: t('notFound'),
+    }
+  }
+
   return {
-    title: t('title', { title: data.docs[0].title }),
-    description: t('description'),
+    title: t('seo.job.title', { title: data.docs[0].title }),
+    description: t('seo.job.description'),
   }
 }

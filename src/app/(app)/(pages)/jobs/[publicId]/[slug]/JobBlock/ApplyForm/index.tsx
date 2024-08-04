@@ -1,18 +1,18 @@
 'use client'
 
+import { Controller, useForm } from 'react-hook-form'
 import { Dialog, DialogPanel, DialogTitle } from '@headlessui/react'
 import React, { Fragment, useCallback, useEffect, useState } from 'react'
-import { useTranslations } from 'next-intl'
-
-import { Button, FormInputField, Input, InputFile, Label, Textarea } from '@/components'
-import { XMarkIcon } from '@heroicons/react/24/solid'
-import { Controller, useForm } from 'react-hook-form'
-import { useApplicationFieldSchema, ApplicationFormData } from '@/types'
-import { zodResolver } from '@hookform/resolvers/zod'
+import { Candidate } from '@payload-types'
 import { toast } from 'sonner'
-import { Candidate, Cv } from '@payload-types'
-import { useAuth } from '@/providers'
+import { useTranslations } from 'next-intl'
+import { XMarkIcon } from '@heroicons/react/24/solid'
+import { zodResolver } from '@hookform/resolvers/zod'
+
+import { ApplicationFormData, useApplicationFieldSchema } from '@/types'
+import { Button, FormInputField, InputFile, Label, Textarea } from '@/components'
 import { createApplication, uploadCv } from '@/actions'
+import { useAuth } from '@/providers'
 
 interface ApplyFormProps {
   jobId: string
@@ -28,10 +28,8 @@ const ApplyForm = ({ jobId, organizationId }: ApplyFormProps) => {
     handleSubmit,
     register,
     reset,
-    formState: { errors, isDirty },
+    formState: { errors },
     control,
-    setValue,
-    watch,
   } = useForm<ApplicationFormData>({
     resolver: zodResolver(ApplicationFieldSchema),
   })

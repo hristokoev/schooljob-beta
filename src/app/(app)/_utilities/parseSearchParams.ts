@@ -14,7 +14,7 @@ export const parseSearchParams = (params: Record<string, string | number>) => {
     const parsedParams: Record<string, string | number | boolean> = {}
 
     for (const key in params) {
-        if (params.hasOwnProperty(key)) {
+        if (Object.prototype.hasOwnProperty.call(params, key)) {
             parsedParams[key] = parseValue(params[key])
         }
     }

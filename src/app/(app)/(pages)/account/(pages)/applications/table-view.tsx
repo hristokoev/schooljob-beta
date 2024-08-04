@@ -1,9 +1,9 @@
+import { Application, Job } from '@payload-types'
 import React, { Fragment } from 'react'
 import { getTranslations } from 'next-intl/server'
-
-import { type Column, Table, Message } from '@/components'
-import { Application, Job } from '@payload-types'
 import Link from 'next/link'
+
+import { type Column, Message, Table } from '@/components'
 import { formatDate } from '@/utilities'
 
 interface ApplicationsTableViewProps {
@@ -14,6 +14,7 @@ const candidateFullName = (item: Application) => {
   if (!item.candidate) {
     return `${item.firstName} ${item.lastName}`
   }
+
   return typeof item.candidate === 'string'
     ? item.candidate
     : `${item.candidate.firstName} ${item.candidate.lastName}`

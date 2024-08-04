@@ -46,7 +46,7 @@ export const createOrUpdateJob = async (data: JobFormData, id?: string) => {
       }
 
       return doc
-    } catch (error) {
+    } catch {
       throw new Error(t('errors.updateJob'))
     }
   }
@@ -66,7 +66,7 @@ export const createOrUpdateJob = async (data: JobFormData, id?: string) => {
     }
 
     return doc
-  } catch (error) {
+  } catch {
     throw new Error(t('errors.createJob'))
   }
 

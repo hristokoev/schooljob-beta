@@ -1,8 +1,8 @@
 import { z, ZodType } from "zod"
+import { Photo } from "@payload-types"
 import { useTranslations } from 'next-intl'
 
 import { FileSchema } from "./file"
-import { Photo } from "@payload-types"
 
 const PhotoSchema = FileSchema
 
@@ -31,6 +31,5 @@ const useCandidateFieldSchema = (): ZodType<CandidateFormData> => {
         logo: PhotoSchema.optional(),
     })
 }
-
 
 export { type CandidateFormData, useCandidateFieldSchema }

@@ -1,7 +1,6 @@
 import type { ElementType, Ref } from 'react'
+import type { ImageCover, Logo, Photo } from '@payload-types'
 import type { StaticImageData } from 'next/image'
-
-import type { Logo, ImageCover, Photo } from '@payload-types'
 
 export interface Props {
   src?: StaticImageData // for static media

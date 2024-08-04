@@ -1,13 +1,14 @@
 'use client'
 
-import { Button, toast, useTableCell, LoadingOverlayToggle } from '@payloadcms/ui'
+import { Button, LoadingOverlayToggle, toast, useTableCell } from '@payloadcms/ui'
+import React, { useCallback, useEffect, useState } from 'react'
+import { Config } from '@payload-types'
 import { CustomComponent } from 'payload'
-import { updateDocument } from '@/payload/actions'
-import { useCallback, useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 
+import { updateDocument } from '@/payload/actions'
+
 import './index.scss'
-import { Config } from '@payload-types'
 
 const ArchivedCell: CustomComponent = () => {
   const [loading, setLoading] = useState(false)
@@ -38,9 +39,11 @@ const ArchivedCell: CustomComponent = () => {
 
   useEffect(() => {
     const cellArchived = document.querySelectorAll('.cell-archived')
+
     if (cellArchived) {
       cellArchived.forEach(cell => {
         const cellParent = cell.parentElement
+
         if (cellParent) {
           const childNode = cellParent.childNodes[1].childNodes[0] as HTMLElement
           const childNodeText = childNode.innerText

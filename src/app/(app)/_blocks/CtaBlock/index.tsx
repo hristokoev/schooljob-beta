@@ -1,10 +1,10 @@
+import { ChevronRightIcon } from '@heroicons/react/24/solid'
 import Image from 'next/image'
 import React from 'react'
 
 import { Button } from '@/components'
 import { Checkmark } from '@/components'
 import CtaIllustration from '@/public/images/cta-illustration.png'
-import { ChevronRightIcon } from '@heroicons/react/24/solid'
 
 interface CtaProps {
   title: string

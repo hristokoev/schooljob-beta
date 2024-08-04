@@ -126,6 +126,4 @@ const JobFieldSchema: ZodType<JobFormData> = z
         customApplyUrl: z.string().optional(),
     })
 
-
-
 export { type Option, type JobFormData, JobFieldSchema }

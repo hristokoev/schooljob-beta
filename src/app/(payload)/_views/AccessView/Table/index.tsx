@@ -1,5 +1,5 @@
-import React from 'react'
 import { FieldPermissions } from 'payload'
+import React from 'react'
 
 interface PermissionTableProps {
   fields: {

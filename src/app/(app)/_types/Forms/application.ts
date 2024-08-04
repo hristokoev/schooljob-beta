@@ -6,6 +6,7 @@ const MAX_FILE_SIZE = 3
 
 const sizeInMB = (sizeInBytes: number, decimalsNum = 2) => {
     const result = sizeInBytes / (1024 * 1024)
+
     return +result.toFixed(decimalsNum)
 }
 
@@ -49,6 +50,7 @@ const useApplicationFieldSchema = (): ZodType<ApplicationFormData> => {
                         code: z.ZodIssueCode.custom,
                         message: t('cv'),
                     })
+
                     return z.NEVER
                 }
 
@@ -57,6 +59,7 @@ const useApplicationFieldSchema = (): ZodType<ApplicationFormData> => {
                         code: z.ZodIssueCode.custom,
                         message: t('maxFileSize', { size: MAX_FILE_SIZE }),
                     })
+
                     return z.NEVER
                 }
 
@@ -65,11 +68,11 @@ const useApplicationFieldSchema = (): ZodType<ApplicationFormData> => {
                         code: z.ZodIssueCode.custom,
                         message: t('unsupportedFileType'),
                     })
+
                     return z.NEVER
                 }
             }),
     })
 }
-
 
 export { type ApplicationFormData, useApplicationFieldSchema }

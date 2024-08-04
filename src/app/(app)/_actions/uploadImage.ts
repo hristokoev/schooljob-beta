@@ -1,10 +1,10 @@
 'use server'
 
+import { Candidate, Config, ImageCover, Logo, Organization, Photo, User } from '@payload-types'
 import configPromise from '@payload-config'
 import { getPayloadHMR } from '@payloadcms/next/utilities'
-import { Organization, Candidate, User, Logo, ImageCover, Photo, Config } from '@payload-types'
-import { File as PayloadFile } from 'payload'
 import { getTranslations } from 'next-intl/server'
+import { File as PayloadFile } from 'payload'
 import sharp from 'sharp'
 
 export const uploadImage = async (imageDoc: Logo | ImageCover, user: User | null | undefined, collection: keyof Config['collections']): Promise<Logo | ImageCover | Photo | null> => {
@@ -16,7 +16,8 @@ export const uploadImage = async (imageDoc: Logo | ImageCover, user: User | null
     })
 
     // Decode base64 string
-    const matches = imageDoc.url?.match(/^data:([A-Za-z-+\/]+)base64,(.+)$/)
+    const matches = imageDoc.url?.match(/^data:([A-Za-z-+/]+)base64,(.+)$/)
+
     if (!matches || matches.length !== 3) {
         throw new Error('Invalid base64 string')
     }
@@ -40,7 +41,6 @@ export const uploadImage = async (imageDoc: Logo | ImageCover, user: User | null
         size: file.size,
     }
 
-
     if (id) {
         try {
             const doc = await payload.create({
@@ -58,7 +58,7 @@ export const uploadImage = async (imageDoc: Logo | ImageCover, user: User | null
             }
 
             return doc
-        } catch (error) {
+        } catch {
             throw new Error(t('errors.uploadImage'))
         }
     }

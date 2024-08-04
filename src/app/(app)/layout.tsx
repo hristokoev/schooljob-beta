@@ -1,9 +1,9 @@
+import { getLocale, getMessages, getTranslations } from 'next-intl/server'
 import { Inter } from 'next/font/google'
 import { Metadata } from 'next'
+import { NextIntlClientProvider } from 'next-intl'
 import React from 'react'
 import { Toaster } from 'sonner'
-import { NextIntlClientProvider } from 'next-intl'
-import { getLocale, getMessages, getTranslations } from 'next-intl/server'
 
 import './globals.css'
 

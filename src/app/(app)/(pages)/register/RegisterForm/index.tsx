@@ -5,8 +5,8 @@ import { useRouter, useSearchParams } from 'next/navigation'
 import StarIcon from '@heroicons/react/24/solid/StarIcon'
 import { toast } from 'sonner'
 import { useForm } from 'react-hook-form'
-import { zodResolver } from '@hookform/resolvers/zod'
 import { useTranslations } from 'next-intl'
+import { zodResolver } from '@hookform/resolvers/zod'
 
 import { Button, FormInputField, Label, LoadingIcon } from '@/components'
 import { RegisterFormData, useRegisterFieldSchema } from '@/types'
@@ -23,9 +23,7 @@ const RegisterForm: React.FC = () => {
   const {
     register,
     handleSubmit,
-    reset,
     formState: { errors },
-    setError,
     setValue,
   } = useForm<RegisterFormData>({
     resolver: zodResolver(RegisterFieldSchema),
@@ -40,7 +38,7 @@ const RegisterForm: React.FC = () => {
         await create(data)
         if (redirect?.current) router.push(redirect.current as string)
         else router.push(`/login?success=${encodeURIComponent(t('register.success'))}`)
-      } catch (e) {
+      } catch {
         toast.error(t('register.error'))
       }
     },

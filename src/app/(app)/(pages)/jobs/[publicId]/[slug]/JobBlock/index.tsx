@@ -1,7 +1,8 @@
+import { Job, Organization } from '@payload-types'
 import React, { Fragment } from 'react'
+import { getTranslations } from 'next-intl/server'
 import { redirect } from 'next/navigation'
 import StarIcon from '@heroicons/react/24/solid/StarIcon'
-import { getTranslations } from 'next-intl/server'
 
 import {
   Article,
@@ -18,10 +19,9 @@ import {
   TopLabel,
 } from '@/components'
 import { formatDate, renderSalary } from '@/utilities'
-import { getDocument } from '@/utilities/getDocument'
-import { Job, Organization } from '@payload-types'
-import { JobsList } from '@/blocks'
 import { ApplyForm } from './ApplyForm'
+import { getDocument } from '@/utilities/getDocument'
+import { JobsList } from '@/blocks'
 
 const JobBlock: React.FC<{ publicId: string; slug: string }> = async ({ publicId, slug }) => {
   const t = await getTranslations()

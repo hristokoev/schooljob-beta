@@ -1,7 +1,7 @@
 import { AdminViewProps, InitPageResult } from 'payload'
-import { DefaultTemplate } from '@payloadcms/next/templates'
 import { Gutter, HydrateClientUser } from '@payloadcms/ui'
 import React, { Fragment } from 'react'
+import { DefaultTemplate } from '@payloadcms/next/templates'
 
 import Container from './Container'
 

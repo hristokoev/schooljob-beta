@@ -1,16 +1,16 @@
 'use client'
 
-import React, { Fragment, useCallback, useState } from 'react'
+import React, { useCallback, useState } from 'react'
 import Link from 'next/link'
 import { toast } from 'sonner'
+import { useForm } from 'react-hook-form'
 import { useTranslations } from 'next-intl'
+import { zodResolver } from '@hookform/resolvers/zod'
 
 import { Button, FormInputField, Input, Label } from '@/components'
-import { useAuth } from '@/providers'
-import { useForm } from 'react-hook-form'
-import { zodResolver } from '@hookform/resolvers/zod'
 import { ResetPasswordFormData, useResetPasswordFieldSchema } from '@/types'
 import { updatePassword } from '@/actions'
+import { useAuth } from '@/providers'
 
 const AccountPanel: React.FC = () => {
   const t = useTranslations()

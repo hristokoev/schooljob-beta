@@ -1,7 +1,7 @@
 // TODO: Localize
 
-import { cs } from "date-fns/locale"
 import { formatDistance, isAfter, subDays } from "date-fns"
+import { cs } from "date-fns/locale"
 
 export function formatDate(createdAt: string): string {
     const date = new Date(createdAt)

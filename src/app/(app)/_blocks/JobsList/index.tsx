@@ -1,5 +1,6 @@
 import React, { Fragment } from 'react'
 import configPromise from '@payload-config'
+import { getCachedPayload } from '@cached-local-api'
 import { getPayloadHMR } from '@payloadcms/next/utilities'
 import { getTranslations } from 'next-intl/server'
 
@@ -7,7 +8,6 @@ import { EmptyBlock } from '../EmptyBlock'
 import { JobSearchParams } from '@/types'
 import { LoadMore } from './LoadMore'
 import { SimpleJobCard } from '@/components'
-import { getCachedPayload } from '@cached-local-api'
 
 const JobsList: React.FC<JobSearchParams> = async props => {
   const t = await getTranslations()

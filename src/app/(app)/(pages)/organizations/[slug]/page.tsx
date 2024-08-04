@@ -1,16 +1,16 @@
 import React, { Fragment, Suspense } from 'react'
 import configPromise from '@payload-config'
 import { getPayloadHMR } from '@payloadcms/next/utilities'
+import { getTranslations } from 'next-intl/server'
+import { Metadata } from 'next'
 
+import { Gutter, MinHeight, VerticalPadding } from '@/components'
 import { Description } from './Description'
 import { DescriptionSkeleton } from './Description/Skeleton'
-import { Gutter, MinHeight, VerticalPadding } from '@/components'
 import { JobsBlock } from '@/pages/organizations/[slug]/JobsBlock'
 import { JobsListSkeleton } from '@/blocks'
 import { ProfileBlock } from './Profile'
 import { ProfileBlockSkeleton } from './Profile/Skeleton'
-import { Metadata } from 'next'
-import { getTranslations } from 'next-intl/server'
 
 interface Props {
   params: {
@@ -59,7 +59,7 @@ export async function generateStaticParams() {
 }
 
 export async function generateMetadata({ params: { locale, slug } }: Props): Promise<Metadata> {
-  const t = await getTranslations({ locale, namespace: 'seo.organization' })
+  const t = await getTranslations({ locale })
   const payload = await getPayloadHMR({
     config: configPromise,
   })
@@ -74,8 +74,14 @@ export async function generateMetadata({ params: { locale, slug } }: Props): Pro
     depth: 0,
   })
 
+  if (!data.docs.length) {
+    return {
+      title: t('notFound'),
+    }
+  }
+
   return {
-    title: t('title', { title: data.docs[0].title }),
-    description: t('description'),
+    title: t('seo.organization.title', { title: data.docs[0].title }),
+    description: t('seo.organization.description'),
   }
 }

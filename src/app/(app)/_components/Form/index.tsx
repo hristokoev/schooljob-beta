@@ -1,8 +1,8 @@
 import React, { Fragment } from 'react'
 
+import { FormFieldProps, GenericFormData } from '@/types'
 import { cn } from '@/utilities/cn'
 import { Input } from '@/components'
-import { FormFieldProps, GenericFormData } from '@/types'
 
 const FormInputField = <T extends GenericFormData>({
   type,

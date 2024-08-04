@@ -1,8 +1,8 @@
-import React from 'react'
-import Link from 'next/link'
-import { getTranslations } from 'next-intl/server'
-
 import { Application, Cv } from '@payload-types'
+import { getTranslations } from 'next-intl/server'
+import Link from 'next/link'
+import React from 'react'
+
 import { Button } from '@/components'
 import { convertFilesize } from '@/utilities/convertFilesize'
 

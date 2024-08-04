@@ -1,14 +1,14 @@
 'use client'
 
 import { GlobeEuropeAfricaIcon, LinkIcon, PhoneIcon } from '@heroicons/react/24/solid'
-import React, { Fragment, useEffect, useState } from 'react'
+import React, { Fragment } from 'react'
+import Link from 'next/link'
+import { User } from '@payload-types'
 import { useTranslations } from 'next-intl'
 
 import { isCandidate, isOrganization } from '@/utilities'
+import { RichText } from '@/components'
 import { useAuth } from '@/providers'
-import { User } from '@payload-types'
-import Link from 'next/link'
-import { Button, RichText } from '@/components'
 
 const HeaderContent: React.FC<{ user: User }> = ({ user }) => {
   const t = useTranslations()

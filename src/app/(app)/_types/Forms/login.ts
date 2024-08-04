@@ -18,5 +18,4 @@ const useLoginFieldSchema = (): ZodType<LoginFormData> => {
     })
 }
 
-
 export { type LoginFormData, useLoginFieldSchema }

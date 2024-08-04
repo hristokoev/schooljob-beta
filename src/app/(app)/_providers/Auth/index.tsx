@@ -2,18 +2,16 @@
 
 import React, { createContext, useCallback, useContext, useEffect, useState } from 'react'
 import { toast } from '@payloadcms/ui'
+import { User } from '@payload-types'
 import { useTranslations } from 'next-intl'
 
-import { User } from '@payload-types'
-
-// eslint-disable-next-line no-unused-vars
 type ResetPassword = (args: {
   password: string
   passwordConfirm: string
   token: string
 }) => Promise<void>
 
-type ForgotPassword = (args: { email: string }) => Promise<void> // eslint-disable-line no-unused-vars
+type ForgotPassword = (args: { email: string }) => Promise<void>
 
 type Create = (args: {
   email: string
@@ -23,16 +21,16 @@ type Create = (args: {
   title?: string
   firstName?: string
   lastName?: string
-}) => Promise<void> // eslint-disable-line no-unused-vars
+}) => Promise<void>
 
-type Login = (args: { email: string; password: string }) => Promise<User> // eslint-disable-line no-unused-vars
+type Login = (args: { email: string; password: string }) => Promise<User>
 
 type Logout = () => Promise<void>
 
 type AuthContext = {
   user?: User | null
   loading?: boolean
-  setUser: (user: User | null) => void // eslint-disable-line no-unused-vars
+  setUser: (user: User | null) => void
   logout: Logout
   login: Login
   create: Create
@@ -53,41 +51,6 @@ const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => 
 
   // used to track the loading state of the auth provider
   const [loading, setLoading] = useState<boolean>(false)
-
-  // const fetchCandidateProfile = async (user: User) => {
-  //   if (user.role === 'candidate' && user.profile?.relationTo === 'candidates') {
-  //     try {
-  //       const res = await fetch(
-  //         `${process.env.NEXT_PUBLIC_SERVER_URL}/api/candidates/${
-  //           typeof user.profile.value === 'string' ? user.profile.value : user.profile.value.id
-  //         }`,
-  //         {
-  //           method: 'GET',
-  //           credentials: 'include',
-  //           headers: {
-  //             'Content-Type': 'application/json',
-  //           },
-  //         },
-  //       )
-
-  //       if (res.ok) {
-  //         const profile = await res.json()
-
-  //         return {
-  //           ...user,
-  //           profile: {
-  //             ...user.profile,
-  //             value: profile,
-  //           },
-  //         }
-  //       }
-  //     } catch (e) {
-  //       console.error('An error occurred while fetching the candidate profile.', e)
-  //     }
-  //   }
-
-  //   return user
-  // }
 
   const create = useCallback<Create>(
     async args => {
@@ -125,7 +88,7 @@ const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => 
         } else {
           throw new Error(t('authentication.errors.invalidRegister'))
         }
-      } catch (e) {
+      } catch {
         throw new Error(t('authentication.errors.register'))
       } finally {
         setLoading(false)
@@ -156,11 +119,12 @@ const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => 
           // const userWithProfile = await fetchCandidateProfile(user)
           setUser(user)
           setStatus('loggedIn')
+
           return user
         }
 
         throw new Error(t('authentication.errors.invalidLogin'))
-      } catch (e) {
+      } catch {
         throw new Error(t('authentication.errors.login'))
       } finally {
         setLoading(false)
@@ -186,7 +150,7 @@ const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => 
       } else {
         throw new Error(t('authentication.errors.invalidLogout'))
       }
-    } catch (e) {
+    } catch {
       throw new Error(t('authentication.errors.logout'))
     }
   }, [t])
@@ -211,7 +175,7 @@ const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => 
         } else {
           throw new Error(t('authentication.errors.fetch'))
         }
-      } catch (e) {
+      } catch {
         setUser(null)
         throw new Error(t('authentication.errors.fetch'))
       } finally {
@@ -244,7 +208,7 @@ const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => 
         } else {
           throw new Error(t('authentication.errors.login'))
         }
-      } catch (e) {
+      } catch {
         throw new Error(t('authentication.errors.resetPassword'))
       }
     },
@@ -276,7 +240,7 @@ const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => 
         } else {
           throw new Error(t('authentication.errors.login'))
         }
-      } catch (e) {
+      } catch {
         throw new Error(t('authentication.errors.resetPassword'))
       }
     },
@@ -302,6 +266,7 @@ const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => 
   )
 }
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 type UseAuth<T = User> = () => AuthContext
 
 const useAuth: UseAuth = () => useContext(Context)

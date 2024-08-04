@@ -12,7 +12,7 @@ type Filter = {
   options: { label: string; value: string }[]
 }
 
-const Search: React.FC<{ filters: Filter[]; path: any }> = ({ filters, path }) => {
+const Search: React.FC<{ filters: Filter[]; path: any }> = ({ filters }) => {
   const t = useTranslations()
   const [filtersToDisplay, setFiltersToDisplay] = useState<Filter[]>(filters.slice(0, 5))
 

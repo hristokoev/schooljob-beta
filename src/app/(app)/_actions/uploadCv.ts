@@ -1,11 +1,10 @@
 'use server'
 
+import { Cv, User } from '@payload-types'
 import configPromise from '@payload-config'
 import { getPayloadHMR } from '@payloadcms/next/utilities'
-import { File as PayloadFile } from 'payload'
 import { getTranslations } from 'next-intl/server'
-
-import { User, Cv } from '@payload-types'
+import { File as PayloadFile } from 'payload'
 
 export const uploadCv = async (cv: File, jobId: string, organizationId: string, user: User | null | undefined): Promise<Cv> => {
     const t = await getTranslations()
@@ -42,7 +41,7 @@ export const uploadCv = async (cv: File, jobId: string, organizationId: string, 
         }
 
         return doc
-    } catch (error) {
+    } catch {
         throw new Error(t('errors.uploadCv'))
     }
 }

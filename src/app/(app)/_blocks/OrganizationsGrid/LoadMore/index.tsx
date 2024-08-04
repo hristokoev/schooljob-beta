@@ -1,11 +1,11 @@
 'use client'
 
 import React, { Fragment, useState } from 'react'
+import { Organization } from '@payload-types'
 import { useTranslations } from 'next-intl'
 
 import { Button, LoadingIcon, OrganizationCard } from '@/components'
 import { fetchDocs } from '@/api'
-import { Organization } from '@payload-types'
 import { OrganizationSearchParams } from '@/types'
 
 const LoadMore: React.FC<OrganizationSearchParams> = props => {

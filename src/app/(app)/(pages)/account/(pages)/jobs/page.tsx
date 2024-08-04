@@ -1,15 +1,15 @@
 import React, { Fragment } from 'react'
 import configPromise from '@payload-config'
 import { getPayloadHMR } from '@payloadcms/next/utilities'
-import Link from 'next/link'
-import { PlusIcon } from '@heroicons/react/24/solid'
 import { getTranslations } from 'next-intl/server'
+import Link from 'next/link'
+import { Metadata } from 'next'
+import { PlusIcon } from '@heroicons/react/24/solid'
 
-import { Button } from '@/components'
 import { BreadcrumbBlock } from '@/blocks'
+import { Button } from '@/components'
 import { getMeUser } from '@/utilities/getMeUser'
 import { JobsTableView } from './table-view'
-import { Metadata } from 'next'
 
 interface Props {
   searchParams: { status: 'published' | 'unpublished' }

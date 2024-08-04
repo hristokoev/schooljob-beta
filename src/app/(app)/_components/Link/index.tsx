@@ -1,7 +1,8 @@
-import { Button, type ButtonProps } from '@/components'
-import { cn } from '@/utilities'
 import Link from 'next/link'
 import React from 'react'
+
+import { Button, type ButtonProps } from '@/components'
+import { cn } from '@/utilities'
 
 type CMSLinkType = {
   appearance?: 'inline' | ButtonProps['variant']

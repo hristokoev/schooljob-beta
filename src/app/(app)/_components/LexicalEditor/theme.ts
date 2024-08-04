@@ -39,6 +39,6 @@ const theme = {
         underline: 'editor-text-underline',
         underlineStrikethrough: 'editor-text-underlineStrikethrough',
     },
-};
+}
 
-export default theme;
+export default theme

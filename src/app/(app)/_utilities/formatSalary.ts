@@ -6,8 +6,8 @@ type FormatSalaryProps = {
     format?: string
 }
 
-function formatSalary({ value, currency, format }: FormatSalaryProps): string {
-    const formatter = new Intl.NumberFormat(format = "cs-CZ", {
+function formatSalary({ value, currency, format = 'cs-CZ' }: FormatSalaryProps): string {
+    const formatter = new Intl.NumberFormat(format, {
         style: "currency",
         currency: currency,
         minimumFractionDigits: 0,
@@ -39,6 +39,5 @@ function renderSalary(salary: Job['salary'], lang?: string): string | null {
         format: lang,
     })}`
 }
-
 
 export { renderSalary }

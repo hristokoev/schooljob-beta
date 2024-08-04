@@ -55,6 +55,7 @@ const useRegisterFieldSchema = (): ZodType<RegisterFormData> => {
                     })
 
                     const titleCheck = titleSchema.safeParse(data.title)
+
                     if (!titleCheck.success) {
                         titleCheck.error.issues.forEach(issue => {
                             ctx.addIssue({
@@ -79,6 +80,7 @@ const useRegisterFieldSchema = (): ZodType<RegisterFormData> => {
                     })
 
                     const firstNameCheck = firstNameSchema.safeParse(data.firstName)
+
                     if (!firstNameCheck.success) {
                         firstNameCheck.error.issues.forEach(issue => {
                             ctx.addIssue({
@@ -103,6 +105,7 @@ const useRegisterFieldSchema = (): ZodType<RegisterFormData> => {
                     })
 
                     const lastNameCheck = lastNameSchema.safeParse(data.lastName)
+
                     if (!lastNameCheck.success) {
                         lastNameCheck.error.issues.forEach(issue => {
                             ctx.addIssue({

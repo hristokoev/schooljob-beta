@@ -1,14 +1,14 @@
 import React, { Fragment } from 'react'
 import configPromise from '@payload-config'
-import { redirect } from 'next/navigation'
 import { getPayloadHMR } from '@payloadcms/next/utilities'
 import { getTranslations } from 'next-intl/server'
+import Link from 'next/link'
+import { redirect } from 'next/navigation'
 
+import { Button, Message } from '@/components'
 import { ApplicationsEditView } from '../edit-view'
 import { BreadcrumbBlock } from '@/blocks'
 import { getMeUser } from '@/utilities/getMeUser'
-import { Button, Message } from '@/components'
-import Link from 'next/link'
 
 interface Props {
   params: { trackingId: string }

@@ -1,8 +1,7 @@
 // TODO: i18n
 
-import type { ProfileCardProps } from './Grid/ProfileCard/index'
-
 import { cs } from '@/translations'
+import type { ProfileCardProps } from './Grid/ProfileCard/index'
 
 const cardsCandidate: ProfileCardProps[] = [
   {

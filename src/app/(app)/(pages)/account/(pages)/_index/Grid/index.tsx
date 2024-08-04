@@ -4,8 +4,8 @@ import React, { useEffect, useState } from 'react'
 
 import { cardsCandidate, cardsOrganization } from '../cards'
 import { ProfileCard, ProfileCardProps } from './ProfileCard'
-import { useAuth } from '@/providers'
 import { ProfileCardSkeleton } from './ProfileCard/Skeleton'
+import { useAuth } from '@/providers'
 
 const Grid: React.FC = () => {
   const { user } = useAuth()

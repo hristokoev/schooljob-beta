@@ -11,6 +11,7 @@ import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext
 
 import theme from './theme'
 import ToolbarPlugin from './plugins/ToolbarPlugin'
+
 import './styles.css'
 
 const editorConfig = {
@@ -29,6 +30,7 @@ function OnChangePlugin({ onChange }: { onChange: (editorState: any) => void }) 
       onChange(editorState)
     })
   }, [editor, onChange])
+
   return null
 }
 
@@ -57,6 +59,7 @@ const EditorContent: React.FC<LexicalEditorProps> = ({ onChange, value, editable
         }
       }
     }
+
     editor.setEditable(editable)
   }, [editor, value, editable])
 

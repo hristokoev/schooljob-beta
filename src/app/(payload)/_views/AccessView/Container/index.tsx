@@ -12,19 +12,14 @@ type DocumentCollapsibleProps = DocumentPermissions & {
 }
 
 const DocumentCollapsible: React.FC<DocumentCollapsibleProps> = props => {
-  const {
-    documentName,
-    fields,
-    readVersions,
-    read: readPermission,
-    update: updatePermission,
-  } = props
+  const { documentName, fields, read: readPermission, update: updatePermission } = props
 
   // Optionally check for create and delete props
   const createPermission = 'create' in props ? props.create : undefined
   const deletePermission = 'delete' in props ? props.delete : undefined
 
   const [open, setOpen] = useState(false)
+
   return (
     <Collapsible
       header={documentName}

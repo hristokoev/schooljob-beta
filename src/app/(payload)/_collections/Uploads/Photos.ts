@@ -1,9 +1,9 @@
 import type { CollectionConfig } from 'payload'
 
 import { SA, SA_A } from '@/payload/access'
+import { createdBy } from '@/payload/fields'
 import { obfuscateFilename } from './hooks/obfuscateFilename'
 import { populateCreatedBy } from '@/payload/hooks'
-import { createdBy } from '@/payload/fields'
 
 export const Photos: CollectionConfig = {
   slug: 'photos',

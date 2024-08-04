@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState, useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 
 interface CheckboxProps {
   name: string
@@ -17,6 +17,7 @@ const Checkbox = React.forwardRef<HTMLInputElement, CheckboxProps>(
     const handleChange = () => {
       const newValue = !isActive
       setIsActive(newValue)
+
       if (onChange) {
         onChange(newValue)
       }

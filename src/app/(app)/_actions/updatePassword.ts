@@ -1,3 +1,5 @@
+// TODO: Fix typing and remove 'any'
+
 'use server'
 
 import configPromise from '@payload-config'
@@ -29,7 +31,7 @@ export const updatePassword = async (data: any) => {
         }
 
         return doc
-    } catch (error) {
+    } catch {
         throw new Error(t('errors.updatePassword'))
     }
 }

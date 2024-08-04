@@ -1,10 +1,10 @@
+import { type Job, type Organization } from '@payload-types'
 import { getTranslations } from 'next-intl/server'
 import Link from 'next/link'
 import React from 'react'
 
-import { formatDate, isWithinLast3Days, renderSalary } from '@/utilities'
 import { Favorite, Pill } from '@/components'
-import { type Job, type Organization } from '@payload-types'
+import { formatDate, isWithinLast3Days, renderSalary } from '@/utilities'
 
 export const SimpleJobCard: React.FC<Job> = async ({
   publicId,

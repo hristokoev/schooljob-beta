@@ -22,6 +22,7 @@ const VerticalPadding: React.FC<VerticalPaddingProps> = ({
       sm: position === 'top' ? 'pt-12' : 'pb-12',
       none: '0',
     }
+
     return sizeMap[size]
   }
 

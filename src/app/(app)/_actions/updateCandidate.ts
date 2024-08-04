@@ -1,11 +1,11 @@
 'use server'
 
+import { Candidate, User } from '@payload-types'
+import configPromise from '@payload-config'
 import { getPayloadHMR } from '@payloadcms/next/utilities'
 import { getTranslations } from 'next-intl/server'
 
-import { Candidate, User } from '@payload-types'
 import { CandidateFormData } from '@/types'
-import configPromise from '@payload-config'
 
 export const updateCandidate = async (data: CandidateFormData, user: User | null | undefined) => {
   const t = await getTranslations()
@@ -36,7 +36,7 @@ export const updateCandidate = async (data: CandidateFormData, user: User | null
       }
 
       return doc
-    } catch (error) {
+    } catch {
       throw new Error(t('errors.updateCandidate'))
     }
   }

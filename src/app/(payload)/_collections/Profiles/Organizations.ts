@@ -1,10 +1,10 @@
 import { CollectionConfig } from 'payload'
 
 import { ARCHIVED, SA, SA_A, SA_A_O_Self_createdBy } from '@/payload/access'
-import { createdBy } from '@/payload/fields'
 import { archived, slugField } from '@/payload/fields'
-import { categoriesOptions } from '@/payload/data'
 import { Archived } from '@/payload/components'
+import { categoriesOptions } from '@/payload/data'
+import { createdBy } from '@/payload/fields'
 
 export const Organizations: CollectionConfig = {
   slug: 'organizations',
@@ -30,6 +30,7 @@ export const Organizations: CollectionConfig = {
       if (user?.role === 'super-admin') {
         return true
       }
+
       return {
         archived: {
           equals: false

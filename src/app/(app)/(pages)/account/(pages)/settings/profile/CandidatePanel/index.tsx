@@ -1,17 +1,17 @@
 'use client'
 
+import { Candidate, Photo, User } from '@payload-types'
 import { Controller, useForm } from 'react-hook-form'
 import React, { useCallback, useEffect } from 'react'
 import Link from 'next/link'
 import { toast } from 'sonner'
 import { useRouter } from 'next/navigation'
-import { zodResolver } from '@hookform/resolvers/zod'
 import { useTranslations } from 'next-intl'
+import { zodResolver } from '@hookform/resolvers/zod'
 
 import { Button, EditUpload, FormInputField, Label, Textarea } from '@/components'
-import { useCandidateFieldSchema, CandidateFormData } from '@/types'
-import { User, Candidate, Photo } from '@payload-types'
-import { uploadImage, updateCandidate } from '@/actions'
+import { CandidateFormData, useCandidateFieldSchema } from '@/types'
+import { updateCandidate, uploadImage } from '@/actions'
 import { useAuth } from '@/providers'
 
 const CandidatePanel: React.FC<{ user: User }> = ({ user }) => {

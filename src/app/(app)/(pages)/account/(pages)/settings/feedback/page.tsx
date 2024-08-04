@@ -1,10 +1,10 @@
 import React, { Fragment } from 'react'
+import { getTranslations } from 'next-intl/server'
 import { Metadata } from 'next'
 
-import SettingsSidebar from '../settings-sidebar'
-import { FeedbackPanel } from './feedback-panel'
 import { BreadcrumbBlock } from '@/blocks'
-import { getTranslations } from 'next-intl/server'
+import { FeedbackPanel } from './feedback-panel'
+import SettingsSidebar from '../settings-sidebar'
 
 export default async function FeedbackSettings() {
   const t = await getTranslations()

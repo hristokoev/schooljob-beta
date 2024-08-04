@@ -1,10 +1,10 @@
 import React, { Fragment, Suspense } from 'react'
-import { Metadata } from 'next'
 import { getTranslations } from 'next-intl/server'
+import { Metadata } from 'next'
 
 import { Gutter, Hr, MinHeight, TopLabel, VerticalPadding } from '@/components'
-import { JobSearchParams } from '@/types'
 import { JobsList, JobsListSkeleton } from '@/blocks'
+import { JobSearchParams } from '@/types'
 import { parseSearchParams } from '@/utilities'
 import { SearchBlock } from './SearchBlock'
 

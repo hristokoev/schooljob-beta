@@ -1,4 +1,5 @@
 import { CustomComponent } from 'payload'
+import React from 'react'
 
 const AccessNavLink: CustomComponent = () => {
   return (

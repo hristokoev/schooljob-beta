@@ -2,11 +2,11 @@ import React, { Fragment } from 'react'
 import configPromise from '@payload-config'
 import { getPayloadHMR } from '@payloadcms/next/utilities'
 import { getTranslations } from 'next-intl/server'
-
-import { BreadcrumbBlock } from '@/blocks'
-import { ApplicationsTableView } from './table-view'
-import { getMeUser } from '@/utilities/getMeUser'
 import { Metadata } from 'next'
+
+import { ApplicationsTableView } from './table-view'
+import { BreadcrumbBlock } from '@/blocks'
+import { getMeUser } from '@/utilities/getMeUser'
 
 export default async function Jobs() {
   const t = await getTranslations()

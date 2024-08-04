@@ -17,7 +17,7 @@ export const LogoutPage: React.FC<{ className?: string }> = ({ className }) => {
       try {
         await logout()
         setSuccess(t('logout.success'))
-      } catch (_) {
+      } catch {
         setError(t('logout.error'))
       }
     }

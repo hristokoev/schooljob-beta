@@ -1,6 +1,7 @@
 import type { Access, Where } from 'payload'
-import { checkRole } from '@/payload/access'
 import type { User } from '@payload-types'
+
+import { checkRole } from '@/payload/access'
 
 const SA_A_O_Some_U: Access = ({ req }) => {
   const user = req.user as User

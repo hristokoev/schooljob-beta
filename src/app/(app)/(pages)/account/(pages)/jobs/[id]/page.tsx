@@ -2,13 +2,13 @@ import React, { Fragment } from 'react'
 import configPromise from '@payload-config'
 import { getPayloadHMR } from '@payloadcms/next/utilities'
 import { getTranslations } from 'next-intl/server'
+import { Metadata } from 'next'
 
 import { Gutter, Main } from '@/components'
 import { BreadcrumbBlock } from '@/blocks'
-import { JobsEditView } from '../edit-view'
 import { getMeUser } from '@/utilities/getMeUser'
-import { JobFormData } from 'src/app/(app)/_types'
-import { Metadata } from 'next'
+import { JobFormData } from '@/types'
+import { JobsEditView } from '../edit-view'
 
 interface Props {
   params: { id: string; locale: string }
@@ -122,7 +122,7 @@ export default async function EditJob({ params: { id } }: Props) {
 }
 
 export async function generateMetadata({ params: { locale, id } }: Props): Promise<Metadata> {
-  const t = await getTranslations({ locale, namespace: 'seo.editJob' })
+  const t = await getTranslations({ locale })
   const { user } = await getMeUser()
   const payload = await getPayloadHMR({
     config: configPromise,
@@ -136,8 +136,14 @@ export async function generateMetadata({ params: { locale, id } }: Props): Promi
     depth: 0,
   })
 
+  if (!data) {
+    return {
+      title: t('notFound'),
+    }
+  }
+
   return {
-    title: t('title', { title: data.title }),
-    description: t('description'),
+    title: t('seo.editJob.title', { title: data.title }),
+    description: t('seo.editJob.description'),
   }
 }

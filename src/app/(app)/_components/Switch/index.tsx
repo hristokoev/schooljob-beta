@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState, useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 
 interface SwitchProps {
   name: string
@@ -24,6 +24,7 @@ const Switch: React.FC<SwitchProps> = ({
   const handleChange = () => {
     const newValue = !isActive
     setIsActive(newValue)
+
     if (onChange) {
       onChange(newValue)
     }

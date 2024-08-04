@@ -1,19 +1,19 @@
 'use client'
 
 import { Controller, useForm } from 'react-hook-form'
+import { ImageCover, Logo, Organization, User } from '@payload-types'
 import React, { useCallback, useEffect } from 'react'
 import Link from 'next/link'
 import { toast } from 'sonner'
 import { useRouter } from 'next/navigation'
-import { zodResolver } from '@hookform/resolvers/zod'
 import { useTranslations } from 'next-intl'
+import { zodResolver } from '@hookform/resolvers/zod'
 
 import { Button, EditUpload, FormInputField, Label, Select, Textarea } from '@/components'
-import { useOrganizationFieldSchema, OrganizationFormData } from '@/types'
+import { OrganizationFormData, useOrganizationFieldSchema } from '@/types'
+import { updateOrganization, uploadImage } from '@/actions'
 import { categoriesOptions } from '@/payload/data'
 import { LexicalEditor } from '@/components'
-import { Organization, Logo, ImageCover, User } from '@payload-types'
-import { uploadImage, updateOrganization } from '@/actions'
 import { useAuth } from '@/providers'
 
 const OrganizationPanel: React.FC<{ user: User }> = ({ user }) => {

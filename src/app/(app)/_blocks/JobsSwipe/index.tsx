@@ -1,5 +1,6 @@
 import React, { Fragment } from 'react'
 import configPromise from '@payload-config'
+import { getCachedPayload } from '@cached-local-api'
 import { getPayloadHMR } from '@payloadcms/next/utilities'
 import { getTranslations } from 'next-intl/server'
 
@@ -12,7 +13,6 @@ import {
   FeaturedJobCard,
 } from '@/components'
 import { EmptyBlock } from '../EmptyBlock'
-import { getCachedPayload } from '@cached-local-api'
 
 interface JobsSwipeProps {
   limit?: number

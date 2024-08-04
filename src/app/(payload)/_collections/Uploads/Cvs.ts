@@ -1,10 +1,10 @@
 import { CollectionConfig } from 'payload'
 
 import { SA, SA_C_U } from '@/payload/access'
+import { createdBy } from '@/payload/fields'
 import { obfuscateFilename } from './hooks/obfuscateFilename'
 import { populateCreatedBy } from '@/payload/hooks'
 import SA_A_O_Some_C_Self from './access/SA_A_O_Some_C_Self'
-import { createdBy } from '@/payload/fields'
 
 export const Cvs: CollectionConfig = {
   slug: 'cvs',

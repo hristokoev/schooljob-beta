@@ -1,10 +1,10 @@
 import React, { Fragment } from 'react'
+import { getTranslations } from 'next-intl/server'
 import Link from 'next/link'
 import { Metadata } from 'next'
-import { getTranslations } from 'next-intl/server'
 
-import { BreadcrumbBlock } from '@/blocks'
 import { Button, Gutter, MinHeight, VerticalPadding } from '@/components'
+import { BreadcrumbBlock } from '@/blocks'
 import { LogoutPage } from './LogoutPage'
 
 export default async function Logout() {

@@ -4,8 +4,8 @@ import React, { useCallback, useRef } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { toast } from 'sonner'
 import { useForm } from 'react-hook-form'
-import { zodResolver } from '@hookform/resolvers/zod'
 import { useTranslations } from 'next-intl'
+import { zodResolver } from '@hookform/resolvers/zod'
 
 import { Button, FormInputField, Label, LoadingIcon } from '@/components'
 import { LoginFormData, useLoginFieldSchema } from '@/types'
@@ -24,7 +24,6 @@ export const LoginForm = () => {
     handleSubmit,
     reset,
     formState: { errors },
-    setError,
   } = useForm<LoginFormData>({
     resolver: zodResolver(LoginFieldSchema),
   })
@@ -35,7 +34,7 @@ export const LoginForm = () => {
         await login(data)
         if (redirect?.current) router.push(redirect.current as string)
         else router.push('/account')
-      } catch (e) {
+      } catch {
         toast.error(t('authentication.errors.invalidEmailOrPassword'))
       } finally {
         reset()

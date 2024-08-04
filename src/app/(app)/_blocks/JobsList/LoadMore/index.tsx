@@ -1,11 +1,11 @@
 'use client'
 
 import React, { Fragment, useState } from 'react'
+import { Job } from '@payload-types'
 import { useTranslations } from 'next-intl'
 
 import { Button } from '@/components'
 import { fetchDocs } from '@/api'
-import { Job } from '@payload-types'
 import { JobSearchParams } from '@/types'
 import { LoadingIcon } from '@/components'
 import { SimpleJobCard } from '@/components'

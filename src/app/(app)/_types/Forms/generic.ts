@@ -1,7 +1,7 @@
 import { FieldError, Path, UseFormRegister } from "react-hook-form"
 
 // Define a generic type for form data
-type GenericFormData = Record<string, any>;
+type GenericFormData = Record<string, any>
 
 // Define a generic type for form field props
 type FormFieldProps<T extends GenericFormData> = {

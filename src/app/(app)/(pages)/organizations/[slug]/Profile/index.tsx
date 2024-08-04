@@ -4,13 +4,13 @@
   TODO: Make this component reusable
 */
 
+import { GlobeEuropeAfricaIcon, LinkIcon, PhoneIcon } from '@heroicons/react/24/solid'
 import React, { Fragment } from 'react'
 import { getTranslations } from 'next-intl/server'
+import { Organization } from '@payload-types'
 
 import { Gutter, Media, VerticalPadding } from '@/components'
 import { getDocument } from '@/utilities/getDocument'
-import { Organization } from '@payload-types'
-import { GlobeEuropeAfricaIcon, LinkIcon, PhoneIcon } from '@heroicons/react/24/solid'
 
 const NoAvatar: React.FC<{ letter: string }> = ({ letter }) => (
   <div className="-ml-1 -mt-1 mb-4 inline-flex rounded-md border-2 md:mb-0">

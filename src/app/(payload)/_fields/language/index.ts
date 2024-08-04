@@ -1,7 +1,7 @@
 import { type Field } from 'payload'
 
-import { languageOptions } from '@/payload/data'
 import { ARCHIVED } from '@/payload/access'
+import { languageOptions } from '@/payload/data'
 
 export const languageField: Field = {
   name: 'language',

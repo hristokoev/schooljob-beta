@@ -31,8 +31,6 @@ export const Image: React.FC<MediaProps> = props => {
     height = fullHeight ?? undefined
     alt = fullFilename ?? undefined
 
-    const filename = fullFilename
-
     src = `${process.env.NEXT_PUBLIC_SERVER_URL}${fullUrl}`
   }
 

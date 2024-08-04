@@ -1,8 +1,8 @@
 import React, { Fragment } from 'react'
 import { getTranslations } from 'next-intl/server'
+import { Metadata } from 'next'
 
 import { BreadcrumbBlock } from '@/blocks'
-import { Metadata } from 'next'
 
 export default async function SavedJobs() {
   const t = await getTranslations()

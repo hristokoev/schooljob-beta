@@ -3,8 +3,8 @@
 import React, { useState } from 'react'
 import { Button } from '@payloadcms/ui'
 import { CustomComponent } from 'payload'
-import { useSearchParams } from '@payloadcms/ui'
 import { useRouter } from 'next/navigation'
+import { useSearchParams } from '@payloadcms/ui'
 
 import './style.scss'
 

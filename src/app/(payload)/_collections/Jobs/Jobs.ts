@@ -1,8 +1,12 @@
 import { CollectionConfig } from 'payload'
+import { User } from '@payload-types'
 
 import { ARCHIVED, SA, SA_A, SA_A_O, SA_A_O_Self_createdBy, SA_O } from '@/payload/access'
-import { createdBy } from '@/payload/fields'
+import { archived, slugField } from '@/payload/fields'
 import { categoriesOptions, currencyOptions, educationOptions, employmentTypeOptions, experienceOptions, locationTypeOptions, salaryTypeOptions } from '@/payload/data'
+import { Archived } from '@/payload/components'
+import { createdBy } from '@/payload/fields'
+import { FeaturedCell } from '@/payload/cells'
 import { languageField } from '@/payload/fields'
 import { organizationFilter } from './filters/organizationFilter'
 import { populateCreatedBy } from '@/payload/hooks'
@@ -10,12 +14,8 @@ import { populateGlobalsDataJobs } from './hooks/populateGlobalsData'
 import { populateOrganizationJobs } from './hooks/populateOrganizationJobs'
 import { populatePublicId } from './hooks/populatePublicId'
 import SA_A_O_Some_U from './access/SA_A_O_Some_U'
-import { archived, slugField } from '@/payload/fields'
 import { statusField } from '@/payload/fields'
 import { updateOrganizationJobs } from './hooks/updateOrganizationJobs'
-import { User } from '@payload-types'
-import { FeaturedCell } from '@/payload/cells'
-import { Archived } from '@/payload/components'
 
 export const Jobs: CollectionConfig = {
   slug: 'jobs',
@@ -193,10 +193,11 @@ export const Jobs: CollectionConfig = {
                         width: '50%',
                         condition: (data) => data?.salary?.enabled && !data?.salary?.range,
                       },
-                      validate: (value, { data }) => {
+                      validate: (value) => {
                         if (value < 1) {
                           return 'Number must be greater than or equal to 1'
                         }
+
                         return true
                       },
                       required: true,
@@ -214,6 +215,7 @@ export const Jobs: CollectionConfig = {
                         if (value > data.salary?.maxSalary) {
                           return 'Minimum salary must be less than maximum salary'
                         }
+
                         return true
                       },
                       required: true,
@@ -231,6 +233,7 @@ export const Jobs: CollectionConfig = {
                         if (value < data.salary?.minSalary) {
                           return 'Maximum salary must be greater than minimum salary'
                         }
+
                         return true
                       },
                       required: true,

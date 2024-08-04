@@ -1,8 +1,8 @@
 'use server'
 
-import { getPayloadHMR } from '@payloadcms/next/utilities'
 import config from '@payload-config'
 import { Config } from '@payload-types'
+import { getPayloadHMR } from '@payloadcms/next/utilities'
 
 interface updateDocumentProps {
     collection: keyof Config['collections']
@@ -17,6 +17,7 @@ const updateDocument = async ({ collection, id, data }: updateDocumentProps) => 
         id,
         data
     })
+
     return doc
 }
 

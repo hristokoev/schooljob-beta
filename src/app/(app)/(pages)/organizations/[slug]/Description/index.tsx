@@ -1,9 +1,9 @@
 import React, { Fragment } from 'react'
 import { getTranslations } from 'next-intl/server'
-
 import { Organization } from '@payload-types'
-import { RichText } from '@/components'
+
 import { getDocument } from '@/utilities/getDocument'
+import { RichText } from '@/components'
 
 const Description: React.FC<{ slug: string }> = async ({ slug }) => {
   const t = await getTranslations()

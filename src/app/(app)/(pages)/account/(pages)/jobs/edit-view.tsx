@@ -2,10 +2,12 @@
 
 import { Controller, useForm } from 'react-hook-form'
 import React, { useCallback, useEffect } from 'react'
+import Link from 'next/link'
+import { StarIcon } from '@heroicons/react/24/solid'
 import { toast } from 'sonner'
 import { useRouter } from 'next/navigation'
-import { zodResolver } from '@hookform/resolvers/zod'
 import { useTranslations } from 'next-intl'
+import { zodResolver } from '@hookform/resolvers/zod'
 
 import {
   Article,
@@ -23,7 +25,6 @@ import {
   Switch,
   Textarea,
 } from '@/components'
-import { JobFormData, JobFieldSchema } from '@/types'
 import {
   categoriesOptions,
   currencyOptions,
@@ -34,8 +35,7 @@ import {
   locationTypeOptions,
   salaryTypeOptions,
 } from '@/payload/data'
-import Link from 'next/link'
-import { StarIcon } from '@heroicons/react/24/solid'
+import { JobFieldSchema, JobFormData } from '@/types'
 import { createOrUpdateJob } from '@/actions'
 
 interface JobsEditViewProps {
@@ -53,7 +53,6 @@ const JobsEditView: React.FC<Partial<JobFormData> & JobsEditViewProps> = formDat
     formState: { errors },
     getValues,
     setValue,
-    setError,
     control,
     watch,
   } = useForm<JobFormData>({
@@ -101,6 +100,7 @@ const JobsEditView: React.FC<Partial<JobFormData> & JobsEditViewProps> = formDat
         loading: t('ui.submitting'),
         success: () => {
           router.push('/account/jobs')
+
           return id ? t('editJob.successUpdated') : t('editJob.successCreated')
         },
         error: message => message,
@@ -314,7 +314,7 @@ const JobsEditView: React.FC<Partial<JobFormData> & JobsEditViewProps> = formDat
                     render={({ field }) => (
                       <Switch
                         {...field}
-                        onChange={value => {
+                        onChange={() => {
                           setValue('salary.enabled', !watchSalary)
                         }}
                         onText={t('editJob.salaryOn')}
@@ -329,7 +329,7 @@ const JobsEditView: React.FC<Partial<JobFormData> & JobsEditViewProps> = formDat
                     render={({ field }) => (
                       <Switch
                         {...field}
-                        onChange={value => setValue('salary.range', !watchRange)}
+                        onChange={() => setValue('salary.range', !watchRange)}
                         onText={t('editJob.salaryRangeOn')}
                         offText={t('editJob.salaryRangeOff')}
                         disabled={!watchSalary || published}

@@ -1,8 +1,7 @@
-import { ArrowUpTrayIcon } from '@heroicons/react/24/solid'
 import React, { Fragment } from 'react'
-import { useTranslations } from 'next-intl'
-
+import { ArrowUpTrayIcon } from '@heroicons/react/24/solid'
 import { FieldError } from 'react-hook-form'
+import { useTranslations } from 'next-intl'
 
 interface InputFileProps extends React.InputHTMLAttributes<HTMLInputElement> {
   id?: string

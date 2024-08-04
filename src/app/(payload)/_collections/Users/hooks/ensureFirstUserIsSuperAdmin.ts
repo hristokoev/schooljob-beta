@@ -1,5 +1,4 @@
 import type { FieldHook } from 'payload'
-
 import type { User } from '@payload-types'
 
 // ensure the first user created is a super-admin

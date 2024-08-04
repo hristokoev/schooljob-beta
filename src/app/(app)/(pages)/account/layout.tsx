@@ -1,6 +1,6 @@
+import { getTranslations } from 'next-intl/server'
 import React from 'react'
 import { redirect } from 'next/navigation'
-import { getTranslations } from 'next-intl/server'
 
 import { getMeUser } from '@/utilities/getMeUser'
 

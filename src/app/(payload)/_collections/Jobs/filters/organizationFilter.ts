@@ -2,9 +2,10 @@
   This filter is used in the Jobs collection to filter the available organizations in the dropdown.
 */
 
-import { checkRole } from '@/payload/access'
-import { User } from '@payload-types'
 import { FilterOptions, FilterOptionsProps, Where } from 'payload'
+import { User } from '@payload-types'
+
+import { checkRole } from '@/payload/access'
 
 export const organizationFilter: (
   options: FilterOptionsProps<any>,

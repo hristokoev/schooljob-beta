@@ -1,4 +1,4 @@
-import { XMarkIcon, CheckIcon, InformationCircleIcon } from '@heroicons/react/24/solid'
+import { CheckIcon, InformationCircleIcon, XMarkIcon } from '@heroicons/react/24/solid'
 import React, { Fragment } from 'react'
 
 export const Message: React.FC<{

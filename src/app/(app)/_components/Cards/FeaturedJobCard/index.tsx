@@ -1,11 +1,11 @@
+import { type Job, type Organization } from '@payload-types'
+import { getTranslations } from 'next-intl/server'
 import Link from 'next/link'
 import React from 'react'
-import { getTranslations } from 'next-intl/server'
-
-import { type Job, type Organization } from '@payload-types'
-import { renderSalary } from '@/utilities'
-import { Media, Pill } from '@/components'
 import { StarIcon } from '@heroicons/react/24/solid'
+
+import { Media, Pill } from '@/components'
+import { renderSalary } from '@/utilities'
 
 export const FeaturedJobCard: React.FC<Job> = async ({
   publicId,

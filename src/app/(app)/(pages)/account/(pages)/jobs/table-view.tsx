@@ -1,10 +1,10 @@
-import React from 'react'
-import Link from 'next/link'
 import { getTranslations } from 'next-intl/server'
+import { Job } from '@payload-types'
+import Link from 'next/link'
+import React from 'react'
 
 import { type Column, Message, Pill, Table } from '@/components'
 import { renderSalary } from '@/utilities'
-import { Job } from '@payload-types'
 
 interface JobsTableViewProps {
   docs: Job[]

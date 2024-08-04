@@ -1,6 +1,6 @@
 import { CollectionConfig } from 'payload'
 
-import { ARCHIVED, SA, SA_A, SA_A_C_Self_createdBy, SA_C } from '@/payload/access'
+import { ARCHIVED, SA, SA_A_C_Self_createdBy } from '@/payload/access'
 import { archived, createdBy } from '@/payload/fields'
 import SA_A_O_C_Self from './access/SA_A_O_C_Self'
 

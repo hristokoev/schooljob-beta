@@ -1,7 +1,8 @@
-import React from 'react'
 import configPromise from '@payload-config'
+import { getCachedPayload } from '@cached-local-api'
 import { getPayloadHMR } from '@payloadcms/next/utilities'
 import { getTranslations } from 'next-intl/server'
+import React from 'react'
 
 import {
   Carousel,
@@ -11,9 +12,8 @@ import {
   CarouselPrevious,
   OrganizationCard,
 } from '@/components'
-import { OrganizationSearchParams } from '@/types'
 import { EmptyBlock } from '../EmptyBlock'
-import { getCachedPayload } from '@cached-local-api'
+import { OrganizationSearchParams } from '@/types'
 
 const OrganizationsSwipe: React.FC<OrganizationSearchParams> = async props => {
   const t = await getTranslations()

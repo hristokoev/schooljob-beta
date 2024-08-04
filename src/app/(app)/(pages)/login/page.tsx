@@ -1,12 +1,12 @@
 import React, { Fragment } from 'react'
+import { getTranslations } from 'next-intl/server'
 import Link from 'next/link'
 import { Metadata } from 'next'
-import { getTranslations } from 'next-intl/server'
 
-import { BreadcrumbBlock } from '@/blocks'
 import { Gutter, MinHeight, RenderParams, VerticalPadding } from '@/components'
-import { LoginForm } from './LoginForm'
+import { BreadcrumbBlock } from '@/blocks'
 import { getMeUser } from '@/utilities/getMeUser'
+import { LoginForm } from './LoginForm'
 
 export default async function Login() {
   const t = await getTranslations()

@@ -5,9 +5,7 @@
 import configPromise from '@payload-config'
 import { getPayloadHMR } from '@payloadcms/next/utilities'
 import { getTranslations } from 'next-intl/server'
-
 import { User } from '@payload-types'
-import { ApplicationFormData } from '../_types'
 
 export const createApplication = async (data: any, user: User | null | undefined) => {
     const t = await getTranslations()
@@ -28,7 +26,7 @@ export const createApplication = async (data: any, user: User | null | undefined
         }
 
         return doc
-    } catch (error) {
+    } catch {
         throw new Error(t('errors.createApplication'))
     }
 }

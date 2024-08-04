@@ -1,8 +1,8 @@
 'use client'
 
-import { useField } from '@payloadcms/ui'
 import { CustomComponent } from 'payload'
 import React from 'react'
+import { useField } from '@payloadcms/ui'
 
 import './index.scss'
 

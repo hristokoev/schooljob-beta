@@ -1,10 +1,10 @@
 import { getTranslations } from 'next-intl/server'
 import Link from 'next/link'
+import { type Organization } from '@payload-types'
 import React from 'react'
 import { StarIcon } from '@heroicons/react/24/solid'
 
 import { Media, Pill } from '@/components'
-import { type Organization } from '@payload-types'
 
 export const OrganizationCard: React.FC<Organization> = async ({
   slug,
@@ -17,6 +17,7 @@ export const OrganizationCard: React.FC<Organization> = async ({
   featured,
 }: Organization) => {
   const t = await getTranslations()
+
   return (
     <div
       className={`h-full bg-white hover:bg-slate-50 sm:col-span-6 xl:col-span-4 ${

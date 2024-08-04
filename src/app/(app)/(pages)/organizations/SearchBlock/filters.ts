@@ -1,7 +1,7 @@
 import { useTranslations } from 'next-intl'
 
-import { type Filter } from '@/components'
 import { categoriesOptions } from '@/payload/data'
+import { type Filter } from '@/components'
 
 const useFilters = (): Filter[] => {
     const t = useTranslations()

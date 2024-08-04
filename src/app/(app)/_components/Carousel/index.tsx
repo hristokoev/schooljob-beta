@@ -1,12 +1,12 @@
 'use client'
 
+import { ArrowLeftIcon, ArrowRightIcon } from '@heroicons/react/24/solid'
 import useEmblaCarousel, { type UseEmblaCarouselType } from 'embla-carousel-react'
 import React from 'react'
 import { useTranslations } from 'next-intl'
 
 import { Button } from '@/components'
 import { cn } from '@/utilities'
-import { ArrowLeftIcon, ArrowRightIcon } from '@heroicons/react/24/solid'
 
 type CarouselApi = UseEmblaCarouselType[1]
 type UseCarouselParameters = Parameters<typeof useEmblaCarousel>

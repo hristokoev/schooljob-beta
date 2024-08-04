@@ -1,13 +1,13 @@
 import React, { Fragment } from 'react'
 import configPromise from '@payload-config'
+import { getCachedPayload } from '@cached-local-api'
 import { getPayloadHMR } from '@payloadcms/next/utilities'
 import { getTranslations } from 'next-intl/server'
 
+import { EmptyBlock } from '../EmptyBlock'
 import { LoadMore } from './LoadMore'
 import { OrganizationCard } from '@/components'
 import { OrganizationSearchParams } from '@/types'
-import { EmptyBlock } from '../EmptyBlock'
-import { getCachedPayload } from '@cached-local-api'
 
 const OrganizationsGrid: React.FC<OrganizationSearchParams> = async props => {
   const t = await getTranslations()

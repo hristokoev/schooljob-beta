@@ -1,8 +1,7 @@
-import { JOBS, ORGANIZATIONS } from '@/graphql'
-import { type Config } from '@payload-types'
-import { GRAPHQL_API_URL } from './shared'
-
 // TODO: Typing
+
+import { JOBS, ORGANIZATIONS } from '@/graphql'
+import { GRAPHQL_API_URL } from './shared'
 
 const queryMap = {
   jobs: {

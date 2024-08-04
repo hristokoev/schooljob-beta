@@ -1,11 +1,11 @@
 import React, { Fragment } from 'react'
+import { getTranslations } from 'next-intl/server'
 import Link from 'next/link'
 import { Metadata } from 'next'
 
-import { getMeUser } from '@/utilities/getMeUser'
 import { Gutter, MinHeight, VerticalPadding } from '@/components'
+import { getMeUser } from '@/utilities/getMeUser'
 import RegisterForm from './RegisterForm'
-import { getTranslations } from 'next-intl/server'
 
 export default async function Register() {
   const t = await getTranslations()
@@ -54,6 +54,7 @@ export default async function Register() {
     </Fragment>
   )
 }
+
 export async function generateMetadata({
   params: { locale },
 }: {

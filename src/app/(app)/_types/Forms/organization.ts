@@ -77,5 +77,4 @@ const useOrganizationFieldSchema = (): ZodType<OrganizationFormData> => {
     })
 }
 
-
 export { type OrganizationFormData, useOrganizationFieldSchema }

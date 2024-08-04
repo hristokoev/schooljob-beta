@@ -1,12 +1,12 @@
 'use client'
 
 import { Dialog, DialogPanel, DialogTitle } from '@headlessui/react'
+import { ImageCover, Logo } from '@payload-types'
 import React, { Fragment, useState } from 'react'
+import { TrashIcon } from '@heroicons/react/24/solid'
 import { useTranslations } from 'next-intl'
 
 import { Button, ImageCropper } from '@/components'
-import { TrashIcon } from '@heroicons/react/24/solid'
-import { ImageCover, Logo } from '@payload-types'
 import { cn } from '@/utilities/cn'
 
 interface EditUploadProps {
@@ -26,7 +26,6 @@ const EditUpload = ({ name, image, setImage, minWidth, minHeight, className }: E
     <Fragment>
       <div className={cn('flex items-center gap-4', className)}>
         {image && image.url ? (
-          // eslint-disable-next-line @next/next/no-img-element
           <img
             src={image.url}
             alt="Logo"

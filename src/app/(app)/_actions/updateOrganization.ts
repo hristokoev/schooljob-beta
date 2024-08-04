@@ -50,7 +50,7 @@ export const updateOrganization = async (data: OrganizationFormData, user: User 
       }
 
       return doc
-    } catch (error) {
+    } catch {
       throw new Error(t('errors.updateOrganization'))
     }
   }

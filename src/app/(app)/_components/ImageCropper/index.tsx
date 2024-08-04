@@ -1,15 +1,16 @@
 'use client'
 
+import { ImageCover, Logo } from '@payload-types'
 import React, { Fragment, useRef, useState } from 'react'
 import ReactCrop, { centerCrop, convertToPixelCrop, Crop, makeAspectCrop } from 'react-image-crop'
-import 'react-image-crop/dist/ReactCrop.css'
+import { ArrowUpTrayIcon } from '@heroicons/react/24/solid'
 import { toast } from 'sonner'
 import { useTranslations } from 'next-intl'
 
+import 'react-image-crop/dist/ReactCrop.css'
+
 import { Button } from '@/components'
 import setCanvasPreview from './utils/setCanvasPreview'
-import { Logo, ImageCover } from '@payload-types'
-import { ArrowUpTrayIcon } from '@heroicons/react/24/solid'
 
 interface ImageCropperProps {
   setIsOpen: (isOpen: boolean) => void
@@ -37,15 +38,18 @@ const ImageCropper = ({ setIsOpen, setImage, minWidth, minHeight }: ImageCropper
 
     const reader = new FileReader()
     reader.readAsDataURL(file)
+
     reader.onload = () => {
       const imageElement = new Image()
       const imageUrl = reader.result?.toString() || ''
       imageElement.src = imageUrl
       imageElement.addEventListener('load', e => {
         const { naturalWidth, naturalHeight } = e.currentTarget as HTMLImageElement
+
         if (naturalWidth < minWidth || naturalHeight < minHeight) {
           toast.error(t('errors.imageResolution', { minWidth, minHeight }))
           setImgSrc('')
+
           return
         }
       })
@@ -101,7 +105,6 @@ const ImageCropper = ({ setIsOpen, setImage, minWidth, minHeight }: ImageCropper
               minWidth={minWidth}
               onChange={(pixelCrop, percentCrop) => setCrop(percentCrop)}
             >
-              {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 ref={imgRef}
                 src={imgSrc}
@@ -126,6 +129,7 @@ const ImageCropper = ({ setIsOpen, setImage, minWidth, minHeight }: ImageCropper
                   convertToPixelCrop(crop, imgRef.current.width || 0, imgRef.current.height || 0),
                 )
               }
+
               const dataUrl = previewCanvasRef.current?.toDataURL()
               setImage({
                 id: '',

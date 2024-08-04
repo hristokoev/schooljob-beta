@@ -1,10 +1,8 @@
 
-import configPromise from '@payload-config'
-import { getPayloadHMR } from '@payloadcms/next/utilities'
-import { unstable_cache } from 'next/cache'
-
 import type { Config } from '@payload-types'
+import configPromise from '@payload-config'
 import { getCachedPayload } from '@cached-local-api'
+import { getPayloadHMR } from '@payloadcms/next/utilities'
 
 type Collection = keyof Config['collections']
 

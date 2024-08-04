@@ -1,9 +1,9 @@
 'use client'
 
-import React, { Fragment, useState } from 'react'
-import { XCircleIcon } from '@heroicons/react/24/solid'
 import { ControllerRenderProps, UseFormReturn } from 'react-hook-form'
+import React, { Fragment, useState } from 'react'
 import { useTranslations } from 'next-intl'
+import { XCircleIcon } from '@heroicons/react/24/solid'
 
 import { Button, Input } from '@/components'
 
@@ -32,12 +32,11 @@ const InputList: React.FC<InputListProps> = ({ field, setValue, disabled }) => {
           type="button"
           disabled={currentValue.trim() === '' || disabled}
           onClick={() => {
-            {
-              field.value?.includes(currentValue)
-                ? null
-                : setValue(field.name, [...(field.value || ''), currentValue])
-              setCurrentValue('')
+            if (!field.value?.includes(currentValue)) {
+              setValue(field.name, [...(field.value || ''), currentValue])
             }
+
+            setCurrentValue('')
           }}
         >
           <svg className="h-4 w-4 shrink-0 fill-current opacity-50" viewBox="0 0 16 16">

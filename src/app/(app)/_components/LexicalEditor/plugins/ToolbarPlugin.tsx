@@ -8,8 +8,6 @@
 
 'use client'
 
-import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext'
-import { mergeRegister } from '@lexical/utils'
 import {
   $getSelection,
   $isRangeSelection,
@@ -21,6 +19,9 @@ import {
   UNDO_COMMAND,
 } from 'lexical'
 import { useCallback, useEffect, useRef, useState } from 'react'
+import { mergeRegister } from '@lexical/utils'
+import React from 'react'
+import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext'
 
 const LowPriority = 1
 
@@ -40,6 +41,7 @@ export default function ToolbarPlugin() {
 
   const $updateToolbar = useCallback(() => {
     const selection = $getSelection()
+
     if ($isRangeSelection(selection)) {
       // Update text format
       setIsBold(selection.hasFormat('bold'))
@@ -58,8 +60,9 @@ export default function ToolbarPlugin() {
       }),
       editor.registerCommand(
         SELECTION_CHANGE_COMMAND,
-        (_payload, _newEditor) => {
+        () => {
           $updateToolbar()
+
           return false
         },
         LowPriority,
@@ -68,6 +71,7 @@ export default function ToolbarPlugin() {
         CAN_UNDO_COMMAND,
         payload => {
           setCanUndo(payload)
+
           return false
         },
         LowPriority,
@@ -76,6 +80,7 @@ export default function ToolbarPlugin() {
         CAN_REDO_COMMAND,
         payload => {
           setCanRedo(payload)
+
           return false
         },
         LowPriority,

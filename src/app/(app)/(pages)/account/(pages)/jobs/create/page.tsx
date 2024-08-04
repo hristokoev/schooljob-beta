@@ -1,10 +1,10 @@
 import React, { Fragment } from 'react'
 import { getTranslations } from 'next-intl/server'
+import { Metadata } from 'next'
 
 import { Gutter, Main } from '@/components'
 import { BreadcrumbBlock } from '@/blocks'
 import { JobsEditView } from '../edit-view'
-import { Metadata } from 'next'
 
 export default async function CreateJob() {
   const t = await getTranslations()

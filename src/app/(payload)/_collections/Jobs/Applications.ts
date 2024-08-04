@@ -2,6 +2,7 @@ import { CollectionConfig, User } from 'payload'
 
 import { ARCHIVED, SA, SA_A_O, SA_C, SA_C_U } from '@/payload/access'
 import { applicationStatusOptions } from '@/payload/data'
+import { archived } from '@/payload/fields'
 import { populateCandidateApplications } from './hooks/populateCandidateApplications'
 import { populateCv } from './hooks/populateCv'
 import { populateGlobalsDataApplications } from './hooks/populateGlobalsData'
@@ -10,7 +11,6 @@ import { populateTrackingId } from './hooks/populateTrackingId'
 import { preventMultipleApplications } from './hooks/preventMultipleApplications'
 import SA_A_O_Some from './access/SA_A_O_Some'
 import SA_A_O_Some_C_Self from './access/SA_A_O_Some_C_Self'
-import { archived } from '@/payload/fields'
 
 export const Applications: CollectionConfig = {
   slug: 'applications',

@@ -1,16 +1,16 @@
 import React, { Fragment, Suspense } from 'react'
+import { getTranslations } from 'next-intl/server'
 import { Metadata } from 'next'
 
 import { Gutter, Hr, TopLabel, VerticalPadding } from '@/components'
-import { OrganizationSearchParams } from '@/types'
 import {
   OrganizationsGrid,
   OrganizationsGridSkeleton,
   OrganizationsSwipe,
   OrganizationsSwipeSkeleton,
 } from '@/blocks'
+import { OrganizationSearchParams } from '@/types'
 import { SearchBlock } from './SearchBlock'
-import { getTranslations } from 'next-intl/server'
 
 export const dynamic = 'force-static'
 

@@ -1,14 +1,14 @@
-import React from 'react'
+import { getTranslations } from 'next-intl/server'
+import Link from 'next/link'
 import { Metadata } from 'next'
+import { PencilIcon } from '@heroicons/react/24/solid'
+import React from 'react'
 
 import { Button, Gutter, MinHeight, VerticalPadding } from '@/components'
 import { Avatar } from './Avatar'
 import { Cover } from './Cover'
 import { Grid } from './Grid'
 import { Header } from './Header'
-import { PencilIcon } from '@heroicons/react/24/solid'
-import Link from 'next/link'
-import { getTranslations } from 'next-intl/server'
 
 export default async function Account() {
   const t = await getTranslations()

@@ -1,5 +1,5 @@
-import { useTranslations } from "next-intl";
 import { z, ZodType } from "zod"
+import { useTranslations } from "next-intl"
 
 type ResetPasswordFormData = {
     password: string;
@@ -24,10 +24,9 @@ const useResetPasswordFieldSchema = (): ZodType<ResetPasswordFormData> => {
                 code: z.ZodIssueCode.custom,
                 path: ['passwordConfirm'],
                 message: t('passwordConfirm'),
-            });
+            })
         }
     })
 }
-
 
 export { type ResetPasswordFormData, useResetPasswordFieldSchema }

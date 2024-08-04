@@ -1,7 +1,7 @@
 import React, { Fragment, Suspense } from 'react'
+import { getTranslations } from 'next-intl/server'
 import Link from 'next/link'
 import { Metadata } from 'next'
-import { getTranslations } from 'next-intl/server'
 
 import { Button, Gutter, TopLabel, VerticalPadding } from '@/components'
 import { CtaBlock, InfiniteScroll, JobsList, JobsListSkeleton } from '@/blocks'
@@ -17,6 +17,7 @@ export const dynamic = 'force-static'
 
 export default async function Index() {
   const t = await getTranslations()
+
   return (
     <Fragment>
       <VerticalPadding>

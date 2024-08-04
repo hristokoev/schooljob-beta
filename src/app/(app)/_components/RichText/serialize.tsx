@@ -1,9 +1,8 @@
-import type { SerializedListItemNode, SerializedListNode } from '@lexical/list'
 import type { LinkFields, SerializedLinkNode } from '@payloadcms/richtext-lexical'
-import type { SerializedHeadingNode } from '@lexical/rich-text'
-import type { SerializedElementNode, SerializedLexicalNode, SerializedTextNode } from 'lexical'
-
 import React, { Fragment, JSX } from 'react'
+import type { SerializedElementNode, SerializedLexicalNode, SerializedTextNode } from 'lexical'
+import type { SerializedListItemNode, SerializedListNode } from '@lexical/list'
+import type { SerializedHeadingNode } from '@lexical/rich-text'
 
 import {
   IS_BOLD,
@@ -27,12 +26,15 @@ export function serializeLexical({ nodes }: Props): JSX.Element {
         if (_node.type === 'text') {
           const node = _node as SerializedTextNode
           let text = <React.Fragment key={index}>{node.text}</React.Fragment>
+
           if (node.format & IS_BOLD) {
             text = <strong key={index}>{text}</strong>
           }
+
           if (node.format & IS_ITALIC) {
             text = <em key={index}>{text}</em>
           }
+
           if (node.format & IS_STRIKETHROUGH) {
             text = (
               <span key={index} style={{ textDecoration: 'line-through' }}>
@@ -40,6 +42,7 @@ export function serializeLexical({ nodes }: Props): JSX.Element {
               </span>
             )
           }
+
           if (node.format & IS_UNDERLINE) {
             text = (
               <span key={index} style={{ textDecoration: 'underline' }}>
@@ -47,12 +50,15 @@ export function serializeLexical({ nodes }: Props): JSX.Element {
               </span>
             )
           }
+
           if (node.format & IS_CODE) {
             text = <code key={index}>{node.text}</code>
           }
+
           if (node.format & IS_SUBSCRIPT) {
             text = <sub key={index}>{text}</sub>
           }
+
           if (node.format & IS_SUPERSCRIPT) {
             text = <sup key={index}>{text}</sup>
           }
@@ -79,6 +85,7 @@ export function serializeLexical({ nodes }: Props): JSX.Element {
                   }
                 }
               }
+
               return serializeLexical({ nodes: node.children })
             } else {
               return serializeLexical({ nodes: node.children })
@@ -93,6 +100,7 @@ export function serializeLexical({ nodes }: Props): JSX.Element {
           case 'linebreak': {
             return <br className="col-start-2" key={index} />
           }
+
           case 'paragraph': {
             return (
               <p className="col-start-2" key={index}>
@@ -100,28 +108,33 @@ export function serializeLexical({ nodes }: Props): JSX.Element {
               </p>
             )
           }
+
           case 'heading': {
             const node = _node as SerializedHeadingNode
 
             type Heading = Extract<keyof JSX.IntrinsicElements, 'h1' | 'h2' | 'h3' | 'h4' | 'h5'>
             const Tag = node?.tag as Heading
+
             return (
               <Tag className="col-start-2" key={index}>
                 {serializedChildren}
               </Tag>
             )
           }
+
           case 'list': {
             const node = _node as SerializedListNode
 
             type List = Extract<keyof JSX.IntrinsicElements, 'ol' | 'ul'>
             const Tag = node?.tag as List
+
             return (
               <Tag className="list col-start-2" key={index}>
                 {serializedChildren}
               </Tag>
             )
           }
+
           case 'listitem': {
             const node = _node as SerializedListItemNode
 
@@ -131,7 +144,6 @@ export function serializeLexical({ nodes }: Props): JSX.Element {
                   aria-checked={node.checked ? 'true' : 'false'}
                   className={` ${node.checked ? '' : ''}`}
                   key={index}
-                  // eslint-disable-next-line jsx-a11y/no-noninteractive-element-to-interactive-role
                   role="checkbox"
                   tabIndex={-1}
                   value={node?.value}
@@ -147,6 +159,7 @@ export function serializeLexical({ nodes }: Props): JSX.Element {
               )
             }
           }
+
           case 'quote': {
             return (
               <blockquote className="col-start-2" key={index}>

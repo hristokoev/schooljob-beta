@@ -1,4 +1,5 @@
 import { Config, FieldHook, Payload } from 'payload'
+
 import { format } from '@/payload/utilities'
 
 type CollectionType = keyof Config['collections']
@@ -58,5 +59,6 @@ export const formatSlug: FieldHook = async ({
 
     return getUniqueSlug(format(title), collectionSlug, id, payload)
   }
+
   return value
 }

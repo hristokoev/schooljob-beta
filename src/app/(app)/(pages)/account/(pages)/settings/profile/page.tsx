@@ -1,12 +1,12 @@
 import React, { Fragment } from 'react'
+import { getTranslations } from 'next-intl/server'
+import { Metadata } from 'next'
 
-import SettingsSidebar from '../settings-sidebar'
 import { BreadcrumbBlock } from '@/blocks'
 import { CandidatePanel } from './CandidatePanel'
 import { getMeUser } from '@/utilities/getMeUser'
 import { OrganizationPanel } from './OrganizationPanel'
-import { Metadata } from 'next'
-import { getTranslations } from 'next-intl/server'
+import SettingsSidebar from '../settings-sidebar'
 
 export default async function ProfileSettings() {
   const t = await getTranslations()

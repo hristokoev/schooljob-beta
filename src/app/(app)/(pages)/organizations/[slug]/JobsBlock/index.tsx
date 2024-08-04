@@ -1,9 +1,9 @@
 import React, { Fragment } from 'react'
 import { getTranslations } from 'next-intl/server'
-
-import { JobsList } from '@/blocks'
 import { Organization } from '@payload-types'
+
 import { getDocument } from '@/utilities/getDocument'
+import { JobsList } from '@/blocks'
 
 const JobsBlock: React.FC<{ slug: string }> = async ({ slug }) => {
   const t = await getTranslations()
