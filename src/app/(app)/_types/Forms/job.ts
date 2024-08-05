@@ -70,7 +70,7 @@ const JobFieldSchema: ZodType<JobFormData> = z
         location: z.array(z.object({
             label: z.string(),
             value: z.string(),
-        })),
+        })).optional(),
         locationType: z.array(z.object({
             label: z.string(),
             value: z.string(),

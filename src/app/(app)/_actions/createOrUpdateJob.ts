@@ -17,15 +17,17 @@ export const createOrUpdateJob = async (data: JobFormData, id?: string) => {
     ...data,
     categories: data.categories.map(category => category.value),
     employmentType: data.employmentType.map(type => type.value),
+    location: data?.location?.map(location => location.value) || [],
     locationType: data?.locationType?.map(type => type.value) || [],
     education: data?.education?.map(education => education.value) || [],
     experience: data?.experience?.map(experience => experience.value) || [],
     language: data?.language?.map(language => language.value) || [],
-    salary: {
+    ...(data.salary?.enabled && { 
+      salary: {
       ...data.salary,
-      currency: data?.salary?.currency?.value || [],
-      salaryType: data?.salary?.salaryType?.value || [],
-    },
+      currency: data?.salary?.currency?.value || '',
+      salaryType: data?.salary?.salaryType?.value || ''
+    }}),
   }
 
   const payload = await getPayloadHMR({
@@ -66,7 +68,7 @@ export const createOrUpdateJob = async (data: JobFormData, id?: string) => {
     }
 
     return doc
-  } catch {
+  } catch (error) {
     throw new Error(t('errors.createJob'))
   }
 

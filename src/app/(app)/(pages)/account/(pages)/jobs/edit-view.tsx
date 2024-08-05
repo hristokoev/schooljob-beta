@@ -104,7 +104,7 @@ const JobsEditView: React.FC<Partial<JobFormData> & JobsEditViewProps> = formDat
 
           return id ? t('editJob.successUpdated') : t('editJob.successCreated')
         },
-        error: message => message,
+        error: message => message.message,
         richColors: true,
       })
     },
