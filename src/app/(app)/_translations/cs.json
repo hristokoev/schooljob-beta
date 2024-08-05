@@ -192,8 +192,8 @@
         "content": "Lorem ipsum dolor sit amet consectetur adipiscing elit Ut et massa mi."
       }
     },
-    "noDescriptionPrivate": "Zdá se, že <strong>{title}</strong> o sobě zatím neposkytl žádné informace.",
-    "noDescriptionPublic": "Zatím nemáte žádný popis. Co takhle napsat něco o vaší společnosti?",
+    "noDescriptionPrivate": "Zatím nemáte žádný popis. Co takhle napsat něco o vaší společnosti?",
+    "noDescriptionPublic": "Zdá se, že <strong>{title}</strong> o sobě zatím neposkytl žádné informace.",
     "vatId": "DIČ"
   },
   "job": {

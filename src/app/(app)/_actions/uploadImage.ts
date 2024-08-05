@@ -16,7 +16,7 @@ export const uploadImage = async (imageDoc: Logo | ImageCover, user: User | null
     })
 
     // Decode base64 string
-    const matches = imageDoc.url?.match(/^data:([A-Za-z-+/]+)base64,(.+)$/)
+    const matches = imageDoc.url?.match(/^data:([A-Za-z0-9+/]+);base64,([A-Za-z0-9+/=]+)$/)
 
     if (!matches || matches.length !== 3) {
         throw new Error('Invalid base64 string')

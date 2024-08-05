@@ -192,8 +192,8 @@
         "content": "Lorem ipsum dolor sit amet consectetur adipiscing elit Ut et massa mi."
       }
     },
-    "noDescriptionPrivate": "Oh, it appears that <strong>{title}</strong> has not provided any information about themselves yet.",
-    "noDescriptionPublic": "You don't have any description yet. How about writing something about your company?",
+    "noDescriptionPrivate": "You don't have any description yet. How about writing something about your company?",
+    "noDescriptionPublic": "Oh, it appears that <strong>{title}</strong> has not provided any information about themselves yet.",
     "vatId": "VAT ID"
   },
   "job": {
