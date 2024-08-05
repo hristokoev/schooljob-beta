@@ -47,7 +47,7 @@ const ImageCropper = ({ setIsOpen, setImage, minWidth, minHeight }: ImageCropper
         const { naturalWidth, naturalHeight } = e.currentTarget as HTMLImageElement
 
         if (naturalWidth < minWidth || naturalHeight < minHeight) {
-          toast.error(t('errors.imageResolution', { minWidth, minHeight }))
+          toast.error(t('errors.imageResolution', { width: minWidth, height: minHeight }))
           setImgSrc('')
 
           return

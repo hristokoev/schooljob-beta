@@ -7,6 +7,7 @@ import { User } from '@payload-types'
 import { useTranslations } from 'next-intl'
 
 import { isCandidate, isOrganization } from '@/utilities'
+import { cz } from '@/payload/data'
 import { RichText } from '@/components'
 import { useAuth } from '@/providers'
 
@@ -84,7 +85,9 @@ const HeaderContent: React.FC<{ user: User }> = ({ user }) => {
             <div className="flex items-center">
               <GlobeEuropeAfricaIcon className="h-4 w-4 shrink-0 fill-current text-slate-400" />
               <span className="ml-2 whitespace-nowrap text-sm font-medium text-slate-500">
-                {user.profile.value.location}
+                {user.profile.value.location.map(
+                  location => cz.find(l => l.value === location)?.label,
+                )}
               </span>
             </div>
           )}

@@ -34,7 +34,7 @@ export default async function Organizations({
             <TopLabel text={t.rich('search.results')} />
             <Suspense fallback={<OrganizationsGridSkeleton count={6} />}>
               <OrganizationsGrid
-                limit={12}
+                limit={6}
                 page={1}
                 sort="-createdAt"
                 loadMore
@@ -60,13 +60,7 @@ export default async function Organizations({
             <Gutter>
               <TopLabel text={t('ui.allOrganizations')} />
               <Suspense fallback={<OrganizationsGridSkeleton count={6} />}>
-                <OrganizationsGrid
-                  limit={12}
-                  page={1}
-                  featured={false}
-                  loadMore
-                  {...searchParams}
-                />
+                <OrganizationsGrid limit={6} page={1} featured={false} loadMore {...searchParams} />
               </Suspense>
             </Gutter>
           </VerticalPadding>

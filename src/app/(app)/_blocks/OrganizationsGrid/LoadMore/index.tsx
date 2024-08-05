@@ -10,7 +10,7 @@ import { OrganizationSearchParams } from '@/types'
 
 const LoadMore: React.FC<OrganizationSearchParams> = props => {
   const t = useTranslations()
-  const { page: initialPage = 1, limit = 12, featured, categories, location } = props
+  const { page: initialPage = 1, limit = 6, featured, categories, location } = props
   const [organizations, setOrganizaions] = useState<Organization[] | null>(null)
   const [page, setPage] = useState<number>(initialPage)
   const [loading, setLoading] = useState<boolean>(false)
@@ -47,7 +47,7 @@ const LoadMore: React.FC<OrganizationSearchParams> = props => {
       <div className="flex justify-center">
         {hasMore ? (
           <Button onClick={handleLoadMore}>
-            Load More
+            {t('ui.loadMore')}
             {loading && <LoadingIcon className="ml-2 size-4" />}
           </Button>
         ) : (

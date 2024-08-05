@@ -11,7 +11,7 @@ import { OrganizationSearchParams } from '@/types'
 
 const OrganizationsGrid: React.FC<OrganizationSearchParams> = async props => {
   const t = await getTranslations()
-  const { limit = 12, page = 1, sort, featured, location, categories, loadMore = false } = props
+  const { limit = 6, page = 1, sort, featured, location, categories, loadMore = false } = props
 
   const payload = await getPayloadHMR({
     config: configPromise,
