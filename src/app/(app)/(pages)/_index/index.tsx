@@ -59,8 +59,8 @@ export default async function Index() {
           <Suspense fallback={<OrganizationsGridSkeleton count={6} />}>
             <OrganizationsGrid limit={6} />
             <div className="relative mt-8 w-full text-center">
-              <div className="absolute bottom-8 z-10 flex h-96 w-full items-center justify-center bg-gradient-to-b from-transparent to-white">
-                <Link href="/organizations" className="mt-64">
+              <div className="absolute bottom-8 z-10 flex h-80 w-full items-center justify-center bg-gradient-to-b from-transparent to-white">
+                <Link href="/organizations" className="mt-72">
                   <Button>{t('ui.viewAllOrganizations')}</Button>
                 </Link>
               </div>

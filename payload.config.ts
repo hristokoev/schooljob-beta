@@ -1,22 +1,23 @@
-import path from 'path'
-import { en } from 'payload/i18n/en'
-import { cs } from 'payload/i18n/cs'
 import {
   BoldFeature,
-  ItalicFeature,
-  UnderlineFeature,
-  StrikethroughFeature,
-  lexicalEditor,
   FixedToolbarFeature,
+  ItalicFeature,
+  lexicalEditor,
+  StrikethroughFeature,
+  UnderlineFeature,
 } from '@payloadcms/richtext-lexical'
-import { s3Storage } from '@payloadcms/storage-s3'
+import { buildConfig, Where } from 'payload'
+import { cs } from 'payload/i18n/cs'
+import { en } from 'payload/i18n/en'
 import { mongooseAdapter } from '@payloadcms/db-mongodb'
-import { buildConfig } from 'payload'
+import { s3Storage } from '@payloadcms/storage-s3'
+import { searchPlugin } from '@payloadcms/plugin-search'
 import sharp from 'sharp'
-import { fileURLToPath } from 'url'
-import { AccessNavLink, AccessView } from '@/payload/views'
-import { cachedPayloadPlugin } from './cached-local-api'
 
+import { fileURLToPath } from 'url'
+import path from 'path'
+
+import { AccessNavLink, AccessView } from '@/payload/views'
 import {
   Agreements,
   Applications,
@@ -29,7 +30,9 @@ import {
   Photos,
   Users,
 } from '@/payload/collections'
+import { cachedPayloadPlugin } from './cached-local-api'
 import { Data } from '@/payload/globals'
+import { extractTopKeywords } from '@/payload/utilities'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -122,5 +125,64 @@ export default buildConfig({
         photos: { prefix: 'photos' },
       },
     }),
+    searchPlugin({
+      collections: ['jobs', 'organizations'],
+      defaultPriorities: {
+        jobs: 10,
+        organizations: 20
+      },
+      beforeSync: ({ originalDoc, searchDoc }) => ({
+        ...searchDoc,
+        status: originalDoc?.status,
+        slug: originalDoc?.slug,
+        publicId: originalDoc?.publicId,
+        keywords: originalDoc?.richText ? extractTopKeywords(originalDoc.richText, 25).join(', ') : "",
+      }),
+      searchOverrides: {
+        access: {
+          read: () => {
+            return {
+              or: [
+                {
+                  status: {
+                    equals: 'published',
+                  },
+                },
+                {
+                  'doc.relationTo': {
+                    equals: 'organizations',
+                  },
+                },
+              ] as Where[]
+            }
+          }
+        },
+        fields: [
+          {
+            name: 'status',
+            type: 'text',
+            index: true
+          },
+          {
+            name: 'slug',
+            type: 'text',
+            index: true
+          },
+          {
+            name: 'publicId',
+            type: 'text',
+            index: true
+          },
+          {
+            name: 'keywords',
+            type: 'text',
+            index: true
+          }
+        ],
+        // admin: {
+        //   hidden: true
+        // }
+      }
+    })
   ],
 })

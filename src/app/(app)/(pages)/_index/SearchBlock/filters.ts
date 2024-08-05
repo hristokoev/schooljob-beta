@@ -1,6 +1,6 @@
 import { useTranslations } from 'next-intl'
 
-import { educationOptions, employmentTypeOptions, experienceOptions, languageOptions, locationTypeOptions, salaryTypeOptions } from '@/payload/data'
+import { categoriesOptions, cz, educationOptions, employmentTypeOptions, experienceOptions, languageOptions, locationTypeOptions } from '@/payload/data'
 import { type Filter } from '@/components'
 
 const useFilters = (): Filter[] => {
@@ -8,11 +8,17 @@ const useFilters = (): Filter[] => {
 
     return [
         {
-            slug: 'salary',
-            text: t('search.salary'),
+            slug: 'location',
+            text: t('search.location'),
             searchable: false,
-            options: salaryTypeOptions.map(option => ({
-                label: t(`search.options.${option}` as 'search.salary'),
+            options: cz
+        },
+        {
+            slug: 'categories',
+            text: t('search.category'),
+            searchable: false,
+            options: categoriesOptions.map(option => ({
+                label: t(`search.options.${option}` as 'search.category'),
                 value: option,
             }))
         },

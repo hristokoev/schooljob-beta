@@ -1,12 +1,14 @@
+'use client'
+
 import { type Job, type Organization } from '@payload-types'
-import { getTranslations } from 'next-intl/server'
 import Link from 'next/link'
 import React from 'react'
+import { useTranslations } from 'next-intl'
 
 import { Favorite, Pill } from '@/components'
 import { formatDate, isWithinLast3Days, renderSalary } from '@/utilities'
 
-export const SimpleJobCard: React.FC<Job> = async ({
+export const SimpleJobCard: React.FC<Job> = ({
   publicId,
   slug,
   title,
@@ -16,7 +18,7 @@ export const SimpleJobCard: React.FC<Job> = async ({
   featured,
   ...props
 }: Job) => {
-  const t = await getTranslations()
+  const t = useTranslations()
   const formattedDate = formatDate(createdAt)
   const isNew = isWithinLast3Days(createdAt)
   const salaryText = renderSalary(salary)

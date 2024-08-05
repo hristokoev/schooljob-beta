@@ -16,7 +16,7 @@ type OrganizationFormData = {
     title: string
     vatId?: string
     categories?: Option[]
-    location?: string
+    location?: Option[]
     phone?: string
     url?: string
     description?: string
@@ -55,7 +55,10 @@ const useOrganizationFieldSchema = (): ZodType<OrganizationFormData> => {
             label: z.string(),
             value: z.string(),
         })).optional(),
-        location: z.string().optional(),
+        location: z.array(z.object({
+            label: z.string(),
+            value: z.string(),
+        })).optional(),
         phone: z.string().optional(),
         url: z.string().optional(),
         description: z.string().optional(),

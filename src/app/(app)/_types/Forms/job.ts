@@ -12,7 +12,7 @@ type JobFormData = {
     title: string
     categories: Option[]
     employmentType: Option[]
-    location?: string
+    location?: Option[]
     locationType?: Option[]
     education?: Option[]
     experience?: Option[]
@@ -67,7 +67,10 @@ const JobFieldSchema: ZodType<JobFormData> = z
             label: z.string(),
             value: z.string(),
         })),
-        location: z.string().optional(),
+        location: z.array(z.object({
+            label: z.string(),
+            value: z.string(),
+        })),
         locationType: z.array(z.object({
             label: z.string(),
             value: z.string(),

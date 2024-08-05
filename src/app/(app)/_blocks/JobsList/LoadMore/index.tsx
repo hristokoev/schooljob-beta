@@ -12,7 +12,26 @@ import { SimpleJobCard } from '@/components'
 
 const LoadMore: React.FC<JobSearchParams> = props => {
   const t = useTranslations()
-  const { page: initialPage = 1, limit = 8, ...JobsProps } = props
+  const {
+    page: initialPage = 1,
+    sort,
+    createdAt,
+    limit = 8,
+    status = 'published',
+    featured,
+    organization,
+    categories,
+    salary,
+    employmentType,
+    education,
+    language,
+    location,
+    locationType,
+    students,
+    mothersOnMaternityLeave,
+    disabledPeople,
+    retirees,
+  } = props
   const [jobs, setJobs] = useState<Job[] | null>(null)
   const [page, setPage] = useState<number>(initialPage)
   const [loading, setLoading] = useState<boolean>(false)
@@ -21,9 +40,24 @@ const LoadMore: React.FC<JobSearchParams> = props => {
   const handleLoadMore = async () => {
     setLoading(true)
     await fetchDocs<Job>('jobs', {
-      page: page + 1,
       limit,
-      ...JobsProps,
+      page: page + 1,
+      sort: sort ? sort : undefined,
+      createdAt: createdAt ? createdAt : undefined,
+      status: status ? status : undefined,
+      featured: featured ? featured : undefined,
+      organization: organization ? organization : undefined,
+      categories: categories ? categories : undefined,
+      salary: salary ? salary : undefined,
+      employmentType: employmentType ? employmentType : undefined,
+      education: education ? education : undefined,
+      language: language ? language : undefined,
+      location: location ? location : undefined,
+      locationType: locationType ? locationType : undefined,
+      students: students ? students : undefined,
+      mothersOnMaternityLeave: mothersOnMaternityLeave ? mothersOnMaternityLeave : undefined,
+      disabledPeople: disabledPeople ? disabledPeople : undefined,
+      retirees: retirees ? retirees : undefined,
     }).then(newJobs => {
       setJobs(prevJobs => (prevJobs ? [...prevJobs, ...newJobs] : newJobs))
       setPage(prevPage => prevPage + 1)

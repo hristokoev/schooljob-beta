@@ -10,9 +10,9 @@ import { useTranslations } from 'next-intl'
 import { zodResolver } from '@hookform/resolvers/zod'
 
 import { Button, EditUpload, FormInputField, Label, Select, Textarea } from '@/components'
+import { categoriesOptions, cz } from '@/payload/data'
 import { OrganizationFormData, useOrganizationFieldSchema } from '@/types'
 import { updateOrganization, uploadImage } from '@/actions'
-import { categoriesOptions } from '@/payload/data'
 import { LexicalEditor } from '@/components'
 import { useAuth } from '@/providers'
 
@@ -86,7 +86,8 @@ const OrganizationPanel: React.FC<{ user: User }> = ({ user }) => {
               value: category,
             }
           }) || [],
-        location: organization?.location || '',
+        location:
+          organization?.location?.map(location => ({ label: location, value: location })) || [],
         phone: organization?.phone || '',
         url: organization?.url || '',
         description: organization?.description || '',
@@ -139,7 +140,7 @@ const OrganizationPanel: React.FC<{ user: User }> = ({ user }) => {
                 title: data.title,
                 description: data.description,
                 richText: data.richText,
-                location: data.location,
+                location: data.location?.map(location => location.value as 'praha') || [],
                 phone: data.phone,
                 url: data.url,
                 vatId: data.vatId,
@@ -237,12 +238,17 @@ const OrganizationPanel: React.FC<{ user: User }> = ({ user }) => {
             </div>
             <div>
               <Label>{t('organizationSettings.location')}</Label>
-              <FormInputField
-                type="text"
+              <Controller
                 name="location"
-                register={register}
-                error={errors.location}
-                className="w-full"
+                control={control}
+                render={({ field }) => (
+                  <Select
+                    {...field}
+                    isMulti
+                    options={cz}
+                    className={`w-full ${errors.location ? 'border-red-300 bg-red-300/10 hover:border-red-400 focus:border-red-500 focus:shadow-red-700/25' : ''}`}
+                  />
+                )}
               />
             </div>
             <div>

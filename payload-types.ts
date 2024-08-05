@@ -18,6 +18,7 @@ export interface Config {
     'image-covers': ImageCover;
     photos: Photo;
     users: User;
+    search: Search;
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
   };
@@ -38,7 +39,17 @@ export interface Job {
   archived?: boolean | null;
   status: string;
   title: string;
-  categories: ('category-1' | 'category-2' | 'category-3')[];
+  categories: (
+    | 'education'
+    | 'healthcare'
+    | 'sport'
+    | 'culture'
+    | 'arts'
+    | 'special'
+    | 'religious'
+    | 'nonprofit'
+    | 'other'
+  )[];
   organization: string | Organization;
   employmentType: (
     | 'fulltime'
@@ -51,7 +62,24 @@ export interface Job {
     | 'volunteer'
     | 'seasonal'
   )[];
-  location?: string | null;
+  location?:
+    | (
+        | 'praha'
+        | 'jihocesky-kraj'
+        | 'jihomoravsky-kraj'
+        | 'karlovarsky-kraj'
+        | 'kralovehradecky-kraj'
+        | 'liberecky-kraj'
+        | 'moravskoslezsky-kraj'
+        | 'olomoucky-kraj'
+        | 'pardubicky-kraj'
+        | 'plzensky-kraj'
+        | 'stredocesky-kraj'
+        | 'ustecky-kraj'
+        | 'vysocina'
+        | 'zlinsky-kraj'
+      )[]
+    | null;
   locationType?: ('onsite' | 'remote' | 'hybrid')[] | null;
   education?:
     | (
@@ -162,9 +190,28 @@ export interface Organization {
   featured?: boolean | null;
   email: string;
   phone?: string | null;
-  location?: string | null;
+  location?:
+    | (
+        | 'praha'
+        | 'jihocesky-kraj'
+        | 'jihomoravsky-kraj'
+        | 'karlovarsky-kraj'
+        | 'kralovehradecky-kraj'
+        | 'liberecky-kraj'
+        | 'moravskoslezsky-kraj'
+        | 'olomoucky-kraj'
+        | 'pardubicky-kraj'
+        | 'plzensky-kraj'
+        | 'stredocesky-kraj'
+        | 'ustecky-kraj'
+        | 'vysocina'
+        | 'zlinsky-kraj'
+      )[]
+    | null;
   vatId?: string | null;
-  categories?: ('category-1' | 'category-2' | 'category-3')[] | null;
+  categories?:
+    | ('education' | 'healthcare' | 'sport' | 'culture' | 'arts' | 'special' | 'religious' | 'nonprofit' | 'other')[]
+    | null;
   logo?: string | Logo | null;
   imageCover?: string | ImageCover | null;
   description?: string | null;
@@ -372,6 +419,30 @@ export interface ImageCover {
   height?: number | null;
   focalX?: number | null;
   focalY?: number | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "search".
+ */
+export interface Search {
+  id: string;
+  title?: string | null;
+  priority?: number | null;
+  doc:
+    | {
+        relationTo: 'jobs';
+        value: string | Job;
+      }
+    | {
+        relationTo: 'organizations';
+        value: string | Organization;
+      };
+  status?: string | null;
+  slug?: string | null;
+  publicId?: string | null;
+  keywords?: string | null;
+  updatedAt: string;
+  createdAt: string;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

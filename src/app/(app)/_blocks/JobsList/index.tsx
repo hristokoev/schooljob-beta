@@ -19,12 +19,13 @@ const JobsList: React.FC<JobSearchParams> = async props => {
     createdAt,
     status = 'published',
     featured,
-    title,
     organization,
+    categories,
     salary,
     employmentType,
     education,
     language,
+    location,
     locationType,
     students,
     mothersOnMaternityLeave,
@@ -48,8 +49,12 @@ const JobsList: React.FC<JobSearchParams> = async props => {
       ...(status && { status: { equals: status } }),
       ...(featured && { featured: { equals: featured } }),
       ...(createdAt && { createdAt: { greater_than: createdAt } }),
-      ...(title && { title: { contains: title } }),
       ...(organization && { organization: { equals: organization } }),
+      ...(categories && {
+        categories: {
+          all: categories,
+        },
+      }),
       ...(salary && {
         or: [
           {
@@ -83,9 +88,14 @@ const JobsList: React.FC<JobSearchParams> = async props => {
           all: language,
         },
       }),
+      ...(location && {
+        location: {
+          all: location,
+        },
+      }),
       ...(locationType && {
         locationType: {
-          equals: locationType,
+          all: locationType,
         },
       }),
       ...(students && { 'suitableFor.students': { equals: students } }),

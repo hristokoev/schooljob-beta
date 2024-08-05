@@ -4,29 +4,29 @@ type RichText = {
     [key: string]: any // This allows for additional properties
 }
 
-function extractTopKeywords(richText: RichText[], maxKeywords: number = 50): string[] {
+function extractTopKeywords(richText: { root: RichText }, maxKeywords: number = 50): string[] {
     const wordCountMap = new Map<string, number>()
 
-    function traverse(nodes: RichText[]): void {
-        nodes.forEach(node => {
-            if (node.text) {
-                // Split text into words and count each word
-                const words = node.text.split(/\s+/).filter(word => word.trim().length > 0)
-                words.forEach(word => {
-                    word = word.toLowerCase() // Normalize to lower case
-                    wordCountMap.set(word, (wordCountMap.get(word) || 0) + 1)
-                })
-            }
+    function traverse(node: RichText): void {
+        if (node.text) {
+            // Split text into words and remove punctuation
+            const words = node.text
+                .split(/\s+/)
+                .map(word => word.replace(/[^\w\s]|_/g, "").toLowerCase()) // Remove punctuation and convert to lower case
+                .filter(word => word.trim().length > 0) // Filter out empty strings
 
-            if (node.children) {
-                traverse(node.children)
-            }
-        })
+            words.forEach(word => {
+                wordCountMap.set(word, (wordCountMap.get(word) || 0) + 1)
+            })
+        }
+
+        if (node.children) {
+            node.children.forEach(child => traverse(child))
+        }
     }
 
-    traverse(richText)
+    traverse(richText.root)
 
-    // Sort the words by frequency in descending order and take the top `maxKeywords`
     const sortedKeywords = Array.from(wordCountMap.entries())
         .sort((a, b) => b[1] - a[1])
         .slice(0, maxKeywords)

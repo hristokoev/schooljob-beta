@@ -28,6 +28,7 @@ import {
 import {
   categoriesOptions,
   currencyOptions,
+  cz,
   educationOptions,
   employmentTypeOptions,
   experienceOptions,
@@ -214,13 +215,18 @@ const JobsEditView: React.FC<Partial<JobFormData> & JobsEditViewProps> = formDat
                 <div className="grid gap-5 md:grid-cols-2">
                   <div>
                     <Label>{t('editJob.location')}</Label>
-                    <FormInputField
-                      type="text"
-                      placeholder={t('editJob.locationPlaceholder')}
+                    <Controller
                       name="location"
-                      register={register}
-                      error={errors.location}
-                      disabled={published}
+                      control={control}
+                      render={({ field }) => (
+                        <Select
+                          {...field}
+                          isMulti
+                          options={cz}
+                          className={`w-full ${errors.location ? 'border-red-300 bg-red-300/10 hover:border-red-400 focus:border-red-500 focus:shadow-red-700/25' : ''}`}
+                          isDisabled={published}
+                        />
+                      )}
                     />
                   </div>
 

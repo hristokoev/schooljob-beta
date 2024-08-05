@@ -10,7 +10,7 @@ import { OrganizationSearchParams } from '@/types'
 
 const LoadMore: React.FC<OrganizationSearchParams> = props => {
   const t = useTranslations()
-  const { page: initialPage = 1, limit = 6, ...OrganizationProps } = props
+  const { page: initialPage = 1, limit = 12, featured, categories, location } = props
   const [organizations, setOrganizaions] = useState<Organization[] | null>(null)
   const [page, setPage] = useState<number>(initialPage)
   const [loading, setLoading] = useState<boolean>(false)
@@ -21,7 +21,9 @@ const LoadMore: React.FC<OrganizationSearchParams> = props => {
     await fetchDocs<Organization>('organizations', {
       page: page + 1,
       limit,
-      ...OrganizationProps,
+      ...(featured && { featured: true }),
+      ...(categories && categories),
+      ...(location && location),
     }).then(newOrganizations => {
       setOrganizaions(prevJobs =>
         prevJobs ? [...prevJobs, ...newOrganizations] : newOrganizations,

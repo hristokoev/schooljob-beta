@@ -1,12 +1,13 @@
-import { getTranslations } from 'next-intl/server'
 import Link from 'next/link'
 import { type Organization } from '@payload-types'
 import React from 'react'
 import { StarIcon } from '@heroicons/react/24/solid'
+import { useTranslations } from 'next-intl'
 
 import { Media, Pill } from '@/components'
+import { cz } from '@/payload/data'
 
-export const OrganizationCard: React.FC<Organization> = async ({
+export const OrganizationCard: React.FC<Organization> = ({
   slug,
   title,
   description,
@@ -16,7 +17,7 @@ export const OrganizationCard: React.FC<Organization> = async ({
   jobsPublished,
   featured,
 }: Organization) => {
-  const t = await getTranslations()
+  const t = useTranslations()
 
   return (
     <div
@@ -66,7 +67,12 @@ export const OrganizationCard: React.FC<Organization> = async ({
               ) : (
                 <div>&nbsp;</div>
               )}
-              {location && <Pill>{location}</Pill>}
+              {location &&
+                location.map(location => (
+                  <Pill key={location} color="blue">
+                    {cz.find(l => l.value === location)?.label}
+                  </Pill>
+                ))}
             </div>
           </div>
         </div>

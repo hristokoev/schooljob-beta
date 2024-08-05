@@ -32,6 +32,7 @@
     "@payloadcms/db-mongodb": "3.0.0-beta.55",
     "@payloadcms/db-postgres": "3.0.0-beta.55",
     "@payloadcms/next": "3.0.0-beta.55",
+    "@payloadcms/plugin-search": "3.0.0-beta.55",
     "@payloadcms/richtext-lexical": "3.0.0-beta.55",
     "@payloadcms/richtext-slate": "3.0.0-beta.55",
     "@payloadcms/storage-s3": "3.0.0-beta.55",
@@ -60,6 +61,7 @@
   "devDependencies": {
     "@eslint/js": "^9.8.0",
     "@payloadcms/graphql": "3.0.0-beta.55",
+    "@types/lodash": "^4.17.7",
     "@types/node": "^20.14.9",
     "@types/react": "npm:types-react@19.0.0-beta.2",
     "@types/react-dom": "npm:types-react-dom@19.0.0-beta.2",
@@ -69,6 +71,7 @@
     "eslint-plugin-import": "^2.29.1",
     "eslint-plugin-react": "^7.35.0",
     "globals": "^15.9.0",
+    "lodash": "^4.17.21",
     "postcss": "^8.4.38",
     "prettier": "^3.3.2",
     "prettier-plugin-tailwindcss": "^0.6.5",

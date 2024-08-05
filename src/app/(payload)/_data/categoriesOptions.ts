@@ -1,5 +1,11 @@
 export const categoriesOptions = [
-    'category-1',
-    'category-2',
-    'category-3',
+    'education',
+    'healthcare',
+    'sport',
+    'culture',
+    'arts',
+    'special',
+    'religious',
+    'nonprofit',
+    'other'
 ]

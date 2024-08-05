@@ -13,12 +13,13 @@ interface JobSearchParams {
     createdAt?: Date
     status?: string
     featured?: boolean
-    title?: string
     organization?: string
+    categories?: string[]
     salary?: number
     employmentType?: string[]
     education?: string[]
     language?: string[]
+    location?: string[]
     locationType?: string[]
     students?: boolean
     mothersOnMaternityLeave?: boolean
@@ -30,6 +31,8 @@ interface OrganizationSearchParams {
     limit?: number
     page?: number
     sort?: string
+    categories?: string[]
+    location?: string[]
     loadMore?: boolean
     featured?: boolean
 }

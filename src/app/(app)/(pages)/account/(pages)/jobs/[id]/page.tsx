@@ -6,6 +6,7 @@ import { Metadata } from 'next'
 
 import { Gutter, Main } from '@/components'
 import { BreadcrumbBlock } from '@/blocks'
+import { cz } from '@/payload/data'
 import { getMeUser } from '@/utilities/getMeUser'
 import { JobFormData } from '@/types'
 import { JobsEditView } from '../edit-view'
@@ -44,7 +45,7 @@ export default async function EditJob({ params: { id } }: Props) {
         value: category,
       }
     }),
-    location: data.location || '',
+    location: cz,
     locationType: data.locationType?.map(type => {
       return {
         label: t(`search.options.${type}`),

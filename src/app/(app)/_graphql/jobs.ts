@@ -1,4 +1,3 @@
-import { MEDIA_FIELDS } from "./media"
 import { SALARY } from "./salary"
 
 export const JOBS_STATIC_PARAMS = `
@@ -22,10 +21,12 @@ query Jobs(
   $createdAt: DateTime
   $title: String
   $organization: JSON
+  $categories: [Job_categories_Input]
   $salary: Float
   $employmentType: [Job_employmentType_Input]
   $education: [Job_education_Input]
   $language: [Job_language_Input]
+  $location: [Job_location_Input]
   $locationType: Job_locationType_Input
   $students: Boolean
   $mothersOnMaternityLeave: Boolean
@@ -43,6 +44,7 @@ query Jobs(
         { createdAt: { greater_than: $createdAt } }
         { title: { contains: $title } }
         { organization: { equals: $organization } }
+        { categories: { all: $categories } }
         {
           OR: [
             {
@@ -64,6 +66,7 @@ query Jobs(
         { employmentType: { all: $employmentType } }
         { education: { all: $education } }
         { language: { all: $language } }
+        { location: { all: $location } }
         { locationType: { equals: $locationType } }
         { suitableFor__students: { equals: $students } }
         { suitableFor__mothersOnMaternityLeave: { equals: $mothersOnMaternityLeave } }
@@ -72,98 +75,16 @@ query Jobs(
       ]
     }) {
     docs {
-      id
       publicId
       slug
-      status
       title
       ${SALARY}
       employmentType
-      location
       createdAt
       featured
-      applications {
-        id
-      }
       organization {
-        slug
-        title
-        logo {
-          ${MEDIA_FIELDS}
-        }
-        imageCover {
-          ${MEDIA_FIELDS}
-        }
-      }
-    }
-  }
-}
-`
-
-export const JOB = `
-query Job($id: String, $slug: String, $publicId: Float, $status: String) {
-  Jobs(
-    limit: 1
-    where: {
-      id: { equals: $id }
-      slug: { equals: $slug }
-      publicId: { equals: $publicId }
-      status: { equals: $status }
-    }
-  ) {
-    docs {
-      id
-      publicId
-      slug
-			title
-      salary {
-        enabled
-        range
-        base
-        minSalary
-        maxSalary
-        currency
-        salaryType
-      }
-      employmentType
-      locationType
-      location
-      education
-      experience
-      language
-      suitableFor {
-        students
-        mothersOnMaternityLeave
-        disabledPeople
-        retirees
-      }
-      richText
-      createdAt
-      featured
-      categories {
-        id
         title
       }
-      organization {
-        id
-        slug
-        title
-        logo {
-          ${MEDIA_FIELDS}
-        }
-        imageCover {
-          ${MEDIA_FIELDS}
-        }
-        description
-        jobsPublished {
-          id
-        }
-        location
-      }
-      skills
-      certifications
-      responsibilities
-      benefits
     }
   }
 }

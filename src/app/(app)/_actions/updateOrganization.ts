@@ -24,7 +24,7 @@ export const updateOrganization = async (data: OrganizationFormData, user: User 
           title: data.title,
           vatId: data.vatId,
           ...(data.categories ? data.categories.map(category => category.value) : []),
-          location: data.location,
+          location: data.location?.map(location => location.value as 'praha') || [],
           phone: data.phone,
           url: data.url,
           description: data.description,

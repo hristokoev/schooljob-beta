@@ -5,9 +5,14 @@ import { useFilters } from './filters'
 
 export const SearchBlock: React.FC = () => {
   return (
-    <Gutter className="max-w-6xl">
+    <Gutter>
       <Suspense>
-        <Search filters={useFilters()} path="jobs" />
+        <Search
+          filters={useFilters()}
+          className="grid gap-2 lg:grid-cols-2"
+          path="organizations"
+          isMulti
+        />
       </Suspense>
     </Gutter>
   )

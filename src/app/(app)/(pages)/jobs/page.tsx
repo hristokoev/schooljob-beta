@@ -22,6 +22,7 @@ export default async function Jobs({ searchParams }: { searchParams: JobSearchPa
       {Object.keys(searchParams).length ? (
         <VerticalPadding>
           <Gutter>
+            <TopLabel text={t.rich('search.results')} />
             <Suspense fallback={<JobsListSkeleton count={8} key={0} />}>
               <JobsList limit={8} page={1} sort="-createdAt" loadMore {...parsedSearchParams} />
             </Suspense>
@@ -44,7 +45,7 @@ export default async function Jobs({ searchParams }: { searchParams: JobSearchPa
             <Gutter>
               <TopLabel text={t('ui.allJobs')} />
               <Suspense fallback={<JobsListSkeleton count={8} key={2} />}>
-                <JobsList limit={8} page={1} featured={false} sort="-createdAt" loadMore />
+                <JobsList limit={8} page={1} sort="-createdAt" loadMore />
               </Suspense>
             </Gutter>
           </VerticalPadding>

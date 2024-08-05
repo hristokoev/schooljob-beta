@@ -1,51 +1,55 @@
 type Query {
-  Job(id: String!, draft: Boolean): Job
-  Jobs(draft: Boolean, where: Job_where, limit: Int, page: Int, sort: String): Jobs
-  countJobs(draft: Boolean, where: Job_where): countJobs
+  Job(id: String!, draft: Boolean, fallbackLocale: FallbackLocaleInputType, locale: LocaleInputType): Job
+  Jobs(draft: Boolean, where: Job_where, fallbackLocale: FallbackLocaleInputType, locale: LocaleInputType, limit: Int, page: Int, sort: String): Jobs
+  countJobs(draft: Boolean, where: Job_where, locale: LocaleInputType): countJobs
   docAccessJob(id: String!): jobsDocAccess
-  Organization(id: String!, draft: Boolean): Organization
-  Organizations(draft: Boolean, where: Organization_where, limit: Int, page: Int, sort: String): Organizations
-  countOrganizations(draft: Boolean, where: Organization_where): countOrganizations
+  Organization(id: String!, draft: Boolean, fallbackLocale: FallbackLocaleInputType, locale: LocaleInputType): Organization
+  Organizations(draft: Boolean, where: Organization_where, fallbackLocale: FallbackLocaleInputType, locale: LocaleInputType, limit: Int, page: Int, sort: String): Organizations
+  countOrganizations(draft: Boolean, where: Organization_where, locale: LocaleInputType): countOrganizations
   docAccessOrganization(id: String!): organizationsDocAccess
-  Candidate(id: String!, draft: Boolean): Candidate
-  Candidates(draft: Boolean, where: Candidate_where, limit: Int, page: Int, sort: String): Candidates
-  countCandidates(draft: Boolean, where: Candidate_where): countCandidates
+  Candidate(id: String!, draft: Boolean, fallbackLocale: FallbackLocaleInputType, locale: LocaleInputType): Candidate
+  Candidates(draft: Boolean, where: Candidate_where, fallbackLocale: FallbackLocaleInputType, locale: LocaleInputType, limit: Int, page: Int, sort: String): Candidates
+  countCandidates(draft: Boolean, where: Candidate_where, locale: LocaleInputType): countCandidates
   docAccessCandidate(id: String!): candidatesDocAccess
-  Application(id: String!, draft: Boolean): Application
-  Applications(draft: Boolean, where: Application_where, limit: Int, page: Int, sort: String): Applications
-  countApplications(draft: Boolean, where: Application_where): countApplications
+  Application(id: String!, draft: Boolean, fallbackLocale: FallbackLocaleInputType, locale: LocaleInputType): Application
+  Applications(draft: Boolean, where: Application_where, fallbackLocale: FallbackLocaleInputType, locale: LocaleInputType, limit: Int, page: Int, sort: String): Applications
+  countApplications(draft: Boolean, where: Application_where, locale: LocaleInputType): countApplications
   docAccessApplication(id: String!): applicationsDocAccess
-  Cv(id: String!, draft: Boolean): Cv
-  Cvs(draft: Boolean, where: Cv_where, limit: Int, page: Int, sort: String): Cvs
-  countCvs(draft: Boolean, where: Cv_where): countCvs
+  Cv(id: String!, draft: Boolean, fallbackLocale: FallbackLocaleInputType, locale: LocaleInputType): Cv
+  Cvs(draft: Boolean, where: Cv_where, fallbackLocale: FallbackLocaleInputType, locale: LocaleInputType, limit: Int, page: Int, sort: String): Cvs
+  countCvs(draft: Boolean, where: Cv_where, locale: LocaleInputType): countCvs
   docAccessCv(id: String!): cvsDocAccess
-  Agreement(id: String!, draft: Boolean): Agreement
-  Agreements(draft: Boolean, where: Agreement_where, limit: Int, page: Int, sort: String): Agreements
-  countAgreements(draft: Boolean, where: Agreement_where): countAgreements
+  Agreement(id: String!, draft: Boolean, fallbackLocale: FallbackLocaleInputType, locale: LocaleInputType): Agreement
+  Agreements(draft: Boolean, where: Agreement_where, fallbackLocale: FallbackLocaleInputType, locale: LocaleInputType, limit: Int, page: Int, sort: String): Agreements
+  countAgreements(draft: Boolean, where: Agreement_where, locale: LocaleInputType): countAgreements
   docAccessAgreement(id: String!): agreementsDocAccess
-  Logo(id: String!, draft: Boolean): Logo
-  Logos(draft: Boolean, where: Logo_where, limit: Int, page: Int, sort: String): Logos
-  countLogos(draft: Boolean, where: Logo_where): countLogos
+  Logo(id: String!, draft: Boolean, fallbackLocale: FallbackLocaleInputType, locale: LocaleInputType): Logo
+  Logos(draft: Boolean, where: Logo_where, fallbackLocale: FallbackLocaleInputType, locale: LocaleInputType, limit: Int, page: Int, sort: String): Logos
+  countLogos(draft: Boolean, where: Logo_where, locale: LocaleInputType): countLogos
   docAccessLogo(id: String!): logosDocAccess
-  ImageCover(id: String!, draft: Boolean): ImageCover
-  ImageCovers(draft: Boolean, where: ImageCover_where, limit: Int, page: Int, sort: String): ImageCovers
-  countImageCovers(draft: Boolean, where: ImageCover_where): countImageCovers
+  ImageCover(id: String!, draft: Boolean, fallbackLocale: FallbackLocaleInputType, locale: LocaleInputType): ImageCover
+  ImageCovers(draft: Boolean, where: ImageCover_where, fallbackLocale: FallbackLocaleInputType, locale: LocaleInputType, limit: Int, page: Int, sort: String): ImageCovers
+  countImageCovers(draft: Boolean, where: ImageCover_where, locale: LocaleInputType): countImageCovers
   docAccessImageCover(id: String!): image_coversDocAccess
-  Photo(id: String!, draft: Boolean): Photo
-  Photos(draft: Boolean, where: Photo_where, limit: Int, page: Int, sort: String): Photos
-  countPhotos(draft: Boolean, where: Photo_where): countPhotos
+  Photo(id: String!, draft: Boolean, fallbackLocale: FallbackLocaleInputType, locale: LocaleInputType): Photo
+  Photos(draft: Boolean, where: Photo_where, fallbackLocale: FallbackLocaleInputType, locale: LocaleInputType, limit: Int, page: Int, sort: String): Photos
+  countPhotos(draft: Boolean, where: Photo_where, locale: LocaleInputType): countPhotos
   docAccessPhoto(id: String!): photosDocAccess
-  User(id: String!, draft: Boolean): User
-  Users(draft: Boolean, where: User_where, limit: Int, page: Int, sort: String): Users
-  countUsers(draft: Boolean, where: User_where): countUsers
+  User(id: String!, draft: Boolean, fallbackLocale: FallbackLocaleInputType, locale: LocaleInputType): User
+  Users(draft: Boolean, where: User_where, fallbackLocale: FallbackLocaleInputType, locale: LocaleInputType, limit: Int, page: Int, sort: String): Users
+  countUsers(draft: Boolean, where: User_where, locale: LocaleInputType): countUsers
   docAccessUser(id: String!): usersDocAccess
   meUser: usersMe
   initializedUser: Boolean
-  PayloadPreference(id: String!, draft: Boolean): PayloadPreference
-  PayloadPreferences(draft: Boolean, where: PayloadPreference_where, limit: Int, page: Int, sort: String): PayloadPreferences
-  countPayloadPreferences(draft: Boolean, where: PayloadPreference_where): countPayloadPreferences
+  Search(id: String!, draft: Boolean, fallbackLocale: FallbackLocaleInputType, locale: LocaleInputType): Search
+  Searches(draft: Boolean, where: Search_where, fallbackLocale: FallbackLocaleInputType, locale: LocaleInputType, limit: Int, page: Int, sort: String): Searches
+  countSearches(draft: Boolean, where: Search_where, locale: LocaleInputType): countSearches
+  docAccessSearch(id: String!): searchDocAccess
+  PayloadPreference(id: String!, draft: Boolean, fallbackLocale: FallbackLocaleInputType, locale: LocaleInputType): PayloadPreference
+  PayloadPreferences(draft: Boolean, where: PayloadPreference_where, fallbackLocale: FallbackLocaleInputType, locale: LocaleInputType, limit: Int, page: Int, sort: String): PayloadPreferences
+  countPayloadPreferences(draft: Boolean, where: PayloadPreference_where, locale: LocaleInputType): countPayloadPreferences
   docAccessPayloadPreference(id: String!): payload_preferencesDocAccess
-  Data(draft: Boolean): Data
+  Data(draft: Boolean, fallbackLocale: FallbackLocaleInputType, locale: LocaleInputType): Data
   docAccessData: dataDocAccess
   Access: Access
 }
@@ -56,9 +60,9 @@ type Job {
   status: String
   title: String!
   categories: [Job_categories!]
-  organization: Organization!
+  organization(locale: LocaleInputType, fallbackLocale: FallbackLocaleInputType): Organization!
   employmentType: [Job_employmentType!]
-  location: String
+  location: [Job_location!]
   locationType: [Job_locationType!]
   education: [Job_education!]
   experience: [Job_experience!]
@@ -71,22 +75,28 @@ type Job {
   responsibilities: [String]
   benefits: [String]
   suitableFor: Job_SuitableFor
-  applications: [Application!]
+  applications(locale: LocaleInputType, fallbackLocale: FallbackLocaleInputType): [Application!]
   featured: Boolean
   hasEndDate: Boolean
   endDate: DateTime
   slug: String
   customApplyUrl: String
-  createdBy: User
+  createdBy(locale: LocaleInputType, fallbackLocale: FallbackLocaleInputType): User
   publicId: Float
   updatedAt: DateTime
   createdAt: DateTime
 }
 
 enum Job_categories {
-  category_1
-  category_2
-  category_3
+  education
+  healthcare
+  sport
+  culture
+  arts
+  special
+  religious
+  nonprofit
+  other
 }
 
 type Organization {
@@ -97,30 +107,54 @@ type Organization {
   featured: Boolean
   email: String
   phone: String
-  location: String
+  location: [Organization_location!]
   vatId: String
   categories: [Organization_categories!]
-  logo(where: Organization_Logo_where): Logo
-  imageCover(where: Organization_ImageCover_where): ImageCover
+  logo(locale: LocaleInputType, fallbackLocale: FallbackLocaleInputType, where: Organization_Logo_where): Logo
+  imageCover(locale: LocaleInputType, fallbackLocale: FallbackLocaleInputType, where: Organization_ImageCover_where): ImageCover
   description: String
   richText(depth: Int): JSON
   url: String
-  jobsPublished: [Job!]
-  jobsUnpublished: [Job!]
-  createdBy: User
+  jobsPublished(locale: LocaleInputType, fallbackLocale: FallbackLocaleInputType): [Job!]
+  jobsUnpublished(locale: LocaleInputType, fallbackLocale: FallbackLocaleInputType): [Job!]
+  createdBy(locale: LocaleInputType, fallbackLocale: FallbackLocaleInputType): User
   updatedAt: DateTime
   createdAt: DateTime
 }
 
+enum Organization_location {
+  praha
+  jihocesky_kraj
+  jihomoravsky_kraj
+  karlovarsky_kraj
+  kralovehradecky_kraj
+  liberecky_kraj
+  moravskoslezsky_kraj
+  olomoucky_kraj
+  pardubicky_kraj
+  plzensky_kraj
+  stredocesky_kraj
+  ustecky_kraj
+  vysocina
+  zlinsky_kraj
+}
+
 enum Organization_categories {
-  category_1
-  category_2
-  category_3
+  education
+  healthcare
+  sport
+  culture
+  arts
+  special
+  religious
+  nonprofit
+  other
 }
 
 type Logo {
   id: String
-  createdBy: User
+  createdBy(locale: LocaleInputType, fallbackLocale: FallbackLocaleInputType): User
+  prefix: String
   updatedAt: DateTime
   createdAt: DateTime
   url: String
@@ -140,7 +174,7 @@ type User {
   title: String
   firstName: String
   lastName: String
-  profile: User_Profile_Relationship
+  profile(locale: LocaleInputType, fallbackLocale: FallbackLocaleInputType): User_Profile_Relationship
   updatedAt: DateTime
   createdAt: DateTime
   email: EmailAddress!
@@ -180,11 +214,11 @@ type Candidate {
   email: String
   phone: String
   location: String
-  photo(where: Candidate_Photo_where): Photo
+  photo(locale: LocaleInputType, fallbackLocale: FallbackLocaleInputType, where: Candidate_Photo_where): Photo
   bio: String
-  applications: [Application!]
-  jobsSaved: [Job!]
-  createdBy: User
+  applications(locale: LocaleInputType, fallbackLocale: FallbackLocaleInputType): [Application!]
+  jobsSaved(locale: LocaleInputType, fallbackLocale: FallbackLocaleInputType): [Job!]
+  createdBy(locale: LocaleInputType, fallbackLocale: FallbackLocaleInputType): User
   fullName: String
   updatedAt: DateTime
   createdAt: DateTime
@@ -192,7 +226,8 @@ type Candidate {
 
 type Photo {
   id: String
-  createdBy: User
+  createdBy(locale: LocaleInputType, fallbackLocale: FallbackLocaleInputType): User
+  prefix: String
   updatedAt: DateTime
   createdAt: DateTime
   url: String
@@ -206,6 +241,17 @@ type Photo {
   focalY: Float
 }
 
+enum LocaleInputType {
+  cs
+  sk
+}
+
+enum FallbackLocaleInputType {
+  cs
+  sk
+  none
+}
+
 """
 A date-time string at UTC, such as 2007-12-03T10:15:30Z, compliant with the `date-time` format outlined in section 5.6 of the RFC 3339 profile of the ISO 8601 standard for representation of dates and times using the Gregorian calendar.
 """
@@ -213,6 +259,7 @@ scalar DateTime
 
 input Candidate_Photo_where {
   createdBy: Candidate_Photo_createdBy_operator
+  prefix: Candidate_Photo_prefix_operator
   updatedAt: Candidate_Photo_updatedAt_operator
   createdAt: Candidate_Photo_createdAt_operator
   url: Candidate_Photo_url_operator
@@ -242,6 +289,17 @@ input Candidate_Photo_createdBy_operator {
 The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
 """
 scalar JSON @specifiedBy(url: "http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf")
+
+input Candidate_Photo_prefix_operator {
+  equals: String
+  not_equals: String
+  like: String
+  contains: String
+  in: [String]
+  not_in: [String]
+  all: [String]
+  exists: Boolean
+}
 
 input Candidate_Photo_updatedAt_operator {
   equals: DateTime
@@ -372,6 +430,7 @@ input Candidate_Photo_id_operator {
 
 input Candidate_Photo_where_and {
   createdBy: Candidate_Photo_createdBy_operator
+  prefix: Candidate_Photo_prefix_operator
   updatedAt: Candidate_Photo_updatedAt_operator
   createdAt: Candidate_Photo_createdAt_operator
   url: Candidate_Photo_url_operator
@@ -390,6 +449,7 @@ input Candidate_Photo_where_and {
 
 input Candidate_Photo_where_or {
   createdBy: Candidate_Photo_createdBy_operator
+  prefix: Candidate_Photo_prefix_operator
   updatedAt: Candidate_Photo_updatedAt_operator
   createdAt: Candidate_Photo_createdAt_operator
   url: Candidate_Photo_url_operator
@@ -409,16 +469,16 @@ input Candidate_Photo_where_or {
 type Application {
   id: String
   archived: Boolean
-  job: Job!
-  candidate: Candidate
+  job(locale: LocaleInputType, fallbackLocale: FallbackLocaleInputType): Job!
+  candidate(locale: LocaleInputType, fallbackLocale: FallbackLocaleInputType): Candidate
   firstName: String
   lastName: String
   email: String
   phone: String
   location: String
   coverLetter: String
-  cv(where: Application_Cv_where): Cv
-  agreements: [Agreement!]
+  cv(locale: LocaleInputType, fallbackLocale: FallbackLocaleInputType, where: Application_Cv_where): Cv
+  agreements(locale: LocaleInputType, fallbackLocale: FallbackLocaleInputType): [Agreement!]
   status: Application_status
   fullName: String
   trackingId: Float
@@ -428,9 +488,9 @@ type Application {
 
 type Cv {
   id: String
-  job: Job
-  organization: Organization
-  createdBy: User
+  job(locale: LocaleInputType, fallbackLocale: FallbackLocaleInputType): Job
+  organization(locale: LocaleInputType, fallbackLocale: FallbackLocaleInputType): Organization
+  createdBy(locale: LocaleInputType, fallbackLocale: FallbackLocaleInputType): User
   prefix: String
   updatedAt: DateTime
   createdAt: DateTime
@@ -696,6 +756,7 @@ scalar EmailAddress @specifiedBy(url: "https://html.spec.whatwg.org/multipage/in
 
 input Organization_Logo_where {
   createdBy: Organization_Logo_createdBy_operator
+  prefix: Organization_Logo_prefix_operator
   updatedAt: Organization_Logo_updatedAt_operator
   createdAt: Organization_Logo_createdAt_operator
   url: Organization_Logo_url_operator
@@ -718,6 +779,17 @@ input Organization_Logo_createdBy_operator {
   in: [JSON]
   not_in: [JSON]
   all: [JSON]
+  exists: Boolean
+}
+
+input Organization_Logo_prefix_operator {
+  equals: String
+  not_equals: String
+  like: String
+  contains: String
+  in: [String]
+  not_in: [String]
+  all: [String]
   exists: Boolean
 }
 
@@ -850,6 +922,7 @@ input Organization_Logo_id_operator {
 
 input Organization_Logo_where_and {
   createdBy: Organization_Logo_createdBy_operator
+  prefix: Organization_Logo_prefix_operator
   updatedAt: Organization_Logo_updatedAt_operator
   createdAt: Organization_Logo_createdAt_operator
   url: Organization_Logo_url_operator
@@ -868,6 +941,7 @@ input Organization_Logo_where_and {
 
 input Organization_Logo_where_or {
   createdBy: Organization_Logo_createdBy_operator
+  prefix: Organization_Logo_prefix_operator
   updatedAt: Organization_Logo_updatedAt_operator
   createdAt: Organization_Logo_createdAt_operator
   url: Organization_Logo_url_operator
@@ -886,7 +960,8 @@ input Organization_Logo_where_or {
 
 type ImageCover {
   id: String
-  createdBy: User
+  createdBy(locale: LocaleInputType, fallbackLocale: FallbackLocaleInputType): User
+  prefix: String
   updatedAt: DateTime
   createdAt: DateTime
   url: String
@@ -902,6 +977,7 @@ type ImageCover {
 
 input Organization_ImageCover_where {
   createdBy: Organization_ImageCover_createdBy_operator
+  prefix: Organization_ImageCover_prefix_operator
   updatedAt: Organization_ImageCover_updatedAt_operator
   createdAt: Organization_ImageCover_createdAt_operator
   url: Organization_ImageCover_url_operator
@@ -924,6 +1000,17 @@ input Organization_ImageCover_createdBy_operator {
   in: [JSON]
   not_in: [JSON]
   all: [JSON]
+  exists: Boolean
+}
+
+input Organization_ImageCover_prefix_operator {
+  equals: String
+  not_equals: String
+  like: String
+  contains: String
+  in: [String]
+  not_in: [String]
+  all: [String]
   exists: Boolean
 }
 
@@ -1056,6 +1143,7 @@ input Organization_ImageCover_id_operator {
 
 input Organization_ImageCover_where_and {
   createdBy: Organization_ImageCover_createdBy_operator
+  prefix: Organization_ImageCover_prefix_operator
   updatedAt: Organization_ImageCover_updatedAt_operator
   createdAt: Organization_ImageCover_createdAt_operator
   url: Organization_ImageCover_url_operator
@@ -1074,6 +1162,7 @@ input Organization_ImageCover_where_and {
 
 input Organization_ImageCover_where_or {
   createdBy: Organization_ImageCover_createdBy_operator
+  prefix: Organization_ImageCover_prefix_operator
   updatedAt: Organization_ImageCover_updatedAt_operator
   createdAt: Organization_ImageCover_createdAt_operator
   url: Organization_ImageCover_url_operator
@@ -1100,6 +1189,23 @@ enum Job_employmentType {
   apprenticeship
   volunteer
   seasonal
+}
+
+enum Job_location {
+  praha
+  jihocesky_kraj
+  jihomoravsky_kraj
+  karlovarsky_kraj
+  kralovehradecky_kraj
+  liberecky_kraj
+  moravskoslezsky_kraj
+  olomoucky_kraj
+  pardubicky_kraj
+  plzensky_kraj
+  stredocesky_kraj
+  ustecky_kraj
+  vysocina
+  zlinsky_kraj
 }
 
 enum Job_locationType {
@@ -1280,9 +1386,15 @@ input Job_categories_operator {
 }
 
 enum Job_categories_Input {
-  category_1
-  category_2
-  category_3
+  education
+  healthcare
+  sport
+  culture
+  arts
+  special
+  religious
+  nonprofit
+  other
 }
 
 input Job_organization_operator {
@@ -1314,14 +1426,29 @@ enum Job_employmentType_Input {
 }
 
 input Job_location_operator {
-  equals: String
-  not_equals: String
-  like: String
-  contains: String
-  in: [String]
-  not_in: [String]
-  all: [String]
+  equals: Job_location_Input
+  not_equals: Job_location_Input
+  in: [Job_location_Input]
+  not_in: [Job_location_Input]
+  all: [Job_location_Input]
   exists: Boolean
+}
+
+enum Job_location_Input {
+  praha
+  jihocesky_kraj
+  jihomoravsky_kraj
+  karlovarsky_kraj
+  kralovehradecky_kraj
+  liberecky_kraj
+  moravskoslezsky_kraj
+  olomoucky_kraj
+  pardubicky_kraj
+  plzensky_kraj
+  stredocesky_kraj
+  ustecky_kraj
+  vysocina
+  zlinsky_kraj
 }
 
 input Job_locationType_operator {
@@ -2860,14 +2987,29 @@ input Organization_phone_operator {
 }
 
 input Organization_location_operator {
-  equals: String
-  not_equals: String
-  like: String
-  contains: String
-  in: [String]
-  not_in: [String]
-  all: [String]
+  equals: Organization_location_Input
+  not_equals: Organization_location_Input
+  in: [Organization_location_Input]
+  not_in: [Organization_location_Input]
+  all: [Organization_location_Input]
   exists: Boolean
+}
+
+enum Organization_location_Input {
+  praha
+  jihocesky_kraj
+  jihomoravsky_kraj
+  karlovarsky_kraj
+  kralovehradecky_kraj
+  liberecky_kraj
+  moravskoslezsky_kraj
+  olomoucky_kraj
+  pardubicky_kraj
+  plzensky_kraj
+  stredocesky_kraj
+  ustecky_kraj
+  vysocina
+  zlinsky_kraj
 }
 
 input Organization_vatId_operator {
@@ -2891,9 +3033,15 @@ input Organization_categories_operator {
 }
 
 enum Organization_categories_Input {
-  category_1
-  category_2
-  category_3
+  education
+  healthcare
+  sport
+  culture
+  arts
+  special
+  religious
+  nonprofit
+  other
 }
 
 input Organization_logo_operator {
@@ -5737,6 +5885,7 @@ type Logos {
 
 input Logo_where {
   createdBy: Logo_createdBy_operator
+  prefix: Logo_prefix_operator
   updatedAt: Logo_updatedAt_operator
   createdAt: Logo_createdAt_operator
   url: Logo_url_operator
@@ -5759,6 +5908,17 @@ input Logo_createdBy_operator {
   in: [JSON]
   not_in: [JSON]
   all: [JSON]
+  exists: Boolean
+}
+
+input Logo_prefix_operator {
+  equals: String
+  not_equals: String
+  like: String
+  contains: String
+  in: [String]
+  not_in: [String]
+  all: [String]
   exists: Boolean
 }
 
@@ -5891,6 +6051,7 @@ input Logo_id_operator {
 
 input Logo_where_and {
   createdBy: Logo_createdBy_operator
+  prefix: Logo_prefix_operator
   updatedAt: Logo_updatedAt_operator
   createdAt: Logo_createdAt_operator
   url: Logo_url_operator
@@ -5909,6 +6070,7 @@ input Logo_where_and {
 
 input Logo_where_or {
   createdBy: Logo_createdBy_operator
+  prefix: Logo_prefix_operator
   updatedAt: Logo_updatedAt_operator
   createdAt: Logo_createdAt_operator
   url: Logo_url_operator
@@ -5939,6 +6101,7 @@ type logosDocAccess {
 
 type LogosDocAccessFields {
   createdBy: LogosDocAccessFields_createdBy
+  prefix: LogosDocAccessFields_prefix
   updatedAt: LogosDocAccessFields_updatedAt
   createdAt: LogosDocAccessFields_createdAt
   url: LogosDocAccessFields_url
@@ -5972,6 +6135,29 @@ type LogosDocAccessFields_createdBy_Update {
 }
 
 type LogosDocAccessFields_createdBy_Delete {
+  permission: Boolean!
+}
+
+type LogosDocAccessFields_prefix {
+  create: LogosDocAccessFields_prefix_Create
+  read: LogosDocAccessFields_prefix_Read
+  update: LogosDocAccessFields_prefix_Update
+  delete: LogosDocAccessFields_prefix_Delete
+}
+
+type LogosDocAccessFields_prefix_Create {
+  permission: Boolean!
+}
+
+type LogosDocAccessFields_prefix_Read {
+  permission: Boolean!
+}
+
+type LogosDocAccessFields_prefix_Update {
+  permission: Boolean!
+}
+
+type LogosDocAccessFields_prefix_Delete {
   permission: Boolean!
 }
 
@@ -6264,6 +6450,7 @@ type ImageCovers {
 
 input ImageCover_where {
   createdBy: ImageCover_createdBy_operator
+  prefix: ImageCover_prefix_operator
   updatedAt: ImageCover_updatedAt_operator
   createdAt: ImageCover_createdAt_operator
   url: ImageCover_url_operator
@@ -6286,6 +6473,17 @@ input ImageCover_createdBy_operator {
   in: [JSON]
   not_in: [JSON]
   all: [JSON]
+  exists: Boolean
+}
+
+input ImageCover_prefix_operator {
+  equals: String
+  not_equals: String
+  like: String
+  contains: String
+  in: [String]
+  not_in: [String]
+  all: [String]
   exists: Boolean
 }
 
@@ -6418,6 +6616,7 @@ input ImageCover_id_operator {
 
 input ImageCover_where_and {
   createdBy: ImageCover_createdBy_operator
+  prefix: ImageCover_prefix_operator
   updatedAt: ImageCover_updatedAt_operator
   createdAt: ImageCover_createdAt_operator
   url: ImageCover_url_operator
@@ -6436,6 +6635,7 @@ input ImageCover_where_and {
 
 input ImageCover_where_or {
   createdBy: ImageCover_createdBy_operator
+  prefix: ImageCover_prefix_operator
   updatedAt: ImageCover_updatedAt_operator
   createdAt: ImageCover_createdAt_operator
   url: ImageCover_url_operator
@@ -6466,6 +6666,7 @@ type image_coversDocAccess {
 
 type ImageCoversDocAccessFields {
   createdBy: ImageCoversDocAccessFields_createdBy
+  prefix: ImageCoversDocAccessFields_prefix
   updatedAt: ImageCoversDocAccessFields_updatedAt
   createdAt: ImageCoversDocAccessFields_createdAt
   url: ImageCoversDocAccessFields_url
@@ -6499,6 +6700,29 @@ type ImageCoversDocAccessFields_createdBy_Update {
 }
 
 type ImageCoversDocAccessFields_createdBy_Delete {
+  permission: Boolean!
+}
+
+type ImageCoversDocAccessFields_prefix {
+  create: ImageCoversDocAccessFields_prefix_Create
+  read: ImageCoversDocAccessFields_prefix_Read
+  update: ImageCoversDocAccessFields_prefix_Update
+  delete: ImageCoversDocAccessFields_prefix_Delete
+}
+
+type ImageCoversDocAccessFields_prefix_Create {
+  permission: Boolean!
+}
+
+type ImageCoversDocAccessFields_prefix_Read {
+  permission: Boolean!
+}
+
+type ImageCoversDocAccessFields_prefix_Update {
+  permission: Boolean!
+}
+
+type ImageCoversDocAccessFields_prefix_Delete {
   permission: Boolean!
 }
 
@@ -6791,6 +7015,7 @@ type Photos {
 
 input Photo_where {
   createdBy: Photo_createdBy_operator
+  prefix: Photo_prefix_operator
   updatedAt: Photo_updatedAt_operator
   createdAt: Photo_createdAt_operator
   url: Photo_url_operator
@@ -6813,6 +7038,17 @@ input Photo_createdBy_operator {
   in: [JSON]
   not_in: [JSON]
   all: [JSON]
+  exists: Boolean
+}
+
+input Photo_prefix_operator {
+  equals: String
+  not_equals: String
+  like: String
+  contains: String
+  in: [String]
+  not_in: [String]
+  all: [String]
   exists: Boolean
 }
 
@@ -6945,6 +7181,7 @@ input Photo_id_operator {
 
 input Photo_where_and {
   createdBy: Photo_createdBy_operator
+  prefix: Photo_prefix_operator
   updatedAt: Photo_updatedAt_operator
   createdAt: Photo_createdAt_operator
   url: Photo_url_operator
@@ -6963,6 +7200,7 @@ input Photo_where_and {
 
 input Photo_where_or {
   createdBy: Photo_createdBy_operator
+  prefix: Photo_prefix_operator
   updatedAt: Photo_updatedAt_operator
   createdAt: Photo_createdAt_operator
   url: Photo_url_operator
@@ -6993,6 +7231,7 @@ type photosDocAccess {
 
 type PhotosDocAccessFields {
   createdBy: PhotosDocAccessFields_createdBy
+  prefix: PhotosDocAccessFields_prefix
   updatedAt: PhotosDocAccessFields_updatedAt
   createdAt: PhotosDocAccessFields_createdAt
   url: PhotosDocAccessFields_url
@@ -7026,6 +7265,29 @@ type PhotosDocAccessFields_createdBy_Update {
 }
 
 type PhotosDocAccessFields_createdBy_Delete {
+  permission: Boolean!
+}
+
+type PhotosDocAccessFields_prefix {
+  create: PhotosDocAccessFields_prefix_Create
+  read: PhotosDocAccessFields_prefix_Read
+  update: PhotosDocAccessFields_prefix_Update
+  delete: PhotosDocAccessFields_prefix_Delete
+}
+
+type PhotosDocAccessFields_prefix_Create {
+  permission: Boolean!
+}
+
+type PhotosDocAccessFields_prefix_Read {
+  permission: Boolean!
+}
+
+type PhotosDocAccessFields_prefix_Update {
+  permission: Boolean!
+}
+
+type PhotosDocAccessFields_prefix_Delete {
   permission: Boolean!
 }
 
@@ -7724,9 +7986,452 @@ type usersMe {
   user: User
 }
 
+type Search {
+  id: String
+  title: String
+  priority: Float
+  doc(locale: LocaleInputType, fallbackLocale: FallbackLocaleInputType): Search_Doc_Relationship!
+  status: String
+  slug: String
+  publicId: String
+  keywords: String
+  updatedAt: DateTime
+  createdAt: DateTime
+}
+
+type Search_Doc_Relationship {
+  relationTo: Search_Doc_RelationTo
+  value: Search_Doc
+}
+
+enum Search_Doc_RelationTo {
+  jobs
+  organizations
+}
+
+union Search_Doc = Job | Organization
+
+type Searches {
+  docs: [Search]
+  hasNextPage: Boolean
+  hasPrevPage: Boolean
+  limit: Int
+  nextPage: Int
+  offset: Int
+  page: Int
+  pagingCounter: Int
+  prevPage: Int
+  totalDocs: Int
+  totalPages: Int
+}
+
+input Search_where {
+  title: Search_title_operator
+  priority: Search_priority_operator
+  doc: Search_doc_Relation
+  status: Search_status_operator
+  slug: Search_slug_operator
+  publicId: Search_publicId_operator
+  keywords: Search_keywords_operator
+  updatedAt: Search_updatedAt_operator
+  createdAt: Search_createdAt_operator
+  id: Search_id_operator
+  AND: [Search_where_and]
+  OR: [Search_where_or]
+}
+
+input Search_title_operator {
+  equals: String
+  not_equals: String
+  like: String
+  contains: String
+  in: [String]
+  not_in: [String]
+  all: [String]
+  exists: Boolean
+}
+
+input Search_priority_operator {
+  equals: Float
+  not_equals: Float
+  greater_than_equal: Float
+  greater_than: Float
+  less_than_equal: Float
+  less_than: Float
+  exists: Boolean
+}
+
+input Search_doc_Relation {
+  relationTo: Search_doc_Relation_RelationTo
+  value: JSON
+}
+
+enum Search_doc_Relation_RelationTo {
+  jobs
+  organizations
+}
+
+input Search_status_operator {
+  equals: String
+  not_equals: String
+  like: String
+  contains: String
+  in: [String]
+  not_in: [String]
+  all: [String]
+  exists: Boolean
+}
+
+input Search_slug_operator {
+  equals: String
+  not_equals: String
+  like: String
+  contains: String
+  in: [String]
+  not_in: [String]
+  all: [String]
+  exists: Boolean
+}
+
+input Search_publicId_operator {
+  equals: String
+  not_equals: String
+  like: String
+  contains: String
+  in: [String]
+  not_in: [String]
+  all: [String]
+  exists: Boolean
+}
+
+input Search_keywords_operator {
+  equals: String
+  not_equals: String
+  like: String
+  contains: String
+  in: [String]
+  not_in: [String]
+  all: [String]
+  exists: Boolean
+}
+
+input Search_updatedAt_operator {
+  equals: DateTime
+  not_equals: DateTime
+  greater_than_equal: DateTime
+  greater_than: DateTime
+  less_than_equal: DateTime
+  less_than: DateTime
+  like: DateTime
+  exists: Boolean
+}
+
+input Search_createdAt_operator {
+  equals: DateTime
+  not_equals: DateTime
+  greater_than_equal: DateTime
+  greater_than: DateTime
+  less_than_equal: DateTime
+  less_than: DateTime
+  like: DateTime
+  exists: Boolean
+}
+
+input Search_id_operator {
+  equals: String
+  not_equals: String
+  like: String
+  contains: String
+  in: [String]
+  not_in: [String]
+  all: [String]
+  exists: Boolean
+}
+
+input Search_where_and {
+  title: Search_title_operator
+  priority: Search_priority_operator
+  doc: Search_doc_Relation
+  status: Search_status_operator
+  slug: Search_slug_operator
+  publicId: Search_publicId_operator
+  keywords: Search_keywords_operator
+  updatedAt: Search_updatedAt_operator
+  createdAt: Search_createdAt_operator
+  id: Search_id_operator
+  AND: [Search_where_and]
+  OR: [Search_where_or]
+}
+
+input Search_where_or {
+  title: Search_title_operator
+  priority: Search_priority_operator
+  doc: Search_doc_Relation
+  status: Search_status_operator
+  slug: Search_slug_operator
+  publicId: Search_publicId_operator
+  keywords: Search_keywords_operator
+  updatedAt: Search_updatedAt_operator
+  createdAt: Search_createdAt_operator
+  id: Search_id_operator
+  AND: [Search_where_and]
+  OR: [Search_where_or]
+}
+
+type countSearches {
+  totalDocs: Int
+}
+
+type searchDocAccess {
+  fields: SearchDocAccessFields
+  create: SearchCreateDocAccess
+  read: SearchReadDocAccess
+  update: SearchUpdateDocAccess
+  delete: SearchDeleteDocAccess
+}
+
+type SearchDocAccessFields {
+  title: SearchDocAccessFields_title
+  priority: SearchDocAccessFields_priority
+  doc: SearchDocAccessFields_doc
+  status: SearchDocAccessFields_status
+  slug: SearchDocAccessFields_slug
+  publicId: SearchDocAccessFields_publicId
+  keywords: SearchDocAccessFields_keywords
+  updatedAt: SearchDocAccessFields_updatedAt
+  createdAt: SearchDocAccessFields_createdAt
+}
+
+type SearchDocAccessFields_title {
+  create: SearchDocAccessFields_title_Create
+  read: SearchDocAccessFields_title_Read
+  update: SearchDocAccessFields_title_Update
+  delete: SearchDocAccessFields_title_Delete
+}
+
+type SearchDocAccessFields_title_Create {
+  permission: Boolean!
+}
+
+type SearchDocAccessFields_title_Read {
+  permission: Boolean!
+}
+
+type SearchDocAccessFields_title_Update {
+  permission: Boolean!
+}
+
+type SearchDocAccessFields_title_Delete {
+  permission: Boolean!
+}
+
+type SearchDocAccessFields_priority {
+  create: SearchDocAccessFields_priority_Create
+  read: SearchDocAccessFields_priority_Read
+  update: SearchDocAccessFields_priority_Update
+  delete: SearchDocAccessFields_priority_Delete
+}
+
+type SearchDocAccessFields_priority_Create {
+  permission: Boolean!
+}
+
+type SearchDocAccessFields_priority_Read {
+  permission: Boolean!
+}
+
+type SearchDocAccessFields_priority_Update {
+  permission: Boolean!
+}
+
+type SearchDocAccessFields_priority_Delete {
+  permission: Boolean!
+}
+
+type SearchDocAccessFields_doc {
+  create: SearchDocAccessFields_doc_Create
+  read: SearchDocAccessFields_doc_Read
+  update: SearchDocAccessFields_doc_Update
+  delete: SearchDocAccessFields_doc_Delete
+}
+
+type SearchDocAccessFields_doc_Create {
+  permission: Boolean!
+}
+
+type SearchDocAccessFields_doc_Read {
+  permission: Boolean!
+}
+
+type SearchDocAccessFields_doc_Update {
+  permission: Boolean!
+}
+
+type SearchDocAccessFields_doc_Delete {
+  permission: Boolean!
+}
+
+type SearchDocAccessFields_status {
+  create: SearchDocAccessFields_status_Create
+  read: SearchDocAccessFields_status_Read
+  update: SearchDocAccessFields_status_Update
+  delete: SearchDocAccessFields_status_Delete
+}
+
+type SearchDocAccessFields_status_Create {
+  permission: Boolean!
+}
+
+type SearchDocAccessFields_status_Read {
+  permission: Boolean!
+}
+
+type SearchDocAccessFields_status_Update {
+  permission: Boolean!
+}
+
+type SearchDocAccessFields_status_Delete {
+  permission: Boolean!
+}
+
+type SearchDocAccessFields_slug {
+  create: SearchDocAccessFields_slug_Create
+  read: SearchDocAccessFields_slug_Read
+  update: SearchDocAccessFields_slug_Update
+  delete: SearchDocAccessFields_slug_Delete
+}
+
+type SearchDocAccessFields_slug_Create {
+  permission: Boolean!
+}
+
+type SearchDocAccessFields_slug_Read {
+  permission: Boolean!
+}
+
+type SearchDocAccessFields_slug_Update {
+  permission: Boolean!
+}
+
+type SearchDocAccessFields_slug_Delete {
+  permission: Boolean!
+}
+
+type SearchDocAccessFields_publicId {
+  create: SearchDocAccessFields_publicId_Create
+  read: SearchDocAccessFields_publicId_Read
+  update: SearchDocAccessFields_publicId_Update
+  delete: SearchDocAccessFields_publicId_Delete
+}
+
+type SearchDocAccessFields_publicId_Create {
+  permission: Boolean!
+}
+
+type SearchDocAccessFields_publicId_Read {
+  permission: Boolean!
+}
+
+type SearchDocAccessFields_publicId_Update {
+  permission: Boolean!
+}
+
+type SearchDocAccessFields_publicId_Delete {
+  permission: Boolean!
+}
+
+type SearchDocAccessFields_keywords {
+  create: SearchDocAccessFields_keywords_Create
+  read: SearchDocAccessFields_keywords_Read
+  update: SearchDocAccessFields_keywords_Update
+  delete: SearchDocAccessFields_keywords_Delete
+}
+
+type SearchDocAccessFields_keywords_Create {
+  permission: Boolean!
+}
+
+type SearchDocAccessFields_keywords_Read {
+  permission: Boolean!
+}
+
+type SearchDocAccessFields_keywords_Update {
+  permission: Boolean!
+}
+
+type SearchDocAccessFields_keywords_Delete {
+  permission: Boolean!
+}
+
+type SearchDocAccessFields_updatedAt {
+  create: SearchDocAccessFields_updatedAt_Create
+  read: SearchDocAccessFields_updatedAt_Read
+  update: SearchDocAccessFields_updatedAt_Update
+  delete: SearchDocAccessFields_updatedAt_Delete
+}
+
+type SearchDocAccessFields_updatedAt_Create {
+  permission: Boolean!
+}
+
+type SearchDocAccessFields_updatedAt_Read {
+  permission: Boolean!
+}
+
+type SearchDocAccessFields_updatedAt_Update {
+  permission: Boolean!
+}
+
+type SearchDocAccessFields_updatedAt_Delete {
+  permission: Boolean!
+}
+
+type SearchDocAccessFields_createdAt {
+  create: SearchDocAccessFields_createdAt_Create
+  read: SearchDocAccessFields_createdAt_Read
+  update: SearchDocAccessFields_createdAt_Update
+  delete: SearchDocAccessFields_createdAt_Delete
+}
+
+type SearchDocAccessFields_createdAt_Create {
+  permission: Boolean!
+}
+
+type SearchDocAccessFields_createdAt_Read {
+  permission: Boolean!
+}
+
+type SearchDocAccessFields_createdAt_Update {
+  permission: Boolean!
+}
+
+type SearchDocAccessFields_createdAt_Delete {
+  permission: Boolean!
+}
+
+type SearchCreateDocAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type SearchReadDocAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type SearchUpdateDocAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type SearchDeleteDocAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
 type PayloadPreference {
   id: String
-  user: PayloadPreference_User_Relationship!
+  user(locale: LocaleInputType, fallbackLocale: FallbackLocaleInputType): PayloadPreference_User_Relationship!
   key: String
   value: JSON
   updatedAt: DateTime
@@ -8143,6 +8848,7 @@ type Access {
   image_covers: image_coversAccess
   photos: photosAccess
   users: usersAccess
+  search: searchAccess
   payload_preferences: payload_preferencesAccess
   data: dataAccess
 }
@@ -10991,6 +11697,7 @@ type logosAccess {
 
 type LogosFields {
   createdBy: LogosFields_createdBy
+  prefix: LogosFields_prefix
   updatedAt: LogosFields_updatedAt
   createdAt: LogosFields_createdAt
   url: LogosFields_url
@@ -11024,6 +11731,29 @@ type LogosFields_createdBy_Update {
 }
 
 type LogosFields_createdBy_Delete {
+  permission: Boolean!
+}
+
+type LogosFields_prefix {
+  create: LogosFields_prefix_Create
+  read: LogosFields_prefix_Read
+  update: LogosFields_prefix_Update
+  delete: LogosFields_prefix_Delete
+}
+
+type LogosFields_prefix_Create {
+  permission: Boolean!
+}
+
+type LogosFields_prefix_Read {
+  permission: Boolean!
+}
+
+type LogosFields_prefix_Update {
+  permission: Boolean!
+}
+
+type LogosFields_prefix_Delete {
   permission: Boolean!
 }
 
@@ -11310,6 +12040,7 @@ type image_coversAccess {
 
 type ImageCoversFields {
   createdBy: ImageCoversFields_createdBy
+  prefix: ImageCoversFields_prefix
   updatedAt: ImageCoversFields_updatedAt
   createdAt: ImageCoversFields_createdAt
   url: ImageCoversFields_url
@@ -11343,6 +12074,29 @@ type ImageCoversFields_createdBy_Update {
 }
 
 type ImageCoversFields_createdBy_Delete {
+  permission: Boolean!
+}
+
+type ImageCoversFields_prefix {
+  create: ImageCoversFields_prefix_Create
+  read: ImageCoversFields_prefix_Read
+  update: ImageCoversFields_prefix_Update
+  delete: ImageCoversFields_prefix_Delete
+}
+
+type ImageCoversFields_prefix_Create {
+  permission: Boolean!
+}
+
+type ImageCoversFields_prefix_Read {
+  permission: Boolean!
+}
+
+type ImageCoversFields_prefix_Update {
+  permission: Boolean!
+}
+
+type ImageCoversFields_prefix_Delete {
   permission: Boolean!
 }
 
@@ -11629,6 +12383,7 @@ type photosAccess {
 
 type PhotosFields {
   createdBy: PhotosFields_createdBy
+  prefix: PhotosFields_prefix
   updatedAt: PhotosFields_updatedAt
   createdAt: PhotosFields_createdAt
   url: PhotosFields_url
@@ -11662,6 +12417,29 @@ type PhotosFields_createdBy_Update {
 }
 
 type PhotosFields_createdBy_Delete {
+  permission: Boolean!
+}
+
+type PhotosFields_prefix {
+  create: PhotosFields_prefix_Create
+  read: PhotosFields_prefix_Read
+  update: PhotosFields_prefix_Update
+  delete: PhotosFields_prefix_Delete
+}
+
+type PhotosFields_prefix_Create {
+  permission: Boolean!
+}
+
+type PhotosFields_prefix_Read {
+  permission: Boolean!
+}
+
+type PhotosFields_prefix_Update {
+  permission: Boolean!
+}
+
+type PhotosFields_prefix_Delete {
   permission: Boolean!
 }
 
@@ -12191,6 +12969,253 @@ type UsersUnlockAccess {
   where: JSONObject
 }
 
+type searchAccess {
+  fields: SearchFields
+  create: SearchCreateAccess
+  read: SearchReadAccess
+  update: SearchUpdateAccess
+  delete: SearchDeleteAccess
+}
+
+type SearchFields {
+  title: SearchFields_title
+  priority: SearchFields_priority
+  doc: SearchFields_doc
+  status: SearchFields_status
+  slug: SearchFields_slug
+  publicId: SearchFields_publicId
+  keywords: SearchFields_keywords
+  updatedAt: SearchFields_updatedAt
+  createdAt: SearchFields_createdAt
+}
+
+type SearchFields_title {
+  create: SearchFields_title_Create
+  read: SearchFields_title_Read
+  update: SearchFields_title_Update
+  delete: SearchFields_title_Delete
+}
+
+type SearchFields_title_Create {
+  permission: Boolean!
+}
+
+type SearchFields_title_Read {
+  permission: Boolean!
+}
+
+type SearchFields_title_Update {
+  permission: Boolean!
+}
+
+type SearchFields_title_Delete {
+  permission: Boolean!
+}
+
+type SearchFields_priority {
+  create: SearchFields_priority_Create
+  read: SearchFields_priority_Read
+  update: SearchFields_priority_Update
+  delete: SearchFields_priority_Delete
+}
+
+type SearchFields_priority_Create {
+  permission: Boolean!
+}
+
+type SearchFields_priority_Read {
+  permission: Boolean!
+}
+
+type SearchFields_priority_Update {
+  permission: Boolean!
+}
+
+type SearchFields_priority_Delete {
+  permission: Boolean!
+}
+
+type SearchFields_doc {
+  create: SearchFields_doc_Create
+  read: SearchFields_doc_Read
+  update: SearchFields_doc_Update
+  delete: SearchFields_doc_Delete
+}
+
+type SearchFields_doc_Create {
+  permission: Boolean!
+}
+
+type SearchFields_doc_Read {
+  permission: Boolean!
+}
+
+type SearchFields_doc_Update {
+  permission: Boolean!
+}
+
+type SearchFields_doc_Delete {
+  permission: Boolean!
+}
+
+type SearchFields_status {
+  create: SearchFields_status_Create
+  read: SearchFields_status_Read
+  update: SearchFields_status_Update
+  delete: SearchFields_status_Delete
+}
+
+type SearchFields_status_Create {
+  permission: Boolean!
+}
+
+type SearchFields_status_Read {
+  permission: Boolean!
+}
+
+type SearchFields_status_Update {
+  permission: Boolean!
+}
+
+type SearchFields_status_Delete {
+  permission: Boolean!
+}
+
+type SearchFields_slug {
+  create: SearchFields_slug_Create
+  read: SearchFields_slug_Read
+  update: SearchFields_slug_Update
+  delete: SearchFields_slug_Delete
+}
+
+type SearchFields_slug_Create {
+  permission: Boolean!
+}
+
+type SearchFields_slug_Read {
+  permission: Boolean!
+}
+
+type SearchFields_slug_Update {
+  permission: Boolean!
+}
+
+type SearchFields_slug_Delete {
+  permission: Boolean!
+}
+
+type SearchFields_publicId {
+  create: SearchFields_publicId_Create
+  read: SearchFields_publicId_Read
+  update: SearchFields_publicId_Update
+  delete: SearchFields_publicId_Delete
+}
+
+type SearchFields_publicId_Create {
+  permission: Boolean!
+}
+
+type SearchFields_publicId_Read {
+  permission: Boolean!
+}
+
+type SearchFields_publicId_Update {
+  permission: Boolean!
+}
+
+type SearchFields_publicId_Delete {
+  permission: Boolean!
+}
+
+type SearchFields_keywords {
+  create: SearchFields_keywords_Create
+  read: SearchFields_keywords_Read
+  update: SearchFields_keywords_Update
+  delete: SearchFields_keywords_Delete
+}
+
+type SearchFields_keywords_Create {
+  permission: Boolean!
+}
+
+type SearchFields_keywords_Read {
+  permission: Boolean!
+}
+
+type SearchFields_keywords_Update {
+  permission: Boolean!
+}
+
+type SearchFields_keywords_Delete {
+  permission: Boolean!
+}
+
+type SearchFields_updatedAt {
+  create: SearchFields_updatedAt_Create
+  read: SearchFields_updatedAt_Read
+  update: SearchFields_updatedAt_Update
+  delete: SearchFields_updatedAt_Delete
+}
+
+type SearchFields_updatedAt_Create {
+  permission: Boolean!
+}
+
+type SearchFields_updatedAt_Read {
+  permission: Boolean!
+}
+
+type SearchFields_updatedAt_Update {
+  permission: Boolean!
+}
+
+type SearchFields_updatedAt_Delete {
+  permission: Boolean!
+}
+
+type SearchFields_createdAt {
+  create: SearchFields_createdAt_Create
+  read: SearchFields_createdAt_Read
+  update: SearchFields_createdAt_Update
+  delete: SearchFields_createdAt_Delete
+}
+
+type SearchFields_createdAt_Create {
+  permission: Boolean!
+}
+
+type SearchFields_createdAt_Read {
+  permission: Boolean!
+}
+
+type SearchFields_createdAt_Update {
+  permission: Boolean!
+}
+
+type SearchFields_createdAt_Delete {
+  permission: Boolean!
+}
+
+type SearchCreateAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type SearchReadAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type SearchUpdateAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type SearchDeleteAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
 type payload_preferencesAccess {
   fields: PayloadPreferencesFields
   create: PayloadPreferencesCreateAccess
@@ -12458,40 +13483,40 @@ type DataUpdateAccess {
 }
 
 type Mutation {
-  createJob(data: mutationJobInput!, draft: Boolean): Job
-  updateJob(id: String!, autosave: Boolean, data: mutationJobUpdateInput!, draft: Boolean): Job
+  createJob(data: mutationJobInput!, draft: Boolean, locale: LocaleInputType): Job
+  updateJob(id: String!, autosave: Boolean, data: mutationJobUpdateInput!, draft: Boolean, locale: LocaleInputType): Job
   deleteJob(id: String!): Job
   duplicateJob(id: String!): Job
-  createOrganization(data: mutationOrganizationInput!, draft: Boolean): Organization
-  updateOrganization(id: String!, autosave: Boolean, data: mutationOrganizationUpdateInput!, draft: Boolean): Organization
+  createOrganization(data: mutationOrganizationInput!, draft: Boolean, locale: LocaleInputType): Organization
+  updateOrganization(id: String!, autosave: Boolean, data: mutationOrganizationUpdateInput!, draft: Boolean, locale: LocaleInputType): Organization
   deleteOrganization(id: String!): Organization
   duplicateOrganization(id: String!): Organization
-  createCandidate(data: mutationCandidateInput!, draft: Boolean): Candidate
-  updateCandidate(id: String!, autosave: Boolean, data: mutationCandidateUpdateInput!, draft: Boolean): Candidate
+  createCandidate(data: mutationCandidateInput!, draft: Boolean, locale: LocaleInputType): Candidate
+  updateCandidate(id: String!, autosave: Boolean, data: mutationCandidateUpdateInput!, draft: Boolean, locale: LocaleInputType): Candidate
   deleteCandidate(id: String!): Candidate
   duplicateCandidate(id: String!): Candidate
-  createApplication(data: mutationApplicationInput!, draft: Boolean): Application
-  updateApplication(id: String!, autosave: Boolean, data: mutationApplicationUpdateInput!, draft: Boolean): Application
+  createApplication(data: mutationApplicationInput!, draft: Boolean, locale: LocaleInputType): Application
+  updateApplication(id: String!, autosave: Boolean, data: mutationApplicationUpdateInput!, draft: Boolean, locale: LocaleInputType): Application
   deleteApplication(id: String!): Application
   duplicateApplication(id: String!): Application
-  createCv(data: mutationCvInput!, draft: Boolean): Cv
-  updateCv(id: String!, autosave: Boolean, data: mutationCvUpdateInput!, draft: Boolean): Cv
+  createCv(data: mutationCvInput!, draft: Boolean, locale: LocaleInputType): Cv
+  updateCv(id: String!, autosave: Boolean, data: mutationCvUpdateInput!, draft: Boolean, locale: LocaleInputType): Cv
   deleteCv(id: String!): Cv
-  createAgreement(data: mutationAgreementInput!, draft: Boolean): Agreement
-  updateAgreement(id: String!, autosave: Boolean, data: mutationAgreementUpdateInput!, draft: Boolean): Agreement
+  createAgreement(data: mutationAgreementInput!, draft: Boolean, locale: LocaleInputType): Agreement
+  updateAgreement(id: String!, autosave: Boolean, data: mutationAgreementUpdateInput!, draft: Boolean, locale: LocaleInputType): Agreement
   deleteAgreement(id: String!): Agreement
   duplicateAgreement(id: String!): Agreement
-  createLogo(data: mutationLogoInput!, draft: Boolean): Logo
-  updateLogo(id: String!, autosave: Boolean, data: mutationLogoUpdateInput!, draft: Boolean): Logo
+  createLogo(data: mutationLogoInput!, draft: Boolean, locale: LocaleInputType): Logo
+  updateLogo(id: String!, autosave: Boolean, data: mutationLogoUpdateInput!, draft: Boolean, locale: LocaleInputType): Logo
   deleteLogo(id: String!): Logo
-  createImageCover(data: mutationImageCoverInput!, draft: Boolean): ImageCover
-  updateImageCover(id: String!, autosave: Boolean, data: mutationImageCoverUpdateInput!, draft: Boolean): ImageCover
+  createImageCover(data: mutationImageCoverInput!, draft: Boolean, locale: LocaleInputType): ImageCover
+  updateImageCover(id: String!, autosave: Boolean, data: mutationImageCoverUpdateInput!, draft: Boolean, locale: LocaleInputType): ImageCover
   deleteImageCover(id: String!): ImageCover
-  createPhoto(data: mutationPhotoInput!, draft: Boolean): Photo
-  updatePhoto(id: String!, autosave: Boolean, data: mutationPhotoUpdateInput!, draft: Boolean): Photo
+  createPhoto(data: mutationPhotoInput!, draft: Boolean, locale: LocaleInputType): Photo
+  updatePhoto(id: String!, autosave: Boolean, data: mutationPhotoUpdateInput!, draft: Boolean, locale: LocaleInputType): Photo
   deletePhoto(id: String!): Photo
-  createUser(data: mutationUserInput!, draft: Boolean): User
-  updateUser(id: String!, autosave: Boolean, data: mutationUserUpdateInput!, draft: Boolean): User
+  createUser(data: mutationUserInput!, draft: Boolean, locale: LocaleInputType): User
+  updateUser(id: String!, autosave: Boolean, data: mutationUserUpdateInput!, draft: Boolean, locale: LocaleInputType): User
   deleteUser(id: String!): User
   refreshTokenUser(token: String): usersRefreshedUser
   logoutUser: String
@@ -12500,11 +13525,15 @@ type Mutation {
   forgotPasswordUser(disableEmail: Boolean, email: String!, expiration: Int): Boolean!
   resetPasswordUser(password: String, token: String): usersResetPassword
   verifyEmailUser(token: String): Boolean
-  createPayloadPreference(data: mutationPayloadPreferenceInput!, draft: Boolean): PayloadPreference
-  updatePayloadPreference(id: String!, autosave: Boolean, data: mutationPayloadPreferenceUpdateInput!, draft: Boolean): PayloadPreference
+  createSearch(data: mutationSearchInput!, draft: Boolean, locale: LocaleInputType): Search
+  updateSearch(id: String!, autosave: Boolean, data: mutationSearchUpdateInput!, draft: Boolean, locale: LocaleInputType): Search
+  deleteSearch(id: String!): Search
+  duplicateSearch(id: String!): Search
+  createPayloadPreference(data: mutationPayloadPreferenceInput!, draft: Boolean, locale: LocaleInputType): PayloadPreference
+  updatePayloadPreference(id: String!, autosave: Boolean, data: mutationPayloadPreferenceUpdateInput!, draft: Boolean, locale: LocaleInputType): PayloadPreference
   deletePayloadPreference(id: String!): PayloadPreference
   duplicatePayloadPreference(id: String!): PayloadPreference
-  updateData(data: mutationDataInput!, draft: Boolean): Data
+  updateData(data: mutationDataInput!, draft: Boolean, locale: LocaleInputType): Data
 }
 
 input mutationJobInput {
@@ -12514,7 +13543,7 @@ input mutationJobInput {
   categories: [Job_categories_MutationInput]
   organization: String
   employmentType: [Job_employmentType_MutationInput]
-  location: String
+  location: [Job_location_MutationInput]
   locationType: [Job_locationType_MutationInput]
   education: [Job_education_MutationInput]
   experience: [Job_experience_MutationInput]
@@ -12540,9 +13569,15 @@ input mutationJobInput {
 }
 
 enum Job_categories_MutationInput {
-  category_1
-  category_2
-  category_3
+  education
+  healthcare
+  sport
+  culture
+  arts
+  special
+  religious
+  nonprofit
+  other
 }
 
 enum Job_employmentType_MutationInput {
@@ -12555,6 +13590,23 @@ enum Job_employmentType_MutationInput {
   apprenticeship
   volunteer
   seasonal
+}
+
+enum Job_location_MutationInput {
+  praha
+  jihocesky_kraj
+  jihomoravsky_kraj
+  karlovarsky_kraj
+  kralovehradecky_kraj
+  liberecky_kraj
+  moravskoslezsky_kraj
+  olomoucky_kraj
+  pardubicky_kraj
+  plzensky_kraj
+  stredocesky_kraj
+  ustecky_kraj
+  vysocina
+  zlinsky_kraj
 }
 
 enum Job_locationType_MutationInput {
@@ -12649,7 +13701,7 @@ input mutationJobUpdateInput {
   categories: [JobUpdate_categories_MutationInput]
   organization: String
   employmentType: [JobUpdate_employmentType_MutationInput]
-  location: String
+  location: [JobUpdate_location_MutationInput]
   locationType: [JobUpdate_locationType_MutationInput]
   education: [JobUpdate_education_MutationInput]
   experience: [JobUpdate_experience_MutationInput]
@@ -12675,9 +13727,15 @@ input mutationJobUpdateInput {
 }
 
 enum JobUpdate_categories_MutationInput {
-  category_1
-  category_2
-  category_3
+  education
+  healthcare
+  sport
+  culture
+  arts
+  special
+  religious
+  nonprofit
+  other
 }
 
 enum JobUpdate_employmentType_MutationInput {
@@ -12690,6 +13748,23 @@ enum JobUpdate_employmentType_MutationInput {
   apprenticeship
   volunteer
   seasonal
+}
+
+enum JobUpdate_location_MutationInput {
+  praha
+  jihocesky_kraj
+  jihomoravsky_kraj
+  karlovarsky_kraj
+  kralovehradecky_kraj
+  liberecky_kraj
+  moravskoslezsky_kraj
+  olomoucky_kraj
+  pardubicky_kraj
+  plzensky_kraj
+  stredocesky_kraj
+  ustecky_kraj
+  vysocina
+  zlinsky_kraj
 }
 
 enum JobUpdate_locationType_MutationInput {
@@ -12784,7 +13859,7 @@ input mutationOrganizationInput {
   featured: Boolean
   email: String
   phone: String
-  location: String
+  location: [Organization_location_MutationInput]
   vatId: String
   categories: [Organization_categories_MutationInput]
   logo: String
@@ -12799,10 +13874,33 @@ input mutationOrganizationInput {
   createdAt: String
 }
 
+enum Organization_location_MutationInput {
+  praha
+  jihocesky_kraj
+  jihomoravsky_kraj
+  karlovarsky_kraj
+  kralovehradecky_kraj
+  liberecky_kraj
+  moravskoslezsky_kraj
+  olomoucky_kraj
+  pardubicky_kraj
+  plzensky_kraj
+  stredocesky_kraj
+  ustecky_kraj
+  vysocina
+  zlinsky_kraj
+}
+
 enum Organization_categories_MutationInput {
-  category_1
-  category_2
-  category_3
+  education
+  healthcare
+  sport
+  culture
+  arts
+  special
+  religious
+  nonprofit
+  other
 }
 
 input mutationOrganizationUpdateInput {
@@ -12812,7 +13910,7 @@ input mutationOrganizationUpdateInput {
   featured: Boolean
   email: String
   phone: String
-  location: String
+  location: [OrganizationUpdate_location_MutationInput]
   vatId: String
   categories: [OrganizationUpdate_categories_MutationInput]
   logo: String
@@ -12827,10 +13925,33 @@ input mutationOrganizationUpdateInput {
   createdAt: String
 }
 
+enum OrganizationUpdate_location_MutationInput {
+  praha
+  jihocesky_kraj
+  jihomoravsky_kraj
+  karlovarsky_kraj
+  kralovehradecky_kraj
+  liberecky_kraj
+  moravskoslezsky_kraj
+  olomoucky_kraj
+  pardubicky_kraj
+  plzensky_kraj
+  stredocesky_kraj
+  ustecky_kraj
+  vysocina
+  zlinsky_kraj
+}
+
 enum OrganizationUpdate_categories_MutationInput {
-  category_1
-  category_2
-  category_3
+  education
+  healthcare
+  sport
+  culture
+  arts
+  special
+  religious
+  nonprofit
+  other
 }
 
 input mutationCandidateInput {
@@ -12973,6 +14094,7 @@ input mutationAgreementUpdateInput {
 
 input mutationLogoInput {
   createdBy: String
+  prefix: String
   updatedAt: String
   createdAt: String
   url: String
@@ -12988,6 +14110,7 @@ input mutationLogoInput {
 
 input mutationLogoUpdateInput {
   createdBy: String
+  prefix: String
   updatedAt: String
   createdAt: String
   url: String
@@ -13003,6 +14126,7 @@ input mutationLogoUpdateInput {
 
 input mutationImageCoverInput {
   createdBy: String
+  prefix: String
   updatedAt: String
   createdAt: String
   url: String
@@ -13018,6 +14142,7 @@ input mutationImageCoverInput {
 
 input mutationImageCoverUpdateInput {
   createdBy: String
+  prefix: String
   updatedAt: String
   createdAt: String
   url: String
@@ -13033,6 +14158,7 @@ input mutationImageCoverUpdateInput {
 
 input mutationPhotoInput {
   createdBy: String
+  prefix: String
   updatedAt: String
   createdAt: String
   url: String
@@ -13048,6 +14174,7 @@ input mutationPhotoInput {
 
 input mutationPhotoUpdateInput {
   createdBy: String
+  prefix: String
   updatedAt: String
   createdAt: String
   url: String
@@ -13152,6 +14279,50 @@ type usersLoginResult {
 type usersResetPassword {
   token: String
   user: User
+}
+
+input mutationSearchInput {
+  title: String
+  priority: Float
+  doc: Search_DocRelationshipInput
+  status: String
+  slug: String
+  publicId: String
+  keywords: String
+  updatedAt: String
+  createdAt: String
+}
+
+input Search_DocRelationshipInput {
+  relationTo: Search_DocRelationshipInputRelationTo
+  value: JSON
+}
+
+enum Search_DocRelationshipInputRelationTo {
+  jobs
+  organizations
+}
+
+input mutationSearchUpdateInput {
+  title: String
+  priority: Float
+  doc: SearchUpdate_DocRelationshipInput
+  status: String
+  slug: String
+  publicId: String
+  keywords: String
+  updatedAt: String
+  createdAt: String
+}
+
+input SearchUpdate_DocRelationshipInput {
+  relationTo: SearchUpdate_DocRelationshipInputRelationTo
+  value: JSON
+}
+
+enum SearchUpdate_DocRelationshipInputRelationTo {
+  jobs
+  organizations
 }
 
 input mutationPayloadPreferenceInput {

@@ -3,7 +3,7 @@ import { User } from '@payload-types'
 
 import { ARCHIVED, SA, SA_A, SA_A_O, SA_A_O_Self_createdBy, SA_O } from '@/payload/access'
 import { archived, slugField } from '@/payload/fields'
-import { categoriesOptions, currencyOptions, educationOptions, employmentTypeOptions, experienceOptions, locationTypeOptions, salaryTypeOptions } from '@/payload/data'
+import { categoriesOptions, currencyOptions, cz, educationOptions, employmentTypeOptions, experienceOptions, locationTypeOptions, salaryTypeOptions } from '@/payload/data'
 import { Archived } from '@/payload/components'
 import { createdBy } from '@/payload/fields'
 import { FeaturedCell } from '@/payload/cells'
@@ -109,8 +109,9 @@ export const Jobs: CollectionConfig = {
               fields: [
                 {
                   name: 'location',
-                  type: 'text',
-                  defaultValue: '',
+                  type: 'select',
+                  options: cz,
+                  hasMany: true,
                   admin: {
                     width: '50%',
                   },

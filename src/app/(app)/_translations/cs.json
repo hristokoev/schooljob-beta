@@ -49,7 +49,7 @@
     "title": "Připraveni začít?",
     "items": {
       "item01": "Vytvořit účet",
-      "item02": "Procházet pracovní nabídky"
+      "item02": "Procházet nabídky"
     },
     "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
     "button": "Pojďme začít"
@@ -63,11 +63,11 @@
   "editJob": {
     "successCreated": "Pracovní nabídka byla úspěšně vytvořena.",
     "successUpdated": "Pracovní nabídka byla úspěšně aktualizována.",
-    "errorCreating": "Při vytváření pracovní nabídky došlo k chybě. Zkuste to prosím znovu.",
-    "errorUpdating": "Při aktualizaci pracovní nabídky došlo k chybě. Zkuste to prosím znovu.",
+    "errorCreating": "Při vytváření nabídky došlo k chybě. Zkuste to prosím znovu.",
+    "errorUpdating": "Při aktualizaci nabídky došlo k chybě. Zkuste to prosím znovu.",
     "jobDetails": "Detaily práce",
     "title": "Název",
-    "titlePlaceholder": "Název pracovní pozice",
+    "titlePlaceholder": "Název pozice",
     "categories": "Kategorie",
     "employment": "Typ zaměstnání",
     "location": "Místo",
@@ -113,17 +113,17 @@
   },
   "errors": {
     "createApplication": "Při vytváření žádosti došlo k chybě.",
-    "createJob": "Při vytváření pracovní nabídky došlo k chybě.",
+    "createJob": "Při vytváření nabídky došlo k chybě.",
     "imageResolution": "Obrázek musí mít šířku alespoň {width} px nebo výšku {height} px.",
     "noCandidate": "Nebyl nalezen žádný kandidát.",
-    "noJobs": "Nebyly nalezeny žádné pracovní nabídky.",
-    "noMoreJobs": "Žádné další pracovní nabídky.",
+    "noJobs": "Nebyly nalezeny žádné nabídky.",
+    "noMoreJobs": "Žádné další nabídky.",
     "noOrganization": "Nebyla nalezena žádná organizace.",
     "noOrganizations": "Nebyly nalezeny žádné organizace.",
     "noMoreOrganizations": "Žádné další organizace.",
     "noProfile": "Nebyl nalezen žádný profil.",
     "updateCandidate": "Při aktualizaci kandidáta došlo k chybě.",
-    "updateJob": "Při aktualizaci pracovní nabídky došlo k chybě.",
+    "updateJob": "Při aktualizaci nabídky došlo k chybě.",
     "updateOrganization": "Při aktualizaci organizace došlo k chybě.",
     "updatePassword": "Při aktualizaci hesla došlo k chybě.",
     "uploadCv": "Při nahrávání životopisu došlo k chybě.",
@@ -162,12 +162,12 @@
     "jobs": "Aktuálně nabírá v {title}",
     "cards": {
       "card01": {
-        "header": "Vytvořit pracovní nabídku",
+        "header": "Vytvořit nabídku",
         "title": "Lorem ipsum dolor sit.",
         "content": "Lorem ipsum dolor sit amet consectetur adipiscing elit Ut et massa mi."
       },
       "card02": {
-        "header": "Aktivní pracovní nabídky",
+        "header": "Aktivní nabídky",
         "title": "Lorem ipsum dolor sit.",
         "content": "Lorem ipsum dolor sit amet consectetur adipiscing elit Ut et massa mi."
       },
@@ -215,21 +215,35 @@
   },
   "search": {
     "homeh1": "Pracovní portál pro školy a učitele.\nPomůžeme vám najít <UnderlinedText>perfektní práci</UnderlinedText>.",
+    "button": "Hledat",
+    "placeholder": "Hledat...",
     "category": "Kategorie",
     "salary": "Plat",
     "employmentType": "Typ zaměstnání",
     "education": "Vzdělání",
     "experience": "Zkušenosti",
     "language": "Jazyk",
-    "locationType": "Místo",
+    "location": "Kde?",
+    "locationType": "Práce z...",
     "currency": "Měna",
     "salaryType":"Typ platu",
     "status": "Stav",
     "suitableFor": "Vhodné pro",
+    "results": "Výsledky hledání",
+    "loading": "Načítání...",
+    "error": "Něco se nepovedlo. Zkuste to prosím znovu.",
+    "noResults": "Žádné výsledky nebyly nalezeny.",
+    "noResultsFor": "Žádné výsledky nebyly nalezeny pro: {query}. Zkuste to trochu jinak.",
     "options": {
-      "category-1": "Kategorie 1",
-      "category-2": "Kategorie 2",
-      "category-3": "Kategorie 3",
+      "education": "Vzdělávání",
+      "healthcare": "Zdravotnictví",
+      "sport": "Sport",
+      "culture": "Kultura",
+      "arts": "Umění",
+      "special": "Specifické",
+      "religious": "Církev",
+      "nonprofit": "Neziskové",
+      "other": "Ostatní",
       "fulltime": "Plný úvazek",
       "parttime": "Částečný úvazek",
       "contract": "Smlouva",
@@ -239,7 +253,7 @@
       "apprenticeship": "Učňovství",
       "seasonal": "Sezónní",
       "freelance": "Na volné noze",
-      "remote": "Na dálku",
+      "remote": "Z domova",
       "onsite": "Na místě",
       "hybrid": "Hybridní",
       "highSchool": "Střední škola",
@@ -467,11 +481,11 @@
       "description": "Lorem ipsum dolor sit amet consectetur adipiscing elit Ut et massa mi."
     },
     "createJob": {
-      "title": "Vytvořit pracovní nabídku - SchoolJob",
+      "title": "Vytvořit nabídku - SchoolJob",
       "description": "Lorem ipsum dolor sit amet consectetur adipiscing elit Ut et massa mi."
     },
     "editJob": {
-      "title": "{title} - Vytvořit pracovní nabídku - SchoolJob",
+      "title": "{title} - Vytvořit nabídku - SchoolJob",
       "description": "Lorem ipsum dolor sit amet consectetur adipiscing elit Ut et massa mi."
     },
     "job": {
@@ -507,7 +521,7 @@
       "description": "Lorem ipsum dolor sit amet consectetur adipiscing elit Ut et massa mi."
     },
     "savedJobs": {
-      "title": "Uložené pracovní nabídky - SchoolJob",
+      "title": "Uložené nabídky - SchoolJob",
       "description": "Lorem ipsum dolor sit amet consectetur adipiscing elit Ut et massa mi."
     },
     "settings": {
@@ -517,18 +531,18 @@
   },
   "ui": {
     "add": "Přidat",
-    "allJobs": "Všechny pracovní nabídky",
+    "allJobs": "Všechny nabídky",
     "allOrganizations": "Všechny organizace",
     "application": "Žádost",
     "applications": "{count, plural, =0 {Žádné žádosti} =1 {1 žádost} other {# žádosti}}",
     "approve": "Schválit",
     "cancel": "Zrušit",
     "candidate": "Kandidát",
-    "createJob": "Vytvořit pracovní nabídku",
+    "createJob": "Vytvořit nabídku",
     "cropImage": "Oříznout obrázek",
     "downloadPdf": "Stáhnout PDF",
     "edit": "Upravit",
-    "editJob": "Upravit pracovní nabídku",
+    "editJob": "Upravit nabídku",
     "editProfile": "Upravit profil",
     "files": "Soubory",
     "filename": "Soubor",
@@ -536,15 +550,15 @@
     "filesize": "Velikost",
     "goBack": "Zpět",
     "job": "Pracovní nabídka",
-    "jobs": "{count, plural, =0 {Žádné pracovní nabídky} =1 {1 pracovní nabídka} other {# pracovní nabídky}}",
+    "jobs": "{count, plural, =0 {Žádné nabídky} =1 {1 nabídka} other {# nabídky}}",
     "labelHot": "ŽHAVÉ",
     "labelNew": "NOVÉ",
     "labelRecommended": "Doporučené",
     "lastUpdated": "Naposledy aktualizováno",
     "loadMore": "Načíst více",
-    "mostRecentJobs": "Nejnovější pracovní nabídky",
-    "newJob": "Nová pracovní nabídka",
-    "recommendedJobs": "Doporučené pracovní nabídky",
+    "mostRecentJobs": "Nejnovější nabídky",
+    "newJob": "Nová nabídka",
+    "recommendedJobs": "Doporučené nabídky",
     "recommendedOrganizations": "Doporučené organizace",
     "reject": "Odmítnout",
     "saveChanges": "Uložit změny",
@@ -558,7 +572,7 @@
     "submitting": "Odesílání...",
     "upload": "Klikněte pro nahrání",
     "uploadImage": "Klikněte pro nahrání obrázku",
-    "viewAllJobs": "Zobrazit všechny pracovní nabídky",
+    "viewAllJobs": "Zobrazit všechny nabídky",
     "viewAllOrganizations": "Zobrazit všechny organizace"
   },
   "account": "Účet",
@@ -570,6 +584,6 @@
   "organizations": "Organizace",
   "ourPartners": "Naši partneři",
   "profile": "Profil",
-  "savedJobs": "Uložené pracovní nabídky",
+  "savedJobs": "Uložené nabídky",
   "settings": "Nastavení"
 }

@@ -3,7 +3,7 @@ import { CollectionConfig } from 'payload'
 import { ARCHIVED, SA, SA_A, SA_A_O_Self_createdBy } from '@/payload/access'
 import { archived, slugField } from '@/payload/fields'
 import { Archived } from '@/payload/components'
-import { categoriesOptions } from '@/payload/data'
+import { categoriesOptions, cz } from '@/payload/data'
 import { createdBy } from '@/payload/fields'
 
 export const Organizations: CollectionConfig = {
@@ -109,7 +109,9 @@ export const Organizations: CollectionConfig = {
                     read: ARCHIVED
                   },
                   name: 'location',
-                  type: 'text',
+                  type: 'select',
+                  hasMany: true,
+                  options: cz,
                   admin: {
                     width: '50%',
                   },
