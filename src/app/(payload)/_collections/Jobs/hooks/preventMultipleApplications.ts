@@ -1,5 +1,4 @@
 import { CollectionBeforeValidateHook } from 'payload'
-import { ValidationError } from 'payload'
 
 import { checkRole } from '@/payload/access'
 
@@ -23,9 +22,9 @@ export const preventMultipleApplications: CollectionBeforeValidateHook = async (
       })
 
       if (existingApplication.docs.length > 0) {
-        throw new ValidationError([
-          { field: 'job', message: 'You have already applied for this job' },
-        ])
+        throw new Error(
+          'You have already applied for this job',
+        )
       }
     }
   } else {
@@ -50,9 +49,9 @@ export const preventMultipleApplications: CollectionBeforeValidateHook = async (
         })
 
         if (existingApplication.docs.length > 0) {
-          throw new ValidationError([
-            { field: 'job', message: 'You have already applied for this job' },
-          ])
+          throw new Error(
+            'You have already applied for this job',
+          )
         }
       }
     }

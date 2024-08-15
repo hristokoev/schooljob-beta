@@ -36,22 +36,26 @@ const ApplyForm = ({ jobId, organizationId }: ApplyFormProps) => {
 
   const onSubmit = useCallback(
     async (data: ApplicationFormData) => {
-      toast.promise(
-        async () => {
-          const cvDoc = await uploadCv(data.cv, data.job, data.organization, user)
+      const uploadPromise = uploadCv(data.cv, data.job, data.organization, user)
 
-          createApplication(
+      toast.promise(
+        uploadPromise.then(async cvDoc => {
+          await createApplication(
             {
               ...data,
               cv: cvDoc?.id,
             },
             user,
           )
-        },
+        }),
         {
           loading: t('applyForm.loading'),
           success: t('applyForm.success'),
-          error: t('applyForm.error'),
+          error: error => error.message,
+          finally: () => {
+            setIsOpen(false)
+            reset()
+          },
         },
       )
     },

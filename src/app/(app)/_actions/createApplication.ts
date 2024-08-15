@@ -26,7 +26,11 @@ export const createApplication = async (data: any, user: User | null | undefined
         }
 
         return doc
-    } catch {
-        throw new Error(t('errors.createApplication'))
+    } catch (error) {
+        if (error instanceof Error) {
+            throw new Error(error.message)
+        } else {
+            throw new Error(t('errors.createApplication'))
+        }
     }
 }
