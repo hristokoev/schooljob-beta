@@ -65,7 +65,7 @@
     "successUpdated": "Pracovní nabídka byla úspěšně aktualizována.",
     "errorCreating": "Při vytváření nabídky došlo k chybě. Zkuste to prosím znovu.",
     "errorUpdating": "Při aktualizaci nabídky došlo k chybě. Zkuste to prosím znovu.",
-    "jobDetails": "Detaily práce",
+    "jobDetails": "Detaily inzerátu",
     "title": "Název",
     "titlePlaceholder": "Název pozice",
     "categories": "Kategorie",
@@ -89,7 +89,7 @@
     "salaryCurrency": "Měna",
     "salaryType": "Typ ohodnocení",
     "description": "Popis",
-    "richText": "Detaily práce",
+    "richText": "Detaily inzerátu",
     "skills": "Dovednosti",
     "certifications": "Certifikace",
     "responsibilities": "Náplň práce",
@@ -107,7 +107,7 @@
     "status": "Stav",
     "askToEdit": "Požádat o úpravu",
     "askToEditRequested": "Žádost odeslána. Dáme vám vědět 😊",
-    "saveJob": "Uložit práci"
+    "saveJob": "Uložit inzerát"
   },
   "errors": {
     "createApplication": "Při vytváření žádosti došlo k chybě.",
@@ -137,7 +137,7 @@
     "information": "Informace o kandidátovi",
     "cards": {
       "card01": {
-        "header": "Uložené práce",
+        "header": "Uloženy inzeráty",
         "title": "Lorem ipsum dolor sit.",
         "content": "Lorem ipsum dolor sit amet consectetur adipiscing elit Ut et massa mi."
       },
