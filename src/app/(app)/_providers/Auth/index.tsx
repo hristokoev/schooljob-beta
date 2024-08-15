@@ -83,7 +83,6 @@ const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => 
           }
 
           // const userWithProfile = await fetchCandidateProfile(responseData.doc.user)
-          setUser(responseData.doc.user)
           setStatus('loggedIn')
         } else {
           throw new Error(t('authentication.errors.invalidRegister'))
