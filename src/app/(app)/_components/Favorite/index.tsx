@@ -5,9 +5,15 @@ import { HeartIcon } from '@heroicons/react/24/solid'
 import { toast } from 'sonner'
 
 import { Button } from '@/components'
+import { useAuth } from '@/providers'
 
 const Favorite: React.FC = () => {
+  const { user } = useAuth()
   const [isFavorite, setIsFavorite] = useState(false)
+
+  if (user && user.role !== 'candidate') {
+    return null
+  }
 
   const handleFavoriteClick = async (e: React.MouseEvent) => {
     /*
