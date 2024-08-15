@@ -23,6 +23,10 @@ type Query {
   Agreements(draft: Boolean, where: Agreement_where, fallbackLocale: FallbackLocaleInputType, locale: LocaleInputType, limit: Int, page: Int, sort: String): Agreements
   countAgreements(draft: Boolean, where: Agreement_where, locale: LocaleInputType): countAgreements
   docAccessAgreement(id: String!): agreementsDocAccess
+  EmailTemplate(id: String!, draft: Boolean, fallbackLocale: FallbackLocaleInputType, locale: LocaleInputType): EmailTemplate
+  EmailTemplates(draft: Boolean, where: EmailTemplate_where, fallbackLocale: FallbackLocaleInputType, locale: LocaleInputType, limit: Int, page: Int, sort: String): EmailTemplates
+  countEmailTemplates(draft: Boolean, where: EmailTemplate_where, locale: LocaleInputType): countEmailTemplates
+  docAccessEmailTemplate(id: String!): email_templatesDocAccess
   Logo(id: String!, draft: Boolean, fallbackLocale: FallbackLocaleInputType, locale: LocaleInputType): Logo
   Logos(draft: Boolean, where: Logo_where, fallbackLocale: FallbackLocaleInputType, locale: LocaleInputType, limit: Int, page: Int, sort: String): Logos
   countLogos(draft: Boolean, where: Logo_where, locale: LocaleInputType): countLogos
@@ -5869,6 +5873,393 @@ type AgreementsDeleteDocAccess {
   where: JSONObject
 }
 
+type EmailTemplate {
+  id: String
+  title: String!
+  subject: String!
+  from: EmailTemplate_from!
+  to: [EmailTemplate_to!]!
+  event: EmailTemplate_event
+  updatedAt: DateTime
+  createdAt: DateTime
+}
+
+enum EmailTemplate_from {
+  info
+  no_reply
+}
+
+enum EmailTemplate_to {
+  admin
+  candidate
+  organization
+}
+
+enum EmailTemplate_event {
+  new_candidate
+  new_organization
+  reset_password
+  new_job
+  job_status_changed
+  new_application
+  application_status_changed
+}
+
+type EmailTemplates {
+  docs: [EmailTemplate]
+  hasNextPage: Boolean
+  hasPrevPage: Boolean
+  limit: Int
+  nextPage: Int
+  offset: Int
+  page: Int
+  pagingCounter: Int
+  prevPage: Int
+  totalDocs: Int
+  totalPages: Int
+}
+
+input EmailTemplate_where {
+  title: EmailTemplate_title_operator
+  subject: EmailTemplate_subject_operator
+  from: EmailTemplate_from_operator
+  to: EmailTemplate_to_operator
+  event: EmailTemplate_event_operator
+  updatedAt: EmailTemplate_updatedAt_operator
+  createdAt: EmailTemplate_createdAt_operator
+  id: EmailTemplate_id_operator
+  AND: [EmailTemplate_where_and]
+  OR: [EmailTemplate_where_or]
+}
+
+input EmailTemplate_title_operator {
+  equals: String
+  not_equals: String
+  like: String
+  contains: String
+  in: [String]
+  not_in: [String]
+  all: [String]
+}
+
+input EmailTemplate_subject_operator {
+  equals: String
+  not_equals: String
+  like: String
+  contains: String
+  in: [String]
+  not_in: [String]
+  all: [String]
+}
+
+input EmailTemplate_from_operator {
+  equals: EmailTemplate_from_Input
+  not_equals: EmailTemplate_from_Input
+  in: [EmailTemplate_from_Input]
+  not_in: [EmailTemplate_from_Input]
+  all: [EmailTemplate_from_Input]
+}
+
+enum EmailTemplate_from_Input {
+  info
+  no_reply
+}
+
+input EmailTemplate_to_operator {
+  equals: EmailTemplate_to_Input
+  not_equals: EmailTemplate_to_Input
+  in: [EmailTemplate_to_Input]
+  not_in: [EmailTemplate_to_Input]
+  all: [EmailTemplate_to_Input]
+}
+
+enum EmailTemplate_to_Input {
+  admin
+  candidate
+  organization
+}
+
+input EmailTemplate_event_operator {
+  equals: EmailTemplate_event_Input
+  not_equals: EmailTemplate_event_Input
+  in: [EmailTemplate_event_Input]
+  not_in: [EmailTemplate_event_Input]
+  all: [EmailTemplate_event_Input]
+  exists: Boolean
+}
+
+enum EmailTemplate_event_Input {
+  new_candidate
+  new_organization
+  reset_password
+  new_job
+  job_status_changed
+  new_application
+  application_status_changed
+}
+
+input EmailTemplate_updatedAt_operator {
+  equals: DateTime
+  not_equals: DateTime
+  greater_than_equal: DateTime
+  greater_than: DateTime
+  less_than_equal: DateTime
+  less_than: DateTime
+  like: DateTime
+  exists: Boolean
+}
+
+input EmailTemplate_createdAt_operator {
+  equals: DateTime
+  not_equals: DateTime
+  greater_than_equal: DateTime
+  greater_than: DateTime
+  less_than_equal: DateTime
+  less_than: DateTime
+  like: DateTime
+  exists: Boolean
+}
+
+input EmailTemplate_id_operator {
+  equals: String
+  not_equals: String
+  like: String
+  contains: String
+  in: [String]
+  not_in: [String]
+  all: [String]
+  exists: Boolean
+}
+
+input EmailTemplate_where_and {
+  title: EmailTemplate_title_operator
+  subject: EmailTemplate_subject_operator
+  from: EmailTemplate_from_operator
+  to: EmailTemplate_to_operator
+  event: EmailTemplate_event_operator
+  updatedAt: EmailTemplate_updatedAt_operator
+  createdAt: EmailTemplate_createdAt_operator
+  id: EmailTemplate_id_operator
+  AND: [EmailTemplate_where_and]
+  OR: [EmailTemplate_where_or]
+}
+
+input EmailTemplate_where_or {
+  title: EmailTemplate_title_operator
+  subject: EmailTemplate_subject_operator
+  from: EmailTemplate_from_operator
+  to: EmailTemplate_to_operator
+  event: EmailTemplate_event_operator
+  updatedAt: EmailTemplate_updatedAt_operator
+  createdAt: EmailTemplate_createdAt_operator
+  id: EmailTemplate_id_operator
+  AND: [EmailTemplate_where_and]
+  OR: [EmailTemplate_where_or]
+}
+
+type countEmailTemplates {
+  totalDocs: Int
+}
+
+type email_templatesDocAccess {
+  fields: EmailTemplatesDocAccessFields
+  create: EmailTemplatesCreateDocAccess
+  read: EmailTemplatesReadDocAccess
+  update: EmailTemplatesUpdateDocAccess
+  delete: EmailTemplatesDeleteDocAccess
+}
+
+type EmailTemplatesDocAccessFields {
+  title: EmailTemplatesDocAccessFields_title
+  subject: EmailTemplatesDocAccessFields_subject
+  from: EmailTemplatesDocAccessFields_from
+  to: EmailTemplatesDocAccessFields_to
+  event: EmailTemplatesDocAccessFields_event
+  updatedAt: EmailTemplatesDocAccessFields_updatedAt
+  createdAt: EmailTemplatesDocAccessFields_createdAt
+}
+
+type EmailTemplatesDocAccessFields_title {
+  create: EmailTemplatesDocAccessFields_title_Create
+  read: EmailTemplatesDocAccessFields_title_Read
+  update: EmailTemplatesDocAccessFields_title_Update
+  delete: EmailTemplatesDocAccessFields_title_Delete
+}
+
+type EmailTemplatesDocAccessFields_title_Create {
+  permission: Boolean!
+}
+
+type EmailTemplatesDocAccessFields_title_Read {
+  permission: Boolean!
+}
+
+type EmailTemplatesDocAccessFields_title_Update {
+  permission: Boolean!
+}
+
+type EmailTemplatesDocAccessFields_title_Delete {
+  permission: Boolean!
+}
+
+type EmailTemplatesDocAccessFields_subject {
+  create: EmailTemplatesDocAccessFields_subject_Create
+  read: EmailTemplatesDocAccessFields_subject_Read
+  update: EmailTemplatesDocAccessFields_subject_Update
+  delete: EmailTemplatesDocAccessFields_subject_Delete
+}
+
+type EmailTemplatesDocAccessFields_subject_Create {
+  permission: Boolean!
+}
+
+type EmailTemplatesDocAccessFields_subject_Read {
+  permission: Boolean!
+}
+
+type EmailTemplatesDocAccessFields_subject_Update {
+  permission: Boolean!
+}
+
+type EmailTemplatesDocAccessFields_subject_Delete {
+  permission: Boolean!
+}
+
+type EmailTemplatesDocAccessFields_from {
+  create: EmailTemplatesDocAccessFields_from_Create
+  read: EmailTemplatesDocAccessFields_from_Read
+  update: EmailTemplatesDocAccessFields_from_Update
+  delete: EmailTemplatesDocAccessFields_from_Delete
+}
+
+type EmailTemplatesDocAccessFields_from_Create {
+  permission: Boolean!
+}
+
+type EmailTemplatesDocAccessFields_from_Read {
+  permission: Boolean!
+}
+
+type EmailTemplatesDocAccessFields_from_Update {
+  permission: Boolean!
+}
+
+type EmailTemplatesDocAccessFields_from_Delete {
+  permission: Boolean!
+}
+
+type EmailTemplatesDocAccessFields_to {
+  create: EmailTemplatesDocAccessFields_to_Create
+  read: EmailTemplatesDocAccessFields_to_Read
+  update: EmailTemplatesDocAccessFields_to_Update
+  delete: EmailTemplatesDocAccessFields_to_Delete
+}
+
+type EmailTemplatesDocAccessFields_to_Create {
+  permission: Boolean!
+}
+
+type EmailTemplatesDocAccessFields_to_Read {
+  permission: Boolean!
+}
+
+type EmailTemplatesDocAccessFields_to_Update {
+  permission: Boolean!
+}
+
+type EmailTemplatesDocAccessFields_to_Delete {
+  permission: Boolean!
+}
+
+type EmailTemplatesDocAccessFields_event {
+  create: EmailTemplatesDocAccessFields_event_Create
+  read: EmailTemplatesDocAccessFields_event_Read
+  update: EmailTemplatesDocAccessFields_event_Update
+  delete: EmailTemplatesDocAccessFields_event_Delete
+}
+
+type EmailTemplatesDocAccessFields_event_Create {
+  permission: Boolean!
+}
+
+type EmailTemplatesDocAccessFields_event_Read {
+  permission: Boolean!
+}
+
+type EmailTemplatesDocAccessFields_event_Update {
+  permission: Boolean!
+}
+
+type EmailTemplatesDocAccessFields_event_Delete {
+  permission: Boolean!
+}
+
+type EmailTemplatesDocAccessFields_updatedAt {
+  create: EmailTemplatesDocAccessFields_updatedAt_Create
+  read: EmailTemplatesDocAccessFields_updatedAt_Read
+  update: EmailTemplatesDocAccessFields_updatedAt_Update
+  delete: EmailTemplatesDocAccessFields_updatedAt_Delete
+}
+
+type EmailTemplatesDocAccessFields_updatedAt_Create {
+  permission: Boolean!
+}
+
+type EmailTemplatesDocAccessFields_updatedAt_Read {
+  permission: Boolean!
+}
+
+type EmailTemplatesDocAccessFields_updatedAt_Update {
+  permission: Boolean!
+}
+
+type EmailTemplatesDocAccessFields_updatedAt_Delete {
+  permission: Boolean!
+}
+
+type EmailTemplatesDocAccessFields_createdAt {
+  create: EmailTemplatesDocAccessFields_createdAt_Create
+  read: EmailTemplatesDocAccessFields_createdAt_Read
+  update: EmailTemplatesDocAccessFields_createdAt_Update
+  delete: EmailTemplatesDocAccessFields_createdAt_Delete
+}
+
+type EmailTemplatesDocAccessFields_createdAt_Create {
+  permission: Boolean!
+}
+
+type EmailTemplatesDocAccessFields_createdAt_Read {
+  permission: Boolean!
+}
+
+type EmailTemplatesDocAccessFields_createdAt_Update {
+  permission: Boolean!
+}
+
+type EmailTemplatesDocAccessFields_createdAt_Delete {
+  permission: Boolean!
+}
+
+type EmailTemplatesCreateDocAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type EmailTemplatesReadDocAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type EmailTemplatesUpdateDocAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type EmailTemplatesDeleteDocAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
 type Logos {
   docs: [Logo]
   hasNextPage: Boolean
@@ -8844,6 +9235,7 @@ type Access {
   applications: applicationsAccess
   cvs: cvsAccess
   agreements: agreementsAccess
+  email_templates: email_templatesAccess
   logos: logosAccess
   image_covers: image_coversAccess
   photos: photosAccess
@@ -11687,6 +12079,205 @@ type AgreementsDeleteAccess {
   where: JSONObject
 }
 
+type email_templatesAccess {
+  fields: EmailTemplatesFields
+  create: EmailTemplatesCreateAccess
+  read: EmailTemplatesReadAccess
+  update: EmailTemplatesUpdateAccess
+  delete: EmailTemplatesDeleteAccess
+}
+
+type EmailTemplatesFields {
+  title: EmailTemplatesFields_title
+  subject: EmailTemplatesFields_subject
+  from: EmailTemplatesFields_from
+  to: EmailTemplatesFields_to
+  event: EmailTemplatesFields_event
+  updatedAt: EmailTemplatesFields_updatedAt
+  createdAt: EmailTemplatesFields_createdAt
+}
+
+type EmailTemplatesFields_title {
+  create: EmailTemplatesFields_title_Create
+  read: EmailTemplatesFields_title_Read
+  update: EmailTemplatesFields_title_Update
+  delete: EmailTemplatesFields_title_Delete
+}
+
+type EmailTemplatesFields_title_Create {
+  permission: Boolean!
+}
+
+type EmailTemplatesFields_title_Read {
+  permission: Boolean!
+}
+
+type EmailTemplatesFields_title_Update {
+  permission: Boolean!
+}
+
+type EmailTemplatesFields_title_Delete {
+  permission: Boolean!
+}
+
+type EmailTemplatesFields_subject {
+  create: EmailTemplatesFields_subject_Create
+  read: EmailTemplatesFields_subject_Read
+  update: EmailTemplatesFields_subject_Update
+  delete: EmailTemplatesFields_subject_Delete
+}
+
+type EmailTemplatesFields_subject_Create {
+  permission: Boolean!
+}
+
+type EmailTemplatesFields_subject_Read {
+  permission: Boolean!
+}
+
+type EmailTemplatesFields_subject_Update {
+  permission: Boolean!
+}
+
+type EmailTemplatesFields_subject_Delete {
+  permission: Boolean!
+}
+
+type EmailTemplatesFields_from {
+  create: EmailTemplatesFields_from_Create
+  read: EmailTemplatesFields_from_Read
+  update: EmailTemplatesFields_from_Update
+  delete: EmailTemplatesFields_from_Delete
+}
+
+type EmailTemplatesFields_from_Create {
+  permission: Boolean!
+}
+
+type EmailTemplatesFields_from_Read {
+  permission: Boolean!
+}
+
+type EmailTemplatesFields_from_Update {
+  permission: Boolean!
+}
+
+type EmailTemplatesFields_from_Delete {
+  permission: Boolean!
+}
+
+type EmailTemplatesFields_to {
+  create: EmailTemplatesFields_to_Create
+  read: EmailTemplatesFields_to_Read
+  update: EmailTemplatesFields_to_Update
+  delete: EmailTemplatesFields_to_Delete
+}
+
+type EmailTemplatesFields_to_Create {
+  permission: Boolean!
+}
+
+type EmailTemplatesFields_to_Read {
+  permission: Boolean!
+}
+
+type EmailTemplatesFields_to_Update {
+  permission: Boolean!
+}
+
+type EmailTemplatesFields_to_Delete {
+  permission: Boolean!
+}
+
+type EmailTemplatesFields_event {
+  create: EmailTemplatesFields_event_Create
+  read: EmailTemplatesFields_event_Read
+  update: EmailTemplatesFields_event_Update
+  delete: EmailTemplatesFields_event_Delete
+}
+
+type EmailTemplatesFields_event_Create {
+  permission: Boolean!
+}
+
+type EmailTemplatesFields_event_Read {
+  permission: Boolean!
+}
+
+type EmailTemplatesFields_event_Update {
+  permission: Boolean!
+}
+
+type EmailTemplatesFields_event_Delete {
+  permission: Boolean!
+}
+
+type EmailTemplatesFields_updatedAt {
+  create: EmailTemplatesFields_updatedAt_Create
+  read: EmailTemplatesFields_updatedAt_Read
+  update: EmailTemplatesFields_updatedAt_Update
+  delete: EmailTemplatesFields_updatedAt_Delete
+}
+
+type EmailTemplatesFields_updatedAt_Create {
+  permission: Boolean!
+}
+
+type EmailTemplatesFields_updatedAt_Read {
+  permission: Boolean!
+}
+
+type EmailTemplatesFields_updatedAt_Update {
+  permission: Boolean!
+}
+
+type EmailTemplatesFields_updatedAt_Delete {
+  permission: Boolean!
+}
+
+type EmailTemplatesFields_createdAt {
+  create: EmailTemplatesFields_createdAt_Create
+  read: EmailTemplatesFields_createdAt_Read
+  update: EmailTemplatesFields_createdAt_Update
+  delete: EmailTemplatesFields_createdAt_Delete
+}
+
+type EmailTemplatesFields_createdAt_Create {
+  permission: Boolean!
+}
+
+type EmailTemplatesFields_createdAt_Read {
+  permission: Boolean!
+}
+
+type EmailTemplatesFields_createdAt_Update {
+  permission: Boolean!
+}
+
+type EmailTemplatesFields_createdAt_Delete {
+  permission: Boolean!
+}
+
+type EmailTemplatesCreateAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type EmailTemplatesReadAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type EmailTemplatesUpdateAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type EmailTemplatesDeleteAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
 type logosAccess {
   fields: LogosFields
   create: LogosCreateAccess
@@ -13506,6 +14097,10 @@ type Mutation {
   updateAgreement(id: String!, autosave: Boolean, data: mutationAgreementUpdateInput!, draft: Boolean, locale: LocaleInputType): Agreement
   deleteAgreement(id: String!): Agreement
   duplicateAgreement(id: String!): Agreement
+  createEmailTemplate(data: mutationEmailTemplateInput!, draft: Boolean, locale: LocaleInputType): EmailTemplate
+  updateEmailTemplate(id: String!, autosave: Boolean, data: mutationEmailTemplateUpdateInput!, draft: Boolean, locale: LocaleInputType): EmailTemplate
+  deleteEmailTemplate(id: String!): EmailTemplate
+  duplicateEmailTemplate(id: String!): EmailTemplate
   createLogo(data: mutationLogoInput!, draft: Boolean, locale: LocaleInputType): Logo
   updateLogo(id: String!, autosave: Boolean, data: mutationLogoUpdateInput!, draft: Boolean, locale: LocaleInputType): Logo
   deleteLogo(id: String!): Logo
@@ -14090,6 +14685,68 @@ input mutationAgreementUpdateInput {
   slug: String
   updatedAt: String
   createdAt: String
+}
+
+input mutationEmailTemplateInput {
+  title: String!
+  subject: String!
+  from: EmailTemplate_from_MutationInput!
+  to: [EmailTemplate_to_MutationInput]!
+  event: EmailTemplate_event_MutationInput
+  updatedAt: String
+  createdAt: String
+}
+
+enum EmailTemplate_from_MutationInput {
+  info
+  no_reply
+}
+
+enum EmailTemplate_to_MutationInput {
+  admin
+  candidate
+  organization
+}
+
+enum EmailTemplate_event_MutationInput {
+  new_candidate
+  new_organization
+  reset_password
+  new_job
+  job_status_changed
+  new_application
+  application_status_changed
+}
+
+input mutationEmailTemplateUpdateInput {
+  title: String
+  subject: String
+  from: EmailTemplateUpdate_from_MutationInput
+  to: [EmailTemplateUpdate_to_MutationInput]
+  event: EmailTemplateUpdate_event_MutationInput
+  updatedAt: String
+  createdAt: String
+}
+
+enum EmailTemplateUpdate_from_MutationInput {
+  info
+  no_reply
+}
+
+enum EmailTemplateUpdate_to_MutationInput {
+  admin
+  candidate
+  organization
+}
+
+enum EmailTemplateUpdate_event_MutationInput {
+  new_candidate
+  new_organization
+  reset_password
+  new_job
+  job_status_changed
+  new_application
+  application_status_changed
 }
 
 input mutationLogoInput {

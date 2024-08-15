@@ -3,6 +3,7 @@ import { CollectionConfig, User } from 'payload'
 import { ARCHIVED, SA, SA_A_O, SA_C, SA_C_U } from '@/payload/access'
 import { applicationStatusOptions } from '@/payload/data'
 import { archived } from '@/payload/fields'
+import { dispatchEvents } from '@/payload/hooks'
 import { populateCandidateApplications } from './hooks/populateCandidateApplications'
 import { populateCv } from './hooks/populateCv'
 import { populateGlobalsDataApplications } from './hooks/populateGlobalsData'
@@ -29,6 +30,17 @@ export const Applications: CollectionConfig = {
     beforeValidate: [preventMultipleApplications],
     beforeChange: [populateTrackingId],
     afterChange: [
+      dispatchEvents([
+        {
+          operation: 'create',
+          event: 'new-application',
+        },
+        {
+          operation: 'update',
+          event: 'application-status-changed',
+          fields: ['status'],
+        },
+      ]),
       populateGlobalsDataApplications,
       populateCv,
       populateCandidateApplications,

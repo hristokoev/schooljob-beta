@@ -14,6 +14,7 @@ export interface Config {
     applications: Application;
     cvs: Cv;
     agreements: Agreement;
+    'email-templates': EmailTemplate;
     logos: Logo;
     'image-covers': ImageCover;
     photos: Photo;
@@ -51,6 +52,7 @@ export interface Job {
     | 'other'
   )[];
   organization: string | Organization;
+  email: string;
   employmentType: (
     | 'fulltime'
     | 'parttime'
@@ -419,6 +421,67 @@ export interface ImageCover {
   height?: number | null;
   focalX?: number | null;
   focalY?: number | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "email-templates".
+ */
+export interface EmailTemplate {
+  id: string;
+  title: string;
+  from: 'no-reply@schooljob.cz';
+  to: 'admin' | 'candidate' | 'organization';
+  preview: string;
+  blocks: (TextBlock | ButtonBlock)[];
+  footer: string;
+  event?:
+    | (
+        | 'new-candidate'
+        | 'new-organization'
+        | 'reset-password'
+        | 'new-job'
+        | 'job-status-changed'
+        | 'new-application'
+        | 'application-status-changed'
+      )
+    | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "TextBlock".
+ */
+export interface TextBlock {
+  text: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'Text';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ButtonBlock".
+ */
+export interface ButtonBlock {
+  text: string;
+  link: string;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'Button';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

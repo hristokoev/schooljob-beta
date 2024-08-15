@@ -2,6 +2,7 @@ import { CollectionConfig } from 'payload'
 
 import { ARCHIVED, SA, SA_A_C_Self_createdBy } from '@/payload/access'
 import { archived, createdBy } from '@/payload/fields'
+import { dispatchEvents } from '@/payload/hooks'
 import SA_A_O_C_Self from './access/SA_A_O_C_Self'
 
 export const Candidates: CollectionConfig = {
@@ -11,6 +12,16 @@ export const Candidates: CollectionConfig = {
     useAsTitle: 'fullName',
     defaultColumns: ['firstName', 'lastName', 'email', 'phone', 'location', 'archived'],
     // hidden: ({ user }) => user?.role === 'organization' || user?.role === 'candidate',
+  },
+  hooks: {
+    afterChange: [
+      dispatchEvents([
+        {
+          operation: 'create',
+          event: 'new-candidate',
+        },
+      ]),
+    ]
   },
   access: {
     /*

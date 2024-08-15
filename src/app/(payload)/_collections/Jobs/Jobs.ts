@@ -4,12 +4,13 @@ import { User } from '@payload-types'
 import { ARCHIVED, SA, SA_A, SA_A_O, SA_A_O_Self_createdBy, SA_O } from '@/payload/access'
 import { archived, slugField } from '@/payload/fields'
 import { categoriesOptions, currencyOptions, cz, educationOptions, employmentTypeOptions, experienceOptions, locationTypeOptions, salaryTypeOptions } from '@/payload/data'
+import { dispatchEvents, populateCreatedBy } from '@/payload/hooks'
 import { Archived } from '@/payload/components'
 import { createdBy } from '@/payload/fields'
 import { FeaturedCell } from '@/payload/cells'
 import { languageField } from '@/payload/fields'
 import { organizationFilter } from './filters/organizationFilter'
-import { populateCreatedBy } from '@/payload/hooks'
+import { populateEmail } from './hooks/populateEmail'
 import { populateGlobalsDataJobs } from './hooks/populateGlobalsData'
 import { populateOrganizationJobs } from './hooks/populateOrganizationJobs'
 import { populatePublicId } from './hooks/populatePublicId'
@@ -29,8 +30,19 @@ export const Jobs: CollectionConfig = {
     // hidden: ({ user }) => user?.role === 'candidate',
   },
   hooks: {
-    beforeChange: [populateCreatedBy, populatePublicId],
+    beforeChange: [populateCreatedBy, populateEmail, populatePublicId],
     afterChange: [
+      dispatchEvents([
+        {
+          operation: 'create',
+          event: 'new-job',
+        },
+        {
+          operation: 'update',
+          event: 'job-status-changed',
+          fields: ['featured'],
+        }
+      ]),
       populateGlobalsDataJobs,
       populateOrganizationJobs,
       updateOrganizationJobs,
@@ -84,6 +96,14 @@ export const Jobs: CollectionConfig = {
 
         // super-admins
         return undefined
+      },
+      required: true,
+    },
+    {
+      name: 'email',
+      type: 'text',
+      access: {
+        read: ARCHIVED
       },
       required: true,
     },

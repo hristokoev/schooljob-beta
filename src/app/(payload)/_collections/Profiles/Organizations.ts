@@ -2,9 +2,10 @@ import { CollectionConfig } from 'payload'
 
 import { ARCHIVED, SA, SA_A, SA_A_O_Self_createdBy } from '@/payload/access'
 import { archived, slugField } from '@/payload/fields'
-import { Archived } from '@/payload/components'
 import { categoriesOptions, cz } from '@/payload/data'
+import { Archived } from '@/payload/components'
 import { createdBy } from '@/payload/fields'
+import { dispatchEvents } from '@/payload/hooks'
 
 export const Organizations: CollectionConfig = {
   slug: 'organizations',
@@ -16,6 +17,16 @@ export const Organizations: CollectionConfig = {
       BeforeListTable: [Archived],
     }
     // hidden: ({ user }) => user?.role === 'organization' || user?.role === 'candidate',
+  },
+  hooks: {
+    afterChange: [
+      dispatchEvents([
+        {
+          operation: 'create',
+          event: 'new-organization',
+        },
+      ]),
+    ]
   },
   access: {
     /*
