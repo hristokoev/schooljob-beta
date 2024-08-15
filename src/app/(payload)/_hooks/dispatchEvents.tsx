@@ -50,7 +50,11 @@ export const dispatchEvents: (eventOperations: EventOperation[]) => CollectionAf
           // Determine the recipient based on the template's "to" property.
           switch (template.to) {
             case 'admin':
-              emailTo = 'admin@gmail.com'
+              if (!process.env.ADMIN_EMAIL) {
+                throw new Error('ADMIN_EMAIL environment variable is not set')
+              }
+
+              emailTo = process.env.ADMIN_EMAIL
               break
 
             // If sending to candidates, use the document's email. This case is used for candidates and applications.
@@ -90,7 +94,7 @@ export const dispatchEvents: (eventOperations: EventOperation[]) => CollectionAf
 
           // Send email
           await payload.sendEmail({
-            from: process.env.RESEND_FROM_EMAIL, // template.from,
+            from: process.env.RESEND_FROM_EMAIL, // TODO: use template.from,
             to: emailTo,
             subject: template.title,
             html: html,
