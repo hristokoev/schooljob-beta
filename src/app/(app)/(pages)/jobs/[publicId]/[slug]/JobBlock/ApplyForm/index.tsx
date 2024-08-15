@@ -78,13 +78,15 @@ const ApplyForm = ({ jobId, organizationId }: ApplyFormProps) => {
 
   return (
     <Fragment>
-      <div className="flex items-center gap-4">
-        <div className="flex gap-2">
-          <Button type="button" onClick={() => setIsOpen(true)}>
-            {t('applyForm.button')}
-          </Button>
+      {(!user || user.role === 'candidate') && (
+        <div className="flex items-center gap-4">
+          <div className="flex gap-2">
+            <Button type="button" onClick={() => setIsOpen(true)}>
+              {t('applyForm.button')}
+            </Button>
+          </div>
         </div>
-      </div>
+      )}
       <Dialog open={isOpen} onClose={() => setIsOpen(false)} className="relative z-50" transition>
         <div className="fixed inset-0 flex w-screen items-center justify-center bg-black/50 p-4 backdrop-blur-sm">
           <DialogPanel className="max-h-[85dvh] overflow-y-auto rounded-md bg-white p-6 md:min-w-[768px]">
