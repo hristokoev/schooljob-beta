@@ -62,10 +62,8 @@ export const OrganizationCard: React.FC<Organization> = ({
               <p>{description}</p>
             </div>
             <div className="flex flex-wrap gap-2">
-              {jobsPublished && jobsPublished.length > 0 ? (
+              {jobsPublished && jobsPublished.length > 0 && (
                 <Pill color="green">{t('ui.jobs', { count: jobsPublished.length })}</Pill>
-              ) : (
-                <div>&nbsp;</div>
               )}
               {location &&
                 location.map(location => (

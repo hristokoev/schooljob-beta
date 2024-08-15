@@ -50,7 +50,17 @@ const OrganizationsGrid: React.FC<OrganizationSearchParams> = async props => {
           </div>
         ))}
       </div>
-      {loadMore && <LoadMore {...props} />}
+      {loadMore && (
+        <Fragment>
+          {organizations.length >= limit ? (
+            <LoadMore {...props} />
+          ) : (
+            <div className="mt-8 text-center text-neutral-400">
+              {t('errors.noMoreOrganizations')}
+            </div>
+          )}
+        </Fragment>
+      )}
     </Fragment>
   )
 }
