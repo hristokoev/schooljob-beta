@@ -24,7 +24,7 @@ const Pill: React.FC<Props> = ({ children, color, size }) => {
   return (
     <div>
       <span
-        className={`inline-flex rounded-full px-1.5 py-0.5 text-center text-xs font-medium ${
+        className={`inline-flex text-nowrap rounded-full px-1.5 py-0.5 text-center text-xs font-medium ${
           color ? colors[color] : colors.gray
         } ${size ? sizes[size] : sizes.md}`}
       >

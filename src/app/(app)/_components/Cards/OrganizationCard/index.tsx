@@ -61,7 +61,7 @@ export const OrganizationCard: React.FC<Organization> = ({
             <div className="line-clamp-2 h-12">
               <p>{description}</p>
             </div>
-            <div className="flex space-x-2">
+            <div className="flex flex-wrap gap-2">
               {jobsPublished && jobsPublished.length > 0 ? (
                 <Pill color="green">{t('ui.jobs', { count: jobsPublished.length })}</Pill>
               ) : (

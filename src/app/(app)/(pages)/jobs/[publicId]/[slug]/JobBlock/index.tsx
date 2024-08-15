@@ -20,6 +20,7 @@ import {
 } from '@/components'
 import { formatDate, renderSalary } from '@/utilities'
 import { ApplyForm } from './ApplyForm'
+import { cz } from '@/payload/data'
 import { getDocument } from '@/utilities/getDocument'
 import { JobsList } from '@/blocks'
 
@@ -88,11 +89,12 @@ const JobBlock: React.FC<{ publicId: string; slug: string }> = async ({ publicId
                       {type}
                     </Pill>
                   ))}
-                {location && (
-                  <Pill size="lg" color="blue">
-                    {location}
-                  </Pill>
-                )}
+                {location &&
+                  location.map(location => (
+                    <Pill key={location} size="lg" color="blue">
+                      {cz.find(l => l.value === location)?.label}
+                    </Pill>
+                  ))}
               </div>
             </div>
             <Fragment>
