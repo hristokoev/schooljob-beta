@@ -45,7 +45,7 @@ const useOrganizationFieldSchema = (): ZodType<OrganizationFormData> => {
     return z.object({
         title: z.string({ message: t('title') }).min(2, {
             message: t('titleLength', { number: 2 }),
-        }).regex(/^[a-zA-Z0-9 ]+$/, {
+        }).regex(/^[a-zA-Z0-9À-ž ]+$/, {
             message: t('titleAllowedCharacters'),
         }).regex(/^[^\s].+$/, {
             message: t('titleForbiddenCharacters')

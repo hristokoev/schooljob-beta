@@ -31,10 +31,10 @@ const useApplicationFieldSchema = (): ZodType<ApplicationFormData> => {
         status: z.enum(['pending', 'approved', 'rejected']),
         job: z.string(),
         organization: z.string(),
-        firstName: z.string({ message: t('firstName') }).min(2, { message: t('firstNameLength', { number: 2 }) }).regex(/^[a-zA-Z ]+$/, {
+        firstName: z.string({ message: t('firstName') }).min(2, { message: t('firstNameLength', { number: 2 }) }).regex(/^[a-zA-ZÀ-ž ]+$/, {
             message: t('firstNameAllowedCharacters'),
         }),
-        lastName: z.string({ message: t('lastName') }).min(2, { message: t('lastNameLength', { number: 2 }) }).regex(/^[a-zA-Z ]+$/, {
+        lastName: z.string({ message: t('lastName') }).min(2, { message: t('lastNameLength', { number: 2 }) }).regex(/^[a-zA-ZÀ-ž ]+$/, {
             message: t('lastNameAllowedCharacters')
         }),
         email: z.string().email({ message: t('email') }),

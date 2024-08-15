@@ -19,10 +19,10 @@ const useCandidateFieldSchema = (): ZodType<CandidateFormData> => {
     const t = useTranslations('candidateSettings.validation')
 
     return z.object({
-        firstName: z.string({ message: t('firstName') }).min(2, { message: t('firstNameLength', { number: 2 }) }).regex(/^[a-zA-Z ]+$/, {
+        firstName: z.string({ message: t('firstName') }).min(2, { message: t('firstNameLength', { number: 2 }) }).regex(/^[a-zA-ZÀ-ž ]+$/, {
             message: t('firstNameAllowedCharacters'),
         }),
-        lastName: z.string({ message: t('lastName') }).min(2, { message: t('lastNameLength', { number: 2 }) }).regex(/^[a-zA-Z ]+$/, {
+        lastName: z.string({ message: t('lastName') }).min(2, { message: t('lastNameLength', { number: 2 }) }).regex(/^[a-zA-ZÀ-ž ]+$/, {
             message: t('lastNameAllowedCharacters')
         }),
         location: z.string().optional(),
