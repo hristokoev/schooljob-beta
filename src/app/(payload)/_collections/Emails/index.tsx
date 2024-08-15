@@ -10,6 +10,10 @@ const Text: Block = {
   fields: [
     {
       name: 'text',
+      label: {
+        en: 'Text',
+        cs: 'Text',
+      },
       type: 'richText',
       required: true,
     },
@@ -24,11 +28,19 @@ const Button: Block = {
   fields: [
     {
       name: 'text',
+      label: {
+        en: 'Text',
+        cs: 'Text',
+      },
       type: 'text',
       required: true,
     },
     {
       name: 'link',
+      label: {
+        en: 'Link',
+        cs: 'Odkaz',
+      },
       type: 'text',
       required: true,
     },
@@ -38,14 +50,23 @@ const Button: Block = {
 export const EmailTemplates: CollectionConfig = {
   slug: 'email-templates',
   labels: {
-    singular: 'Email Template',
-    plural: 'Email Templates',
+    singular: {
+      en: 'Email Template',
+      cs: 'Šablona e-mailů',
+    },
+    plural: {
+      en: 'Email Templates',
+      cs: 'Šablony e-mailů',
+    },
   },
   admin: {
-    group: 'SchoolJob',
+    group: {
+      en: 'Others',
+      cs: 'Další',
+    },
     useAsTitle: 'title',
     defaultColumns: ['title', 'to', 'event'],
-    hidden: ({ user }) => user?.role !== 'super-admin' || user?.role !== 'admin',
+    hidden: ({ user }) => user?.role === 'organization' || user?.role === 'candidate',
   },
   access: {
     create: SA,
@@ -56,11 +77,19 @@ export const EmailTemplates: CollectionConfig = {
   fields: [
     {
       name: 'title',
+      label: {
+        en: 'Title',
+        cs: 'Název',
+      },
       type: 'text',
       required: true,
     },
     {
       name: 'from',
+      label: {
+        en: 'From',
+        cs: 'Odesílatel',
+      },
       type: 'select',
       options: [
         {
@@ -72,6 +101,10 @@ export const EmailTemplates: CollectionConfig = {
     },
     {
       name: 'to',
+      label: {
+        en: 'To',
+        cs: 'Příjemce',
+      },
       type: 'select',
       options: [
         {
@@ -91,51 +124,94 @@ export const EmailTemplates: CollectionConfig = {
     },
     {
       name: 'preview',
+      label: {
+        en: 'Preview',
+        cs: 'Krátký popis',
+      },
       type: 'text',
       required: true,
     },
     {
       name: 'blocks',
+      labels: {
+        singular: {
+          en: 'Block',
+          cs: 'Blok',
+        },
+        plural: {
+          en: 'Blocks',
+          cs: 'Bloky',
+        },
+      },
       type: 'blocks',
       blocks: [Text, Button],
       required: true,
     },
     {
       name: 'footer',
+      label: {
+        en: 'Footer',
+        cs: 'Paticka',
+      },
       type: 'text',
       required: true,
     },
     {
       name: 'event',
+      label: {
+        en: 'Event',
+        cs: 'Aktivováno při',
+      },
       type: 'select',
       unique: true,
       options: [
         {
-          label: 'New Candidate',
+          label: {
+            en: 'New Candidate',
+            cs: 'Nový kandidát',
+          },
           value: 'new-candidate',
         },
         {
-          label: 'New Organization',
+          label: {
+            en: 'New Organization',
+            cs: 'Nová organizace',
+          },
           value: 'new-organization',
         },
         {
-          label: 'Reset Password',
+          label: {
+            en: 'Reset Password',
+            cs: 'Reset hesla',
+          },
           value: 'reset-password',
         },
         {
-          label: 'New Job',
+          label: {
+            en: 'New Job',
+            cs: 'Nový inzerát',
+          },
           value: 'new-job',
         },
         {
-          label: 'Job Status Changed',
+          label: {
+            en: 'Job Status Changed',
+            cs: 'Stav inzerátu změněn',
+          },
           value: 'job-status-changed',
         },
         {
-          label: 'New Application',
+          label: {
+            en: 'New Application',
+            cs: 'Nová žádost',
+          },
           value: 'new-application',
         },
         {
-          label: 'Application Status Changed',
+          label: {
+            en: 'Application Status Changed',
+            cs: 'Stav žádosti změněn',
+          },
           value: 'application-status-changed',
         },
       ],

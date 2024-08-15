@@ -3,14 +3,28 @@ import { CollectionConfig } from 'payload'
 import { ARCHIVED, SA, SA_A, SA_A_O_Self_createdBy } from '@/payload/access'
 import { archived, slugField } from '@/payload/fields'
 import { categoriesOptions, cz } from '@/payload/data'
+import { cs, en } from '@/translations'
 import { Archived } from '@/payload/components'
 import { createdBy } from '@/payload/fields'
 import { dispatchEvents } from '@/payload/hooks'
 
 export const Organizations: CollectionConfig = {
   slug: 'organizations',
+  labels: {
+    singular: {
+      en: 'Organization',
+      cs: 'Profil organizace',
+    },
+    plural: {
+      en: 'Organizations',
+      cs: 'Profily organizací',
+    },
+  },
   admin: {
-    group: 'SchoolJob',
+    group: {
+      en: 'Profiles',
+      cs: 'Profily',
+    },
     useAsTitle: 'title',
     defaultColumns: ['title', 'location', 'archived'],
     components: {
@@ -55,6 +69,10 @@ export const Organizations: CollectionConfig = {
     archived,
     {
       name: 'title',
+      label: {
+        en: 'Title',
+        cs: 'Název',
+      },
       type: 'text',
       required: true,
       access: {
@@ -64,6 +82,10 @@ export const Organizations: CollectionConfig = {
     slugField,
     {
       name: 'featured',
+      label: {
+        en: 'Featured',
+        cs: 'Zvýrazněno ⭐',
+      },
       type: 'checkbox',
       defaultValue: false,
       admin: {
@@ -93,6 +115,10 @@ export const Organizations: CollectionConfig = {
                     read: ARCHIVED
                   },
                   name: 'email',
+                  label: {
+                    en: 'Email',
+                    cs: 'Email',
+                  },
                   type: 'text',
                   admin: {
                     width: '50%',
@@ -105,6 +131,10 @@ export const Organizations: CollectionConfig = {
                     read: ARCHIVED
                   },
                   name: 'phone',
+                  label: {
+                    en: 'Phone',
+                    cs: 'Telefon',
+                  },
                   type: 'text',
                   admin: {
                     width: '50%',
@@ -120,6 +150,10 @@ export const Organizations: CollectionConfig = {
                     read: ARCHIVED
                   },
                   name: 'location',
+                  label: {
+                    en: 'Location',
+                    cs: 'Lokalita',
+                  },
                   type: 'select',
                   hasMany: true,
                   options: cz,
@@ -132,6 +166,10 @@ export const Organizations: CollectionConfig = {
                     read: ARCHIVED
                   },
                   name: 'vatId',
+                  label: {
+                    en: 'VAT ID',
+                    cs: 'IČO',
+                  },
                   type: 'text',
                   admin: {
                     width: '50%',
@@ -144,8 +182,18 @@ export const Organizations: CollectionConfig = {
                 read: ARCHIVED
               },
               name: 'categories',
+              label: {
+                en: 'Categories',
+                cs: 'Kategorie',
+              },
               type: 'select',
-              options: categoriesOptions,
+              options: categoriesOptions.map(option => ({
+                label: {
+                  en: en.search.options[option as keyof typeof en.search.options],
+                  cs: cs.search.options[option as keyof typeof cs.search.options],
+                },
+                value: option,
+              })),
               hasMany: true,
             },
             {
@@ -153,6 +201,10 @@ export const Organizations: CollectionConfig = {
               fields: [
                 {
                   name: 'logo',
+                  label: {
+                    en: 'Logo',
+                    cs: 'Logo',
+                  },
                   type: 'upload',
                   relationTo: 'logos',
                   admin: {
@@ -165,6 +217,10 @@ export const Organizations: CollectionConfig = {
                 },
                 {
                   name: 'imageCover',
+                  label: {
+                    en: 'Image Cover',
+                    cs: 'Obrázek',
+                  },
                   type: 'upload',
                   relationTo: 'image-covers',
                   admin: {
@@ -181,6 +237,10 @@ export const Organizations: CollectionConfig = {
                 read: ARCHIVED
               },
               name: 'description',
+              label: {
+                en: 'Description',
+                cs: 'Popis',
+              },
               type: 'textarea',
             },
             {
@@ -188,6 +248,10 @@ export const Organizations: CollectionConfig = {
                 read: ARCHIVED
               },
               name: 'richText',
+              label: {
+                en: 'Rich Text',
+                cs: 'Celý popis',
+              },
               type: 'richText',
             },
             {
@@ -195,6 +259,10 @@ export const Organizations: CollectionConfig = {
                 read: ARCHIVED
               },
               name: 'url',
+              label: {
+                en: 'URL',
+                cs: 'Odkaz',
+              },
               type: 'text',
             },
           ],
@@ -204,6 +272,10 @@ export const Organizations: CollectionConfig = {
           fields: [
             {
               name: 'jobsPublished',
+              label: {
+                en: 'Published Jobs',
+                cs: 'Publikované inzeráty',
+              },
               type: 'relationship',
               relationTo: 'jobs',
               maxDepth: 0,
@@ -220,6 +292,10 @@ export const Organizations: CollectionConfig = {
           fields: [
             {
               name: 'jobsUnpublished',
+              label: {
+                en: 'Unpublished Jobs',
+                cs: 'Koncepty',
+              },
               type: 'relationship',
               relationTo: 'jobs',
               maxDepth: 0,

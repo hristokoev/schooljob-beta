@@ -9,11 +9,20 @@ import SA_A_O_Some_C_Self from './access/SA_A_O_Some_C_Self'
 export const Cvs: CollectionConfig = {
   slug: 'cvs',
   labels: {
-    singular: 'CV',
-    plural: 'CVs',
+    singular: {
+      en: 'CV',
+      cs: 'CV',
+    },
+    plural: {
+      en: 'CVs',
+      cs: 'CV'
+    }
   },
   admin: {
-    group: 'SchoolJob',
+    group: {
+      en: 'Files',
+      cs: 'Soubory',
+    },
     useAsTitle: 'filename',
     defaultColumns: ['filename', 'filesize', 'createdBy', 'createdAt'],
     hidden: ({ user }) => user?.role === 'organization' || user?.role === 'candidate',
@@ -38,6 +47,10 @@ export const Cvs: CollectionConfig = {
   fields: [
     {
       name: 'job',
+      label: {
+        en: 'Job',
+        cs: 'Inzerát',
+      },
       type: 'relationship',
       relationTo: 'jobs',
       hasMany: false,
@@ -51,6 +64,10 @@ export const Cvs: CollectionConfig = {
     },
     {
       name: 'organization',
+      label: {
+        en: 'Organization',
+        cs: 'Organizace',
+      },
       type: 'relationship',
       relationTo: 'organizations',
       hasMany: false,

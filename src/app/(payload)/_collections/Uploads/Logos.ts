@@ -8,11 +8,20 @@ import { populateCreatedBy } from '@/payload/hooks'
 export const Logos: CollectionConfig = {
   slug: 'logos',
   labels: {
-    singular: 'Logo',
-    plural: 'Logos',
+    singular: {
+      en: 'Logo',
+      cs: 'Logo',
+    },
+    plural: {
+      en: 'Logos',
+      cs: 'Loga',
+    }
   },
   admin: {
-    group: 'Files',
+    group: {
+      en: 'Files',
+      cs: 'Soubory',
+    },
     useAsTitle: 'filename',
     hidden: ({ user }) => user?.role !== 'super-admin'
   },

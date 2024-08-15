@@ -1,5 +1,6 @@
 'use client'
 
+import { ArrowPathIcon, TrashIcon } from '@heroicons/react/24/solid'
 import { Button, LoadingOverlayToggle, toast, useTableCell } from '@payloadcms/ui'
 import React, { useCallback, useEffect, useState } from 'react'
 import { Config } from '@payload-types'
@@ -75,7 +76,7 @@ const ArchivedCell: CustomComponent = () => {
 
   return (
     <Button
-      buttonStyle="secondary"
+      buttonStyle="transparent"
       size="small"
       className={cellData ? 'archived' : 'published'}
       onClick={() => handleClick()}
@@ -83,7 +84,11 @@ const ArchivedCell: CustomComponent = () => {
       disabled={loading}
     >
       <LoadingOverlayToggle name="loading" show={loading} />
-      {cellData ? 'Restore' : 'Archive'}
+      {cellData ? (
+        <ArrowPathIcon style={{ width: '24px', height: '24px' }} />
+      ) : (
+        <TrashIcon style={{ width: '24px', height: '24px' }} />
+      )}
     </Button>
   )
 }

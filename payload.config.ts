@@ -32,6 +32,8 @@ import {
   Photos,
   Users,
 } from '@/payload/collections'
+import { cs as customCs, en as customEn } from '@/payload/translations'
+import { Icon, Logo } from '@/payload/components'
 import { cachedPayloadPlugin } from './cached-local-api'
 import { Data } from '@/payload/globals'
 import { extractTopKeywords } from '@/payload/utilities'
@@ -50,8 +52,13 @@ export default buildConfig({
     ],
   }),
   admin: {
+
     components: {
       afterNavLinks: [AccessNavLink],
+      graphics: {
+        Icon: Icon,
+        Logo: Logo,
+      },
       views: {
         'access': {
           Component: AccessView,
@@ -75,10 +82,6 @@ export default buildConfig({
     Users,
   ],
   globals: [Data],
-  localization: {
-    locales: ['cs', 'sk'],
-    defaultLocale: 'cs',
-  },
   email: resendAdapter({
     defaultFromAddress: process.env.RESEND_FROM_EMAIL || '',
     defaultFromName: process.env.RESEND_FROM_NAME || '',
@@ -104,6 +107,10 @@ export default buildConfig({
   i18n: {
     supportedLanguages: { en, cs },
     fallbackLanguage: 'cs',
+    translations: {
+      en: customEn,
+      cs: customCs,
+    },
   },
 
   // Sharp is now an optional dependency -

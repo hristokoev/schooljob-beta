@@ -1,0 +1,8 @@
+{
+    "other": {
+        "published": "Published",
+        "unpublished": "Unpublished",
+        "active": "Active",
+        "archived": "Archived"
+    }
+}

@@ -23,7 +23,6 @@ import {
   Section,
   Select,
   Switch,
-  Textarea,
 } from '@/components'
 import {
   categoriesOptions,
@@ -444,23 +443,6 @@ const JobsEditView: React.FC<Partial<JobFormData> & JobsEditViewProps> = formDat
             </div>
             <div>
               <div className="space-y-8 rounded-md border border-slate-200 bg-white p-6">
-                <div>
-                  <Label>{t('editJob.description')}</Label>
-                  <Controller
-                    name="description"
-                    control={control}
-                    render={({ field }) => (
-                      <Textarea
-                        className="form-textarea w-full"
-                        {...field}
-                        rows={3}
-                        maxLength={140}
-                        disabled={published}
-                      />
-                    )}
-                  />
-                </div>
-
                 <div>
                   <Label>{t('editJob.richText')}</Label>
                   <Controller

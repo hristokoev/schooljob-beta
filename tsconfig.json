@@ -42,6 +42,7 @@
       "@/payload/globals": ["./src/app/(payload)/_globals/"],
       "@/payload/hooks": ["./src/app/(payload)/_hooks/"],
       "@/payload/templates": ["./src/app/(payload)/_templates/"],
+      "@/payload/translations": ["./src/app/(payload)/_translations/"],
       "@/payload/utilities": ["./src/app/(payload)/_utilities/"],
       "@/payload/views": ["./src/app/(payload)/_views/"],
       "@cached-local-api": ["./cached-local-api.ts"],

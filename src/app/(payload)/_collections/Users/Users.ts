@@ -7,6 +7,16 @@ import { populateCreatedBy } from './hooks/populateCreatedBy'
 
 export const Users: CollectionConfig = {
   slug: 'users',
+  labels: {
+    singular: {
+      en: 'User',
+      cs: 'Uživatel',
+    },
+    plural: {
+      en: 'Users',
+      cs: 'Uživatelé',
+    },
+  },
   admin: {
     group: 'Payload',
     useAsTitle: 'email',
@@ -27,6 +37,10 @@ export const Users: CollectionConfig = {
   fields: [
     {
       name: 'role',
+      label: {
+        en: 'Role',
+        cs: 'Role',
+      },
       type: 'select',
       hasMany: false,
       options: [
@@ -61,6 +75,10 @@ export const Users: CollectionConfig = {
     // Virtual fields
     {
       name: 'title',
+      label: {
+        en: 'Title',
+        cs: 'Název',
+      },
       type: 'text',
       admin: {
         position: 'sidebar',
@@ -69,6 +87,10 @@ export const Users: CollectionConfig = {
     },
     {
       name: 'firstName',
+      label: {
+        en: 'First name',
+        cs: 'Jméno',
+      },
       type: 'text',
       admin: {
         position: 'sidebar',
@@ -77,6 +99,10 @@ export const Users: CollectionConfig = {
     },
     {
       name: 'lastName',
+      label: {
+        en: 'Last name',
+        cs: 'Příjmení',
+      },
       type: 'text',
       admin: {
         position: 'sidebar',
@@ -85,6 +111,10 @@ export const Users: CollectionConfig = {
     },
     {
       name: 'profile',
+      label: {
+        en: 'Profile',
+        cs: 'Profil',
+      },
       type: 'relationship',
       relationTo: ['organizations', 'candidates'],
       hasMany: false,

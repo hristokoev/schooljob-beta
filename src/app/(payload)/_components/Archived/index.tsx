@@ -1,16 +1,32 @@
 'use client'
 
 import React, { useState } from 'react'
+import { useSearchParams, useTranslation } from '@payloadcms/ui'
 import { Button } from '@payloadcms/ui'
 import { CustomComponent } from 'payload'
 import { useRouter } from 'next/navigation'
-import { useSearchParams } from '@payloadcms/ui'
+
+import { TranslationKeys } from '@/payload/translations'
 
 import './style.scss'
 
 type ArchiveFilter = 'all' | 'active' | 'archived' | undefined
 
+// TODO: Use from payload after updating the beta version
+type NestedKeysStripped<T> = T extends object
+  ? {
+      [K in keyof T]-?: K extends string
+        ? T[K] extends object
+          ? `${K}:${NestedKeysStripped<T[K]>}`
+          : K
+        : never
+    }[keyof T]
+  : ''
+
+type CustomTranslationKeys = NestedKeysStripped<TranslationKeys>
+
 const Archived: CustomComponent = () => {
+  const { t } = useTranslation<TranslationKeys, CustomTranslationKeys>()
   const { searchParams, stringifyParams } = useSearchParams()
   const [selected, setSelected] = useState<ArchiveFilter>(undefined)
   const router = useRouter()
@@ -50,21 +66,21 @@ const Archived: CustomComponent = () => {
         size="small"
         onClick={() => updateSearchParams('all')}
       >
-        All
+        {t('fields:showAll')}
       </Button>
       <Button
         buttonStyle={selected === 'active' ? 'primary' : 'secondary'}
         size="small"
         onClick={() => updateSearchParams('active')}
       >
-        Active
+        {t('other:active')}
       </Button>
       <Button
         buttonStyle={selected === 'archived' ? 'primary' : 'secondary'}
         size="small"
         onClick={() => updateSearchParams('archived')}
       >
-        Archived
+        {t('other:archived')}
       </Button>
     </div>
   )

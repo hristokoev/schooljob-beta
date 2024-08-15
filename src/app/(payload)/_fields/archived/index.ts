@@ -5,6 +5,10 @@ import { ArchivedField } from './field'
 
 export const archived: Field = {
     name: 'archived',
+    label: {
+        en: 'archive',
+        cs: 'Archivovat',
+    },
     type: 'checkbox',
     defaultValue: false,
     admin: {

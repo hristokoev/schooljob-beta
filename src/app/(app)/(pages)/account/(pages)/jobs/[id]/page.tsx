@@ -85,7 +85,6 @@ export default async function EditJob({ params: { id } }: Props) {
         value: data.salary?.salaryType || 'monthly',
       },
     },
-    description: data.description || '',
     richText: data.richText || {
       root: { type: '', children: [], direction: null, format: '', indent: 0, version: 0 },
     },

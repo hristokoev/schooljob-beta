@@ -8,11 +8,20 @@ import { populateCreatedBy } from '@/payload/hooks'
 export const ImageCovers: CollectionConfig = {
   slug: 'image-covers',
   labels: {
-    singular: 'Image Cover',
-    plural: 'Image Covers',
+    singular: {
+      en: 'Image Cover',
+      cs: 'Obrázek',
+    },
+    plural: {
+      en: 'Image Covers',
+      cs: 'Obrázky',
+    }
   },
   admin: {
-    group: 'Files',
+    group: {
+      en: 'Files',
+      cs: 'Soubory',
+    },
     useAsTitle: 'filename',
     hidden: ({ user }) => user?.role !== 'super-admin'
   },

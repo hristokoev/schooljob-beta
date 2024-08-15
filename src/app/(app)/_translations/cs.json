@@ -451,7 +451,7 @@
     "phone": "Telefon",
     "url": "URL",
     "description": "Krátký popis",
-    "richText": "Úplný popis",
+    "richText": "Detaily organizace",
     "loading": "Aktualizace profilu...",
     "success": "Váš profil byl aktualizován.",
     "error": "Něco se pokazilo. Zkuste to prosím později.",

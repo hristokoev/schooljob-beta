@@ -2,15 +2,32 @@ import { CollectionConfig } from 'payload'
 
 import { ARCHIVED, SA, SA_A_C_Self_createdBy } from '@/payload/access'
 import { archived, createdBy } from '@/payload/fields'
+import { Archived } from '@/payload/components'
 import { dispatchEvents } from '@/payload/hooks'
 import SA_A_O_C_Self from './access/SA_A_O_C_Self'
 
 export const Candidates: CollectionConfig = {
   slug: 'candidates',
+  labels: {
+    singular: {
+      en: 'Candidate',
+      cs: 'Profil kandidáta',
+    },
+    plural: {
+      en: 'Candidates',
+      cs: 'Profily kandidátů',
+    },
+  },
   admin: {
-    group: 'SchoolJob',
+    group: {
+      en: 'Profiles',
+      cs: 'Profily',
+    },
     useAsTitle: 'fullName',
     defaultColumns: ['firstName', 'lastName', 'email', 'phone', 'location', 'archived'],
+    components: {
+      BeforeListTable: [Archived],
+    },
     hidden: ({ user }) => user?.role === 'organization' || user?.role === 'candidate',
   },
   hooks: {
@@ -49,6 +66,10 @@ export const Candidates: CollectionConfig = {
               fields: [
                 {
                   name: 'firstName',
+                  label: {
+                    en: 'First Name',
+                    cs: 'Jméno',
+                  },
                   type: 'text',
                   admin: {
                     width: '50%',
@@ -60,6 +81,10 @@ export const Candidates: CollectionConfig = {
                 },
                 {
                   name: 'lastName',
+                  label: {
+                    en: 'Last Name',
+                    cs: 'Příjmení',
+                  },
                   type: 'text',
                   admin: {
                     width: '50%',
@@ -76,6 +101,10 @@ export const Candidates: CollectionConfig = {
               fields: [
                 {
                   name: 'email',
+                  label: {
+                    en: 'Email',
+                    cs: 'Email',
+                  },
                   type: 'text',
                   admin: {
                     width: '50%',
@@ -88,6 +117,10 @@ export const Candidates: CollectionConfig = {
                 },
                 {
                   name: 'phone',
+                  label: {
+                    en: 'Phone',
+                    cs: 'Telefon',
+                  },
                   type: 'text',
                   admin: {
                     width: '50%',
@@ -100,6 +133,10 @@ export const Candidates: CollectionConfig = {
             },
             {
               name: 'location',
+              label: {
+                en: 'Location',
+                cs: 'Místo',
+              },
               type: 'text',
               access: {
                 read: ARCHIVED
@@ -107,6 +144,10 @@ export const Candidates: CollectionConfig = {
             },
             {
               name: 'photo',
+              label: {
+                en: 'Photo',
+                cs: 'Fotka',
+              },
               type: 'upload',
               relationTo: 'photos',
               access: {
@@ -115,6 +156,10 @@ export const Candidates: CollectionConfig = {
             },
             {
               name: 'bio',
+              label: {
+                en: 'Bio',
+                cs: 'Bio',
+              },
               type: 'textarea',
               access: {
                 read: ARCHIVED
@@ -127,6 +172,10 @@ export const Candidates: CollectionConfig = {
           fields: [
             {
               name: 'applications',
+              label: {
+                en: 'Applications',
+                cs: 'Žádosti',
+              },
               type: 'relationship',
               relationTo: 'applications',
               hasMany: true,
@@ -141,6 +190,10 @@ export const Candidates: CollectionConfig = {
           fields: [
             {
               name: 'jobsSaved',
+              label: {
+                en: 'Saved Jobs',
+                cs: 'Uložené pozice',
+              },
               type: 'relationship',
               relationTo: 'jobs',
               hasMany: true,
@@ -155,6 +208,10 @@ export const Candidates: CollectionConfig = {
     createdBy,
     {
       name: 'fullName',
+      label: {
+        en: 'Full Name',
+        cs: 'Celé jméno',
+      },
       type: 'text',
       admin: {
         hidden: true, // hides the field from the admin panel

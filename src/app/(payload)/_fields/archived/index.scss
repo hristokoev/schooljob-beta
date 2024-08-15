@@ -1,20 +1,25 @@
 .cell-archived {
-    color: var(--theme-base-500);
+    color: var(--color-base-0);
     
     .btn {
         width: '100%';
     }
 
     .archived {
+        color: var(--color-base-800);
+        background-color: var(--theme-success-500);
     }
 
     .archived:hover {
+        background-color: var(--theme-success-400);
     }
 
     .published {
+        background-color: var(--theme-error-500);
     }
 
     .published:hover {
+        background-color: var(--theme-error-400);
     }
 }
 

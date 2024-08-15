@@ -26,7 +26,6 @@ type JobFormData = {
         currency?: Option
         salaryType?: Option
     }
-    description?: string
     richText?: {
         root: {
             type: string
@@ -101,7 +100,6 @@ const JobFieldSchema: ZodType<JobFormData> = z
                 value: z.string(),
             }).optional(),
         }).optional(),
-        description: z.string().optional(),
         richText: z.object({
             root: z.object({
                 type: z.string(),
