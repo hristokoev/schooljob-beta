@@ -1,11 +1,8 @@
 export const employmentTypeOptions = [
     'fulltime',
     'parttime',
-    'contract',
-    'temporary',
+    'agreement',
     'internship',
-    'freelance',
-    'apprenticeship',
+    'contract',
     'volunteer',
-    'seasonal',
 ]

@@ -618,18 +618,6 @@ const JobsEditView: React.FC<Partial<JobFormData> & JobsEditViewProps> = formDat
                   </div>
                 </div>
                 */}
-
-                <div>
-                  <Label>{t('editJob.applyUrl')}</Label>
-                  <FormInputField
-                    type="url"
-                    placeholder={t('editJob.applyUrlPlaceholder')}
-                    name="customApplyUrl"
-                    register={register}
-                    error={errors.customApplyUrl}
-                    disabled={published}
-                  />
-                </div>
               </div>
             </div>
           </Aside>

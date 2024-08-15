@@ -1,11 +1,9 @@
 export const categoriesOptions = [
-    'education',
-    'healthcare',
+    'preschool',
+    'primary',
+    'secondary',
+    'tertiary',
+    'leisure',
     'sport',
-    'culture',
-    'arts',
-    'special',
-    'religious',
-    'nonprofit',
     'other'
 ]
