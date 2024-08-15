@@ -15,8 +15,8 @@ export const Organizations: CollectionConfig = {
     defaultColumns: ['title', 'location', 'archived'],
     components: {
       BeforeListTable: [Archived],
-    }
-    // hidden: ({ user }) => user?.role === 'organization' || user?.role === 'candidate',
+    },
+    hidden: ({ user }) => user?.role === 'organization' || user?.role === 'candidate',
   },
   hooks: {
     afterChange: [

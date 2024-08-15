@@ -45,9 +45,10 @@ export const EmailTemplates: CollectionConfig = {
     group: 'SchoolJob',
     useAsTitle: 'title',
     defaultColumns: ['title', 'to', 'event'],
+    hidden: ({ user }) => user?.role !== 'super-admin' || user?.role !== 'admin',
   },
   access: {
-    create: SA_A,
+    create: SA,
     read: SA_A,
     update: SA_A,
     delete: SA,

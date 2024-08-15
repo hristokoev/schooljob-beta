@@ -26,8 +26,8 @@ export const Jobs: CollectionConfig = {
     defaultColumns: ['title', 'organization', 'featured', 'status', 'archived'],
     components: {
       BeforeListTable: [Archived],
-    }
-    // hidden: ({ user }) => user?.role === 'candidate',
+    },
+    hidden: ({ user }) => user?.role === 'candidate',
   },
   hooks: {
     beforeChange: [populateCreatedBy, populateEmail, populatePublicId],
@@ -430,30 +430,7 @@ export const Jobs: CollectionConfig = {
             update: SA_A,
           },
         },
-        {
-          name: 'hasEndDate',
-          type: 'checkbox',
-          defaultValue: false,
-          admin: {
-            width: '50%',
-          },
-          access: {
-            read: ARCHIVED,
-          },
-        },
       ],
-    },
-    {
-      name: 'endDate',
-      type: 'date',
-      admin: {
-        position: 'sidebar',
-        condition: (data) => Boolean(data?.hasEndDate),
-      },
-      access: {
-        read: ARCHIVED,
-      },
-      required: true,
     },
     slugField,
     createdBy,

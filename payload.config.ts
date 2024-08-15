@@ -147,6 +147,9 @@ export default buildConfig({
         keywords: originalDoc?.richText ? extractTopKeywords(originalDoc.richText, 25).join(', ') : "",
       }),
       searchOverrides: {
+        admin: {
+          hidden: ({ user }) => user?.role !== 'super-admin'
+        },
         access: {
           read: () => {
             return {
@@ -187,9 +190,6 @@ export default buildConfig({
             index: true
           }
         ],
-        // admin: {
-        //   hidden: true
-        // }
       }
     })
   ],

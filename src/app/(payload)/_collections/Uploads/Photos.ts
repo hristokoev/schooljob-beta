@@ -14,7 +14,7 @@ export const Photos: CollectionConfig = {
   admin: {
     group: 'Files',
     useAsTitle: 'filename',
-    // hidden: ({ user }) => user?.role === 'organization' || user?.role === 'candidate',
+    hidden: ({ user }) => user?.role !== 'super-admin'
   },
   hooks: {
     beforeChange: [obfuscateFilename, populateCreatedBy],

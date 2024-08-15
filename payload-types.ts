@@ -151,8 +151,6 @@ export interface Job {
   };
   applications?: (string | Application)[] | null;
   featured?: boolean | null;
-  hasEndDate?: boolean | null;
-  endDate?: string | null;
   slug?: string | null;
   createdBy?: (string | null) | User;
   publicId?: number | null;

@@ -604,20 +604,6 @@ const JobsEditView: React.FC<Partial<JobFormData> & JobsEditViewProps> = formDat
                     </Label>
                   </div>
                 </div>
-
-                {/* TODO: Implement this feature
-                <div className="space-y-4">
-                  <div className="flex items-center">
-                    <Switch
-                      name="hasEndDate"
-                      value={hasEndDate}
-                      onText="Has End Date"
-                      offText="No End Date"
-                      onChange={() => setHasEndDate(!hasEndDate)}
-                  />
-                  </div>
-                </div>
-                */}
               </div>
             </div>
           </Aside>

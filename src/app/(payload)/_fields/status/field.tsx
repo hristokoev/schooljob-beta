@@ -21,7 +21,7 @@ export const StatusSelectField: CustomComponent = ({ path }) => {
       onClick={() => setValue(value === 'published' ? 'unpublished' : 'published')}
     >
       <p className="m-0 p-4 text-center text-lg font-bold leading-none">
-        {value === 'published' ? 'Published. Set to Unpublish' : 'Not Published. Set to Publish'}
+        {value === 'published' ? 'Published. Click to change.' : 'Not Published. Click to change.'}
       </p>
     </div>
   )

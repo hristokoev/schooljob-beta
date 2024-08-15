@@ -11,7 +11,7 @@ export const Candidates: CollectionConfig = {
     group: 'SchoolJob',
     useAsTitle: 'fullName',
     defaultColumns: ['firstName', 'lastName', 'email', 'phone', 'location', 'archived'],
-    // hidden: ({ user }) => user?.role === 'organization' || user?.role === 'candidate',
+    hidden: ({ user }) => user?.role === 'organization' || user?.role === 'candidate',
   },
   hooks: {
     afterChange: [

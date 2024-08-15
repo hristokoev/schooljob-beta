@@ -13,7 +13,7 @@ export const Agreements: CollectionConfig = {
     group: 'SchoolJob',
     useAsTitle: 'title',
     defaultColumns: ['title', 'slug'],
-    // hidden: ({ user }) => user?.role === 'organization' || user?.role === 'candidate',
+    hidden: ({ user }) => user?.role === 'organization' || user?.role === 'candidate',
   },
   access: {
     create: SA_A,

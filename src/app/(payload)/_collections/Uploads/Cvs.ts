@@ -16,7 +16,7 @@ export const Cvs: CollectionConfig = {
     group: 'SchoolJob',
     useAsTitle: 'filename',
     defaultColumns: ['filename', 'filesize', 'createdBy', 'createdAt'],
-    // hidden: ({ user }) => user?.role === 'organization' || user?.role === 'candidate',
+    hidden: ({ user }) => user?.role === 'organization' || user?.role === 'candidate',
   },
   upload: {
     staticDir: '/cvs',

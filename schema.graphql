@@ -82,8 +82,6 @@ type Job {
   suitableFor: Job_SuitableFor
   applications(locale: LocaleInputType, fallbackLocale: FallbackLocaleInputType): [Application!]
   featured: Boolean
-  hasEndDate: Boolean
-  endDate: DateTime
   slug: String
   createdBy(locale: LocaleInputType, fallbackLocale: FallbackLocaleInputType): User
   publicId: Float
@@ -1336,8 +1334,6 @@ input Job_where {
   suitableFor__retirees: Job_suitableFor__retirees_operator
   applications: Job_applications_operator
   featured: Job_featured_operator
-  hasEndDate: Job_hasEndDate_operator
-  endDate: Job_endDate_operator
   slug: Job_slug_operator
   createdBy: Job_createdBy_operator
   publicId: Job_publicId_operator
@@ -1710,22 +1706,6 @@ input Job_featured_operator {
   exists: Boolean
 }
 
-input Job_hasEndDate_operator {
-  equals: Boolean
-  not_equals: Boolean
-  exists: Boolean
-}
-
-input Job_endDate_operator {
-  equals: DateTime
-  not_equals: DateTime
-  greater_than_equal: DateTime
-  greater_than: DateTime
-  less_than_equal: DateTime
-  less_than: DateTime
-  like: DateTime
-}
-
 input Job_slug_operator {
   equals: String
   not_equals: String
@@ -1820,8 +1800,6 @@ input Job_where_and {
   suitableFor__retirees: Job_suitableFor__retirees_operator
   applications: Job_applications_operator
   featured: Job_featured_operator
-  hasEndDate: Job_hasEndDate_operator
-  endDate: Job_endDate_operator
   slug: Job_slug_operator
   createdBy: Job_createdBy_operator
   publicId: Job_publicId_operator
@@ -1864,8 +1842,6 @@ input Job_where_or {
   suitableFor__retirees: Job_suitableFor__retirees_operator
   applications: Job_applications_operator
   featured: Job_featured_operator
-  hasEndDate: Job_hasEndDate_operator
-  endDate: Job_endDate_operator
   slug: Job_slug_operator
   createdBy: Job_createdBy_operator
   publicId: Job_publicId_operator
@@ -1911,8 +1887,6 @@ type JobsDocAccessFields {
   suitableFor: JobsDocAccessFields_suitableFor
   applications: JobsDocAccessFields_applications
   featured: JobsDocAccessFields_featured
-  hasEndDate: JobsDocAccessFields_hasEndDate
-  endDate: JobsDocAccessFields_endDate
   slug: JobsDocAccessFields_slug
   createdBy: JobsDocAccessFields_createdBy
   publicId: JobsDocAccessFields_publicId
@@ -2695,52 +2669,6 @@ type JobsDocAccessFields_featured_Update {
 }
 
 type JobsDocAccessFields_featured_Delete {
-  permission: Boolean!
-}
-
-type JobsDocAccessFields_hasEndDate {
-  create: JobsDocAccessFields_hasEndDate_Create
-  read: JobsDocAccessFields_hasEndDate_Read
-  update: JobsDocAccessFields_hasEndDate_Update
-  delete: JobsDocAccessFields_hasEndDate_Delete
-}
-
-type JobsDocAccessFields_hasEndDate_Create {
-  permission: Boolean!
-}
-
-type JobsDocAccessFields_hasEndDate_Read {
-  permission: Boolean!
-}
-
-type JobsDocAccessFields_hasEndDate_Update {
-  permission: Boolean!
-}
-
-type JobsDocAccessFields_hasEndDate_Delete {
-  permission: Boolean!
-}
-
-type JobsDocAccessFields_endDate {
-  create: JobsDocAccessFields_endDate_Create
-  read: JobsDocAccessFields_endDate_Read
-  update: JobsDocAccessFields_endDate_Update
-  delete: JobsDocAccessFields_endDate_Delete
-}
-
-type JobsDocAccessFields_endDate_Create {
-  permission: Boolean!
-}
-
-type JobsDocAccessFields_endDate_Read {
-  permission: Boolean!
-}
-
-type JobsDocAccessFields_endDate_Update {
-  permission: Boolean!
-}
-
-type JobsDocAccessFields_endDate_Delete {
   permission: Boolean!
 }
 
@@ -9339,8 +9267,6 @@ type JobsFields {
   suitableFor: JobsFields_suitableFor
   applications: JobsFields_applications
   featured: JobsFields_featured
-  hasEndDate: JobsFields_hasEndDate
-  endDate: JobsFields_endDate
   slug: JobsFields_slug
   createdBy: JobsFields_createdBy
   publicId: JobsFields_publicId
@@ -10123,52 +10049,6 @@ type JobsFields_featured_Update {
 }
 
 type JobsFields_featured_Delete {
-  permission: Boolean!
-}
-
-type JobsFields_hasEndDate {
-  create: JobsFields_hasEndDate_Create
-  read: JobsFields_hasEndDate_Read
-  update: JobsFields_hasEndDate_Update
-  delete: JobsFields_hasEndDate_Delete
-}
-
-type JobsFields_hasEndDate_Create {
-  permission: Boolean!
-}
-
-type JobsFields_hasEndDate_Read {
-  permission: Boolean!
-}
-
-type JobsFields_hasEndDate_Update {
-  permission: Boolean!
-}
-
-type JobsFields_hasEndDate_Delete {
-  permission: Boolean!
-}
-
-type JobsFields_endDate {
-  create: JobsFields_endDate_Create
-  read: JobsFields_endDate_Read
-  update: JobsFields_endDate_Update
-  delete: JobsFields_endDate_Delete
-}
-
-type JobsFields_endDate_Create {
-  permission: Boolean!
-}
-
-type JobsFields_endDate_Read {
-  permission: Boolean!
-}
-
-type JobsFields_endDate_Update {
-  permission: Boolean!
-}
-
-type JobsFields_endDate_Delete {
   permission: Boolean!
 }
 
@@ -14265,8 +14145,6 @@ input mutationJobInput {
   suitableFor: mutationJob_SuitableForInput
   applications: [String]
   featured: Boolean
-  hasEndDate: Boolean
-  endDate: String
   slug: String
   createdBy: String
   publicId: Float
@@ -14418,8 +14296,6 @@ input mutationJobUpdateInput {
   suitableFor: mutationJobUpdate_SuitableForInput
   applications: [String]
   featured: Boolean
-  hasEndDate: Boolean
-  endDate: String
   slug: String
   createdBy: String
   publicId: Float

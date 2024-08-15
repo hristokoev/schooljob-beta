@@ -5,6 +5,9 @@ export const Data: GlobalConfig = {
   typescript: {
     interface: 'Data',
   },
+  admin: {
+    hidden: ({ user }) => user?.role !== 'super-admin'
+  },
   graphQL: {
     name: 'Data',
   },
