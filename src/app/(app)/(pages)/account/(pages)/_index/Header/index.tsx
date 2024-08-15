@@ -81,13 +81,13 @@ const HeaderContent: React.FC<{ user: User }> = ({ user }) => {
           )}
         </div>
         <div className="flex flex-wrap justify-center space-x-4 md:justify-start">
-          {user.profile.value.location && (
+          {user.profile.value.location?.length && (
             <div className="flex items-center">
               <GlobeEuropeAfricaIcon className="h-4 w-4 shrink-0 fill-current text-slate-400" />
               <span className="ml-2 whitespace-nowrap text-sm font-medium text-slate-500">
-                {user.profile.value.location.map(
-                  location => cz.find(l => l.value === location)?.label,
-                )}
+                {user.profile.value.location
+                  .map(location => cz.find(l => l.value === location)?.label)
+                  .join(', ')}
               </span>
             </div>
           )}
