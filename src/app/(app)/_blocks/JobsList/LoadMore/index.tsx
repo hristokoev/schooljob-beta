@@ -16,7 +16,7 @@ const LoadMore: React.FC<JobSearchParams> = props => {
     page: initialPage = 1,
     sort,
     createdAt,
-    limit = 8,
+    limit,
     status = 'published',
     featured,
     organization,

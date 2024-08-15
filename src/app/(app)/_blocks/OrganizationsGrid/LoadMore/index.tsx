@@ -10,7 +10,7 @@ import { OrganizationSearchParams } from '@/types'
 
 const LoadMore: React.FC<OrganizationSearchParams> = props => {
   const t = useTranslations()
-  const { page: initialPage = 1, limit = 6, featured, categories, location } = props
+  const { page: initialPage = 1, limit, featured, categories, location } = props
   const [organizations, setOrganizaions] = useState<Organization[] | null>(null)
   const [page, setPage] = useState<number>(initialPage)
   const [loading, setLoading] = useState<boolean>(false)
@@ -36,7 +36,7 @@ const LoadMore: React.FC<OrganizationSearchParams> = props => {
 
   return (
     <Fragment>
-      <div className="mb-8 grid grid-cols-3 gap-2">
+      <div className="mb-8 grid grid-cols-1 gap-2 sm:grid-cols-2 md:grid-cols-3">
         {organizations &&
           organizations.map(organization => (
             <div key={organization.id}>

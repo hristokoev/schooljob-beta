@@ -13,7 +13,7 @@ const JobsList: React.FC<JobSearchParams> = async props => {
   const t = await getTranslations()
   const {
     loadMore = false,
-    limit = 8,
+    limit = 24,
     page = 1,
     sort,
     createdAt,

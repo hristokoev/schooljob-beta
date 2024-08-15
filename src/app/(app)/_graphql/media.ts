@@ -3,4 +3,5 @@ mimeType
 filename
 width
 height
+url
 `
