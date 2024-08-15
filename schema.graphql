@@ -92,14 +92,12 @@ type Job {
 }
 
 enum Job_categories {
-  education
-  healthcare
+  preschool
+  primary
+  secondary
+  tertiary
+  leisure
   sport
-  culture
-  arts
-  special
-  religious
-  nonprofit
   other
 }
 
@@ -144,14 +142,12 @@ enum Organization_location {
 }
 
 enum Organization_categories {
-  education
-  healthcare
+  preschool
+  primary
+  secondary
+  tertiary
+  leisure
   sport
-  culture
-  arts
-  special
-  religious
-  nonprofit
   other
 }
 
@@ -1186,13 +1182,10 @@ input Organization_ImageCover_where_or {
 enum Job_employmentType {
   fulltime
   parttime
-  contract
-  temporary
+  agreement
   internship
-  freelance
-  apprenticeship
+  contract
   volunteer
-  seasonal
 }
 
 enum Job_location {
@@ -1390,14 +1383,12 @@ input Job_categories_operator {
 }
 
 enum Job_categories_Input {
-  education
-  healthcare
+  preschool
+  primary
+  secondary
+  tertiary
+  leisure
   sport
-  culture
-  arts
-  special
-  religious
-  nonprofit
   other
 }
 
@@ -1430,13 +1421,10 @@ input Job_employmentType_operator {
 enum Job_employmentType_Input {
   fulltime
   parttime
-  contract
-  temporary
+  agreement
   internship
-  freelance
-  apprenticeship
+  contract
   volunteer
-  seasonal
 }
 
 input Job_location_operator {
@@ -3036,14 +3024,12 @@ input Organization_categories_operator {
 }
 
 enum Organization_categories_Input {
-  education
-  healthcare
+  preschool
+  primary
+  secondary
+  tertiary
+  leisure
   sport
-  culture
-  arts
-  special
-  religious
-  nonprofit
   other
 }
 
@@ -14289,27 +14275,22 @@ input mutationJobInput {
 }
 
 enum Job_categories_MutationInput {
-  education
-  healthcare
+  preschool
+  primary
+  secondary
+  tertiary
+  leisure
   sport
-  culture
-  arts
-  special
-  religious
-  nonprofit
   other
 }
 
 enum Job_employmentType_MutationInput {
   fulltime
   parttime
-  contract
-  temporary
+  agreement
   internship
-  freelance
-  apprenticeship
+  contract
   volunteer
-  seasonal
 }
 
 enum Job_location_MutationInput {
@@ -14447,27 +14428,22 @@ input mutationJobUpdateInput {
 }
 
 enum JobUpdate_categories_MutationInput {
-  education
-  healthcare
+  preschool
+  primary
+  secondary
+  tertiary
+  leisure
   sport
-  culture
-  arts
-  special
-  religious
-  nonprofit
   other
 }
 
 enum JobUpdate_employmentType_MutationInput {
   fulltime
   parttime
-  contract
-  temporary
+  agreement
   internship
-  freelance
-  apprenticeship
+  contract
   volunteer
-  seasonal
 }
 
 enum JobUpdate_location_MutationInput {
@@ -14612,14 +14588,12 @@ enum Organization_location_MutationInput {
 }
 
 enum Organization_categories_MutationInput {
-  education
-  healthcare
+  preschool
+  primary
+  secondary
+  tertiary
+  leisure
   sport
-  culture
-  arts
-  special
-  religious
-  nonprofit
   other
 }
 
@@ -14663,14 +14637,12 @@ enum OrganizationUpdate_location_MutationInput {
 }
 
 enum OrganizationUpdate_categories_MutationInput {
-  education
-  healthcare
+  preschool
+  primary
+  secondary
+  tertiary
+  leisure
   sport
-  culture
-  arts
-  special
-  religious
-  nonprofit
   other
 }
 
