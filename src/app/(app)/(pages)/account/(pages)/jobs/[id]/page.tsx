@@ -101,7 +101,6 @@ export default async function EditJob({ params: { id } }: Props) {
       mothersOnMaternityLeave: data.suitableFor?.mothersOnMaternityLeave || false,
       retirees: data.suitableFor?.retirees || false,
     },
-    customApplyUrl: data.customApplyUrl || '',
   }
 
   const links = [

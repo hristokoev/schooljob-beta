@@ -64,7 +64,7 @@ export const EmailTemplates: CollectionConfig = {
       options: [
         {
           label: 'no-reply@schooljob.cz',
-          value: 'no-reply@schooljob.cz',
+          value: 'no-reply',
         },
       ],
       required: true,

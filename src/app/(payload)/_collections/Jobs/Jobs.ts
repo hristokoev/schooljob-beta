@@ -456,18 +456,6 @@ export const Jobs: CollectionConfig = {
       required: true,
     },
     slugField,
-    {
-      name: 'customApplyUrl',
-      label: 'Custom Apply URL',
-      defaultValue: 'https://',
-      type: 'text',
-      admin: {
-        position: 'sidebar'
-      },
-      access: {
-        read: ARCHIVED,
-      },
-    },
     createdBy,
     {
       name: 'publicId',

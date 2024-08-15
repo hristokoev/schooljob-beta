@@ -52,7 +52,6 @@ type JobFormData = {
         mothersOnMaternityLeave?: boolean
         retirees?: boolean
     }
-    customApplyUrl?: string
 }
 
 const JobFieldSchema: ZodType<JobFormData> = z
@@ -126,7 +125,6 @@ const JobFieldSchema: ZodType<JobFormData> = z
             mothersOnMaternityLeave: z.boolean().optional(),
             retirees: z.boolean().optional(),
         }).optional(),
-        customApplyUrl: z.string().optional(),
     })
 
 export { type Option, type JobFormData, JobFieldSchema }

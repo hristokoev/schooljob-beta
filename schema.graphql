@@ -65,6 +65,7 @@ type Job {
   title: String!
   categories: [Job_categories!]
   organization(locale: LocaleInputType, fallbackLocale: FallbackLocaleInputType): Organization!
+  email: String
   employmentType: [Job_employmentType!]
   location: [Job_location!]
   locationType: [Job_locationType!]
@@ -84,7 +85,6 @@ type Job {
   hasEndDate: Boolean
   endDate: DateTime
   slug: String
-  customApplyUrl: String
   createdBy(locale: LocaleInputType, fallbackLocale: FallbackLocaleInputType): User
   publicId: Float
   updatedAt: DateTime
@@ -1317,6 +1317,7 @@ input Job_where {
   title: Job_title_operator
   categories: Job_categories_operator
   organization: Job_organization_operator
+  email: Job_email_operator
   employmentType: Job_employmentType_operator
   location: Job_location_operator
   locationType: Job_locationType_operator
@@ -1345,7 +1346,6 @@ input Job_where {
   hasEndDate: Job_hasEndDate_operator
   endDate: Job_endDate_operator
   slug: Job_slug_operator
-  customApplyUrl: Job_customApplyUrl_operator
   createdBy: Job_createdBy_operator
   publicId: Job_publicId_operator
   updatedAt: Job_updatedAt_operator
@@ -1407,6 +1407,16 @@ input Job_organization_operator {
   in: [JSON]
   not_in: [JSON]
   all: [JSON]
+}
+
+input Job_email_operator {
+  equals: String
+  not_equals: String
+  like: String
+  contains: String
+  in: [String]
+  not_in: [String]
+  all: [String]
 }
 
 input Job_employmentType_operator {
@@ -1739,17 +1749,6 @@ input Job_slug_operator {
   exists: Boolean
 }
 
-input Job_customApplyUrl_operator {
-  equals: String
-  not_equals: String
-  like: String
-  contains: String
-  in: [String]
-  not_in: [String]
-  all: [String]
-  exists: Boolean
-}
-
 input Job_createdBy_operator {
   equals: JSON
   not_equals: JSON
@@ -1807,6 +1806,7 @@ input Job_where_and {
   title: Job_title_operator
   categories: Job_categories_operator
   organization: Job_organization_operator
+  email: Job_email_operator
   employmentType: Job_employmentType_operator
   location: Job_location_operator
   locationType: Job_locationType_operator
@@ -1835,7 +1835,6 @@ input Job_where_and {
   hasEndDate: Job_hasEndDate_operator
   endDate: Job_endDate_operator
   slug: Job_slug_operator
-  customApplyUrl: Job_customApplyUrl_operator
   createdBy: Job_createdBy_operator
   publicId: Job_publicId_operator
   updatedAt: Job_updatedAt_operator
@@ -1851,6 +1850,7 @@ input Job_where_or {
   title: Job_title_operator
   categories: Job_categories_operator
   organization: Job_organization_operator
+  email: Job_email_operator
   employmentType: Job_employmentType_operator
   location: Job_location_operator
   locationType: Job_locationType_operator
@@ -1879,7 +1879,6 @@ input Job_where_or {
   hasEndDate: Job_hasEndDate_operator
   endDate: Job_endDate_operator
   slug: Job_slug_operator
-  customApplyUrl: Job_customApplyUrl_operator
   createdBy: Job_createdBy_operator
   publicId: Job_publicId_operator
   updatedAt: Job_updatedAt_operator
@@ -1907,6 +1906,7 @@ type JobsDocAccessFields {
   title: JobsDocAccessFields_title
   categories: JobsDocAccessFields_categories
   organization: JobsDocAccessFields_organization
+  email: JobsDocAccessFields_email
   employmentType: JobsDocAccessFields_employmentType
   location: JobsDocAccessFields_location
   locationType: JobsDocAccessFields_locationType
@@ -1926,7 +1926,6 @@ type JobsDocAccessFields {
   hasEndDate: JobsDocAccessFields_hasEndDate
   endDate: JobsDocAccessFields_endDate
   slug: JobsDocAccessFields_slug
-  customApplyUrl: JobsDocAccessFields_customApplyUrl
   createdBy: JobsDocAccessFields_createdBy
   publicId: JobsDocAccessFields_publicId
   updatedAt: JobsDocAccessFields_updatedAt
@@ -2045,6 +2044,29 @@ type JobsDocAccessFields_organization_Update {
 }
 
 type JobsDocAccessFields_organization_Delete {
+  permission: Boolean!
+}
+
+type JobsDocAccessFields_email {
+  create: JobsDocAccessFields_email_Create
+  read: JobsDocAccessFields_email_Read
+  update: JobsDocAccessFields_email_Update
+  delete: JobsDocAccessFields_email_Delete
+}
+
+type JobsDocAccessFields_email_Create {
+  permission: Boolean!
+}
+
+type JobsDocAccessFields_email_Read {
+  permission: Boolean!
+}
+
+type JobsDocAccessFields_email_Update {
+  permission: Boolean!
+}
+
+type JobsDocAccessFields_email_Delete {
   permission: Boolean!
 }
 
@@ -2754,29 +2776,6 @@ type JobsDocAccessFields_slug_Update {
 }
 
 type JobsDocAccessFields_slug_Delete {
-  permission: Boolean!
-}
-
-type JobsDocAccessFields_customApplyUrl {
-  create: JobsDocAccessFields_customApplyUrl_Create
-  read: JobsDocAccessFields_customApplyUrl_Read
-  update: JobsDocAccessFields_customApplyUrl_Update
-  delete: JobsDocAccessFields_customApplyUrl_Delete
-}
-
-type JobsDocAccessFields_customApplyUrl_Create {
-  permission: Boolean!
-}
-
-type JobsDocAccessFields_customApplyUrl_Read {
-  permission: Boolean!
-}
-
-type JobsDocAccessFields_customApplyUrl_Update {
-  permission: Boolean!
-}
-
-type JobsDocAccessFields_customApplyUrl_Delete {
   permission: Boolean!
 }
 
@@ -5876,16 +5875,17 @@ type AgreementsDeleteDocAccess {
 type EmailTemplate {
   id: String
   title: String!
-  subject: String!
   from: EmailTemplate_from!
-  to: [EmailTemplate_to!]!
+  to: EmailTemplate_to!
+  preview: String!
+  blocks: [EmailTemplate_Blocks!]!
+  footer: String!
   event: EmailTemplate_event
   updatedAt: DateTime
   createdAt: DateTime
 }
 
 enum EmailTemplate_from {
-  info
   no_reply
 }
 
@@ -5893,6 +5893,23 @@ enum EmailTemplate_to {
   admin
   candidate
   organization
+}
+
+union EmailTemplate_Blocks = TextBlock | ButtonBlock
+
+type TextBlock {
+  text(depth: Int): JSON!
+  id: String
+  blockName: String
+  blockType: String
+}
+
+type ButtonBlock {
+  text: String!
+  link: String!
+  id: String
+  blockName: String
+  blockType: String
 }
 
 enum EmailTemplate_event {
@@ -5921,9 +5938,10 @@ type EmailTemplates {
 
 input EmailTemplate_where {
   title: EmailTemplate_title_operator
-  subject: EmailTemplate_subject_operator
   from: EmailTemplate_from_operator
   to: EmailTemplate_to_operator
+  preview: EmailTemplate_preview_operator
+  footer: EmailTemplate_footer_operator
   event: EmailTemplate_event_operator
   updatedAt: EmailTemplate_updatedAt_operator
   createdAt: EmailTemplate_createdAt_operator
@@ -5942,16 +5960,6 @@ input EmailTemplate_title_operator {
   all: [String]
 }
 
-input EmailTemplate_subject_operator {
-  equals: String
-  not_equals: String
-  like: String
-  contains: String
-  in: [String]
-  not_in: [String]
-  all: [String]
-}
-
 input EmailTemplate_from_operator {
   equals: EmailTemplate_from_Input
   not_equals: EmailTemplate_from_Input
@@ -5961,7 +5969,6 @@ input EmailTemplate_from_operator {
 }
 
 enum EmailTemplate_from_Input {
-  info
   no_reply
 }
 
@@ -5977,6 +5984,26 @@ enum EmailTemplate_to_Input {
   admin
   candidate
   organization
+}
+
+input EmailTemplate_preview_operator {
+  equals: String
+  not_equals: String
+  like: String
+  contains: String
+  in: [String]
+  not_in: [String]
+  all: [String]
+}
+
+input EmailTemplate_footer_operator {
+  equals: String
+  not_equals: String
+  like: String
+  contains: String
+  in: [String]
+  not_in: [String]
+  all: [String]
 }
 
 input EmailTemplate_event_operator {
@@ -6033,9 +6060,10 @@ input EmailTemplate_id_operator {
 
 input EmailTemplate_where_and {
   title: EmailTemplate_title_operator
-  subject: EmailTemplate_subject_operator
   from: EmailTemplate_from_operator
   to: EmailTemplate_to_operator
+  preview: EmailTemplate_preview_operator
+  footer: EmailTemplate_footer_operator
   event: EmailTemplate_event_operator
   updatedAt: EmailTemplate_updatedAt_operator
   createdAt: EmailTemplate_createdAt_operator
@@ -6046,9 +6074,10 @@ input EmailTemplate_where_and {
 
 input EmailTemplate_where_or {
   title: EmailTemplate_title_operator
-  subject: EmailTemplate_subject_operator
   from: EmailTemplate_from_operator
   to: EmailTemplate_to_operator
+  preview: EmailTemplate_preview_operator
+  footer: EmailTemplate_footer_operator
   event: EmailTemplate_event_operator
   updatedAt: EmailTemplate_updatedAt_operator
   createdAt: EmailTemplate_createdAt_operator
@@ -6071,9 +6100,11 @@ type email_templatesDocAccess {
 
 type EmailTemplatesDocAccessFields {
   title: EmailTemplatesDocAccessFields_title
-  subject: EmailTemplatesDocAccessFields_subject
   from: EmailTemplatesDocAccessFields_from
   to: EmailTemplatesDocAccessFields_to
+  preview: EmailTemplatesDocAccessFields_preview
+  blocks: EmailTemplatesDocAccessFields_blocks
+  footer: EmailTemplatesDocAccessFields_footer
   event: EmailTemplatesDocAccessFields_event
   updatedAt: EmailTemplatesDocAccessFields_updatedAt
   createdAt: EmailTemplatesDocAccessFields_createdAt
@@ -6099,29 +6130,6 @@ type EmailTemplatesDocAccessFields_title_Update {
 }
 
 type EmailTemplatesDocAccessFields_title_Delete {
-  permission: Boolean!
-}
-
-type EmailTemplatesDocAccessFields_subject {
-  create: EmailTemplatesDocAccessFields_subject_Create
-  read: EmailTemplatesDocAccessFields_subject_Read
-  update: EmailTemplatesDocAccessFields_subject_Update
-  delete: EmailTemplatesDocAccessFields_subject_Delete
-}
-
-type EmailTemplatesDocAccessFields_subject_Create {
-  permission: Boolean!
-}
-
-type EmailTemplatesDocAccessFields_subject_Read {
-  permission: Boolean!
-}
-
-type EmailTemplatesDocAccessFields_subject_Update {
-  permission: Boolean!
-}
-
-type EmailTemplatesDocAccessFields_subject_Delete {
   permission: Boolean!
 }
 
@@ -6168,6 +6176,75 @@ type EmailTemplatesDocAccessFields_to_Update {
 }
 
 type EmailTemplatesDocAccessFields_to_Delete {
+  permission: Boolean!
+}
+
+type EmailTemplatesDocAccessFields_preview {
+  create: EmailTemplatesDocAccessFields_preview_Create
+  read: EmailTemplatesDocAccessFields_preview_Read
+  update: EmailTemplatesDocAccessFields_preview_Update
+  delete: EmailTemplatesDocAccessFields_preview_Delete
+}
+
+type EmailTemplatesDocAccessFields_preview_Create {
+  permission: Boolean!
+}
+
+type EmailTemplatesDocAccessFields_preview_Read {
+  permission: Boolean!
+}
+
+type EmailTemplatesDocAccessFields_preview_Update {
+  permission: Boolean!
+}
+
+type EmailTemplatesDocAccessFields_preview_Delete {
+  permission: Boolean!
+}
+
+type EmailTemplatesDocAccessFields_blocks {
+  create: EmailTemplatesDocAccessFields_blocks_Create
+  read: EmailTemplatesDocAccessFields_blocks_Read
+  update: EmailTemplatesDocAccessFields_blocks_Update
+  delete: EmailTemplatesDocAccessFields_blocks_Delete
+}
+
+type EmailTemplatesDocAccessFields_blocks_Create {
+  permission: Boolean!
+}
+
+type EmailTemplatesDocAccessFields_blocks_Read {
+  permission: Boolean!
+}
+
+type EmailTemplatesDocAccessFields_blocks_Update {
+  permission: Boolean!
+}
+
+type EmailTemplatesDocAccessFields_blocks_Delete {
+  permission: Boolean!
+}
+
+type EmailTemplatesDocAccessFields_footer {
+  create: EmailTemplatesDocAccessFields_footer_Create
+  read: EmailTemplatesDocAccessFields_footer_Read
+  update: EmailTemplatesDocAccessFields_footer_Update
+  delete: EmailTemplatesDocAccessFields_footer_Delete
+}
+
+type EmailTemplatesDocAccessFields_footer_Create {
+  permission: Boolean!
+}
+
+type EmailTemplatesDocAccessFields_footer_Read {
+  permission: Boolean!
+}
+
+type EmailTemplatesDocAccessFields_footer_Update {
+  permission: Boolean!
+}
+
+type EmailTemplatesDocAccessFields_footer_Delete {
   permission: Boolean!
 }
 
@@ -9259,6 +9336,7 @@ type JobsFields {
   title: JobsFields_title
   categories: JobsFields_categories
   organization: JobsFields_organization
+  email: JobsFields_email
   employmentType: JobsFields_employmentType
   location: JobsFields_location
   locationType: JobsFields_locationType
@@ -9278,7 +9356,6 @@ type JobsFields {
   hasEndDate: JobsFields_hasEndDate
   endDate: JobsFields_endDate
   slug: JobsFields_slug
-  customApplyUrl: JobsFields_customApplyUrl
   createdBy: JobsFields_createdBy
   publicId: JobsFields_publicId
   updatedAt: JobsFields_updatedAt
@@ -9397,6 +9474,29 @@ type JobsFields_organization_Update {
 }
 
 type JobsFields_organization_Delete {
+  permission: Boolean!
+}
+
+type JobsFields_email {
+  create: JobsFields_email_Create
+  read: JobsFields_email_Read
+  update: JobsFields_email_Update
+  delete: JobsFields_email_Delete
+}
+
+type JobsFields_email_Create {
+  permission: Boolean!
+}
+
+type JobsFields_email_Read {
+  permission: Boolean!
+}
+
+type JobsFields_email_Update {
+  permission: Boolean!
+}
+
+type JobsFields_email_Delete {
   permission: Boolean!
 }
 
@@ -10106,29 +10206,6 @@ type JobsFields_slug_Update {
 }
 
 type JobsFields_slug_Delete {
-  permission: Boolean!
-}
-
-type JobsFields_customApplyUrl {
-  create: JobsFields_customApplyUrl_Create
-  read: JobsFields_customApplyUrl_Read
-  update: JobsFields_customApplyUrl_Update
-  delete: JobsFields_customApplyUrl_Delete
-}
-
-type JobsFields_customApplyUrl_Create {
-  permission: Boolean!
-}
-
-type JobsFields_customApplyUrl_Read {
-  permission: Boolean!
-}
-
-type JobsFields_customApplyUrl_Update {
-  permission: Boolean!
-}
-
-type JobsFields_customApplyUrl_Delete {
   permission: Boolean!
 }
 
@@ -12089,9 +12166,11 @@ type email_templatesAccess {
 
 type EmailTemplatesFields {
   title: EmailTemplatesFields_title
-  subject: EmailTemplatesFields_subject
   from: EmailTemplatesFields_from
   to: EmailTemplatesFields_to
+  preview: EmailTemplatesFields_preview
+  blocks: EmailTemplatesFields_blocks
+  footer: EmailTemplatesFields_footer
   event: EmailTemplatesFields_event
   updatedAt: EmailTemplatesFields_updatedAt
   createdAt: EmailTemplatesFields_createdAt
@@ -12117,29 +12196,6 @@ type EmailTemplatesFields_title_Update {
 }
 
 type EmailTemplatesFields_title_Delete {
-  permission: Boolean!
-}
-
-type EmailTemplatesFields_subject {
-  create: EmailTemplatesFields_subject_Create
-  read: EmailTemplatesFields_subject_Read
-  update: EmailTemplatesFields_subject_Update
-  delete: EmailTemplatesFields_subject_Delete
-}
-
-type EmailTemplatesFields_subject_Create {
-  permission: Boolean!
-}
-
-type EmailTemplatesFields_subject_Read {
-  permission: Boolean!
-}
-
-type EmailTemplatesFields_subject_Update {
-  permission: Boolean!
-}
-
-type EmailTemplatesFields_subject_Delete {
   permission: Boolean!
 }
 
@@ -12186,6 +12242,75 @@ type EmailTemplatesFields_to_Update {
 }
 
 type EmailTemplatesFields_to_Delete {
+  permission: Boolean!
+}
+
+type EmailTemplatesFields_preview {
+  create: EmailTemplatesFields_preview_Create
+  read: EmailTemplatesFields_preview_Read
+  update: EmailTemplatesFields_preview_Update
+  delete: EmailTemplatesFields_preview_Delete
+}
+
+type EmailTemplatesFields_preview_Create {
+  permission: Boolean!
+}
+
+type EmailTemplatesFields_preview_Read {
+  permission: Boolean!
+}
+
+type EmailTemplatesFields_preview_Update {
+  permission: Boolean!
+}
+
+type EmailTemplatesFields_preview_Delete {
+  permission: Boolean!
+}
+
+type EmailTemplatesFields_blocks {
+  create: EmailTemplatesFields_blocks_Create
+  read: EmailTemplatesFields_blocks_Read
+  update: EmailTemplatesFields_blocks_Update
+  delete: EmailTemplatesFields_blocks_Delete
+}
+
+type EmailTemplatesFields_blocks_Create {
+  permission: Boolean!
+}
+
+type EmailTemplatesFields_blocks_Read {
+  permission: Boolean!
+}
+
+type EmailTemplatesFields_blocks_Update {
+  permission: Boolean!
+}
+
+type EmailTemplatesFields_blocks_Delete {
+  permission: Boolean!
+}
+
+type EmailTemplatesFields_footer {
+  create: EmailTemplatesFields_footer_Create
+  read: EmailTemplatesFields_footer_Read
+  update: EmailTemplatesFields_footer_Update
+  delete: EmailTemplatesFields_footer_Delete
+}
+
+type EmailTemplatesFields_footer_Create {
+  permission: Boolean!
+}
+
+type EmailTemplatesFields_footer_Read {
+  permission: Boolean!
+}
+
+type EmailTemplatesFields_footer_Update {
+  permission: Boolean!
+}
+
+type EmailTemplatesFields_footer_Delete {
   permission: Boolean!
 }
 
@@ -14137,6 +14262,7 @@ input mutationJobInput {
   title: String!
   categories: [Job_categories_MutationInput]
   organization: String
+  email: String
   employmentType: [Job_employmentType_MutationInput]
   location: [Job_location_MutationInput]
   locationType: [Job_locationType_MutationInput]
@@ -14156,7 +14282,6 @@ input mutationJobInput {
   hasEndDate: Boolean
   endDate: String
   slug: String
-  customApplyUrl: String
   createdBy: String
   publicId: Float
   updatedAt: String
@@ -14295,6 +14420,7 @@ input mutationJobUpdateInput {
   title: String
   categories: [JobUpdate_categories_MutationInput]
   organization: String
+  email: String
   employmentType: [JobUpdate_employmentType_MutationInput]
   location: [JobUpdate_location_MutationInput]
   locationType: [JobUpdate_locationType_MutationInput]
@@ -14314,7 +14440,6 @@ input mutationJobUpdateInput {
   hasEndDate: Boolean
   endDate: String
   slug: String
-  customApplyUrl: String
   createdBy: String
   publicId: Float
   updatedAt: String
@@ -14689,16 +14814,17 @@ input mutationAgreementUpdateInput {
 
 input mutationEmailTemplateInput {
   title: String!
-  subject: String!
   from: EmailTemplate_from_MutationInput!
-  to: [EmailTemplate_to_MutationInput]!
+  to: EmailTemplate_to_MutationInput!
+  preview: String!
+  blocks: JSON
+  footer: String!
   event: EmailTemplate_event_MutationInput
   updatedAt: String
   createdAt: String
 }
 
 enum EmailTemplate_from_MutationInput {
-  info
   no_reply
 }
 
@@ -14720,16 +14846,17 @@ enum EmailTemplate_event_MutationInput {
 
 input mutationEmailTemplateUpdateInput {
   title: String
-  subject: String
   from: EmailTemplateUpdate_from_MutationInput
-  to: [EmailTemplateUpdate_to_MutationInput]
+  to: EmailTemplateUpdate_to_MutationInput
+  preview: String
+  blocks: JSON
+  footer: String
   event: EmailTemplateUpdate_event_MutationInput
   updatedAt: String
   createdAt: String
 }
 
 enum EmailTemplateUpdate_from_MutationInput {
-  info
   no_reply
 }
 

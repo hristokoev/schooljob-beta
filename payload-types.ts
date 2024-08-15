@@ -40,30 +40,10 @@ export interface Job {
   archived?: boolean | null;
   status: string;
   title: string;
-  categories: (
-    | 'education'
-    | 'healthcare'
-    | 'sport'
-    | 'culture'
-    | 'arts'
-    | 'special'
-    | 'religious'
-    | 'nonprofit'
-    | 'other'
-  )[];
+  categories: ('preschool' | 'primary' | 'secondary' | 'tertiary' | 'leisure' | 'sport' | 'other')[];
   organization: string | Organization;
   email: string;
-  employmentType: (
-    | 'fulltime'
-    | 'parttime'
-    | 'contract'
-    | 'temporary'
-    | 'internship'
-    | 'freelance'
-    | 'apprenticeship'
-    | 'volunteer'
-    | 'seasonal'
-  )[];
+  employmentType: ('fulltime' | 'parttime' | 'agreement' | 'internship' | 'contract' | 'volunteer')[];
   location?:
     | (
         | 'praha'
@@ -174,7 +154,6 @@ export interface Job {
   hasEndDate?: boolean | null;
   endDate?: string | null;
   slug?: string | null;
-  customApplyUrl?: string | null;
   createdBy?: (string | null) | User;
   publicId?: number | null;
   updatedAt: string;
@@ -211,9 +190,7 @@ export interface Organization {
       )[]
     | null;
   vatId?: string | null;
-  categories?:
-    | ('education' | 'healthcare' | 'sport' | 'culture' | 'arts' | 'special' | 'religious' | 'nonprofit' | 'other')[]
-    | null;
+  categories?: ('preschool' | 'primary' | 'secondary' | 'tertiary' | 'leisure' | 'sport' | 'other')[] | null;
   logo?: string | Logo | null;
   imageCover?: string | ImageCover | null;
   description?: string | null;
@@ -429,7 +406,7 @@ export interface ImageCover {
 export interface EmailTemplate {
   id: string;
   title: string;
-  from: 'no-reply@schooljob.cz';
+  from: 'no-reply';
   to: 'admin' | 'candidate' | 'organization';
   preview: string;
   blocks: (TextBlock | ButtonBlock)[];
