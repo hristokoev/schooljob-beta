@@ -22,12 +22,11 @@ export const createOrUpdateJob = async (data: JobFormData, id?: string) => {
     education: data?.education?.map(education => education.value) || [],
     experience: data?.experience?.map(experience => experience.value) || [],
     language: data?.language?.map(language => language.value) || [],
-    ...(data.salary?.enabled && { 
-      salary: {
+    salary: {
       ...data.salary,
       currency: data?.salary?.currency?.value || '',
       salaryType: data?.salary?.salaryType?.value || ''
-    }}),
+    }
   }
 
   const payload = await getPayloadHMR({
@@ -68,7 +67,7 @@ export const createOrUpdateJob = async (data: JobFormData, id?: string) => {
     }
 
     return doc
-  } catch (error) {
+  } catch {
     throw new Error(t('errors.createJob'))
   }
 

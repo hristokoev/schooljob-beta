@@ -4,6 +4,7 @@ import Link from 'next/link'
 import React from 'react'
 
 import { type Column, Message, Pill, Table } from '@/components'
+import { cz } from '@/payload/data'
 import { renderSalary } from '@/utilities'
 
 interface JobsTableViewProps {
@@ -29,7 +30,9 @@ const JobsTableView: React.FC<JobsTableViewProps> = async ({ docs }) => {
       label: t('editJob.location'),
       render: (item: Job) => (
         <div className="text-left font-medium text-sky-500">
-          {item.location ? item.location : '-'}
+          {item.location && item.location.length > 0
+            ? item.location.map(location => cz.find(l => l.value === location)?.label).join(', ')
+            : '-'}
         </div>
       ),
     },

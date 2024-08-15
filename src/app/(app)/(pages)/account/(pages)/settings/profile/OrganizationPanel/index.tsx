@@ -87,7 +87,10 @@ const OrganizationPanel: React.FC<{ user: User }> = ({ user }) => {
             }
           }) || [],
         location:
-          organization?.location?.map(location => ({ label: location, value: location })) || [],
+          organization?.location?.map(location => ({
+            label: cz.find(l => l.value === location)?.label,
+            value: location,
+          })) || [],
         phone: organization?.phone || '',
         url: organization?.url || '',
         description: organization?.description || '',

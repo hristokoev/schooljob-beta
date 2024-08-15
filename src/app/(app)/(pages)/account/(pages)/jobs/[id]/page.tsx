@@ -45,7 +45,12 @@ export default async function EditJob({ params: { id } }: Props) {
         value: category,
       }
     }),
-    location: cz,
+    location: data.location?.map(type => {
+      return {
+        label: cz.find(type => type === type)?.label || type,
+        value: type,
+      }
+    }),
     locationType: data.locationType?.map(type => {
       return {
         label: t(`search.options.${type}`),
