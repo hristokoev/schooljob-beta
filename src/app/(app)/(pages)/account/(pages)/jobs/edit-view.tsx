@@ -157,11 +157,10 @@ const JobsEditView: React.FC<Partial<JobFormData> & JobsEditViewProps> = formDat
                     name="title"
                     register={register}
                     error={errors.title}
-                    disabled={published}
                   />
                 </div>
 
-                <div className={published ? 'cursor-not-allowed' : ''}>
+                <div>
                   <Label>
                     {t('editJob.categories')} <span className="text-rose-500">*</span>
                   </Label>
@@ -177,7 +176,6 @@ const JobsEditView: React.FC<Partial<JobFormData> & JobsEditViewProps> = formDat
                           label: t(`search.options.${category}` as 'search.category'),
                         }))}
                         className={`w-full ${errors.categories ? 'border-red-300 bg-red-300/10 hover:border-red-400 focus:border-red-500 focus:shadow-red-700/25' : ''}`}
-                        isDisabled={published}
                       />
                     )}
                   />
@@ -186,7 +184,7 @@ const JobsEditView: React.FC<Partial<JobFormData> & JobsEditViewProps> = formDat
                   )}
                 </div>
 
-                <div className={published ? 'cursor-not-allowed' : ''}>
+                <div>
                   <Label>
                     {t('editJob.employment')} <span className="text-rose-500">*</span>
                   </Label>
@@ -202,7 +200,6 @@ const JobsEditView: React.FC<Partial<JobFormData> & JobsEditViewProps> = formDat
                           label: t(`search.options.${employmentType}` as 'search.employmentType'),
                         }))}
                         className={`w-full ${errors.employmentType ? 'border-red-300 bg-red-300/10 hover:border-red-400 focus:border-red-500 focus:shadow-red-700/25' : ''}`}
-                        isDisabled={published}
                       />
                     )}
                   />
@@ -223,13 +220,12 @@ const JobsEditView: React.FC<Partial<JobFormData> & JobsEditViewProps> = formDat
                           isMulti
                           options={cz}
                           className={`w-full ${errors.location ? 'border-red-300 bg-red-300/10 hover:border-red-400 focus:border-red-500 focus:shadow-red-700/25' : ''}`}
-                          isDisabled={published}
                         />
                       )}
                     />
                   </div>
 
-                  <div className={published ? 'cursor-not-allowed' : ''}>
+                  <div>
                     <Label>{t('editJob.locationType')}</Label>
                     <Controller
                       name="locationType"
@@ -243,7 +239,6 @@ const JobsEditView: React.FC<Partial<JobFormData> & JobsEditViewProps> = formDat
                             label: t(`search.options.${locationType}` as 'search.locationType'),
                           }))}
                           className={`w-full ${errors.locationType ? 'border-red-300 bg-red-300/10 hover:border-red-400 focus:border-red-500 focus:shadow-red-700/25' : ''}`}
-                          isDisabled={published}
                         />
                       )}
                     />
@@ -251,7 +246,7 @@ const JobsEditView: React.FC<Partial<JobFormData> & JobsEditViewProps> = formDat
                 </div>
 
                 <div className="grid gap-5 md:grid-cols-2">
-                  <div className={published ? 'cursor-not-allowed' : ''}>
+                  <div>
                     <Label>{t('editJob.education')}</Label>
                     <Controller
                       name="education"
@@ -265,13 +260,12 @@ const JobsEditView: React.FC<Partial<JobFormData> & JobsEditViewProps> = formDat
                             label: t(`search.options.${education}` as 'search.education'),
                           }))}
                           className={`w-full ${errors.education ? 'border-red-300 bg-red-300/10 hover:border-red-400 focus:border-red-500 focus:shadow-red-700/25' : ''}`}
-                          isDisabled={published}
                         />
                       )}
                     />
                   </div>
 
-                  <div className={published ? 'cursor-not-allowed' : ''}>
+                  <div>
                     <Label>{t('editJob.experience')}</Label>
                     <Controller
                       name="experience"
@@ -285,14 +279,13 @@ const JobsEditView: React.FC<Partial<JobFormData> & JobsEditViewProps> = formDat
                             label: t(`search.options.${experience}` as 'search.experience'),
                           }))}
                           className={`w-full ${errors.experience ? 'border-red-300 bg-red-300/10 hover:border-red-400 focus:border-red-500 focus:shadow-red-700/25' : ''}`}
-                          isDisabled={published}
                         />
                       )}
                     />
                   </div>
                 </div>
 
-                <div className={published ? 'cursor-not-allowed' : ''}>
+                <div>
                   <Label>{t('editJob.language')}</Label>
                   <Controller
                     name="language"
@@ -306,7 +299,6 @@ const JobsEditView: React.FC<Partial<JobFormData> & JobsEditViewProps> = formDat
                           label: t(`search.options.${language}` as 'search.language'),
                         }))}
                         className={`w-full ${errors.language ? 'border-red-300 bg-red-300/10 hover:border-red-400 focus:border-red-500 focus:shadow-red-700/25' : ''}`}
-                        isDisabled={published}
                       />
                     )}
                   />
@@ -324,7 +316,6 @@ const JobsEditView: React.FC<Partial<JobFormData> & JobsEditViewProps> = formDat
                         }}
                         onText={t('editJob.salaryOn')}
                         offText={t('editJob.salaryOff')}
-                        disabled={published}
                       />
                     )}
                   />
@@ -337,7 +328,7 @@ const JobsEditView: React.FC<Partial<JobFormData> & JobsEditViewProps> = formDat
                         onChange={() => setValue('salary.range', !watchRange)}
                         onText={t('editJob.salaryRangeOn')}
                         offText={t('editJob.salaryRangeOff')}
-                        disabled={!watchSalary || published}
+                        disabled={!watchSalary}
                       />
                     )}
                   />
@@ -356,7 +347,7 @@ const JobsEditView: React.FC<Partial<JobFormData> & JobsEditViewProps> = formDat
                         name="salary.base"
                         register={register}
                         error={errors.salary?.base}
-                        disabled={!watchSalary || published}
+                        disabled={!watchSalary}
                       />
                     </div>
                   )}
@@ -374,7 +365,7 @@ const JobsEditView: React.FC<Partial<JobFormData> & JobsEditViewProps> = formDat
                           name="salary.minSalary"
                           register={register}
                           error={errors.salary?.minSalary}
-                          disabled={!watchSalary || published}
+                          disabled={!watchSalary}
                         />
                       </div>
                       <div>
@@ -388,12 +379,12 @@ const JobsEditView: React.FC<Partial<JobFormData> & JobsEditViewProps> = formDat
                           name="salary.maxSalary"
                           register={register}
                           error={errors.salary?.maxSalary}
-                          disabled={!watchSalary || published}
+                          disabled={!watchSalary}
                         />
                       </div>
                     </>
                   )}
-                  <div className={published ? 'cursor-not-allowed' : ''}>
+                  <div>
                     <Label>
                       {t('editJob.salaryCurrency')}{' '}
                       {watchSalary && <span className="text-rose-500">*</span>}
@@ -409,13 +400,13 @@ const JobsEditView: React.FC<Partial<JobFormData> & JobsEditViewProps> = formDat
                             label: t(`search.options.${currency}` as 'search.currency'),
                           }))}
                           className={`w-full ${errors.salary?.currency ? 'border-red-300 bg-red-300/10 hover:border-red-400 focus:border-red-500 focus:shadow-red-700/25' : ''}`}
-                          isDisabled={!watchSalary || published}
+                          isDisabled={!watchSalary}
                         />
                       )}
                     />
                   </div>
 
-                  <div className={published ? 'cursor-not-allowed' : ''}>
+                  <div>
                     <Label>
                       {t('editJob.salaryType')}{' '}
                       {watchSalary && <span className="text-rose-500">*</span>}
@@ -433,7 +424,7 @@ const JobsEditView: React.FC<Partial<JobFormData> & JobsEditViewProps> = formDat
                             }
                           })}
                           className={`w-full ${errors.salary?.salaryType ? 'border-red-300 bg-red-300/10 hover:border-red-400 focus:border-red-500 focus:shadow-red-700/25' : ''}`}
-                          isDisabled={!watchSalary || published}
+                          isDisabled={!watchSalary}
                         />
                       )}
                     />
@@ -455,7 +446,6 @@ const JobsEditView: React.FC<Partial<JobFormData> & JobsEditViewProps> = formDat
                           const jsonState = editorState.toJSON()
                           field.onChange(jsonState)
                         }}
-                        editable={!published}
                       />
                     )}
                   />
@@ -469,9 +459,7 @@ const JobsEditView: React.FC<Partial<JobFormData> & JobsEditViewProps> = formDat
                   <Controller
                     control={control}
                     name="skills"
-                    render={({ field }) => (
-                      <InputList field={field} setValue={setValue} disabled={published} />
-                    )}
+                    render={({ field }) => <InputList field={field} setValue={setValue} />}
                   />
                 </div>
 
@@ -480,9 +468,7 @@ const JobsEditView: React.FC<Partial<JobFormData> & JobsEditViewProps> = formDat
                   <Controller
                     control={control}
                     name="certifications"
-                    render={({ field }) => (
-                      <InputList field={field} setValue={setValue} disabled={published} />
-                    )}
+                    render={({ field }) => <InputList field={field} setValue={setValue} />}
                   />
                 </div>
 
@@ -491,9 +477,7 @@ const JobsEditView: React.FC<Partial<JobFormData> & JobsEditViewProps> = formDat
                   <Controller
                     control={control}
                     name="benefits"
-                    render={({ field }) => (
-                      <InputList field={field} setValue={setValue} disabled={published} />
-                    )}
+                    render={({ field }) => <InputList field={field} setValue={setValue} />}
                   />
                 </div>
               </div>
@@ -531,7 +515,7 @@ const JobsEditView: React.FC<Partial<JobFormData> & JobsEditViewProps> = formDat
                         name="suitableFor.students"
                         control={control}
                         render={({ field }) => (
-                          <Checkbox {...field} label={t('editJob.students')} disabled={published} />
+                          <Checkbox {...field} label={t('editJob.students')} />
                         )}
                       />
                     </Label>
@@ -541,11 +525,7 @@ const JobsEditView: React.FC<Partial<JobFormData> & JobsEditViewProps> = formDat
                         name="suitableFor.disabledPeople"
                         control={control}
                         render={({ field }) => (
-                          <Checkbox
-                            {...field}
-                            label={t('editJob.disabledPeople')}
-                            disabled={published}
-                          />
+                          <Checkbox {...field} label={t('editJob.disabledPeople')} />
                         )}
                       />
                     </Label>
@@ -555,11 +535,7 @@ const JobsEditView: React.FC<Partial<JobFormData> & JobsEditViewProps> = formDat
                         name="suitableFor.mothersOnMaternityLeave"
                         control={control}
                         render={({ field }) => (
-                          <Checkbox
-                            {...field}
-                            label={t('editJob.mothersOnMaternityLeave')}
-                            disabled={published}
-                          />
+                          <Checkbox {...field} label={t('editJob.mothersOnMaternityLeave')} />
                         )}
                       />
                     </Label>
@@ -569,7 +545,7 @@ const JobsEditView: React.FC<Partial<JobFormData> & JobsEditViewProps> = formDat
                         name="suitableFor.retirees"
                         control={control}
                         render={({ field }) => (
-                          <Checkbox {...field} label={t('editJob.retirees')} disabled={published} />
+                          <Checkbox {...field} label={t('editJob.retirees')} />
                         )}
                       />
                     </Label>
@@ -593,24 +569,9 @@ const JobsEditView: React.FC<Partial<JobFormData> & JobsEditViewProps> = formDat
                 {t('ui.goBack')}
               </Button>
             </Link>
-            {published ? (
-              <Button
-                size="lg"
-                className="w-1/2 shadow-md"
-                type="button"
-                disabled={!canPublish}
-                onClick={() => {
-                  // TODO: Implement this feature
-                  toast.success(t('editJob.askToEditRequested'))
-                }}
-              >
-                {t('editJob.askToEdit')}
-              </Button>
-            ) : (
-              <Button size="lg" className="w-1/2 shadow-md" type="submit" disabled={!canPublish}>
-                {t('editJob.saveJob')}
-              </Button>
-            )}
+            <Button size="lg" className="w-1/2 shadow-md" type="submit" disabled={!canPublish}>
+              {t('editJob.saveJob')}
+            </Button>
           </div>
         </Gutter>
       </div>
