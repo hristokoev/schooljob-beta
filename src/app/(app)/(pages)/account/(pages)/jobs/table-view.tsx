@@ -3,7 +3,7 @@ import { Job } from '@payload-types'
 import Link from 'next/link'
 import React from 'react'
 
-import { type Column, Message, Pill, Table } from '@/components'
+import { type Column, Duplicate, Message, Pill, Table } from '@/components'
 import { cz } from '@/payload/data'
 import { renderSalary } from '@/utilities'
 
@@ -13,6 +13,7 @@ interface JobsTableViewProps {
 
 const JobsTableView: React.FC<JobsTableViewProps> = async ({ docs }) => {
   const t = await getTranslations()
+
   const columns: Column[] = [
     {
       key: 'title',
@@ -95,6 +96,11 @@ const JobsTableView: React.FC<JobsTableViewProps> = async ({ docs }) => {
           className="w-full"
         />
       ),
+    },
+    {
+      key: 'actions',
+      label: t('editJob.actions'),
+      render: (item: Job) => <Duplicate id={item.id} />,
     },
   ]
 

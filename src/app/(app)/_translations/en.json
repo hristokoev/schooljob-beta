@@ -104,6 +104,8 @@
     "retirees": "Retirees",
     "applications": "Applications",
     "status": "Status",
+    "actions": "Actions",
+    "duplicate": "Duplicate",
     "askToEdit": "Ask to Edit",
     "askToEditRequested": "Request sent. We'll let you know 😊",
     "saveJob": "Save Job"
