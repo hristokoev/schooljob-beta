@@ -1,3 +1,4 @@
+import { getTranslations } from 'next-intl/server'
 import React from 'react'
 
 import { TableItem } from './TableItem'
@@ -12,7 +13,17 @@ interface Column {
   }
 }
 
-const Table = ({ columns, data, title }: { columns: Column[]; data: any[]; title: string }) => {
+const Table = async ({
+  columns,
+  data,
+  title,
+}: {
+  columns: Column[]
+  data: any[]
+  title: string
+}) => {
+  const t = await getTranslations()
+
   return (
     <div className="relative rounded-md border border-slate-300 bg-white shadow-sm">
       <header className="border-b border-slate-100 px-5 py-4">
@@ -36,7 +47,7 @@ const Table = ({ columns, data, title }: { columns: Column[]; data: any[]; title
             {data.length === 0 && (
               <tr>
                 <td colSpan={columns.length} className="py-4 text-center text-slate-500">
-                  No items to display
+                  {t('errors.noJobs')}
                 </td>
               </tr>
             )}
