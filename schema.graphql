@@ -1,59 +1,59 @@
 type Query {
-  Job(id: String!, draft: Boolean, fallbackLocale: FallbackLocaleInputType, locale: LocaleInputType): Job
-  Jobs(draft: Boolean, where: Job_where, fallbackLocale: FallbackLocaleInputType, locale: LocaleInputType, limit: Int, page: Int, sort: String): Jobs
-  countJobs(draft: Boolean, where: Job_where, locale: LocaleInputType): countJobs
+  Job(id: String!, draft: Boolean): Job
+  Jobs(draft: Boolean, where: Job_where, limit: Int, page: Int, sort: String): Jobs
+  countJobs(draft: Boolean, where: Job_where): countJobs
   docAccessJob(id: String!): jobsDocAccess
-  Organization(id: String!, draft: Boolean, fallbackLocale: FallbackLocaleInputType, locale: LocaleInputType): Organization
-  Organizations(draft: Boolean, where: Organization_where, fallbackLocale: FallbackLocaleInputType, locale: LocaleInputType, limit: Int, page: Int, sort: String): Organizations
-  countOrganizations(draft: Boolean, where: Organization_where, locale: LocaleInputType): countOrganizations
+  Organization(id: String!, draft: Boolean): Organization
+  Organizations(draft: Boolean, where: Organization_where, limit: Int, page: Int, sort: String): Organizations
+  countOrganizations(draft: Boolean, where: Organization_where): countOrganizations
   docAccessOrganization(id: String!): organizationsDocAccess
-  Candidate(id: String!, draft: Boolean, fallbackLocale: FallbackLocaleInputType, locale: LocaleInputType): Candidate
-  Candidates(draft: Boolean, where: Candidate_where, fallbackLocale: FallbackLocaleInputType, locale: LocaleInputType, limit: Int, page: Int, sort: String): Candidates
-  countCandidates(draft: Boolean, where: Candidate_where, locale: LocaleInputType): countCandidates
+  Candidate(id: String!, draft: Boolean): Candidate
+  Candidates(draft: Boolean, where: Candidate_where, limit: Int, page: Int, sort: String): Candidates
+  countCandidates(draft: Boolean, where: Candidate_where): countCandidates
   docAccessCandidate(id: String!): candidatesDocAccess
-  Application(id: String!, draft: Boolean, fallbackLocale: FallbackLocaleInputType, locale: LocaleInputType): Application
-  Applications(draft: Boolean, where: Application_where, fallbackLocale: FallbackLocaleInputType, locale: LocaleInputType, limit: Int, page: Int, sort: String): Applications
-  countApplications(draft: Boolean, where: Application_where, locale: LocaleInputType): countApplications
+  Application(id: String!, draft: Boolean): Application
+  Applications(draft: Boolean, where: Application_where, limit: Int, page: Int, sort: String): Applications
+  countApplications(draft: Boolean, where: Application_where): countApplications
   docAccessApplication(id: String!): applicationsDocAccess
-  Cv(id: String!, draft: Boolean, fallbackLocale: FallbackLocaleInputType, locale: LocaleInputType): Cv
-  Cvs(draft: Boolean, where: Cv_where, fallbackLocale: FallbackLocaleInputType, locale: LocaleInputType, limit: Int, page: Int, sort: String): Cvs
-  countCvs(draft: Boolean, where: Cv_where, locale: LocaleInputType): countCvs
+  Cv(id: String!, draft: Boolean): Cv
+  Cvs(draft: Boolean, where: Cv_where, limit: Int, page: Int, sort: String): Cvs
+  countCvs(draft: Boolean, where: Cv_where): countCvs
   docAccessCv(id: String!): cvsDocAccess
-  Agreement(id: String!, draft: Boolean, fallbackLocale: FallbackLocaleInputType, locale: LocaleInputType): Agreement
-  Agreements(draft: Boolean, where: Agreement_where, fallbackLocale: FallbackLocaleInputType, locale: LocaleInputType, limit: Int, page: Int, sort: String): Agreements
-  countAgreements(draft: Boolean, where: Agreement_where, locale: LocaleInputType): countAgreements
+  Agreement(id: String!, draft: Boolean): Agreement
+  Agreements(draft: Boolean, where: Agreement_where, limit: Int, page: Int, sort: String): Agreements
+  countAgreements(draft: Boolean, where: Agreement_where): countAgreements
   docAccessAgreement(id: String!): agreementsDocAccess
-  EmailTemplate(id: String!, draft: Boolean, fallbackLocale: FallbackLocaleInputType, locale: LocaleInputType): EmailTemplate
-  EmailTemplates(draft: Boolean, where: EmailTemplate_where, fallbackLocale: FallbackLocaleInputType, locale: LocaleInputType, limit: Int, page: Int, sort: String): EmailTemplates
-  countEmailTemplates(draft: Boolean, where: EmailTemplate_where, locale: LocaleInputType): countEmailTemplates
+  EmailTemplate(id: String!, draft: Boolean): EmailTemplate
+  EmailTemplates(draft: Boolean, where: EmailTemplate_where, limit: Int, page: Int, sort: String): EmailTemplates
+  countEmailTemplates(draft: Boolean, where: EmailTemplate_where): countEmailTemplates
   docAccessEmailTemplate(id: String!): email_templatesDocAccess
-  Logo(id: String!, draft: Boolean, fallbackLocale: FallbackLocaleInputType, locale: LocaleInputType): Logo
-  Logos(draft: Boolean, where: Logo_where, fallbackLocale: FallbackLocaleInputType, locale: LocaleInputType, limit: Int, page: Int, sort: String): Logos
-  countLogos(draft: Boolean, where: Logo_where, locale: LocaleInputType): countLogos
+  Logo(id: String!, draft: Boolean): Logo
+  Logos(draft: Boolean, where: Logo_where, limit: Int, page: Int, sort: String): Logos
+  countLogos(draft: Boolean, where: Logo_where): countLogos
   docAccessLogo(id: String!): logosDocAccess
-  ImageCover(id: String!, draft: Boolean, fallbackLocale: FallbackLocaleInputType, locale: LocaleInputType): ImageCover
-  ImageCovers(draft: Boolean, where: ImageCover_where, fallbackLocale: FallbackLocaleInputType, locale: LocaleInputType, limit: Int, page: Int, sort: String): ImageCovers
-  countImageCovers(draft: Boolean, where: ImageCover_where, locale: LocaleInputType): countImageCovers
+  ImageCover(id: String!, draft: Boolean): ImageCover
+  ImageCovers(draft: Boolean, where: ImageCover_where, limit: Int, page: Int, sort: String): ImageCovers
+  countImageCovers(draft: Boolean, where: ImageCover_where): countImageCovers
   docAccessImageCover(id: String!): image_coversDocAccess
-  Photo(id: String!, draft: Boolean, fallbackLocale: FallbackLocaleInputType, locale: LocaleInputType): Photo
-  Photos(draft: Boolean, where: Photo_where, fallbackLocale: FallbackLocaleInputType, locale: LocaleInputType, limit: Int, page: Int, sort: String): Photos
-  countPhotos(draft: Boolean, where: Photo_where, locale: LocaleInputType): countPhotos
+  Photo(id: String!, draft: Boolean): Photo
+  Photos(draft: Boolean, where: Photo_where, limit: Int, page: Int, sort: String): Photos
+  countPhotos(draft: Boolean, where: Photo_where): countPhotos
   docAccessPhoto(id: String!): photosDocAccess
-  User(id: String!, draft: Boolean, fallbackLocale: FallbackLocaleInputType, locale: LocaleInputType): User
-  Users(draft: Boolean, where: User_where, fallbackLocale: FallbackLocaleInputType, locale: LocaleInputType, limit: Int, page: Int, sort: String): Users
-  countUsers(draft: Boolean, where: User_where, locale: LocaleInputType): countUsers
+  User(id: String!, draft: Boolean): User
+  Users(draft: Boolean, where: User_where, limit: Int, page: Int, sort: String): Users
+  countUsers(draft: Boolean, where: User_where): countUsers
   docAccessUser(id: String!): usersDocAccess
   meUser: usersMe
   initializedUser: Boolean
-  Search(id: String!, draft: Boolean, fallbackLocale: FallbackLocaleInputType, locale: LocaleInputType): Search
-  Searches(draft: Boolean, where: Search_where, fallbackLocale: FallbackLocaleInputType, locale: LocaleInputType, limit: Int, page: Int, sort: String): Searches
-  countSearches(draft: Boolean, where: Search_where, locale: LocaleInputType): countSearches
+  Search(id: String!, draft: Boolean): Search
+  Searches(draft: Boolean, where: Search_where, limit: Int, page: Int, sort: String): Searches
+  countSearches(draft: Boolean, where: Search_where): countSearches
   docAccessSearch(id: String!): searchDocAccess
-  PayloadPreference(id: String!, draft: Boolean, fallbackLocale: FallbackLocaleInputType, locale: LocaleInputType): PayloadPreference
-  PayloadPreferences(draft: Boolean, where: PayloadPreference_where, fallbackLocale: FallbackLocaleInputType, locale: LocaleInputType, limit: Int, page: Int, sort: String): PayloadPreferences
-  countPayloadPreferences(draft: Boolean, where: PayloadPreference_where, locale: LocaleInputType): countPayloadPreferences
+  PayloadPreference(id: String!, draft: Boolean): PayloadPreference
+  PayloadPreferences(draft: Boolean, where: PayloadPreference_where, limit: Int, page: Int, sort: String): PayloadPreferences
+  countPayloadPreferences(draft: Boolean, where: PayloadPreference_where): countPayloadPreferences
   docAccessPayloadPreference(id: String!): payload_preferencesDocAccess
-  Data(draft: Boolean, fallbackLocale: FallbackLocaleInputType, locale: LocaleInputType): Data
+  Data(draft: Boolean): Data
   docAccessData: dataDocAccess
   Access: Access
 }
@@ -61,10 +61,10 @@ type Query {
 type Job {
   id: String
   archived: Boolean
-  status: String
+  status: Job_status
   title: String!
   categories: [Job_categories!]
-  organization(locale: LocaleInputType, fallbackLocale: FallbackLocaleInputType): Organization!
+  organization: Organization!
   email: String
   employmentType: [Job_employmentType!]
   location: [Job_location!]
@@ -73,19 +73,23 @@ type Job {
   experience: [Job_experience!]
   language: [Job_language!]
   salary: Job_Salary
-  description: String
   richText(depth: Int): JSON
   skills: [String]
   certifications: [String]
   benefits: [String]
   suitableFor: Job_SuitableFor
-  applications(locale: LocaleInputType, fallbackLocale: FallbackLocaleInputType): [Application!]
+  applications: [Application!]
   featured: Boolean
   slug: String
-  createdBy(locale: LocaleInputType, fallbackLocale: FallbackLocaleInputType): User
+  createdBy: User
   publicId: Float
   updatedAt: DateTime
   createdAt: DateTime
+}
+
+enum Job_status {
+  published
+  unpublished
 }
 
 enum Job_categories {
@@ -109,14 +113,14 @@ type Organization {
   location: [Organization_location!]
   vatId: String
   categories: [Organization_categories!]
-  logo(locale: LocaleInputType, fallbackLocale: FallbackLocaleInputType, where: Organization_Logo_where): Logo
-  imageCover(locale: LocaleInputType, fallbackLocale: FallbackLocaleInputType, where: Organization_ImageCover_where): ImageCover
+  logo(where: Organization_Logo_where): Logo
+  imageCover(where: Organization_ImageCover_where): ImageCover
   description: String
   richText(depth: Int): JSON
   url: String
-  jobsPublished(locale: LocaleInputType, fallbackLocale: FallbackLocaleInputType): [Job!]
-  jobsUnpublished(locale: LocaleInputType, fallbackLocale: FallbackLocaleInputType): [Job!]
-  createdBy(locale: LocaleInputType, fallbackLocale: FallbackLocaleInputType): User
+  jobsPublished: [Job!]
+  jobsUnpublished: [Job!]
+  createdBy: User
   updatedAt: DateTime
   createdAt: DateTime
 }
@@ -150,7 +154,7 @@ enum Organization_categories {
 
 type Logo {
   id: String
-  createdBy(locale: LocaleInputType, fallbackLocale: FallbackLocaleInputType): User
+  createdBy: User
   prefix: String
   updatedAt: DateTime
   createdAt: DateTime
@@ -171,7 +175,7 @@ type User {
   title: String
   firstName: String
   lastName: String
-  profile(locale: LocaleInputType, fallbackLocale: FallbackLocaleInputType): User_Profile_Relationship
+  profile: User_Profile_Relationship
   updatedAt: DateTime
   createdAt: DateTime
   email: EmailAddress!
@@ -211,11 +215,11 @@ type Candidate {
   email: String
   phone: String
   location: String
-  photo(locale: LocaleInputType, fallbackLocale: FallbackLocaleInputType, where: Candidate_Photo_where): Photo
+  photo(where: Candidate_Photo_where): Photo
   bio: String
-  applications(locale: LocaleInputType, fallbackLocale: FallbackLocaleInputType): [Application!]
-  jobsSaved(locale: LocaleInputType, fallbackLocale: FallbackLocaleInputType): [Job!]
-  createdBy(locale: LocaleInputType, fallbackLocale: FallbackLocaleInputType): User
+  applications: [Application!]
+  jobsSaved: [Job!]
+  createdBy: User
   fullName: String
   updatedAt: DateTime
   createdAt: DateTime
@@ -223,7 +227,7 @@ type Candidate {
 
 type Photo {
   id: String
-  createdBy(locale: LocaleInputType, fallbackLocale: FallbackLocaleInputType): User
+  createdBy: User
   prefix: String
   updatedAt: DateTime
   createdAt: DateTime
@@ -236,17 +240,6 @@ type Photo {
   height: Float
   focalX: Float
   focalY: Float
-}
-
-enum LocaleInputType {
-  cs
-  sk
-}
-
-enum FallbackLocaleInputType {
-  cs
-  sk
-  none
 }
 
 """
@@ -466,16 +459,16 @@ input Candidate_Photo_where_or {
 type Application {
   id: String
   archived: Boolean
-  job(locale: LocaleInputType, fallbackLocale: FallbackLocaleInputType): Job!
-  candidate(locale: LocaleInputType, fallbackLocale: FallbackLocaleInputType): Candidate
+  job: Job!
+  candidate: Candidate
   firstName: String
   lastName: String
   email: String
   phone: String
   location: String
   coverLetter: String
-  cv(locale: LocaleInputType, fallbackLocale: FallbackLocaleInputType, where: Application_Cv_where): Cv
-  agreements(locale: LocaleInputType, fallbackLocale: FallbackLocaleInputType): [Agreement!]
+  cv(where: Application_Cv_where): Cv
+  agreements: [Agreement!]
   status: Application_status
   fullName: String
   trackingId: Float
@@ -485,9 +478,9 @@ type Application {
 
 type Cv {
   id: String
-  job(locale: LocaleInputType, fallbackLocale: FallbackLocaleInputType): Job
-  organization(locale: LocaleInputType, fallbackLocale: FallbackLocaleInputType): Organization
-  createdBy(locale: LocaleInputType, fallbackLocale: FallbackLocaleInputType): User
+  job: Job
+  organization: Organization
+  createdBy: User
   prefix: String
   updatedAt: DateTime
   createdAt: DateTime
@@ -957,7 +950,7 @@ input Organization_Logo_where_or {
 
 type ImageCover {
   id: String
-  createdBy(locale: LocaleInputType, fallbackLocale: FallbackLocaleInputType): User
+  createdBy: User
   prefix: String
   updatedAt: DateTime
   createdAt: DateTime
@@ -1321,7 +1314,6 @@ input Job_where {
   salary__maxSalary: Job_salary__maxSalary_operator
   salary__currency: Job_salary__currency_operator
   salary__salaryType: Job_salary__salaryType_operator
-  description: Job_description_operator
   richText: Job_richText_operator
   skills: Job_skills_operator
   certifications: Job_certifications_operator
@@ -1349,13 +1341,16 @@ input Job_archived_operator {
 }
 
 input Job_status_operator {
-  equals: String
-  not_equals: String
-  like: String
-  contains: String
-  in: [String]
-  not_in: [String]
-  all: [String]
+  equals: Job_status_Input
+  not_equals: Job_status_Input
+  in: [Job_status_Input]
+  not_in: [Job_status_Input]
+  all: [Job_status_Input]
+}
+
+enum Job_status_Input {
+  published
+  unpublished
 }
 
 input Job_title_operator {
@@ -1606,13 +1601,6 @@ enum Job_salary__salaryType_Input {
   annually
 }
 
-input Job_description_operator {
-  equals: String
-  not_equals: String
-  like: String
-  contains: String
-}
-
 input Job_richText_operator {
   equals: JSON
   not_equals: JSON
@@ -1775,7 +1763,6 @@ input Job_where_and {
   salary__maxSalary: Job_salary__maxSalary_operator
   salary__currency: Job_salary__currency_operator
   salary__salaryType: Job_salary__salaryType_operator
-  description: Job_description_operator
   richText: Job_richText_operator
   skills: Job_skills_operator
   certifications: Job_certifications_operator
@@ -1816,7 +1803,6 @@ input Job_where_or {
   salary__maxSalary: Job_salary__maxSalary_operator
   salary__currency: Job_salary__currency_operator
   salary__salaryType: Job_salary__salaryType_operator
-  description: Job_description_operator
   richText: Job_richText_operator
   skills: Job_skills_operator
   certifications: Job_certifications_operator
@@ -1863,7 +1849,6 @@ type JobsDocAccessFields {
   experience: JobsDocAccessFields_experience
   language: JobsDocAccessFields_language
   salary: JobsDocAccessFields_salary
-  description: JobsDocAccessFields_description
   richText: JobsDocAccessFields_richText
   skills: JobsDocAccessFields_skills
   certifications: JobsDocAccessFields_certifications
@@ -2346,29 +2331,6 @@ type JobsDocAccessFields_salary_salaryType_Update {
 }
 
 type JobsDocAccessFields_salary_salaryType_Delete {
-  permission: Boolean!
-}
-
-type JobsDocAccessFields_description {
-  create: JobsDocAccessFields_description_Create
-  read: JobsDocAccessFields_description_Read
-  update: JobsDocAccessFields_description_Update
-  delete: JobsDocAccessFields_description_Delete
-}
-
-type JobsDocAccessFields_description_Create {
-  permission: Boolean!
-}
-
-type JobsDocAccessFields_description_Read {
-  permission: Boolean!
-}
-
-type JobsDocAccessFields_description_Update {
-  permission: Boolean!
-}
-
-type JobsDocAccessFields_description_Delete {
   permission: Boolean!
 }
 
@@ -8333,7 +8295,7 @@ type Search {
   id: String
   title: String
   priority: Float
-  doc(locale: LocaleInputType, fallbackLocale: FallbackLocaleInputType): Search_Doc_Relationship!
+  doc: Search_Doc_Relationship!
   status: String
   slug: String
   publicId: String
@@ -8774,7 +8736,7 @@ type SearchDeleteDocAccess {
 
 type PayloadPreference {
   id: String
-  user(locale: LocaleInputType, fallbackLocale: FallbackLocaleInputType): PayloadPreference_User_Relationship!
+  user: PayloadPreference_User_Relationship!
   key: String
   value: JSON
   updatedAt: DateTime
@@ -9219,7 +9181,6 @@ type JobsFields {
   experience: JobsFields_experience
   language: JobsFields_language
   salary: JobsFields_salary
-  description: JobsFields_description
   richText: JobsFields_richText
   skills: JobsFields_skills
   certifications: JobsFields_certifications
@@ -9702,29 +9663,6 @@ type JobsFields_salary_salaryType_Update {
 }
 
 type JobsFields_salary_salaryType_Delete {
-  permission: Boolean!
-}
-
-type JobsFields_description {
-  create: JobsFields_description_Create
-  read: JobsFields_description_Read
-  update: JobsFields_description_Update
-  delete: JobsFields_description_Delete
-}
-
-type JobsFields_description_Create {
-  permission: Boolean!
-}
-
-type JobsFields_description_Read {
-  permission: Boolean!
-}
-
-type JobsFields_description_Update {
-  permission: Boolean!
-}
-
-type JobsFields_description_Delete {
   permission: Boolean!
 }
 
@@ -14002,44 +13940,44 @@ type DataUpdateAccess {
 }
 
 type Mutation {
-  createJob(data: mutationJobInput!, draft: Boolean, locale: LocaleInputType): Job
-  updateJob(id: String!, autosave: Boolean, data: mutationJobUpdateInput!, draft: Boolean, locale: LocaleInputType): Job
+  createJob(data: mutationJobInput!, draft: Boolean): Job
+  updateJob(id: String!, autosave: Boolean, data: mutationJobUpdateInput!, draft: Boolean): Job
   deleteJob(id: String!): Job
   duplicateJob(id: String!): Job
-  createOrganization(data: mutationOrganizationInput!, draft: Boolean, locale: LocaleInputType): Organization
-  updateOrganization(id: String!, autosave: Boolean, data: mutationOrganizationUpdateInput!, draft: Boolean, locale: LocaleInputType): Organization
+  createOrganization(data: mutationOrganizationInput!, draft: Boolean): Organization
+  updateOrganization(id: String!, autosave: Boolean, data: mutationOrganizationUpdateInput!, draft: Boolean): Organization
   deleteOrganization(id: String!): Organization
   duplicateOrganization(id: String!): Organization
-  createCandidate(data: mutationCandidateInput!, draft: Boolean, locale: LocaleInputType): Candidate
-  updateCandidate(id: String!, autosave: Boolean, data: mutationCandidateUpdateInput!, draft: Boolean, locale: LocaleInputType): Candidate
+  createCandidate(data: mutationCandidateInput!, draft: Boolean): Candidate
+  updateCandidate(id: String!, autosave: Boolean, data: mutationCandidateUpdateInput!, draft: Boolean): Candidate
   deleteCandidate(id: String!): Candidate
   duplicateCandidate(id: String!): Candidate
-  createApplication(data: mutationApplicationInput!, draft: Boolean, locale: LocaleInputType): Application
-  updateApplication(id: String!, autosave: Boolean, data: mutationApplicationUpdateInput!, draft: Boolean, locale: LocaleInputType): Application
+  createApplication(data: mutationApplicationInput!, draft: Boolean): Application
+  updateApplication(id: String!, autosave: Boolean, data: mutationApplicationUpdateInput!, draft: Boolean): Application
   deleteApplication(id: String!): Application
   duplicateApplication(id: String!): Application
-  createCv(data: mutationCvInput!, draft: Boolean, locale: LocaleInputType): Cv
-  updateCv(id: String!, autosave: Boolean, data: mutationCvUpdateInput!, draft: Boolean, locale: LocaleInputType): Cv
+  createCv(data: mutationCvInput!, draft: Boolean): Cv
+  updateCv(id: String!, autosave: Boolean, data: mutationCvUpdateInput!, draft: Boolean): Cv
   deleteCv(id: String!): Cv
-  createAgreement(data: mutationAgreementInput!, draft: Boolean, locale: LocaleInputType): Agreement
-  updateAgreement(id: String!, autosave: Boolean, data: mutationAgreementUpdateInput!, draft: Boolean, locale: LocaleInputType): Agreement
+  createAgreement(data: mutationAgreementInput!, draft: Boolean): Agreement
+  updateAgreement(id: String!, autosave: Boolean, data: mutationAgreementUpdateInput!, draft: Boolean): Agreement
   deleteAgreement(id: String!): Agreement
   duplicateAgreement(id: String!): Agreement
-  createEmailTemplate(data: mutationEmailTemplateInput!, draft: Boolean, locale: LocaleInputType): EmailTemplate
-  updateEmailTemplate(id: String!, autosave: Boolean, data: mutationEmailTemplateUpdateInput!, draft: Boolean, locale: LocaleInputType): EmailTemplate
+  createEmailTemplate(data: mutationEmailTemplateInput!, draft: Boolean): EmailTemplate
+  updateEmailTemplate(id: String!, autosave: Boolean, data: mutationEmailTemplateUpdateInput!, draft: Boolean): EmailTemplate
   deleteEmailTemplate(id: String!): EmailTemplate
   duplicateEmailTemplate(id: String!): EmailTemplate
-  createLogo(data: mutationLogoInput!, draft: Boolean, locale: LocaleInputType): Logo
-  updateLogo(id: String!, autosave: Boolean, data: mutationLogoUpdateInput!, draft: Boolean, locale: LocaleInputType): Logo
+  createLogo(data: mutationLogoInput!, draft: Boolean): Logo
+  updateLogo(id: String!, autosave: Boolean, data: mutationLogoUpdateInput!, draft: Boolean): Logo
   deleteLogo(id: String!): Logo
-  createImageCover(data: mutationImageCoverInput!, draft: Boolean, locale: LocaleInputType): ImageCover
-  updateImageCover(id: String!, autosave: Boolean, data: mutationImageCoverUpdateInput!, draft: Boolean, locale: LocaleInputType): ImageCover
+  createImageCover(data: mutationImageCoverInput!, draft: Boolean): ImageCover
+  updateImageCover(id: String!, autosave: Boolean, data: mutationImageCoverUpdateInput!, draft: Boolean): ImageCover
   deleteImageCover(id: String!): ImageCover
-  createPhoto(data: mutationPhotoInput!, draft: Boolean, locale: LocaleInputType): Photo
-  updatePhoto(id: String!, autosave: Boolean, data: mutationPhotoUpdateInput!, draft: Boolean, locale: LocaleInputType): Photo
+  createPhoto(data: mutationPhotoInput!, draft: Boolean): Photo
+  updatePhoto(id: String!, autosave: Boolean, data: mutationPhotoUpdateInput!, draft: Boolean): Photo
   deletePhoto(id: String!): Photo
-  createUser(data: mutationUserInput!, draft: Boolean, locale: LocaleInputType): User
-  updateUser(id: String!, autosave: Boolean, data: mutationUserUpdateInput!, draft: Boolean, locale: LocaleInputType): User
+  createUser(data: mutationUserInput!, draft: Boolean): User
+  updateUser(id: String!, autosave: Boolean, data: mutationUserUpdateInput!, draft: Boolean): User
   deleteUser(id: String!): User
   refreshTokenUser(token: String): usersRefreshedUser
   logoutUser: String
@@ -14048,20 +13986,20 @@ type Mutation {
   forgotPasswordUser(disableEmail: Boolean, email: String!, expiration: Int): Boolean!
   resetPasswordUser(password: String, token: String): usersResetPassword
   verifyEmailUser(token: String): Boolean
-  createSearch(data: mutationSearchInput!, draft: Boolean, locale: LocaleInputType): Search
-  updateSearch(id: String!, autosave: Boolean, data: mutationSearchUpdateInput!, draft: Boolean, locale: LocaleInputType): Search
+  createSearch(data: mutationSearchInput!, draft: Boolean): Search
+  updateSearch(id: String!, autosave: Boolean, data: mutationSearchUpdateInput!, draft: Boolean): Search
   deleteSearch(id: String!): Search
   duplicateSearch(id: String!): Search
-  createPayloadPreference(data: mutationPayloadPreferenceInput!, draft: Boolean, locale: LocaleInputType): PayloadPreference
-  updatePayloadPreference(id: String!, autosave: Boolean, data: mutationPayloadPreferenceUpdateInput!, draft: Boolean, locale: LocaleInputType): PayloadPreference
+  createPayloadPreference(data: mutationPayloadPreferenceInput!, draft: Boolean): PayloadPreference
+  updatePayloadPreference(id: String!, autosave: Boolean, data: mutationPayloadPreferenceUpdateInput!, draft: Boolean): PayloadPreference
   deletePayloadPreference(id: String!): PayloadPreference
   duplicatePayloadPreference(id: String!): PayloadPreference
-  updateData(data: mutationDataInput!, draft: Boolean, locale: LocaleInputType): Data
+  updateData(data: mutationDataInput!, draft: Boolean): Data
 }
 
 input mutationJobInput {
   archived: Boolean
-  status: String
+  status: Job_status_MutationInput
   title: String!
   categories: [Job_categories_MutationInput]
   organization: String
@@ -14073,7 +14011,6 @@ input mutationJobInput {
   experience: [Job_experience_MutationInput]
   language: [Job_language_MutationInput]
   salary: mutationJob_SalaryInput
-  description: String
   richText: JSON
   skills: [String]
   certifications: [String]
@@ -14086,6 +14023,11 @@ input mutationJobInput {
   publicId: Float
   updatedAt: String
   createdAt: String
+}
+
+enum Job_status_MutationInput {
+  published
+  unpublished
 }
 
 enum Job_categories_MutationInput {
@@ -14211,7 +14153,7 @@ input mutationJob_SuitableForInput {
 
 input mutationJobUpdateInput {
   archived: Boolean
-  status: String
+  status: JobUpdate_status_MutationInput
   title: String
   categories: [JobUpdate_categories_MutationInput]
   organization: String
@@ -14223,7 +14165,6 @@ input mutationJobUpdateInput {
   experience: [JobUpdate_experience_MutationInput]
   language: [JobUpdate_language_MutationInput]
   salary: mutationJobUpdate_SalaryInput
-  description: String
   richText: JSON
   skills: [String]
   certifications: [String]
@@ -14236,6 +14177,11 @@ input mutationJobUpdateInput {
   publicId: Float
   updatedAt: String
   createdAt: String
+}
+
+enum JobUpdate_status_MutationInput {
+  published
+  unpublished
 }
 
 enum JobUpdate_categories_MutationInput {

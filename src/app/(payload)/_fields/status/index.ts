@@ -7,7 +7,16 @@ import { StatusSelectField } from './field'
 export const statusField: Field = {
   name: 'status',
   label: 'Status',
-  type: 'text',
+  type: 'select',
+  options: [
+    {
+      label: 'Published',
+      value: 'published',
+    },
+    {
+      label: 'Unpublished',
+      value: 'unpublished',
+    }],
   admin: {
     components: {
       Field: StatusSelectField,
