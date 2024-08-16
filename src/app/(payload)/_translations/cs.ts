@@ -1,4 +1,4 @@
-{
+export const cs = {
     "other": {
         "published": "Publikováno",
         "unpublished": "Koncept",

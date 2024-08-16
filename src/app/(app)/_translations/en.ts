@@ -1,4 +1,4 @@
-{
+export const en = {
   "authentication": {
     "account": "My Account",
     "login": "Log In",
@@ -200,7 +200,7 @@
     "certifications": "Certifications",
     "categories": "Categories",
     "employment": "Employment",
-    "locationType":"Location Type",
+    "locationType": "Location Type",
     "education": "Education",
     "experience": "Experience",
     "language": "Language(s)",
@@ -224,7 +224,7 @@
     "location": "City or Region",
     "locationType": "Location",
     "currency": "Currency",
-    "salaryType":"Salary Type",
+    "salaryType": "Salary Type",
     "status": "Status",
     "suitableFor": "Suitable For",
     "results": "Results",
@@ -345,7 +345,7 @@
     "confirmPasswordPlaceholder": "Confirm Password",
     "title": "Organization name",
     "titlePlaceholder": "Title of your organization",
-    "firstName":"First Name",
+    "firstName": "First Name",
     "firstNamePlaceholder": "Your first name",
     "lastName": "Last Name",
     "lastNamePlaceholder": "Your last name",
@@ -422,8 +422,8 @@
     "header": "My Profile",
     "subheader": "Candidate Profile",
     "uploadDescription": "Upload or change your profile photo here.",
-    "firstName":"First Name",
-    "lastName":"Last Name",
+    "firstName": "First Name",
+    "lastName": "Last Name",
     "location": "Location",
     "phone": "Phone",
     "bio": "Bio",

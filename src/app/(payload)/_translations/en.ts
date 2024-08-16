@@ -1,4 +1,4 @@
-{
+export const en = {
     "other": {
         "published": "Published",
         "unpublished": "Unpublished",

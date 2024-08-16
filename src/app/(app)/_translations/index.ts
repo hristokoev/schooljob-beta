@@ -1,4 +1,4 @@
-import cs from './cs.json'
-import en from './en.json'
+import { cs } from './cs'
+import { en } from './en'
 
 export { cs, en }

@@ -1,4 +1,4 @@
-{
+export const cs = {
   "authentication": {
     "account": "Můj účet",
     "login": "Přihlásit se",
@@ -200,7 +200,7 @@
     "certifications": "Certifikace",
     "categories": "Kategorie",
     "employment": "Zaměstnání",
-    "locationType":"Typ místa",
+    "locationType": "Typ místa",
     "education": "Vzdělání",
     "experience": "Zkušenosti",
     "language": "Jazyk(y)",
@@ -224,7 +224,7 @@
     "location": "Kde?",
     "locationType": "Práce z...",
     "currency": "Měna",
-    "salaryType":"Typ ohodnocení",
+    "salaryType": "Typ ohodnocení",
     "status": "Stav",
     "suitableFor": "Vhodné pro",
     "results": "Výsledky hledání",
@@ -307,7 +307,7 @@
       "retirees": "Důchodci"
     }
   },
- "login": {
+  "login": {
     "title": "Přihlášení",
     "header": "Vítejte zpět! ✨",
     "description": "Nemáte účet? ",
@@ -345,7 +345,7 @@
     "confirmPasswordPlaceholder": "Potvrďte heslo",
     "title": "Název organizace",
     "titlePlaceholder": "Název vaší organizace",
-    "firstName":"Jméno",
+    "firstName": "Jméno",
     "firstNamePlaceholder": "Vaše jméno",
     "lastName": "Příjmení",
     "lastNamePlaceholder": "Vaše příjmení",
@@ -422,8 +422,8 @@
     "header": "Můj profil",
     "subheader": "Profil kandidáta",
     "uploadDescription": "Zde nahrajte nebo změňte svou profilovou fotku.",
-    "firstName":"Jméno",
-    "lastName":"Příjmení",
+    "firstName": "Jméno",
+    "lastName": "Příjmení",
     "location": "Místo",
     "phone": "Telefon",
     "bio": "Bio",
