@@ -95,9 +95,6 @@ export default async function EditJob({ params: { id } }: Props) {
     },
     skills: Array.isArray(data.skills) ? (data.skills as string[]) : [],
     certifications: Array.isArray(data.certifications) ? (data.certifications as string[]) : [],
-    responsibilities: Array.isArray(data.responsibilities)
-      ? (data.responsibilities as string[])
-      : [],
     benefits: Array.isArray(data.benefits) ? (data.benefits as string[]) : [],
     suitableFor: {
       students: data.suitableFor?.students || false,

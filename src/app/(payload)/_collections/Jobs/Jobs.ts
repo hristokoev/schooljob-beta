@@ -451,18 +451,6 @@ export const Jobs: CollectionConfig = {
               },
             },
             {
-              name: 'responsibilities',
-              label: {
-                en: 'Responsibilities',
-                cs: 'Náplň práce',
-              },
-              type: 'text',
-              hasMany: true,
-              access: {
-                read: ARCHIVED,
-              },
-            },
-            {
               name: 'benefits',
               label: {
                 en: 'Benefits',

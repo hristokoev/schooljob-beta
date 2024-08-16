@@ -43,7 +43,6 @@ type JobFormData = {
     }
     skills?: string[]
     certifications?: string[]
-    responsibilities?: string[]
     benefits?: string[]
     suitableFor?: {
         students?: boolean
@@ -115,7 +114,6 @@ const JobFieldSchema: ZodType<JobFormData> = z
         }).optional(),
         skills: z.array(z.string()).optional(),
         certifications: z.array(z.string()).optional(),
-        responsibilities: z.array(z.string()).optional(),
         benefits: z.array(z.string()).optional(),
         suitableFor: z.object({
             students: z.boolean().optional(),

@@ -77,7 +77,6 @@ type Job {
   richText(depth: Int): JSON
   skills: [String]
   certifications: [String]
-  responsibilities: [String]
   benefits: [String]
   suitableFor: Job_SuitableFor
   applications(locale: LocaleInputType, fallbackLocale: FallbackLocaleInputType): [Application!]
@@ -1326,7 +1325,6 @@ input Job_where {
   richText: Job_richText_operator
   skills: Job_skills_operator
   certifications: Job_certifications_operator
-  responsibilities: Job_responsibilities_operator
   benefits: Job_benefits_operator
   suitableFor__students: Job_suitableFor__students_operator
   suitableFor__disabledPeople: Job_suitableFor__disabledPeople_operator
@@ -1645,17 +1643,6 @@ input Job_certifications_operator {
   exists: Boolean
 }
 
-input Job_responsibilities_operator {
-  equals: String
-  not_equals: String
-  like: String
-  contains: String
-  in: [String]
-  not_in: [String]
-  all: [String]
-  exists: Boolean
-}
-
 input Job_benefits_operator {
   equals: String
   not_equals: String
@@ -1792,7 +1779,6 @@ input Job_where_and {
   richText: Job_richText_operator
   skills: Job_skills_operator
   certifications: Job_certifications_operator
-  responsibilities: Job_responsibilities_operator
   benefits: Job_benefits_operator
   suitableFor__students: Job_suitableFor__students_operator
   suitableFor__disabledPeople: Job_suitableFor__disabledPeople_operator
@@ -1834,7 +1820,6 @@ input Job_where_or {
   richText: Job_richText_operator
   skills: Job_skills_operator
   certifications: Job_certifications_operator
-  responsibilities: Job_responsibilities_operator
   benefits: Job_benefits_operator
   suitableFor__students: Job_suitableFor__students_operator
   suitableFor__disabledPeople: Job_suitableFor__disabledPeople_operator
@@ -1882,7 +1867,6 @@ type JobsDocAccessFields {
   richText: JobsDocAccessFields_richText
   skills: JobsDocAccessFields_skills
   certifications: JobsDocAccessFields_certifications
-  responsibilities: JobsDocAccessFields_responsibilities
   benefits: JobsDocAccessFields_benefits
   suitableFor: JobsDocAccessFields_suitableFor
   applications: JobsDocAccessFields_applications
@@ -2454,29 +2438,6 @@ type JobsDocAccessFields_certifications_Update {
 }
 
 type JobsDocAccessFields_certifications_Delete {
-  permission: Boolean!
-}
-
-type JobsDocAccessFields_responsibilities {
-  create: JobsDocAccessFields_responsibilities_Create
-  read: JobsDocAccessFields_responsibilities_Read
-  update: JobsDocAccessFields_responsibilities_Update
-  delete: JobsDocAccessFields_responsibilities_Delete
-}
-
-type JobsDocAccessFields_responsibilities_Create {
-  permission: Boolean!
-}
-
-type JobsDocAccessFields_responsibilities_Read {
-  permission: Boolean!
-}
-
-type JobsDocAccessFields_responsibilities_Update {
-  permission: Boolean!
-}
-
-type JobsDocAccessFields_responsibilities_Delete {
   permission: Boolean!
 }
 
@@ -9262,7 +9223,6 @@ type JobsFields {
   richText: JobsFields_richText
   skills: JobsFields_skills
   certifications: JobsFields_certifications
-  responsibilities: JobsFields_responsibilities
   benefits: JobsFields_benefits
   suitableFor: JobsFields_suitableFor
   applications: JobsFields_applications
@@ -9834,29 +9794,6 @@ type JobsFields_certifications_Update {
 }
 
 type JobsFields_certifications_Delete {
-  permission: Boolean!
-}
-
-type JobsFields_responsibilities {
-  create: JobsFields_responsibilities_Create
-  read: JobsFields_responsibilities_Read
-  update: JobsFields_responsibilities_Update
-  delete: JobsFields_responsibilities_Delete
-}
-
-type JobsFields_responsibilities_Create {
-  permission: Boolean!
-}
-
-type JobsFields_responsibilities_Read {
-  permission: Boolean!
-}
-
-type JobsFields_responsibilities_Update {
-  permission: Boolean!
-}
-
-type JobsFields_responsibilities_Delete {
   permission: Boolean!
 }
 
@@ -14140,7 +14077,6 @@ input mutationJobInput {
   richText: JSON
   skills: [String]
   certifications: [String]
-  responsibilities: [String]
   benefits: [String]
   suitableFor: mutationJob_SuitableForInput
   applications: [String]
@@ -14291,7 +14227,6 @@ input mutationJobUpdateInput {
   richText: JSON
   skills: [String]
   certifications: [String]
-  responsibilities: [String]
   benefits: [String]
   suitableFor: mutationJobUpdate_SuitableForInput
   applications: [String]

@@ -45,75 +45,75 @@ export interface Job {
   email: string;
   employmentType: ('fulltime' | 'parttime' | 'agreement' | 'internship' | 'contract' | 'volunteer')[];
   location?:
-    | (
-        | 'praha'
-        | 'jihocesky-kraj'
-        | 'jihomoravsky-kraj'
-        | 'karlovarsky-kraj'
-        | 'kralovehradecky-kraj'
-        | 'liberecky-kraj'
-        | 'moravskoslezsky-kraj'
-        | 'olomoucky-kraj'
-        | 'pardubicky-kraj'
-        | 'plzensky-kraj'
-        | 'stredocesky-kraj'
-        | 'ustecky-kraj'
-        | 'vysocina'
-        | 'zlinsky-kraj'
-      )[]
-    | null;
+  | (
+    | 'praha'
+    | 'jihocesky-kraj'
+    | 'jihomoravsky-kraj'
+    | 'karlovarsky-kraj'
+    | 'kralovehradecky-kraj'
+    | 'liberecky-kraj'
+    | 'moravskoslezsky-kraj'
+    | 'olomoucky-kraj'
+    | 'pardubicky-kraj'
+    | 'plzensky-kraj'
+    | 'stredocesky-kraj'
+    | 'ustecky-kraj'
+    | 'vysocina'
+    | 'zlinsky-kraj'
+  )[]
+  | null;
   locationType?: ('onsite' | 'remote' | 'hybrid')[] | null;
   education?:
-    | (
-        | 'noEducation'
-        | 'highSchool'
-        | 'associateDegree'
-        | 'bachelorsDegree'
-        | 'mastersDegree'
-        | 'doctoralDegree'
-        | 'professionalDegree'
-      )[]
-    | null;
+  | (
+    | 'noEducation'
+    | 'highSchool'
+    | 'associateDegree'
+    | 'bachelorsDegree'
+    | 'mastersDegree'
+    | 'doctoralDegree'
+    | 'professionalDegree'
+  )[]
+  | null;
   experience?:
-    | (
-        | 'noExperience'
-        | 'lessThanOneYear'
-        | 'oneTwoYears'
-        | 'twoThreeYears'
-        | 'threeFiveYears'
-        | 'fiveTenYears'
-        | 'tenPlusYears'
-      )[]
-    | null;
+  | (
+    | 'noExperience'
+    | 'lessThanOneYear'
+    | 'oneTwoYears'
+    | 'twoThreeYears'
+    | 'threeFiveYears'
+    | 'fiveTenYears'
+    | 'tenPlusYears'
+  )[]
+  | null;
   language?:
-    | (
-        | 'sq'
-        | 'bg'
-        | 'ca'
-        | 'hr'
-        | 'cs'
-        | 'da'
-        | 'nl'
-        | 'en'
-        | 'fi'
-        | 'fr'
-        | 'de'
-        | 'el'
-        | 'hu'
-        | 'it'
-        | 'no'
-        | 'pl'
-        | 'pt'
-        | 'ro'
-        | 'ru'
-        | 'sr'
-        | 'sk'
-        | 'es'
-        | 'sv'
-        | 'tr'
-        | 'uk'
-      )[]
-    | null;
+  | (
+    | 'sq'
+    | 'bg'
+    | 'ca'
+    | 'hr'
+    | 'cs'
+    | 'da'
+    | 'nl'
+    | 'en'
+    | 'fi'
+    | 'fr'
+    | 'de'
+    | 'el'
+    | 'hu'
+    | 'it'
+    | 'no'
+    | 'pl'
+    | 'pt'
+    | 'ro'
+    | 'ru'
+    | 'sr'
+    | 'sk'
+    | 'es'
+    | 'sv'
+    | 'tr'
+    | 'uk'
+  )[]
+  | null;
   salary?: {
     enabled?: boolean | null;
     range?: boolean | null;
@@ -141,7 +141,6 @@ export interface Job {
   } | null;
   skills?: string[] | null;
   certifications?: string[] | null;
-  responsibilities?: string[] | null;
   benefits?: string[] | null;
   suitableFor?: {
     students?: boolean | null;
@@ -170,23 +169,23 @@ export interface Organization {
   email: string;
   phone?: string | null;
   location?:
-    | (
-        | 'praha'
-        | 'jihocesky-kraj'
-        | 'jihomoravsky-kraj'
-        | 'karlovarsky-kraj'
-        | 'kralovehradecky-kraj'
-        | 'liberecky-kraj'
-        | 'moravskoslezsky-kraj'
-        | 'olomoucky-kraj'
-        | 'pardubicky-kraj'
-        | 'plzensky-kraj'
-        | 'stredocesky-kraj'
-        | 'ustecky-kraj'
-        | 'vysocina'
-        | 'zlinsky-kraj'
-      )[]
-    | null;
+  | (
+    | 'praha'
+    | 'jihocesky-kraj'
+    | 'jihomoravsky-kraj'
+    | 'karlovarsky-kraj'
+    | 'kralovehradecky-kraj'
+    | 'liberecky-kraj'
+    | 'moravskoslezsky-kraj'
+    | 'olomoucky-kraj'
+    | 'pardubicky-kraj'
+    | 'plzensky-kraj'
+    | 'stredocesky-kraj'
+    | 'ustecky-kraj'
+    | 'vysocina'
+    | 'zlinsky-kraj'
+  )[]
+  | null;
   vatId?: string | null;
   categories?: ('preschool' | 'primary' | 'secondary' | 'tertiary' | 'leisure' | 'sport' | 'other')[] | null;
   logo?: string | Logo | null;
@@ -245,14 +244,14 @@ export interface User {
   firstName?: string | null;
   lastName?: string | null;
   profile?:
-    | ({
-        relationTo: 'organizations';
-        value: string | Organization;
-      } | null)
-    | ({
-        relationTo: 'candidates';
-        value: string | Candidate;
-      } | null);
+  | ({
+    relationTo: 'organizations';
+    value: string | Organization;
+  } | null)
+  | ({
+    relationTo: 'candidates';
+    value: string | Candidate;
+  } | null);
   updatedAt: string;
   createdAt: string;
   email: string;
@@ -410,16 +409,16 @@ export interface EmailTemplate {
   blocks: (TextBlock | ButtonBlock)[];
   footer: string;
   event?:
-    | (
-        | 'new-candidate'
-        | 'new-organization'
-        | 'reset-password'
-        | 'new-job'
-        | 'job-status-changed'
-        | 'new-application'
-        | 'application-status-changed'
-      )
-    | null;
+  | (
+    | 'new-candidate'
+    | 'new-organization'
+    | 'reset-password'
+    | 'new-job'
+    | 'job-status-changed'
+    | 'new-application'
+    | 'application-status-changed'
+  )
+  | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -467,14 +466,14 @@ export interface Search {
   title?: string | null;
   priority?: number | null;
   doc:
-    | {
-        relationTo: 'jobs';
-        value: string | Job;
-      }
-    | {
-        relationTo: 'organizations';
-        value: string | Organization;
-      };
+  | {
+    relationTo: 'jobs';
+    value: string | Job;
+  }
+  | {
+    relationTo: 'organizations';
+    value: string | Organization;
+  };
   status?: string | null;
   slug?: string | null;
   publicId?: string | null;
@@ -494,14 +493,14 @@ export interface PayloadPreference {
   };
   key?: string | null;
   value?:
-    | {
-        [k: string]: unknown;
-      }
-    | unknown[]
-    | string
-    | number
-    | boolean
-    | null;
+  | {
+    [k: string]: unknown;
+  }
+  | unknown[]
+  | string
+  | number
+  | boolean
+  | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -530,5 +529,5 @@ export interface Data {
 
 
 declare module 'payload' {
-  export interface GeneratedTypes extends Config {}
+  export interface GeneratedTypes extends Config { }
 }

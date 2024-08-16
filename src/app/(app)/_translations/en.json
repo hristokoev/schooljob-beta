@@ -92,7 +92,6 @@
     "richText": "Job Details",
     "skills": "Skills",
     "certifications": "Certifications",
-    "responsibilities": "Respons.",
     "benefits": "Benefits",
     "aside": "More",
     "featured": "Featured",
@@ -197,7 +196,6 @@
   "job": {
     "skills": "Skills",
     "certifications": "Certifications",
-    "responsibilities": "Responsibilities",
     "categories": "Categories",
     "employment": "Employment",
     "locationType":"Location Type",

@@ -46,7 +46,6 @@ const JobBlock: React.FC<{ publicId: string; slug: string }> = async ({ publicId
     richText,
     skills,
     certifications,
-    responsibilities,
     benefits,
     categories,
     featured,
@@ -125,12 +124,6 @@ const JobBlock: React.FC<{ publicId: string; slug: string }> = async ({ publicId
             {certifications && certifications.length > 0 && (
               <Fragment>
                 <List label={t('job.certifications')} items={certifications as string[]} />
-                <Hr />
-              </Fragment>
-            )}
-            {responsibilities && responsibilities.length > 0 && (
-              <Fragment>
-                <List label={t('job.responsibilities')} items={responsibilities as string[]} />
                 <Hr />
               </Fragment>
             )}

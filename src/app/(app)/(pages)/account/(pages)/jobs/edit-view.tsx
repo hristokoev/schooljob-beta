@@ -487,17 +487,6 @@ const JobsEditView: React.FC<Partial<JobFormData> & JobsEditViewProps> = formDat
                 </div>
 
                 <div>
-                  <Label>{t('editJob.responsibilities')}</Label>
-                  <Controller
-                    control={control}
-                    name="responsibilities"
-                    render={({ field }) => (
-                      <InputList field={field} setValue={setValue} disabled={published} />
-                    )}
-                  />
-                </div>
-
-                <div>
                   <Label>{t('editJob.benefits')}</Label>
                   <Controller
                     control={control}
