@@ -1,5 +1,5 @@
-import { buildCachedPayload } from '@payload-enchants/cached-local-api';
-import { revalidateTag, unstable_cache } from 'next/cache';
+import { revalidateTag, unstable_cache } from 'next/cache'
+import { buildCachedPayload } from '@payload-enchants/cached-local-api'
 
 export const { cachedPayloadPlugin, getCachedPayload } = buildCachedPayload({
     // collections list to cache
@@ -9,6 +9,9 @@ export const { cachedPayloadPlugin, getCachedPayload } = buildCachedPayload({
         },
         {
             slug: 'organizations',
+        },
+        {
+            slug: 'partners',
         }
     ],
     // Log when revalidation runs or operation cache HIT / SKIP
@@ -22,4 +25,5 @@ export const { cachedPayloadPlugin, getCachedPayload } = buildCachedPayload({
         https://github.com/r1tsuu/payload-enchants/issues/86
     */
     useSimpleCacheStrategy: true,
-});
+})
+

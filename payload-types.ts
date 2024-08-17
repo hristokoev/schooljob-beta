@@ -9,15 +9,16 @@
 export interface Config {
   collections: {
     jobs: Job;
+    applications: Application;
     organizations: Organization;
     candidates: Candidate;
-    applications: Application;
     cvs: Cv;
-    agreements: Agreement;
-    'email-templates': EmailTemplate;
     logos: Logo;
     'image-covers': ImageCover;
     photos: Photo;
+    agreements: Agreement;
+    'email-templates': EmailTemplate;
+    partners: Partner;
     users: User;
     search: Search;
     'payload-preferences': PayloadPreference;
@@ -455,6 +456,18 @@ export interface ButtonBlock {
   id?: string | null;
   blockName?: string | null;
   blockType: 'Button';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "partners".
+ */
+export interface Partner {
+  id: string;
+  title: string;
+  logo: string | Logo;
+  url: string;
+  updatedAt: string;
+  createdAt: string;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
