@@ -554,6 +554,7 @@ export const cs = {
     "recommendedJobs": "Doporučené nabídky",
     "recommendedOrganizations": "Doporučené organizace",
     "reject": "Odmítnout",
+    "resetFilters": "Resetovat filtry",
     "saveChanges": "Uložit změny",
     "search": "Hledat",
     "showLess": "Zobrazit méně",

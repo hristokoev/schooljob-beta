@@ -17,7 +17,6 @@ const JobsList: React.FC<JobSearchParams> = async props => {
     page = 1,
     sort,
     createdAt,
-    status = 'published',
     featured,
     organization,
     categories,
@@ -27,10 +26,7 @@ const JobsList: React.FC<JobSearchParams> = async props => {
     language,
     location,
     locationType,
-    students,
-    mothersOnMaternityLeave,
-    disabledPeople,
-    retirees,
+    suitableFor,
   } = props
 
   const payload = await getPayloadHMR({
@@ -46,74 +42,94 @@ const JobsList: React.FC<JobSearchParams> = async props => {
     page,
     sort,
     where: {
-      ...(status && { status: { equals: status } }),
-      ...(featured && { featured: { equals: featured } }),
-      ...(createdAt && { createdAt: { greater_than: createdAt } }),
-      ...(organization && { organization: { equals: organization } }),
-      ...(categories && {
-        categories: {
-          all: categories,
+      status: { equals: 'published' },
+      or: [
+        { ...(featured && { featured: { equals: featured } }) },
+        { ...(createdAt && { createdAt: { greater_than: createdAt } }) },
+        { ...(organization && { organization: { equals: organization } }) },
+        {
+          ...(categories && {
+            categories: {
+              in: categories,
+            },
+          }),
         },
-      }),
-      ...(salary && {
-        or: [
-          {
-            and: [
-              { 'salary.enabled': { equals: true } },
-              { 'salary.range': { equals: false } },
-              { 'salary.base': { greater_than_equal: salary } },
+        {
+          ...(salary && {
+            or: [
+              {
+                and: [
+                  { 'salary.enabled': { equals: true } },
+                  { 'salary.range': { equals: false } },
+                  { 'salary.base': { greater_than_equal: salary } },
+                ],
+              },
+              {
+                and: [
+                  { 'salary.enabled': { equals: true } },
+                  { 'salary.range': { equals: true } },
+                  { 'salary.minSalary': { greater_than_equal: salary } },
+                ],
+              },
             ],
-          },
-          {
-            and: [
-              { 'salary.enabled': { equals: true } },
-              { 'salary.range': { equals: true } },
-              { 'salary.minSalary': { greater_than_equal: salary } },
-            ],
-          },
-        ],
-      }),
-      ...(employmentType && {
-        employmentType: {
-          all: employmentType,
+          }),
         },
-      }),
-      ...(education && {
-        education: {
-          all: education,
+        {
+          ...(employmentType && {
+            employmentType: {
+              in: employmentType,
+            },
+          }),
         },
-      }),
-      ...(language && {
-        language: {
-          all: language,
+        {
+          ...(education && {
+            education: {
+              in: education,
+            },
+          }),
         },
-      }),
-      ...(location && {
-        location: {
-          all: location,
+        {
+          ...(language && {
+            language: {
+              in: language,
+            },
+          }),
         },
-      }),
-      ...(locationType && {
-        locationType: {
-          all: locationType,
+        {
+          ...(location && {
+            location: {
+              in: location,
+            },
+          }),
         },
-      }),
-      ...(students && { 'suitableFor.students': { equals: students } }),
-      ...(mothersOnMaternityLeave && {
-        'suitableFor.mothersOnMaternityLeave': {
-          equals: mothersOnMaternityLeave,
+        {
+          ...(locationType && {
+            locationType: {
+              in: locationType,
+            },
+          }),
         },
-      }),
-      ...(disabledPeople && {
-        'suitableFor.disabledPeople': {
-          equals: disabledPeople,
+        {
+          ...(suitableFor?.includes('students') && {
+            'suitableFor.students': { equals: true },
+          }),
         },
-      }),
-      ...(retirees && {
-        'suitableFor.retirees': {
-          equals: retirees,
+        {
+          ...(suitableFor?.includes('mothersOnMaternityLeave') && {
+            'suitableFor.mothersOnMaternityLeave': { equals: true },
+          }),
         },
-      }),
+        {
+          ...(suitableFor?.includes('disabledPeople') && {
+            'suitableFor.disabledPeople': { equals: true },
+          }),
+        },
+        {
+          ...(suitableFor?.includes('retirees') && {
+            'suitableFor.retirees': { equals: true },
+          }),
+        },
+      ],
     },
   })
 

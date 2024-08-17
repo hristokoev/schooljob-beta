@@ -1,6 +1,7 @@
 'use client'
 
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
+import { useRouter, useSearchParams } from 'next/navigation'
 import { useTranslations } from 'next-intl'
 
 import { Button, Hr, Select } from '@/components'
@@ -19,27 +20,44 @@ type Props = {
   className: string
   path: string
   isMulti?: boolean
+  showMore?: boolean
+  resetFilters?: boolean
 }
 
-const Search: React.FC<Props> = ({ popup = false, filters, className, path, isMulti = false }) => {
+const Search: React.FC<Props> = ({
+  popup = false,
+  filters,
+  className,
+  path,
+  isMulti = false,
+  showMore = false,
+  resetFilters = false,
+}) => {
   const t = useTranslations()
-  const [filtersToDisplay, setFiltersToDisplay] = useState<Filter[]>(filters.slice(0, 5))
+  const router = useRouter()
+  const searchParams = useSearchParams()
+
+  const [filtersToDisplay, setFiltersToDisplay] = useState<Filter[]>(
+    showMore ? filters.slice(0, 5) : filters,
+  )
   const [selectedValues, setSelectedValues] = useState<Record<string, any>>({})
 
+  const hasSelectedFilters = useMemo(() => {
+    return Object.values(selectedValues).some(value =>
+      Array.isArray(value) ? value.length > 0 : value !== null,
+    )
+  }, [selectedValues])
+
   useEffect(() => {
-    // Parse query parameters from the URL
-    const queryParams = new URLSearchParams(window.location.search)
     const parsedValues: Record<string, any> = {}
 
     filters.forEach(filter => {
-      const paramValue = queryParams.get(filter.slug)
+      const paramValue = searchParams.get(filter.slug)
 
       if (paramValue) {
         const values = paramValue
           .split(',')
-          .map(value => {
-            return filter.options.find(option => option.value === value)
-          })
+          .map(value => filter.options.find(option => option.value === value))
           .filter(Boolean)
 
         if (values.length > 0) {
@@ -49,7 +67,7 @@ const Search: React.FC<Props> = ({ popup = false, filters, className, path, isMu
     })
 
     setSelectedValues(parsedValues)
-  }, [filters, isMulti])
+  }, [filters, isMulti, searchParams])
 
   const handleSelectChange = (filterSlug: string, selectedOption: any) => {
     setSelectedValues(prevState => ({
@@ -71,8 +89,21 @@ const Search: React.FC<Props> = ({ popup = false, filters, className, path, isMu
     }, [] as string[])
 
     const queryString = query.length ? `?${query.join('&')}` : ''
-    const url = `/${path}${queryString}` // Adjust base path as needed
-    window.location.href = url
+    router.push(`/${path}${queryString}`)
+  }
+
+  const handleShowMore = () => {
+    setFiltersToDisplay(filtersToDisplay.length < filters.length ? filters : filters.slice(0, 5))
+  }
+
+  const handleResetFilters = () => {
+    if (searchParams.size === 0) {
+      // If there are no search params, just clear the filters without navigating
+      setSelectedValues({})
+    } else {
+      // If there are search params, navigate to the base path
+      router.push(`/${path}`)
+    }
   }
 
   return (
@@ -94,25 +125,21 @@ const Search: React.FC<Props> = ({ popup = false, filters, className, path, isMu
             />
           </div>
         ))}
-        <div className="flex gap-2">
-          {filters.length > 5 && (
-            <Button
-              className="grow"
-              variant="link"
-              onClick={() => {
-                setFiltersToDisplay(
-                  filtersToDisplay.length < filters.length ? filters : filters.slice(0, 5),
-                )
-              }}
-              type="button"
-            >
-              {filtersToDisplay.length < filters.length ? t('ui.showMore') : t('ui.showLess')}
-              {filtersToDisplay.length < filters.length
-                ? ` (${filters.length - filtersToDisplay.length})`
-                : ''}
-            </Button>
-          )}
-        </div>
+      </div>
+      <div className="flex flex-col gap-2">
+        {showMore && filters.length > 5 && (
+          <Button className="grow" variant="link" onClick={handleShowMore} type="button">
+            {filtersToDisplay.length < filters.length ? t('ui.showMore') : t('ui.showLess')}
+            {filtersToDisplay.length < filters.length
+              ? ` (${filters.length - filtersToDisplay.length})`
+              : ''}
+          </Button>
+        )}
+        {resetFilters && hasSelectedFilters && (
+          <Button className="grow" variant="link" onClick={handleResetFilters} type="button">
+            {t('ui.resetFilters')}
+          </Button>
+        )}
       </div>
       <Hr className="md:hidden" />
       <Button className="w-full" type="submit">

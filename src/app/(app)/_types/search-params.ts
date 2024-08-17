@@ -5,6 +5,8 @@
     TODO: Revisit this file and check if it's still necessary.
 */
 
+type SuitableFor = 'students' | 'mothersOnMaternityLeave' | 'disabledPeople' | 'retirees'
+
 interface JobSearchParams {
     limit?: number
     page?: number
@@ -21,10 +23,7 @@ interface JobSearchParams {
     language?: string[]
     location?: string[]
     locationType?: string[]
-    students?: boolean
-    mothersOnMaternityLeave?: boolean
-    disabledPeople?: boolean
-    retirees?: boolean
+    suitableFor?: SuitableFor[]
 }
 
 interface OrganizationSearchParams {

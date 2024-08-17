@@ -2,6 +2,7 @@
 
 import React, { Fragment, useState } from 'react'
 import { Job } from '@payload-types'
+import { PaginatedDocs } from 'payload'
 import { useTranslations } from 'next-intl'
 
 import { Button } from '@/components'
@@ -17,8 +18,6 @@ const LoadMore: React.FC<JobSearchParams> = props => {
     sort,
     createdAt,
     limit,
-    status = 'published',
-    featured,
     organization,
     categories,
     salary,
@@ -27,10 +26,7 @@ const LoadMore: React.FC<JobSearchParams> = props => {
     language,
     location,
     locationType,
-    students,
-    mothersOnMaternityLeave,
-    disabledPeople,
-    retirees,
+    suitableFor,
   } = props
   const [jobs, setJobs] = useState<Job[] | null>(null)
   const [page, setPage] = useState<number>(initialPage)
@@ -39,29 +35,28 @@ const LoadMore: React.FC<JobSearchParams> = props => {
 
   const handleLoadMore = async () => {
     setLoading(true)
-    await fetchDocs<Job>('jobs', {
+    await fetchDocs<PaginatedDocs<Job>>('jobs', {
       limit,
       page: page + 1,
-      sort: sort ? sort : undefined,
-      createdAt: createdAt ? createdAt : undefined,
-      status: status ? status : undefined,
-      featured: featured ? featured : undefined,
-      organization: organization ? organization : undefined,
-      categories: categories ? categories : undefined,
-      salary: salary ? salary : undefined,
-      employmentType: employmentType ? employmentType : undefined,
-      education: education ? education : undefined,
-      language: language ? language : undefined,
-      location: location ? location : undefined,
-      locationType: locationType ? locationType : undefined,
-      students: students ? students : undefined,
-      mothersOnMaternityLeave: mothersOnMaternityLeave ? mothersOnMaternityLeave : undefined,
-      disabledPeople: disabledPeople ? disabledPeople : undefined,
-      retirees: retirees ? retirees : undefined,
-    }).then(newJobs => {
-      setJobs(prevJobs => (prevJobs ? [...prevJobs, ...newJobs] : newJobs))
+      status: 'published',
+      ...(sort && { sort }),
+      ...(createdAt && { createdAt }),
+      ...(organization && { organization }),
+      ...(categories && { categories }),
+      ...(salary && { salary }),
+      ...(employmentType && { employmentType }),
+      ...(education && { education }),
+      ...(language && { language }),
+      ...(location && { location }),
+      ...(locationType && { locationType }),
+      ...(suitableFor?.includes('students') && { students: true }),
+      ...(suitableFor?.includes('mothersOnMaternityLeave') && { mothersOnMaternityLeave: true }),
+      ...(suitableFor?.includes('disabledPeople') && { disabledPeople: true }),
+      ...(suitableFor?.includes('retirees') && { retirees: true }),
+    }).then(data => {
+      setJobs(prevJobs => (prevJobs ? [...prevJobs, ...data.docs] : data.docs))
       setPage(prevPage => prevPage + 1)
-      setHasMore(newJobs.length === limit)
+      setHasMore(data.hasNextPage)
       setLoading(false)
     })
   }
@@ -73,7 +68,7 @@ const LoadMore: React.FC<JobSearchParams> = props => {
       </div>
       <div className="flex justify-center">
         {hasMore ? (
-          <Button onClick={handleLoadMore} className="px-12">
+          <Button onClick={handleLoadMore} className="px-12" disabled={loading}>
             {t('ui.loadMore')}
             {loading && <LoadingIcon className="ml-2 size-4" />}
           </Button>

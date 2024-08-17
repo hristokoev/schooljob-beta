@@ -17,7 +17,13 @@ export const SearchBlock: React.FC = () => {
         </h1>
       </div>
       <Suspense>
-        <Search popup filters={useFilters()} className="grid gap-2 lg:grid-cols-6" path="jobs" />
+        <Search
+          popup
+          filters={useFilters()}
+          className="grid gap-2 lg:grid-cols-6"
+          path="jobs"
+          showMore
+        />
       </Suspense>
     </Gutter>
   )

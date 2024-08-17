@@ -15,7 +15,6 @@ query Organizations(
   $limit: Int
   $page: Int
   $sort: String
-  $featured: Boolean
   $location: [Organization_location_Input]
   $categories: [Organization_categories_Input]
 ) {
@@ -23,10 +22,11 @@ query Organizations(
     limit: $limit
     page: $page
     sort: $sort
-    where: { 
-      featured: { equals: $featured }
-      location: { all: $location }
-      categories: { all: $categories }
+    where: {
+      OR: [
+        { location: { in: $location } }
+        { categories: { in: $categories } }
+      ]
     }
   ) {
     docs {
@@ -45,6 +45,15 @@ query Organizations(
         id
       }
     }
+    totalDocs
+    limit
+    totalPages
+    page
+    pagingCounter
+    hasPrevPage
+    hasNextPage
+    prevPage
+    nextPage
   }
 }
 `

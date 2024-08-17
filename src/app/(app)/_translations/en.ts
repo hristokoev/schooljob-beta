@@ -554,6 +554,7 @@ export const en = {
     "recommendedJobs": "Recommended Jobs",
     "recommendedOrganizations": "Recommended Organizations",
     "reject": "Reject",
+    "resetFilters": "Reset Filters",
     "saveChanges": "Save Changes",
     "search": "Search",
     "showLess": "Show Less",

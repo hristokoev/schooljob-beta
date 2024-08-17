@@ -16,8 +16,7 @@ query Jobs(
   $limit: Int
   $page: Int
   $sort: String
-  $status: String
-  $featured: Boolean
+  $status: Job_status_Input
   $createdAt: DateTime
   $title: String
   $organization: JSON
@@ -38,13 +37,12 @@ query Jobs(
     page: $page
     sort: $sort
     where: {
-      AND: [
-        { status: { equals: $status } }
-        { featured: { equals: $featured } }
+      status: { equals: $status }
+      OR: [
         { createdAt: { greater_than: $createdAt } }
         { title: { contains: $title } }
         { organization: { equals: $organization } }
-        { categories: { all: $categories } }
+        { categories: { in: $categories } }
         {
           OR: [
             {
@@ -63,10 +61,10 @@ query Jobs(
             }
           ]
         }
-        { employmentType: { all: $employmentType } }
-        { education: { all: $education } }
-        { language: { all: $language } }
-        { location: { all: $location } }
+        { employmentType: { in: $employmentType } }
+        { education: { in: $education } }
+        { language: { in: $language } }
+        { location: { in: $location } }
         { locationType: { equals: $locationType } }
         { suitableFor__students: { equals: $students } }
         { suitableFor__mothersOnMaternityLeave: { equals: $mothersOnMaternityLeave } }
@@ -86,6 +84,15 @@ query Jobs(
         title
       }
     }
+    totalDocs
+    limit
+    totalPages
+    page
+    pagingCounter
+    hasPrevPage
+    hasNextPage
+    prevPage
+    nextPage
   }
 }
 `

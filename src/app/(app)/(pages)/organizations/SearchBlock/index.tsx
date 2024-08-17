@@ -12,6 +12,7 @@ export const SearchBlock: React.FC = () => {
           className="grid gap-2 lg:grid-cols-2"
           path="organizations"
           isMulti
+          resetFilters
         />
       </Suspense>
     </Gutter>

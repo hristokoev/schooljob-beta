@@ -25,9 +25,11 @@ const OrganizationsGrid: React.FC<OrganizationSearchParams> = async props => {
     page,
     sort,
     where: {
-      ...(featured && { featured: { equals: featured } }),
-      ...(categories && { categories: { all: categories } }),
-      ...(location && { location: { all: location } }),
+      or: [
+        { ...(featured && { featured: { equals: featured } }) },
+        { ...(categories && { categories: { in: categories } }) },
+        { ...(location && { location: { in: location } }) },
+      ],
     },
   })
 

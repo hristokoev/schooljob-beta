@@ -2,6 +2,7 @@
 
 import React, { Fragment, useState } from 'react'
 import { Organization } from '@payload-types'
+import { PaginatedDocs } from 'payload'
 import { useTranslations } from 'next-intl'
 
 import { Button, LoadingIcon, OrganizationCard } from '@/components'
@@ -10,7 +11,7 @@ import { OrganizationSearchParams } from '@/types'
 
 const LoadMore: React.FC<OrganizationSearchParams> = props => {
   const t = useTranslations()
-  const { page: initialPage = 1, limit, featured, categories, location } = props
+  const { page: initialPage = 1, limit, categories, location } = props
   const [organizations, setOrganizaions] = useState<Organization[] | null>(null)
   const [page, setPage] = useState<number>(initialPage)
   const [loading, setLoading] = useState<boolean>(false)
@@ -18,18 +19,19 @@ const LoadMore: React.FC<OrganizationSearchParams> = props => {
 
   const handleLoadMore = async () => {
     setLoading(true)
-    await fetchDocs<Organization>('organizations', {
+    await fetchDocs<PaginatedDocs<Organization>>('organizations', {
       page: page + 1,
       limit,
-      ...(featured && { featured: true }),
-      ...(categories && categories),
-      ...(location && location),
+      ...(categories && { categories }),
+      ...(location && { location }),
     }).then(newOrganizations => {
-      setOrganizaions(prevJobs =>
-        prevJobs ? [...prevJobs, ...newOrganizations] : newOrganizations,
+      setOrganizaions(prevOrganizations =>
+        prevOrganizations
+          ? [...prevOrganizations, ...newOrganizations.docs]
+          : newOrganizations.docs,
       )
       setPage(prevPage => prevPage + 1)
-      setHasMore(newOrganizations.length === limit)
+      setHasMore(newOrganizations.hasNextPage)
       setLoading(false)
     })
   }
@@ -46,7 +48,7 @@ const LoadMore: React.FC<OrganizationSearchParams> = props => {
       </div>
       <div className="flex justify-center">
         {hasMore ? (
-          <Button onClick={handleLoadMore}>
+          <Button onClick={handleLoadMore} disabled={loading}>
             {t('ui.loadMore')}
             {loading && <LoadingIcon className="ml-2 size-4" />}
           </Button>
