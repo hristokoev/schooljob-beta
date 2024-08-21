@@ -217,7 +217,6 @@ const JobsEditView: React.FC<Partial<JobFormData> & JobsEditViewProps> = formDat
                       render={({ field }) => (
                         <Select
                           {...field}
-                          isMulti
                           options={cz}
                           className={`w-full ${errors.location ? 'border-red-300 bg-red-300/10 hover:border-red-400 focus:border-red-500 focus:shadow-red-700/25' : ''}`}
                         />
