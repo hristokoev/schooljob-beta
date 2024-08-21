@@ -14,7 +14,7 @@ export default async function Account() {
   const t = await getTranslations()
 
   return (
-    <MinHeight className="bg-slate-100">
+    <MinHeight className="bg-slate-200">
       <Cover />
       <VerticalPadding top="none" bottom="sm" className="bg-white">
         <Gutter>
@@ -34,7 +34,7 @@ export default async function Account() {
           </div>
         </Gutter>
       </VerticalPadding>
-      <VerticalPadding bottom="lg" className="bg-slate-100">
+      <VerticalPadding bottom="lg" className="bg-slate-200">
         <Gutter>
           <Grid />
         </Gutter>

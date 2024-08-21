@@ -149,18 +149,12 @@ export const cs = {
     "cards": {
       "card01": {
         "header": "Uloženy inzeráty",
-        "title": "Lorem ipsum dolor sit.",
-        "content": "Lorem ipsum dolor sit amet consectetur adipiscing elit Ut et massa mi."
       },
       "card02": {
         "header": "Žádosti",
-        "title": "Lorem ipsum dolor sit.",
-        "content": "Lorem ipsum dolor sit amet consectetur adipiscing elit Ut et massa mi."
       },
       "card03": {
         "header": "Nastavení účtu",
-        "title": "Lorem ipsum dolor sit.",
-        "content": "Lorem ipsum dolor sit amet consectetur adipiscing elit Ut et massa mi."
       }
     },
     "noDescriptionPrivate": "Zatím nemáte žádný popis. Co takhle napsat něco o sobě?"
@@ -172,33 +166,21 @@ export const cs = {
     "cards": {
       "card01": {
         "header": "Vytvořit nabídku",
-        "title": "Lorem ipsum dolor sit.",
-        "content": "Lorem ipsum dolor sit amet consectetur adipiscing elit Ut et massa mi."
       },
       "card02": {
         "header": "Aktivní nabídky",
-        "title": "Lorem ipsum dolor sit.",
-        "content": "Lorem ipsum dolor sit amet consectetur adipiscing elit Ut et massa mi."
       },
       "card03": {
         "header": "Koncepty",
-        "title": "Lorem ipsum dolor sit.",
-        "content": "Lorem ipsum dolor sit amet consectetur adipiscing elit Ut et massa mi."
       },
       "card04": {
         "header": "Žádosti",
-        "title": "Lorem ipsum dolor sit.",
-        "content": "Lorem ipsum dolor sit amet consectetur adipiscing elit Ut et massa mi."
       },
       "card05": {
         "header": "Nastavení účtu",
-        "title": "Lorem ipsum dolor sit.",
-        "content": "Lorem ipsum dolor sit amet consectetur adipiscing elit Ut et massa mi."
       },
       "card06": {
         "header": "Nastavení profilu",
-        "title": "Lorem ipsum dolor sit.",
-        "content": "Lorem ipsum dolor sit amet consectetur adipiscing elit Ut et massa mi."
       }
     },
     "noDescriptionPrivate": "Zatím nemáte žádný popis. Co takhle napsat něco o vaší společnosti?",

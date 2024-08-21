@@ -13,9 +13,9 @@ import { Media } from '@/components'
 import { useAuth } from '@/providers'
 
 const NoAvatar: React.FC<{ letter: string }> = ({ letter }) => (
-  <div className="-ml-1 -mt-1 mb-4 inline-flex rounded-md border-2 sm:mb-0">
-    <div className="shadow-m border-2 border-white bg-royal-blue-300">
-      <div className="flex size-32 flex-none items-center justify-center rounded-md bg-royal-blue-500 text-7xl font-bold text-white md:size-40 md:text-9xl">
+  <div className="-ml-1 -mt-1 mb-4 inline-flex rounded-md shadow-md sm:mb-0">
+    <div className="shadow-m overflow-hidden rounded-md border-4 border-white bg-royal-blue-300">
+      <div className="flex size-32 flex-none items-center justify-center bg-royal-blue-500 text-7xl font-bold text-white md:size-40 md:text-9xl">
         {letter.toUpperCase()}
       </div>
     </div>

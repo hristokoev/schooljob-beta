@@ -23,14 +23,7 @@ const Grid: React.FC = () => {
     <div className="grid grid-cols-12 gap-4">
       {user
         ? cards.map((card, index) => (
-            <ProfileCard
-              key={index}
-              icon={card.icon}
-              header={card.header}
-              title={card.title}
-              link={card.link}
-              content={card.content}
-            />
+            <ProfileCard key={index} icon={card.icon} header={card.header} link={card.link} />
           ))
         : Array.from({ length: 3 }).map((_, index) => <ProfileCardSkeleton key={index} />)}
     </div>

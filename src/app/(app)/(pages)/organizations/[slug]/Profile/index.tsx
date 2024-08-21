@@ -10,12 +10,13 @@ import { getTranslations } from 'next-intl/server'
 import { Organization } from '@payload-types'
 
 import { Gutter, Media, VerticalPadding } from '@/components'
+import { cz } from '@/payload/data'
 import { getDocument } from '@/utilities/getDocument'
 
 const NoAvatar: React.FC<{ letter: string }> = ({ letter }) => (
-  <div className="-ml-1 -mt-1 mb-4 inline-flex rounded-md border-2 md:mb-0">
-    <div className="shadow-m border-2 border-white bg-royal-blue-300">
-      <div className="flex size-32 flex-none items-center justify-center rounded-md bg-royal-blue-500 text-7xl font-bold text-white md:size-40 md:text-9xl">
+  <div className="-ml-1 -mt-1 mb-4 inline-flex rounded-md shadow-md sm:mb-0">
+    <div className="shadow-m overflow-hidden rounded-md border-4 border-white bg-royal-blue-300">
+      <div className="flex size-32 flex-none items-center justify-center bg-royal-blue-500 text-7xl font-bold text-white md:size-40 md:text-9xl">
         {letter.toUpperCase()}
       </div>
     </div>
@@ -72,7 +73,11 @@ const ProfileBlock: React.FC<{ slug: string }> = async ({ slug }) => {
                     <div className="flex items-center">
                       <GlobeEuropeAfricaIcon className="h-4 w-4 shrink-0 fill-current text-slate-400" />
                       <span className="ml-2 whitespace-nowrap text-sm font-medium text-slate-500">
-                        {organization.location}
+                        {organization.location && organization.location.length > 0
+                          ? organization.location
+                              .map(location => cz.find(l => l.value === location)?.label)
+                              .join(', ')
+                          : '-'}
                       </span>
                     </div>
                   )}

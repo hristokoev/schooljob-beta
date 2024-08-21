@@ -149,18 +149,12 @@ export const en = {
     "cards": {
       "card01": {
         "header": "Saved Jobs",
-        "title": "Lorem ipsum dolor sit.",
-        "content": "Lorem ipsum dolor sit amet consectetur adipiscing elit Ut et massa mi."
       },
       "card02": {
         "header": "Applications",
-        "title": "Lorem ipsum dolor sit.",
-        "content": "Lorem ipsum dolor sit amet consectetur adipiscing elit Ut et massa mi."
       },
       "card03": {
         "header": "Account Settings",
-        "title": "Lorem ipsum dolor sit.",
-        "content": "Lorem ipsum dolor sit amet consectetur adipiscing elit Ut et massa mi."
       }
     },
     "noDescriptionPrivate": "You don't have any description yet. How about writing something about yourself?"
@@ -172,33 +166,21 @@ export const en = {
     "cards": {
       "card01": {
         "header": "Create a Job",
-        "title": "Lorem ipsum dolor sit.",
-        "content": "Lorem ipsum dolor sit amet consectetur adipiscing elit Ut et massa mi."
       },
       "card02": {
         "header": "Active Jobs",
-        "title": "Lorem ipsum dolor sit.",
-        "content": "Lorem ipsum dolor sit amet consectetur adipiscing elit Ut et massa mi."
       },
       "card03": {
         "header": "Drafts",
-        "title": "Lorem ipsum dolor sit.",
-        "content": "Lorem ipsum dolor sit amet consectetur adipiscing elit Ut et massa mi."
       },
       "card04": {
         "header": "Applications",
-        "title": "Lorem ipsum dolor sit.",
-        "content": "Lorem ipsum dolor sit amet consectetur adipiscing elit Ut et massa mi."
       },
       "card05": {
         "header": "Account Settings",
-        "title": "Lorem ipsum dolor sit.",
-        "content": "Lorem ipsum dolor sit amet consectetur adipiscing elit Ut et massa mi."
       },
       "card06": {
         "header": "Profile Settings",
-        "title": "Lorem ipsum dolor sit.",
-        "content": "Lorem ipsum dolor sit amet consectetur adipiscing elit Ut et massa mi."
       }
     },
     "noDescriptionPrivate": "You don't have any description yet. How about writing something about your company?",

@@ -14,9 +14,7 @@ import React from 'react'
 interface ProfileCardProps {
   icon: 'account' | 'chat' | 'envelope' | 'heart' | 'history' | 'pencil' | 'settings'
   header: string
-  title: string
   link: string
-  content: string
 }
 
 const Icon = ({ icon }: { icon: string }) => {
@@ -42,23 +40,17 @@ const Icon = ({ icon }: { icon: string }) => {
   }
 }
 
-const ProfileCard = ({ icon, header, title, link, content }: ProfileCardProps) => {
+const ProfileCard = ({ icon, header, link }: ProfileCardProps) => {
   return (
-    <div className="group col-span-full rounded-md border border-slate-300 bg-white transition duration-100 ease-in-out hover:border-royal-blue-300 hover:bg-slate-50 sm:col-span-6 xl:col-span-4">
-      <Link className="flex h-full flex-col p-5" href={link}>
+    <div className="group col-span-full rounded-md sm:col-span-6 xl:col-span-4">
+      <Link className="flex h-full flex-col" href={link}>
         <header>
-          <div className="flex items-center rounded-md bg-royal-blue-500 px-4 py-3 text-royal-blue-50">
+          <div className="flex items-center rounded-md bg-royal-blue-500 px-4 py-6 text-royal-blue-50 transition duration-100 ease-in-out group-hover:bg-white group-hover:text-slate-800 group-hover:shadow-sm">
             <Icon icon={icon} />
             <h3 className="text-md ml-3 font-semibold leading-snug">{header}</h3>
-            <ArrowRightIcon className="ml-auto size-5 text-white duration-150 ease-in-out group-hover:translate-x-1" />
+            <ArrowRightIcon className="ml-auto size-6 stroke-2 text-white transition duration-100 ease-in-out group-hover:text-slate-800" />
           </div>
         </header>
-        <div className="mt-4 grow">
-          <div className="mb-1 inline-flex text-slate-800 hover:text-slate-900">
-            <h4 className="font-semibold leading-snug">{title}</h4>
-          </div>
-          <div className="text-sm">{content}</div>
-        </div>
       </Link>
     </div>
   )
