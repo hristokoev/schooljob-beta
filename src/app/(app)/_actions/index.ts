@@ -1,6 +1,8 @@
 export { createApplication } from './createApplication'
 export { createOrUpdateJob } from './createOrUpdateJob'
+export { sendEmail } from './sendEmail'
 export { updateCandidate } from './updateCandidate'
+export { updateApplication } from './updateApplication'
 export { updateOrganization } from './updateOrganization'
 export { updatePassword } from './updatePassword'
 export { uploadCv } from './uploadCv'

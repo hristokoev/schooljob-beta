@@ -741,6 +741,7 @@ enum Application_status {
   pending
   accepted
   rejected
+  interview
 }
 
 """
@@ -2884,6 +2885,7 @@ enum Application_status_Input {
   pending
   accepted
   rejected
+  interview
 }
 
 input Application_fullName_operator {
@@ -7455,7 +7457,10 @@ enum EmailTemplate_event {
   new_job
   job_status_changed
   new_application
-  application_status_changed
+  application_status_pending
+  application_status_accepted
+  application_status_rejected
+  application_status_interview
 }
 
 type EmailTemplates {
@@ -7558,7 +7563,10 @@ enum EmailTemplate_event_Input {
   new_job
   job_status_changed
   new_application
-  application_status_changed
+  application_status_pending
+  application_status_accepted
+  application_status_rejected
+  application_status_interview
 }
 
 input EmailTemplate_updatedAt_operator {
@@ -14961,6 +14969,7 @@ enum Application_status_MutationInput {
   pending
   accepted
   rejected
+  interview
 }
 
 input mutationApplicationUpdateInput {
@@ -14986,6 +14995,7 @@ enum ApplicationUpdate_status_MutationInput {
   pending
   accepted
   rejected
+  interview
 }
 
 input mutationOrganizationInput {
@@ -15299,7 +15309,10 @@ enum EmailTemplate_event_MutationInput {
   new_job
   job_status_changed
   new_application
-  application_status_changed
+  application_status_pending
+  application_status_accepted
+  application_status_rejected
+  application_status_interview
 }
 
 input mutationEmailTemplateUpdateInput {
@@ -15331,7 +15344,10 @@ enum EmailTemplateUpdate_event_MutationInput {
   new_job
   job_status_changed
   new_application
-  application_status_changed
+  application_status_pending
+  application_status_accepted
+  application_status_rejected
+  application_status_interview
 }
 
 input mutationPartnerInput {

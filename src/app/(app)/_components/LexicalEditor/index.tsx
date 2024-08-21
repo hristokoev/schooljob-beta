@@ -3,6 +3,7 @@
 import React, { useEffect, useRef } from 'react'
 import { AutoFocusPlugin } from '@lexical/react/LexicalAutoFocusPlugin'
 import { ContentEditable } from '@lexical/react/LexicalContentEditable'
+import { EditorState } from 'lexical'
 import { HistoryPlugin } from '@lexical/react/LexicalHistoryPlugin'
 import { LexicalComposer } from '@lexical/react/LexicalComposer'
 import LexicalErrorBoundary from '@lexical/react/LexicalErrorBoundary'
@@ -23,7 +24,7 @@ const editorConfig = {
   theme: theme,
 }
 
-function OnChangePlugin({ onChange }: { onChange: (editorState: any) => void }) {
+function OnChangePlugin({ onChange }: { onChange: (editorState: EditorState) => void }) {
   const [editor] = useLexicalComposerContext()
   useEffect(() => {
     return editor.registerUpdateListener(({ editorState }) => {
@@ -35,7 +36,7 @@ function OnChangePlugin({ onChange }: { onChange: (editorState: any) => void }) 
 }
 
 type LexicalEditorProps = {
-  onChange: (value: any) => void
+  onChange: (value: EditorState) => void
   value: any
   editable?: boolean
 }

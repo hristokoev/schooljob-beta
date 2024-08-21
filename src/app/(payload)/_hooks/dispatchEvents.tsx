@@ -12,7 +12,7 @@ type EventOperationBase = {
 }
 
 type EventOperation =
-  | ({ operation: 'update'; fields: string[] } & EventOperationBase)
+  | ({ operation: 'update'; field: string } & EventOperationBase)
   | ({ operation: 'create' | 'delete' } & EventOperationBase)
 
 export const dispatchEvents: (eventOperations: EventOperation[]) => CollectionAfterChangeHook =
@@ -35,13 +35,10 @@ export const dispatchEvents: (eventOperations: EventOperation[]) => CollectionAf
       emailTemplates.docs.forEach(async template => {
         // Only send the email if the operation matches
         if (eventOperation.operation === operation) {
-          // Check whether the fields that are being updated match the fields in the template.
+          // Check whether the field that is being updated is included in the fields in the template.
           const docChanged = compareTwoObjects(doc, previousDoc)
 
-          if (
-            eventOperation.operation === 'update' &&
-            !eventOperation.fields.every(field => docChanged.includes(field))
-          ) {
+          if (eventOperation.operation === 'update' && !docChanged.includes(eventOperation.field)) {
             return
           }
 

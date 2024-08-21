@@ -125,8 +125,6 @@ const Search: React.FC<Props> = ({
             />
           </div>
         ))}
-      </div>
-      <div className="flex flex-col gap-2">
         {showMore && filters.length > 5 && (
           <Button className="grow" variant="link" onClick={handleShowMore} type="button">
             {filtersToDisplay.length < filters.length ? t('ui.showMore') : t('ui.showLess')}
@@ -135,12 +133,12 @@ const Search: React.FC<Props> = ({
               : ''}
           </Button>
         )}
-        {resetFilters && hasSelectedFilters && (
-          <Button className="grow" variant="link" onClick={handleResetFilters} type="button">
-            {t('ui.resetFilters')}
-          </Button>
-        )}
       </div>
+      {resetFilters && hasSelectedFilters && (
+        <Button className="grow" variant="link" onClick={handleResetFilters} type="button">
+          {t('ui.resetFilters')}
+        </Button>
+      )}
       <Hr className="md:hidden" />
       <Button className="w-full" type="submit">
         {t('search.button')}

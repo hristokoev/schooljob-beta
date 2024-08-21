@@ -315,13 +315,13 @@ export interface Application {
   candidate?: (string | null) | Candidate;
   firstName?: string | null;
   lastName?: string | null;
-  email?: string | null;
+  email: string;
   phone?: string | null;
   location?: string | null;
   coverLetter?: string | null;
   cv: string | Cv;
   agreements?: (string | Agreement)[] | null;
-  status: 'pending' | 'accepted' | 'rejected';
+  status: 'pending' | 'accepted' | 'rejected' | 'interview';
   fullName?: string | null;
   trackingId?: number | null;
   updatedAt: string;
@@ -416,7 +416,10 @@ export interface EmailTemplate {
         | 'new-job'
         | 'job-status-changed'
         | 'new-application'
-        | 'application-status-changed'
+        | 'application-status-pending'
+        | 'application-status-accepted'
+        | 'application-status-rejected'
+        | 'application-status-interview'
       )
     | null;
   updatedAt: string;

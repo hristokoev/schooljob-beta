@@ -53,11 +53,6 @@ export const Applications: CollectionConfig = {
           operation: 'create',
           event: 'new-application',
         },
-        {
-          operation: 'update',
-          event: 'application-status-changed',
-          fields: ['status'],
-        },
       ]),
       populateGlobalsDataApplications,
       populateCv,
@@ -177,16 +172,10 @@ export const Applications: CollectionConfig = {
           type: 'text',
           admin: {
             width: '50%',
-            condition: (data) => !data?.candidate,
           },
           access: {
             read: ARCHIVED,
             update: SA,
-          },
-          defaultValue: ({ user }: { user: User }) => {
-            if (user?.role === 'candidate') {
-              return user.profile.value.email
-            }
           },
           required: true,
         },

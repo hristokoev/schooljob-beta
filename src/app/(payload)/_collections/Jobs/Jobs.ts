@@ -54,7 +54,7 @@ export const Jobs: CollectionConfig = {
         {
           operation: 'update',
           event: 'job-status-changed',
-          fields: ['featured'],
+          field: 'featured',
         }
       ]),
       populateGlobalsDataJobs,

@@ -1,6 +1,6 @@
 import { Block, CollectionConfig } from 'payload'
 
-import { SA, SA_A } from '@/payload/access'
+import { SA, SA_A, SA_A_O } from '@/payload/access'
 
 const Text: Block = {
   slug: 'Text',
@@ -70,7 +70,7 @@ export const EmailTemplates: CollectionConfig = {
   },
   access: {
     create: SA,
-    read: SA_A,
+    read: SA_A_O,
     update: SA_A,
     delete: SA,
   },
@@ -209,10 +209,31 @@ export const EmailTemplates: CollectionConfig = {
         },
         {
           label: {
-            en: 'Application Status Changed',
-            cs: 'Stav žádosti změněn',
+            en: 'Application Status - Pending',
+            cs: 'Stav žádosti - Čeká na schválení',
           },
-          value: 'application-status-changed',
+          value: 'application-status-pending',
+        },
+        {
+          label: {
+            en: 'Application Status - Accepted',
+            cs: 'Stav žádosti - Schváleno',
+          },
+          value: 'application-status-accepted',
+        },
+        {
+          label: {
+            en: 'Application Status - Rejected',
+            cs: 'Stav žádosti - Odmítnuto',
+          },
+          value: 'application-status-rejected',
+        },
+        {
+          label: {
+            en: 'Application Status - Interview',
+            cs: 'Stav žádosti - Pohovor',
+          },
+          value: 'application-status-interview',
         },
       ],
       admin: {

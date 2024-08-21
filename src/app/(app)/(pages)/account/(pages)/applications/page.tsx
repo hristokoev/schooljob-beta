@@ -8,7 +8,7 @@ import { ApplicationsTableView } from './table-view'
 import { BreadcrumbBlock } from '@/blocks'
 import { getMeUser } from '@/utilities/getMeUser'
 
-export default async function Jobs() {
+export default async function Applications() {
   const t = await getTranslations()
   const { user } = await getMeUser({
     nullUserRedirect: `/login?error=${encodeURIComponent(
