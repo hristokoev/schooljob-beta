@@ -8,8 +8,6 @@ import { Metadata } from 'next'
 import { Gutter, MinHeight, VerticalPadding } from '@/components'
 import { PricingTable } from '@/blocks'
 
-export const dynamic = 'force-static'
-
 export default async function Pricing() {
   const t = await getTranslations()
   const payload = await getPayloadHMR({

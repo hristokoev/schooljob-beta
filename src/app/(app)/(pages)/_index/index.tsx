@@ -13,8 +13,6 @@ import {
 } from '@/blocks'
 import { SearchBlock } from './SearchBlock'
 
-export const dynamic = 'force-static'
-
 export default async function Index() {
   const t = await getTranslations()
 
