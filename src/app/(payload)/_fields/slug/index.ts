@@ -5,7 +5,10 @@ import { SA } from '@/payload/access'
 
 const slugField: Field = {
   name: 'slug',
-  label: 'Slug',
+  label: {
+    en: 'Slug',
+    cs: 'Slug',
+  },
   type: 'text',
   index: true,
   hooks: {

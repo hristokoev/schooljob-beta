@@ -91,7 +91,7 @@ export const dispatchEvents: (eventOperations: EventOperation[]) => CollectionAf
 
           // Send email
           await payload.sendEmail({
-            from: process.env.RESEND_FROM_EMAIL, // TODO: use template.from,
+            from: `${template.from}@${process.env.RESEND_FROM_EMAIL}`,
             to: emailTo,
             subject: template.title,
             html: html,

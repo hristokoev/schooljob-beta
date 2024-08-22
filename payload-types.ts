@@ -18,6 +18,8 @@ export interface Config {
     photos: Photo;
     agreements: Agreement;
     'email-templates': EmailTemplate;
+    memberships: Membership;
+    orders: Order;
     partners: Partner;
     users: User;
     search: Search;
@@ -39,7 +41,7 @@ export interface Config {
 export interface Job {
   id: string;
   archived?: boolean | null;
-  status: 'published' | 'unpublished';
+  status: 'published' | 'unpublished' | 'expired';
   title: string;
   categories: ('preschool' | 'primary' | 'secondary' | 'tertiary' | 'leisure' | 'sport' | 'other')[];
   organization: string | Organization;
@@ -209,6 +211,14 @@ export interface Organization {
   url?: string | null;
   jobsPublished?: (string | Job)[] | null;
   jobsUnpublished?: (string | Job)[] | null;
+  jobsAllowed: number;
+  memberships?:
+    | {
+        membership: string | Membership;
+        price: number;
+        id?: string | null;
+      }[]
+    | null;
   createdBy?: (string | null) | User;
   updatedAt: string;
   createdAt: string;
@@ -398,6 +408,30 @@ export interface ImageCover {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "memberships".
+ */
+export interface Membership {
+  id: string;
+  title: string;
+  featured?: boolean | null;
+  description: string;
+  features: string[];
+  price: number;
+  currency: 'czk' | 'eur';
+  discount?:
+    | {
+        count: number;
+        discount: number;
+        text: string;
+        id?: string | null;
+      }[]
+    | null;
+  slug?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "email-templates".
  */
 export interface EmailTemplate {
@@ -459,6 +493,22 @@ export interface ButtonBlock {
   id?: string | null;
   blockName?: string | null;
   blockType: 'Button';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "orders".
+ */
+export interface Order {
+  id: string;
+  organization: string | Organization;
+  membership: string | Membership;
+  quantity: number;
+  expiresAt: string;
+  price: number;
+  currency: 'czk' | 'eur';
+  createdBy?: (string | null) | User;
+  updatedAt: string;
+  createdAt: string;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

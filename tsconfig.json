@@ -35,6 +35,7 @@
       "@/payload/access": ["./src/app/(payload)/_access/"],
       "@/payload/cells": ["./src/app/(payload)/_cells/"],
       "@/payload/collections": ["./src/app/(payload)/_collections/"],
+      "@/payload/collections/*": ["./src/app/(payload)/_collections/*"],
       "@/payload/components": ["./src/app/(payload)/_components/"],
       "@/payload/data": ["./src/app/(payload)/_data/"],
       "@/payload/endpoints": ["./src/app/(payload)/_endpoints/"],

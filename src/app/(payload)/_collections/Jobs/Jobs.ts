@@ -1,7 +1,7 @@
 import { CollectionConfig } from 'payload'
 import { User } from '@payload-types'
 
-import { ARCHIVED, SA, SA_A, SA_A_O, SA_A_O_Self_createdBy, SA_O } from '@/payload/access'
+import { ARCHIVED, SA, SA_A, SA_A_O, SA_A_O_Self_createdBy } from '@/payload/access'
 import { archived, slugField } from '@/payload/fields'
 import { categoriesOptions, currencyOptions, cz, educationOptions, employmentTypeOptions, experienceOptions, locationTypeOptions, salaryTypeOptions } from '@/payload/data'
 import { cs, en } from '@/translations'
@@ -15,9 +15,11 @@ import { populateEmail } from './hooks/populateEmail'
 import { populateGlobalsDataJobs } from './hooks/populateGlobalsData'
 import { populateOrganizationJobs } from './hooks/populateOrganizationJobs'
 import { populatePublicId } from './hooks/populatePublicId'
-import SA_A_O_Some_U from './access/SA_A_O_Some_U'
+import { SA_A_O_Some_U } from './access/SA_A_O_Some_U'
+import { SA_O_jobsAllowed } from './access/SA_O_jobsAllowed'
 import { statusField } from '@/payload/fields'
 import { updateOrganizationJobs } from './hooks/updateOrganizationJobs'
+import { updateOrganizationJobsAllowed } from './hooks/updateOrganizationJobsAllowed'
 
 export const Jobs: CollectionConfig = {
   slug: 'jobs',
@@ -60,10 +62,11 @@ export const Jobs: CollectionConfig = {
       populateGlobalsDataJobs,
       populateOrganizationJobs,
       updateOrganizationJobs,
+      updateOrganizationJobsAllowed
     ],
   },
   access: {
-    create: SA_O,
+    create: SA_O_jobsAllowed,
     read: SA_A_O_Some_U,
     update: SA_A_O_Self_createdBy,
     delete: SA,

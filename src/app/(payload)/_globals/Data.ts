@@ -21,7 +21,10 @@ export const Data: GlobalConfig = {
         {
           name: 'lastPublicJobId',
           type: 'number',
-          label: 'Last Public Job ID',
+          label: {
+            en: 'Last Public Job ID',
+            cs: 'Poslední ID veřejného otevřeného volného místa',
+          },
           defaultValue: 10000,
           access: {
             read: () => true,
@@ -34,7 +37,10 @@ export const Data: GlobalConfig = {
         {
           name: 'lastApplicationTrackingId',
           type: 'number',
-          label: 'Last Application Tracking ID',
+          label: {
+            en: 'Last Application Tracking ID',
+            cs: 'Poslední ID sledování žádosti',
+          },
           defaultValue: 10000,
           access: {
             read: () => true,

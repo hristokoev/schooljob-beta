@@ -12,7 +12,7 @@ import { getMeUser } from '@/utilities/getMeUser'
 import { JobsTableView } from './table-view'
 
 interface Props {
-  searchParams: { status: 'published' | 'unpublished' }
+  searchParams: { status: 'published' | 'unpublished' | 'expired' }
 }
 
 export default async function Jobs({ searchParams }: Props) {
@@ -32,9 +32,29 @@ export default async function Jobs({ searchParams }: Props) {
     collection: 'jobs',
     overrideAccess: false,
     where: {
-      status: {
-        equals: status === 'published' ? 'published' : 'unpublished',
-      },
+      or: [
+        {
+          ...(status === 'published' && {
+            status: {
+              equals: 'published',
+            },
+          }),
+        },
+        {
+          ...(status === 'unpublished' && {
+            status: {
+              equals: 'unpublished',
+            },
+          }),
+        },
+        {
+          ...(status === 'expired' && {
+            status: {
+              equals: 'expired',
+            },
+          }),
+        },
+      ],
       organization: {
         equals:
           typeof user.profile?.value === 'string' ? user.profile.value : user.profile?.value?.id,

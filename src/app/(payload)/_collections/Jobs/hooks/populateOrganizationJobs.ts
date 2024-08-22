@@ -4,6 +4,7 @@ export const populateOrganizationJobs: CollectionAfterChangeHook = async ({
   doc,
   req: { payload },
   operation,
+  context
 }) => {
   const { id, organization } = doc
 
@@ -30,6 +31,9 @@ export const populateOrganizationJobs: CollectionAfterChangeHook = async ({
           jobsUnpublished: organizationDoc.jobsUnpublished ? [...jobsUnpublishedIds, id] : [id],
         },
       })
+
+      // Put the current quantity of allowed jobs in context
+      context.jobsAllowed = organizationDoc.jobsAllowed
     } catch (error) {
       console.error("Error updating organization's jobs:", error)
     }

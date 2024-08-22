@@ -39,6 +39,14 @@ type Query {
   EmailTemplates(draft: Boolean, where: EmailTemplate_where, limit: Int, page: Int, sort: String): EmailTemplates
   countEmailTemplates(draft: Boolean, where: EmailTemplate_where): countEmailTemplates
   docAccessEmailTemplate(id: String!): email_templatesDocAccess
+  Membership(id: String!, draft: Boolean): Membership
+  Memberships(draft: Boolean, where: Membership_where, limit: Int, page: Int, sort: String): Memberships
+  countMemberships(draft: Boolean, where: Membership_where): countMemberships
+  docAccessMembership(id: String!): membershipsDocAccess
+  Order(id: String!, draft: Boolean): Order
+  Orders(draft: Boolean, where: Order_where, limit: Int, page: Int, sort: String): Orders
+  countOrders(draft: Boolean, where: Order_where): countOrders
+  docAccessOrder(id: String!): ordersDocAccess
   Partner(id: String!, draft: Boolean): Partner
   Partners(draft: Boolean, where: Partner_where, limit: Int, page: Int, sort: String): Partners
   countPartners(draft: Boolean, where: Partner_where): countPartners
@@ -94,6 +102,7 @@ type Job {
 enum Job_status {
   published
   unpublished
+  expired
 }
 
 enum Job_categories {
@@ -124,6 +133,8 @@ type Organization {
   url: String
   jobsPublished: [Job!]
   jobsUnpublished: [Job!]
+  jobsAllowed: Float
+  memberships: [Organization_Memberships!]
   createdBy: User
   updatedAt: DateTime
   createdAt: DateTime
@@ -1174,6 +1185,38 @@ input Organization_ImageCover_where_or {
   OR: [Organization_ImageCover_where_or]
 }
 
+type Organization_Memberships {
+  membership: Membership
+  price: Float
+  id: String
+}
+
+type Membership {
+  id: String
+  title: String!
+  featured: Boolean
+  description: String!
+  features: [String]!
+  price: Float!
+  currency: Membership_currency!
+  discount: [Membership_Discount!]
+  slug: String
+  updatedAt: DateTime
+  createdAt: DateTime
+}
+
+enum Membership_currency {
+  czk
+  eur
+}
+
+type Membership_Discount {
+  count: Float
+  discount: Float
+  text: String
+  id: String
+}
+
 enum Job_employmentType {
   fulltime
   parttime
@@ -1356,6 +1399,7 @@ input Job_status_operator {
 enum Job_status_Input {
   published
   unpublished
+  expired
 }
 
 input Job_title_operator {
@@ -3436,6 +3480,10 @@ input Organization_where {
   url: Organization_url_operator
   jobsPublished: Organization_jobsPublished_operator
   jobsUnpublished: Organization_jobsUnpublished_operator
+  jobsAllowed: Organization_jobsAllowed_operator
+  memberships__membership: Organization_memberships__membership_operator
+  memberships__price: Organization_memberships__price_operator
+  memberships__id: Organization_memberships__id_operator
   createdBy: Organization_createdBy_operator
   updatedAt: Organization_updatedAt_operator
   createdAt: Organization_createdAt_operator
@@ -3611,6 +3659,43 @@ input Organization_jobsUnpublished_operator {
   exists: Boolean
 }
 
+input Organization_jobsAllowed_operator {
+  equals: Float
+  not_equals: Float
+  greater_than_equal: Float
+  greater_than: Float
+  less_than_equal: Float
+  less_than: Float
+}
+
+input Organization_memberships__membership_operator {
+  equals: JSON
+  not_equals: JSON
+  in: [JSON]
+  not_in: [JSON]
+  all: [JSON]
+}
+
+input Organization_memberships__price_operator {
+  equals: Float
+  not_equals: Float
+  greater_than_equal: Float
+  greater_than: Float
+  less_than_equal: Float
+  less_than: Float
+}
+
+input Organization_memberships__id_operator {
+  equals: String
+  not_equals: String
+  like: String
+  contains: String
+  in: [String]
+  not_in: [String]
+  all: [String]
+  exists: Boolean
+}
+
 input Organization_createdBy_operator {
   equals: JSON
   not_equals: JSON
@@ -3670,6 +3755,10 @@ input Organization_where_and {
   url: Organization_url_operator
   jobsPublished: Organization_jobsPublished_operator
   jobsUnpublished: Organization_jobsUnpublished_operator
+  jobsAllowed: Organization_jobsAllowed_operator
+  memberships__membership: Organization_memberships__membership_operator
+  memberships__price: Organization_memberships__price_operator
+  memberships__id: Organization_memberships__id_operator
   createdBy: Organization_createdBy_operator
   updatedAt: Organization_updatedAt_operator
   createdAt: Organization_createdAt_operator
@@ -3695,6 +3784,10 @@ input Organization_where_or {
   url: Organization_url_operator
   jobsPublished: Organization_jobsPublished_operator
   jobsUnpublished: Organization_jobsUnpublished_operator
+  jobsAllowed: Organization_jobsAllowed_operator
+  memberships__membership: Organization_memberships__membership_operator
+  memberships__price: Organization_memberships__price_operator
+  memberships__id: Organization_memberships__id_operator
   createdBy: Organization_createdBy_operator
   updatedAt: Organization_updatedAt_operator
   createdAt: Organization_createdAt_operator
@@ -3732,6 +3825,8 @@ type OrganizationsDocAccessFields {
   url: OrganizationsDocAccessFields_url
   jobsPublished: OrganizationsDocAccessFields_jobsPublished
   jobsUnpublished: OrganizationsDocAccessFields_jobsUnpublished
+  jobsAllowed: OrganizationsDocAccessFields_jobsAllowed
+  memberships: OrganizationsDocAccessFields_memberships
   createdBy: OrganizationsDocAccessFields_createdBy
   updatedAt: OrganizationsDocAccessFields_updatedAt
   createdAt: OrganizationsDocAccessFields_createdAt
@@ -4102,6 +4197,128 @@ type OrganizationsDocAccessFields_jobsUnpublished_Update {
 }
 
 type OrganizationsDocAccessFields_jobsUnpublished_Delete {
+  permission: Boolean!
+}
+
+type OrganizationsDocAccessFields_jobsAllowed {
+  create: OrganizationsDocAccessFields_jobsAllowed_Create
+  read: OrganizationsDocAccessFields_jobsAllowed_Read
+  update: OrganizationsDocAccessFields_jobsAllowed_Update
+  delete: OrganizationsDocAccessFields_jobsAllowed_Delete
+}
+
+type OrganizationsDocAccessFields_jobsAllowed_Create {
+  permission: Boolean!
+}
+
+type OrganizationsDocAccessFields_jobsAllowed_Read {
+  permission: Boolean!
+}
+
+type OrganizationsDocAccessFields_jobsAllowed_Update {
+  permission: Boolean!
+}
+
+type OrganizationsDocAccessFields_jobsAllowed_Delete {
+  permission: Boolean!
+}
+
+type OrganizationsDocAccessFields_memberships {
+  create: OrganizationsDocAccessFields_memberships_Create
+  read: OrganizationsDocAccessFields_memberships_Read
+  update: OrganizationsDocAccessFields_memberships_Update
+  delete: OrganizationsDocAccessFields_memberships_Delete
+  fields: OrganizationsDocAccessFields_memberships_Fields
+}
+
+type OrganizationsDocAccessFields_memberships_Create {
+  permission: Boolean!
+}
+
+type OrganizationsDocAccessFields_memberships_Read {
+  permission: Boolean!
+}
+
+type OrganizationsDocAccessFields_memberships_Update {
+  permission: Boolean!
+}
+
+type OrganizationsDocAccessFields_memberships_Delete {
+  permission: Boolean!
+}
+
+type OrganizationsDocAccessFields_memberships_Fields {
+  membership: OrganizationsDocAccessFields_memberships_membership
+  price: OrganizationsDocAccessFields_memberships_price
+  id: OrganizationsDocAccessFields_memberships_id
+}
+
+type OrganizationsDocAccessFields_memberships_membership {
+  create: OrganizationsDocAccessFields_memberships_membership_Create
+  read: OrganizationsDocAccessFields_memberships_membership_Read
+  update: OrganizationsDocAccessFields_memberships_membership_Update
+  delete: OrganizationsDocAccessFields_memberships_membership_Delete
+}
+
+type OrganizationsDocAccessFields_memberships_membership_Create {
+  permission: Boolean!
+}
+
+type OrganizationsDocAccessFields_memberships_membership_Read {
+  permission: Boolean!
+}
+
+type OrganizationsDocAccessFields_memberships_membership_Update {
+  permission: Boolean!
+}
+
+type OrganizationsDocAccessFields_memberships_membership_Delete {
+  permission: Boolean!
+}
+
+type OrganizationsDocAccessFields_memberships_price {
+  create: OrganizationsDocAccessFields_memberships_price_Create
+  read: OrganizationsDocAccessFields_memberships_price_Read
+  update: OrganizationsDocAccessFields_memberships_price_Update
+  delete: OrganizationsDocAccessFields_memberships_price_Delete
+}
+
+type OrganizationsDocAccessFields_memberships_price_Create {
+  permission: Boolean!
+}
+
+type OrganizationsDocAccessFields_memberships_price_Read {
+  permission: Boolean!
+}
+
+type OrganizationsDocAccessFields_memberships_price_Update {
+  permission: Boolean!
+}
+
+type OrganizationsDocAccessFields_memberships_price_Delete {
+  permission: Boolean!
+}
+
+type OrganizationsDocAccessFields_memberships_id {
+  create: OrganizationsDocAccessFields_memberships_id_Create
+  read: OrganizationsDocAccessFields_memberships_id_Read
+  update: OrganizationsDocAccessFields_memberships_id_Update
+  delete: OrganizationsDocAccessFields_memberships_id_Delete
+}
+
+type OrganizationsDocAccessFields_memberships_id_Create {
+  permission: Boolean!
+}
+
+type OrganizationsDocAccessFields_memberships_id_Read {
+  permission: Boolean!
+}
+
+type OrganizationsDocAccessFields_memberships_id_Update {
+  permission: Boolean!
+}
+
+type OrganizationsDocAccessFields_memberships_id_Delete {
   permission: Boolean!
 }
 
@@ -7881,6 +8098,1020 @@ type EmailTemplatesDeleteDocAccess {
   where: JSONObject
 }
 
+type Memberships {
+  docs: [Membership]
+  hasNextPage: Boolean
+  hasPrevPage: Boolean
+  limit: Int
+  nextPage: Int
+  offset: Int
+  page: Int
+  pagingCounter: Int
+  prevPage: Int
+  totalDocs: Int
+  totalPages: Int
+}
+
+input Membership_where {
+  title: Membership_title_operator
+  featured: Membership_featured_operator
+  description: Membership_description_operator
+  features: Membership_features_operator
+  price: Membership_price_operator
+  currency: Membership_currency_operator
+  discount__count: Membership_discount__count_operator
+  discount__discount: Membership_discount__discount_operator
+  discount__text: Membership_discount__text_operator
+  discount__id: Membership_discount__id_operator
+  slug: Membership_slug_operator
+  updatedAt: Membership_updatedAt_operator
+  createdAt: Membership_createdAt_operator
+  id: Membership_id_operator
+  AND: [Membership_where_and]
+  OR: [Membership_where_or]
+}
+
+input Membership_title_operator {
+  equals: String
+  not_equals: String
+  like: String
+  contains: String
+  in: [String]
+  not_in: [String]
+  all: [String]
+}
+
+input Membership_featured_operator {
+  equals: Boolean
+  not_equals: Boolean
+  exists: Boolean
+}
+
+input Membership_description_operator {
+  equals: String
+  not_equals: String
+  like: String
+  contains: String
+  in: [String]
+  not_in: [String]
+  all: [String]
+}
+
+input Membership_features_operator {
+  equals: String
+  not_equals: String
+  like: String
+  contains: String
+  in: [String]
+  not_in: [String]
+  all: [String]
+}
+
+input Membership_price_operator {
+  equals: Float
+  not_equals: Float
+  greater_than_equal: Float
+  greater_than: Float
+  less_than_equal: Float
+  less_than: Float
+}
+
+input Membership_currency_operator {
+  equals: Membership_currency_Input
+  not_equals: Membership_currency_Input
+  in: [Membership_currency_Input]
+  not_in: [Membership_currency_Input]
+  all: [Membership_currency_Input]
+}
+
+enum Membership_currency_Input {
+  czk
+  eur
+}
+
+input Membership_discount__count_operator {
+  equals: Float
+  not_equals: Float
+  greater_than_equal: Float
+  greater_than: Float
+  less_than_equal: Float
+  less_than: Float
+}
+
+input Membership_discount__discount_operator {
+  equals: Float
+  not_equals: Float
+  greater_than_equal: Float
+  greater_than: Float
+  less_than_equal: Float
+  less_than: Float
+}
+
+input Membership_discount__text_operator {
+  equals: String
+  not_equals: String
+  like: String
+  contains: String
+  in: [String]
+  not_in: [String]
+  all: [String]
+}
+
+input Membership_discount__id_operator {
+  equals: String
+  not_equals: String
+  like: String
+  contains: String
+  in: [String]
+  not_in: [String]
+  all: [String]
+  exists: Boolean
+}
+
+input Membership_slug_operator {
+  equals: String
+  not_equals: String
+  like: String
+  contains: String
+  in: [String]
+  not_in: [String]
+  all: [String]
+  exists: Boolean
+}
+
+input Membership_updatedAt_operator {
+  equals: DateTime
+  not_equals: DateTime
+  greater_than_equal: DateTime
+  greater_than: DateTime
+  less_than_equal: DateTime
+  less_than: DateTime
+  like: DateTime
+  exists: Boolean
+}
+
+input Membership_createdAt_operator {
+  equals: DateTime
+  not_equals: DateTime
+  greater_than_equal: DateTime
+  greater_than: DateTime
+  less_than_equal: DateTime
+  less_than: DateTime
+  like: DateTime
+  exists: Boolean
+}
+
+input Membership_id_operator {
+  equals: String
+  not_equals: String
+  like: String
+  contains: String
+  in: [String]
+  not_in: [String]
+  all: [String]
+  exists: Boolean
+}
+
+input Membership_where_and {
+  title: Membership_title_operator
+  featured: Membership_featured_operator
+  description: Membership_description_operator
+  features: Membership_features_operator
+  price: Membership_price_operator
+  currency: Membership_currency_operator
+  discount__count: Membership_discount__count_operator
+  discount__discount: Membership_discount__discount_operator
+  discount__text: Membership_discount__text_operator
+  discount__id: Membership_discount__id_operator
+  slug: Membership_slug_operator
+  updatedAt: Membership_updatedAt_operator
+  createdAt: Membership_createdAt_operator
+  id: Membership_id_operator
+  AND: [Membership_where_and]
+  OR: [Membership_where_or]
+}
+
+input Membership_where_or {
+  title: Membership_title_operator
+  featured: Membership_featured_operator
+  description: Membership_description_operator
+  features: Membership_features_operator
+  price: Membership_price_operator
+  currency: Membership_currency_operator
+  discount__count: Membership_discount__count_operator
+  discount__discount: Membership_discount__discount_operator
+  discount__text: Membership_discount__text_operator
+  discount__id: Membership_discount__id_operator
+  slug: Membership_slug_operator
+  updatedAt: Membership_updatedAt_operator
+  createdAt: Membership_createdAt_operator
+  id: Membership_id_operator
+  AND: [Membership_where_and]
+  OR: [Membership_where_or]
+}
+
+type countMemberships {
+  totalDocs: Int
+}
+
+type membershipsDocAccess {
+  fields: MembershipsDocAccessFields
+  create: MembershipsCreateDocAccess
+  read: MembershipsReadDocAccess
+  update: MembershipsUpdateDocAccess
+  delete: MembershipsDeleteDocAccess
+}
+
+type MembershipsDocAccessFields {
+  title: MembershipsDocAccessFields_title
+  featured: MembershipsDocAccessFields_featured
+  description: MembershipsDocAccessFields_description
+  features: MembershipsDocAccessFields_features
+  price: MembershipsDocAccessFields_price
+  currency: MembershipsDocAccessFields_currency
+  discount: MembershipsDocAccessFields_discount
+  slug: MembershipsDocAccessFields_slug
+  updatedAt: MembershipsDocAccessFields_updatedAt
+  createdAt: MembershipsDocAccessFields_createdAt
+}
+
+type MembershipsDocAccessFields_title {
+  create: MembershipsDocAccessFields_title_Create
+  read: MembershipsDocAccessFields_title_Read
+  update: MembershipsDocAccessFields_title_Update
+  delete: MembershipsDocAccessFields_title_Delete
+}
+
+type MembershipsDocAccessFields_title_Create {
+  permission: Boolean!
+}
+
+type MembershipsDocAccessFields_title_Read {
+  permission: Boolean!
+}
+
+type MembershipsDocAccessFields_title_Update {
+  permission: Boolean!
+}
+
+type MembershipsDocAccessFields_title_Delete {
+  permission: Boolean!
+}
+
+type MembershipsDocAccessFields_featured {
+  create: MembershipsDocAccessFields_featured_Create
+  read: MembershipsDocAccessFields_featured_Read
+  update: MembershipsDocAccessFields_featured_Update
+  delete: MembershipsDocAccessFields_featured_Delete
+}
+
+type MembershipsDocAccessFields_featured_Create {
+  permission: Boolean!
+}
+
+type MembershipsDocAccessFields_featured_Read {
+  permission: Boolean!
+}
+
+type MembershipsDocAccessFields_featured_Update {
+  permission: Boolean!
+}
+
+type MembershipsDocAccessFields_featured_Delete {
+  permission: Boolean!
+}
+
+type MembershipsDocAccessFields_description {
+  create: MembershipsDocAccessFields_description_Create
+  read: MembershipsDocAccessFields_description_Read
+  update: MembershipsDocAccessFields_description_Update
+  delete: MembershipsDocAccessFields_description_Delete
+}
+
+type MembershipsDocAccessFields_description_Create {
+  permission: Boolean!
+}
+
+type MembershipsDocAccessFields_description_Read {
+  permission: Boolean!
+}
+
+type MembershipsDocAccessFields_description_Update {
+  permission: Boolean!
+}
+
+type MembershipsDocAccessFields_description_Delete {
+  permission: Boolean!
+}
+
+type MembershipsDocAccessFields_features {
+  create: MembershipsDocAccessFields_features_Create
+  read: MembershipsDocAccessFields_features_Read
+  update: MembershipsDocAccessFields_features_Update
+  delete: MembershipsDocAccessFields_features_Delete
+}
+
+type MembershipsDocAccessFields_features_Create {
+  permission: Boolean!
+}
+
+type MembershipsDocAccessFields_features_Read {
+  permission: Boolean!
+}
+
+type MembershipsDocAccessFields_features_Update {
+  permission: Boolean!
+}
+
+type MembershipsDocAccessFields_features_Delete {
+  permission: Boolean!
+}
+
+type MembershipsDocAccessFields_price {
+  create: MembershipsDocAccessFields_price_Create
+  read: MembershipsDocAccessFields_price_Read
+  update: MembershipsDocAccessFields_price_Update
+  delete: MembershipsDocAccessFields_price_Delete
+}
+
+type MembershipsDocAccessFields_price_Create {
+  permission: Boolean!
+}
+
+type MembershipsDocAccessFields_price_Read {
+  permission: Boolean!
+}
+
+type MembershipsDocAccessFields_price_Update {
+  permission: Boolean!
+}
+
+type MembershipsDocAccessFields_price_Delete {
+  permission: Boolean!
+}
+
+type MembershipsDocAccessFields_currency {
+  create: MembershipsDocAccessFields_currency_Create
+  read: MembershipsDocAccessFields_currency_Read
+  update: MembershipsDocAccessFields_currency_Update
+  delete: MembershipsDocAccessFields_currency_Delete
+}
+
+type MembershipsDocAccessFields_currency_Create {
+  permission: Boolean!
+}
+
+type MembershipsDocAccessFields_currency_Read {
+  permission: Boolean!
+}
+
+type MembershipsDocAccessFields_currency_Update {
+  permission: Boolean!
+}
+
+type MembershipsDocAccessFields_currency_Delete {
+  permission: Boolean!
+}
+
+type MembershipsDocAccessFields_discount {
+  create: MembershipsDocAccessFields_discount_Create
+  read: MembershipsDocAccessFields_discount_Read
+  update: MembershipsDocAccessFields_discount_Update
+  delete: MembershipsDocAccessFields_discount_Delete
+  fields: MembershipsDocAccessFields_discount_Fields
+}
+
+type MembershipsDocAccessFields_discount_Create {
+  permission: Boolean!
+}
+
+type MembershipsDocAccessFields_discount_Read {
+  permission: Boolean!
+}
+
+type MembershipsDocAccessFields_discount_Update {
+  permission: Boolean!
+}
+
+type MembershipsDocAccessFields_discount_Delete {
+  permission: Boolean!
+}
+
+type MembershipsDocAccessFields_discount_Fields {
+  count: MembershipsDocAccessFields_discount_count
+  discount: MembershipsDocAccessFields_discount_discount
+  text: MembershipsDocAccessFields_discount_text
+  id: MembershipsDocAccessFields_discount_id
+}
+
+type MembershipsDocAccessFields_discount_count {
+  create: MembershipsDocAccessFields_discount_count_Create
+  read: MembershipsDocAccessFields_discount_count_Read
+  update: MembershipsDocAccessFields_discount_count_Update
+  delete: MembershipsDocAccessFields_discount_count_Delete
+}
+
+type MembershipsDocAccessFields_discount_count_Create {
+  permission: Boolean!
+}
+
+type MembershipsDocAccessFields_discount_count_Read {
+  permission: Boolean!
+}
+
+type MembershipsDocAccessFields_discount_count_Update {
+  permission: Boolean!
+}
+
+type MembershipsDocAccessFields_discount_count_Delete {
+  permission: Boolean!
+}
+
+type MembershipsDocAccessFields_discount_discount {
+  create: MembershipsDocAccessFields_discount_discount_Create
+  read: MembershipsDocAccessFields_discount_discount_Read
+  update: MembershipsDocAccessFields_discount_discount_Update
+  delete: MembershipsDocAccessFields_discount_discount_Delete
+}
+
+type MembershipsDocAccessFields_discount_discount_Create {
+  permission: Boolean!
+}
+
+type MembershipsDocAccessFields_discount_discount_Read {
+  permission: Boolean!
+}
+
+type MembershipsDocAccessFields_discount_discount_Update {
+  permission: Boolean!
+}
+
+type MembershipsDocAccessFields_discount_discount_Delete {
+  permission: Boolean!
+}
+
+type MembershipsDocAccessFields_discount_text {
+  create: MembershipsDocAccessFields_discount_text_Create
+  read: MembershipsDocAccessFields_discount_text_Read
+  update: MembershipsDocAccessFields_discount_text_Update
+  delete: MembershipsDocAccessFields_discount_text_Delete
+}
+
+type MembershipsDocAccessFields_discount_text_Create {
+  permission: Boolean!
+}
+
+type MembershipsDocAccessFields_discount_text_Read {
+  permission: Boolean!
+}
+
+type MembershipsDocAccessFields_discount_text_Update {
+  permission: Boolean!
+}
+
+type MembershipsDocAccessFields_discount_text_Delete {
+  permission: Boolean!
+}
+
+type MembershipsDocAccessFields_discount_id {
+  create: MembershipsDocAccessFields_discount_id_Create
+  read: MembershipsDocAccessFields_discount_id_Read
+  update: MembershipsDocAccessFields_discount_id_Update
+  delete: MembershipsDocAccessFields_discount_id_Delete
+}
+
+type MembershipsDocAccessFields_discount_id_Create {
+  permission: Boolean!
+}
+
+type MembershipsDocAccessFields_discount_id_Read {
+  permission: Boolean!
+}
+
+type MembershipsDocAccessFields_discount_id_Update {
+  permission: Boolean!
+}
+
+type MembershipsDocAccessFields_discount_id_Delete {
+  permission: Boolean!
+}
+
+type MembershipsDocAccessFields_slug {
+  create: MembershipsDocAccessFields_slug_Create
+  read: MembershipsDocAccessFields_slug_Read
+  update: MembershipsDocAccessFields_slug_Update
+  delete: MembershipsDocAccessFields_slug_Delete
+}
+
+type MembershipsDocAccessFields_slug_Create {
+  permission: Boolean!
+}
+
+type MembershipsDocAccessFields_slug_Read {
+  permission: Boolean!
+}
+
+type MembershipsDocAccessFields_slug_Update {
+  permission: Boolean!
+}
+
+type MembershipsDocAccessFields_slug_Delete {
+  permission: Boolean!
+}
+
+type MembershipsDocAccessFields_updatedAt {
+  create: MembershipsDocAccessFields_updatedAt_Create
+  read: MembershipsDocAccessFields_updatedAt_Read
+  update: MembershipsDocAccessFields_updatedAt_Update
+  delete: MembershipsDocAccessFields_updatedAt_Delete
+}
+
+type MembershipsDocAccessFields_updatedAt_Create {
+  permission: Boolean!
+}
+
+type MembershipsDocAccessFields_updatedAt_Read {
+  permission: Boolean!
+}
+
+type MembershipsDocAccessFields_updatedAt_Update {
+  permission: Boolean!
+}
+
+type MembershipsDocAccessFields_updatedAt_Delete {
+  permission: Boolean!
+}
+
+type MembershipsDocAccessFields_createdAt {
+  create: MembershipsDocAccessFields_createdAt_Create
+  read: MembershipsDocAccessFields_createdAt_Read
+  update: MembershipsDocAccessFields_createdAt_Update
+  delete: MembershipsDocAccessFields_createdAt_Delete
+}
+
+type MembershipsDocAccessFields_createdAt_Create {
+  permission: Boolean!
+}
+
+type MembershipsDocAccessFields_createdAt_Read {
+  permission: Boolean!
+}
+
+type MembershipsDocAccessFields_createdAt_Update {
+  permission: Boolean!
+}
+
+type MembershipsDocAccessFields_createdAt_Delete {
+  permission: Boolean!
+}
+
+type MembershipsCreateDocAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type MembershipsReadDocAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type MembershipsUpdateDocAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type MembershipsDeleteDocAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type Order {
+  id: String
+  organization: Organization!
+  membership: Membership!
+  quantity: Float!
+  expiresAt: DateTime!
+  price: Float!
+  currency: Order_currency!
+  createdBy: User
+  updatedAt: DateTime
+  createdAt: DateTime
+}
+
+enum Order_currency {
+  czk
+  eur
+}
+
+type Orders {
+  docs: [Order]
+  hasNextPage: Boolean
+  hasPrevPage: Boolean
+  limit: Int
+  nextPage: Int
+  offset: Int
+  page: Int
+  pagingCounter: Int
+  prevPage: Int
+  totalDocs: Int
+  totalPages: Int
+}
+
+input Order_where {
+  organization: Order_organization_operator
+  membership: Order_membership_operator
+  quantity: Order_quantity_operator
+  expiresAt: Order_expiresAt_operator
+  price: Order_price_operator
+  currency: Order_currency_operator
+  createdBy: Order_createdBy_operator
+  updatedAt: Order_updatedAt_operator
+  createdAt: Order_createdAt_operator
+  id: Order_id_operator
+  AND: [Order_where_and]
+  OR: [Order_where_or]
+}
+
+input Order_organization_operator {
+  equals: JSON
+  not_equals: JSON
+  in: [JSON]
+  not_in: [JSON]
+  all: [JSON]
+}
+
+input Order_membership_operator {
+  equals: JSON
+  not_equals: JSON
+  in: [JSON]
+  not_in: [JSON]
+  all: [JSON]
+}
+
+input Order_quantity_operator {
+  equals: Float
+  not_equals: Float
+  greater_than_equal: Float
+  greater_than: Float
+  less_than_equal: Float
+  less_than: Float
+}
+
+input Order_expiresAt_operator {
+  equals: DateTime
+  not_equals: DateTime
+  greater_than_equal: DateTime
+  greater_than: DateTime
+  less_than_equal: DateTime
+  less_than: DateTime
+  like: DateTime
+}
+
+input Order_price_operator {
+  equals: Float
+  not_equals: Float
+  greater_than_equal: Float
+  greater_than: Float
+  less_than_equal: Float
+  less_than: Float
+}
+
+input Order_currency_operator {
+  equals: Order_currency_Input
+  not_equals: Order_currency_Input
+  in: [Order_currency_Input]
+  not_in: [Order_currency_Input]
+  all: [Order_currency_Input]
+}
+
+enum Order_currency_Input {
+  czk
+  eur
+}
+
+input Order_createdBy_operator {
+  equals: JSON
+  not_equals: JSON
+  in: [JSON]
+  not_in: [JSON]
+  all: [JSON]
+  exists: Boolean
+}
+
+input Order_updatedAt_operator {
+  equals: DateTime
+  not_equals: DateTime
+  greater_than_equal: DateTime
+  greater_than: DateTime
+  less_than_equal: DateTime
+  less_than: DateTime
+  like: DateTime
+  exists: Boolean
+}
+
+input Order_createdAt_operator {
+  equals: DateTime
+  not_equals: DateTime
+  greater_than_equal: DateTime
+  greater_than: DateTime
+  less_than_equal: DateTime
+  less_than: DateTime
+  like: DateTime
+  exists: Boolean
+}
+
+input Order_id_operator {
+  equals: String
+  not_equals: String
+  like: String
+  contains: String
+  in: [String]
+  not_in: [String]
+  all: [String]
+  exists: Boolean
+}
+
+input Order_where_and {
+  organization: Order_organization_operator
+  membership: Order_membership_operator
+  quantity: Order_quantity_operator
+  expiresAt: Order_expiresAt_operator
+  price: Order_price_operator
+  currency: Order_currency_operator
+  createdBy: Order_createdBy_operator
+  updatedAt: Order_updatedAt_operator
+  createdAt: Order_createdAt_operator
+  id: Order_id_operator
+  AND: [Order_where_and]
+  OR: [Order_where_or]
+}
+
+input Order_where_or {
+  organization: Order_organization_operator
+  membership: Order_membership_operator
+  quantity: Order_quantity_operator
+  expiresAt: Order_expiresAt_operator
+  price: Order_price_operator
+  currency: Order_currency_operator
+  createdBy: Order_createdBy_operator
+  updatedAt: Order_updatedAt_operator
+  createdAt: Order_createdAt_operator
+  id: Order_id_operator
+  AND: [Order_where_and]
+  OR: [Order_where_or]
+}
+
+type countOrders {
+  totalDocs: Int
+}
+
+type ordersDocAccess {
+  fields: OrdersDocAccessFields
+  create: OrdersCreateDocAccess
+  read: OrdersReadDocAccess
+  update: OrdersUpdateDocAccess
+  delete: OrdersDeleteDocAccess
+}
+
+type OrdersDocAccessFields {
+  organization: OrdersDocAccessFields_organization
+  membership: OrdersDocAccessFields_membership
+  quantity: OrdersDocAccessFields_quantity
+  expiresAt: OrdersDocAccessFields_expiresAt
+  price: OrdersDocAccessFields_price
+  currency: OrdersDocAccessFields_currency
+  createdBy: OrdersDocAccessFields_createdBy
+  updatedAt: OrdersDocAccessFields_updatedAt
+  createdAt: OrdersDocAccessFields_createdAt
+}
+
+type OrdersDocAccessFields_organization {
+  create: OrdersDocAccessFields_organization_Create
+  read: OrdersDocAccessFields_organization_Read
+  update: OrdersDocAccessFields_organization_Update
+  delete: OrdersDocAccessFields_organization_Delete
+}
+
+type OrdersDocAccessFields_organization_Create {
+  permission: Boolean!
+}
+
+type OrdersDocAccessFields_organization_Read {
+  permission: Boolean!
+}
+
+type OrdersDocAccessFields_organization_Update {
+  permission: Boolean!
+}
+
+type OrdersDocAccessFields_organization_Delete {
+  permission: Boolean!
+}
+
+type OrdersDocAccessFields_membership {
+  create: OrdersDocAccessFields_membership_Create
+  read: OrdersDocAccessFields_membership_Read
+  update: OrdersDocAccessFields_membership_Update
+  delete: OrdersDocAccessFields_membership_Delete
+}
+
+type OrdersDocAccessFields_membership_Create {
+  permission: Boolean!
+}
+
+type OrdersDocAccessFields_membership_Read {
+  permission: Boolean!
+}
+
+type OrdersDocAccessFields_membership_Update {
+  permission: Boolean!
+}
+
+type OrdersDocAccessFields_membership_Delete {
+  permission: Boolean!
+}
+
+type OrdersDocAccessFields_quantity {
+  create: OrdersDocAccessFields_quantity_Create
+  read: OrdersDocAccessFields_quantity_Read
+  update: OrdersDocAccessFields_quantity_Update
+  delete: OrdersDocAccessFields_quantity_Delete
+}
+
+type OrdersDocAccessFields_quantity_Create {
+  permission: Boolean!
+}
+
+type OrdersDocAccessFields_quantity_Read {
+  permission: Boolean!
+}
+
+type OrdersDocAccessFields_quantity_Update {
+  permission: Boolean!
+}
+
+type OrdersDocAccessFields_quantity_Delete {
+  permission: Boolean!
+}
+
+type OrdersDocAccessFields_expiresAt {
+  create: OrdersDocAccessFields_expiresAt_Create
+  read: OrdersDocAccessFields_expiresAt_Read
+  update: OrdersDocAccessFields_expiresAt_Update
+  delete: OrdersDocAccessFields_expiresAt_Delete
+}
+
+type OrdersDocAccessFields_expiresAt_Create {
+  permission: Boolean!
+}
+
+type OrdersDocAccessFields_expiresAt_Read {
+  permission: Boolean!
+}
+
+type OrdersDocAccessFields_expiresAt_Update {
+  permission: Boolean!
+}
+
+type OrdersDocAccessFields_expiresAt_Delete {
+  permission: Boolean!
+}
+
+type OrdersDocAccessFields_price {
+  create: OrdersDocAccessFields_price_Create
+  read: OrdersDocAccessFields_price_Read
+  update: OrdersDocAccessFields_price_Update
+  delete: OrdersDocAccessFields_price_Delete
+}
+
+type OrdersDocAccessFields_price_Create {
+  permission: Boolean!
+}
+
+type OrdersDocAccessFields_price_Read {
+  permission: Boolean!
+}
+
+type OrdersDocAccessFields_price_Update {
+  permission: Boolean!
+}
+
+type OrdersDocAccessFields_price_Delete {
+  permission: Boolean!
+}
+
+type OrdersDocAccessFields_currency {
+  create: OrdersDocAccessFields_currency_Create
+  read: OrdersDocAccessFields_currency_Read
+  update: OrdersDocAccessFields_currency_Update
+  delete: OrdersDocAccessFields_currency_Delete
+}
+
+type OrdersDocAccessFields_currency_Create {
+  permission: Boolean!
+}
+
+type OrdersDocAccessFields_currency_Read {
+  permission: Boolean!
+}
+
+type OrdersDocAccessFields_currency_Update {
+  permission: Boolean!
+}
+
+type OrdersDocAccessFields_currency_Delete {
+  permission: Boolean!
+}
+
+type OrdersDocAccessFields_createdBy {
+  create: OrdersDocAccessFields_createdBy_Create
+  read: OrdersDocAccessFields_createdBy_Read
+  update: OrdersDocAccessFields_createdBy_Update
+  delete: OrdersDocAccessFields_createdBy_Delete
+}
+
+type OrdersDocAccessFields_createdBy_Create {
+  permission: Boolean!
+}
+
+type OrdersDocAccessFields_createdBy_Read {
+  permission: Boolean!
+}
+
+type OrdersDocAccessFields_createdBy_Update {
+  permission: Boolean!
+}
+
+type OrdersDocAccessFields_createdBy_Delete {
+  permission: Boolean!
+}
+
+type OrdersDocAccessFields_updatedAt {
+  create: OrdersDocAccessFields_updatedAt_Create
+  read: OrdersDocAccessFields_updatedAt_Read
+  update: OrdersDocAccessFields_updatedAt_Update
+  delete: OrdersDocAccessFields_updatedAt_Delete
+}
+
+type OrdersDocAccessFields_updatedAt_Create {
+  permission: Boolean!
+}
+
+type OrdersDocAccessFields_updatedAt_Read {
+  permission: Boolean!
+}
+
+type OrdersDocAccessFields_updatedAt_Update {
+  permission: Boolean!
+}
+
+type OrdersDocAccessFields_updatedAt_Delete {
+  permission: Boolean!
+}
+
+type OrdersDocAccessFields_createdAt {
+  create: OrdersDocAccessFields_createdAt_Create
+  read: OrdersDocAccessFields_createdAt_Read
+  update: OrdersDocAccessFields_createdAt_Update
+  delete: OrdersDocAccessFields_createdAt_Delete
+}
+
+type OrdersDocAccessFields_createdAt_Create {
+  permission: Boolean!
+}
+
+type OrdersDocAccessFields_createdAt_Read {
+  permission: Boolean!
+}
+
+type OrdersDocAccessFields_createdAt_Update {
+  permission: Boolean!
+}
+
+type OrdersDocAccessFields_createdAt_Delete {
+  permission: Boolean!
+}
+
+type OrdersCreateDocAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type OrdersReadDocAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type OrdersUpdateDocAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type OrdersDeleteDocAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
 type Partner {
   id: String
   title: String!
@@ -9638,6 +10869,8 @@ type Access {
   photos: photosAccess
   agreements: agreementsAccess
   email_templates: email_templatesAccess
+  memberships: membershipsAccess
+  orders: ordersAccess
   partners: partnersAccess
   users: usersAccess
   search: searchAccess
@@ -10988,6 +12221,8 @@ type OrganizationsFields {
   url: OrganizationsFields_url
   jobsPublished: OrganizationsFields_jobsPublished
   jobsUnpublished: OrganizationsFields_jobsUnpublished
+  jobsAllowed: OrganizationsFields_jobsAllowed
+  memberships: OrganizationsFields_memberships
   createdBy: OrganizationsFields_createdBy
   updatedAt: OrganizationsFields_updatedAt
   createdAt: OrganizationsFields_createdAt
@@ -11358,6 +12593,128 @@ type OrganizationsFields_jobsUnpublished_Update {
 }
 
 type OrganizationsFields_jobsUnpublished_Delete {
+  permission: Boolean!
+}
+
+type OrganizationsFields_jobsAllowed {
+  create: OrganizationsFields_jobsAllowed_Create
+  read: OrganizationsFields_jobsAllowed_Read
+  update: OrganizationsFields_jobsAllowed_Update
+  delete: OrganizationsFields_jobsAllowed_Delete
+}
+
+type OrganizationsFields_jobsAllowed_Create {
+  permission: Boolean!
+}
+
+type OrganizationsFields_jobsAllowed_Read {
+  permission: Boolean!
+}
+
+type OrganizationsFields_jobsAllowed_Update {
+  permission: Boolean!
+}
+
+type OrganizationsFields_jobsAllowed_Delete {
+  permission: Boolean!
+}
+
+type OrganizationsFields_memberships {
+  create: OrganizationsFields_memberships_Create
+  read: OrganizationsFields_memberships_Read
+  update: OrganizationsFields_memberships_Update
+  delete: OrganizationsFields_memberships_Delete
+  fields: OrganizationsFields_memberships_Fields
+}
+
+type OrganizationsFields_memberships_Create {
+  permission: Boolean!
+}
+
+type OrganizationsFields_memberships_Read {
+  permission: Boolean!
+}
+
+type OrganizationsFields_memberships_Update {
+  permission: Boolean!
+}
+
+type OrganizationsFields_memberships_Delete {
+  permission: Boolean!
+}
+
+type OrganizationsFields_memberships_Fields {
+  membership: OrganizationsFields_memberships_membership
+  price: OrganizationsFields_memberships_price
+  id: OrganizationsFields_memberships_id
+}
+
+type OrganizationsFields_memberships_membership {
+  create: OrganizationsFields_memberships_membership_Create
+  read: OrganizationsFields_memberships_membership_Read
+  update: OrganizationsFields_memberships_membership_Update
+  delete: OrganizationsFields_memberships_membership_Delete
+}
+
+type OrganizationsFields_memberships_membership_Create {
+  permission: Boolean!
+}
+
+type OrganizationsFields_memberships_membership_Read {
+  permission: Boolean!
+}
+
+type OrganizationsFields_memberships_membership_Update {
+  permission: Boolean!
+}
+
+type OrganizationsFields_memberships_membership_Delete {
+  permission: Boolean!
+}
+
+type OrganizationsFields_memberships_price {
+  create: OrganizationsFields_memberships_price_Create
+  read: OrganizationsFields_memberships_price_Read
+  update: OrganizationsFields_memberships_price_Update
+  delete: OrganizationsFields_memberships_price_Delete
+}
+
+type OrganizationsFields_memberships_price_Create {
+  permission: Boolean!
+}
+
+type OrganizationsFields_memberships_price_Read {
+  permission: Boolean!
+}
+
+type OrganizationsFields_memberships_price_Update {
+  permission: Boolean!
+}
+
+type OrganizationsFields_memberships_price_Delete {
+  permission: Boolean!
+}
+
+type OrganizationsFields_memberships_id {
+  create: OrganizationsFields_memberships_id_Create
+  read: OrganizationsFields_memberships_id_Read
+  update: OrganizationsFields_memberships_id_Update
+  delete: OrganizationsFields_memberships_id_Delete
+}
+
+type OrganizationsFields_memberships_id_Create {
+  permission: Boolean!
+}
+
+type OrganizationsFields_memberships_id_Read {
+  permission: Boolean!
+}
+
+type OrganizationsFields_memberships_id_Update {
+  permission: Boolean!
+}
+
+type OrganizationsFields_memberships_id_Delete {
   permission: Boolean!
 }
 
@@ -13659,6 +15016,624 @@ type EmailTemplatesDeleteAccess {
   where: JSONObject
 }
 
+type membershipsAccess {
+  fields: MembershipsFields
+  create: MembershipsCreateAccess
+  read: MembershipsReadAccess
+  update: MembershipsUpdateAccess
+  delete: MembershipsDeleteAccess
+}
+
+type MembershipsFields {
+  title: MembershipsFields_title
+  featured: MembershipsFields_featured
+  description: MembershipsFields_description
+  features: MembershipsFields_features
+  price: MembershipsFields_price
+  currency: MembershipsFields_currency
+  discount: MembershipsFields_discount
+  slug: MembershipsFields_slug
+  updatedAt: MembershipsFields_updatedAt
+  createdAt: MembershipsFields_createdAt
+}
+
+type MembershipsFields_title {
+  create: MembershipsFields_title_Create
+  read: MembershipsFields_title_Read
+  update: MembershipsFields_title_Update
+  delete: MembershipsFields_title_Delete
+}
+
+type MembershipsFields_title_Create {
+  permission: Boolean!
+}
+
+type MembershipsFields_title_Read {
+  permission: Boolean!
+}
+
+type MembershipsFields_title_Update {
+  permission: Boolean!
+}
+
+type MembershipsFields_title_Delete {
+  permission: Boolean!
+}
+
+type MembershipsFields_featured {
+  create: MembershipsFields_featured_Create
+  read: MembershipsFields_featured_Read
+  update: MembershipsFields_featured_Update
+  delete: MembershipsFields_featured_Delete
+}
+
+type MembershipsFields_featured_Create {
+  permission: Boolean!
+}
+
+type MembershipsFields_featured_Read {
+  permission: Boolean!
+}
+
+type MembershipsFields_featured_Update {
+  permission: Boolean!
+}
+
+type MembershipsFields_featured_Delete {
+  permission: Boolean!
+}
+
+type MembershipsFields_description {
+  create: MembershipsFields_description_Create
+  read: MembershipsFields_description_Read
+  update: MembershipsFields_description_Update
+  delete: MembershipsFields_description_Delete
+}
+
+type MembershipsFields_description_Create {
+  permission: Boolean!
+}
+
+type MembershipsFields_description_Read {
+  permission: Boolean!
+}
+
+type MembershipsFields_description_Update {
+  permission: Boolean!
+}
+
+type MembershipsFields_description_Delete {
+  permission: Boolean!
+}
+
+type MembershipsFields_features {
+  create: MembershipsFields_features_Create
+  read: MembershipsFields_features_Read
+  update: MembershipsFields_features_Update
+  delete: MembershipsFields_features_Delete
+}
+
+type MembershipsFields_features_Create {
+  permission: Boolean!
+}
+
+type MembershipsFields_features_Read {
+  permission: Boolean!
+}
+
+type MembershipsFields_features_Update {
+  permission: Boolean!
+}
+
+type MembershipsFields_features_Delete {
+  permission: Boolean!
+}
+
+type MembershipsFields_price {
+  create: MembershipsFields_price_Create
+  read: MembershipsFields_price_Read
+  update: MembershipsFields_price_Update
+  delete: MembershipsFields_price_Delete
+}
+
+type MembershipsFields_price_Create {
+  permission: Boolean!
+}
+
+type MembershipsFields_price_Read {
+  permission: Boolean!
+}
+
+type MembershipsFields_price_Update {
+  permission: Boolean!
+}
+
+type MembershipsFields_price_Delete {
+  permission: Boolean!
+}
+
+type MembershipsFields_currency {
+  create: MembershipsFields_currency_Create
+  read: MembershipsFields_currency_Read
+  update: MembershipsFields_currency_Update
+  delete: MembershipsFields_currency_Delete
+}
+
+type MembershipsFields_currency_Create {
+  permission: Boolean!
+}
+
+type MembershipsFields_currency_Read {
+  permission: Boolean!
+}
+
+type MembershipsFields_currency_Update {
+  permission: Boolean!
+}
+
+type MembershipsFields_currency_Delete {
+  permission: Boolean!
+}
+
+type MembershipsFields_discount {
+  create: MembershipsFields_discount_Create
+  read: MembershipsFields_discount_Read
+  update: MembershipsFields_discount_Update
+  delete: MembershipsFields_discount_Delete
+  fields: MembershipsFields_discount_Fields
+}
+
+type MembershipsFields_discount_Create {
+  permission: Boolean!
+}
+
+type MembershipsFields_discount_Read {
+  permission: Boolean!
+}
+
+type MembershipsFields_discount_Update {
+  permission: Boolean!
+}
+
+type MembershipsFields_discount_Delete {
+  permission: Boolean!
+}
+
+type MembershipsFields_discount_Fields {
+  count: MembershipsFields_discount_count
+  discount: MembershipsFields_discount_discount
+  text: MembershipsFields_discount_text
+  id: MembershipsFields_discount_id
+}
+
+type MembershipsFields_discount_count {
+  create: MembershipsFields_discount_count_Create
+  read: MembershipsFields_discount_count_Read
+  update: MembershipsFields_discount_count_Update
+  delete: MembershipsFields_discount_count_Delete
+}
+
+type MembershipsFields_discount_count_Create {
+  permission: Boolean!
+}
+
+type MembershipsFields_discount_count_Read {
+  permission: Boolean!
+}
+
+type MembershipsFields_discount_count_Update {
+  permission: Boolean!
+}
+
+type MembershipsFields_discount_count_Delete {
+  permission: Boolean!
+}
+
+type MembershipsFields_discount_discount {
+  create: MembershipsFields_discount_discount_Create
+  read: MembershipsFields_discount_discount_Read
+  update: MembershipsFields_discount_discount_Update
+  delete: MembershipsFields_discount_discount_Delete
+}
+
+type MembershipsFields_discount_discount_Create {
+  permission: Boolean!
+}
+
+type MembershipsFields_discount_discount_Read {
+  permission: Boolean!
+}
+
+type MembershipsFields_discount_discount_Update {
+  permission: Boolean!
+}
+
+type MembershipsFields_discount_discount_Delete {
+  permission: Boolean!
+}
+
+type MembershipsFields_discount_text {
+  create: MembershipsFields_discount_text_Create
+  read: MembershipsFields_discount_text_Read
+  update: MembershipsFields_discount_text_Update
+  delete: MembershipsFields_discount_text_Delete
+}
+
+type MembershipsFields_discount_text_Create {
+  permission: Boolean!
+}
+
+type MembershipsFields_discount_text_Read {
+  permission: Boolean!
+}
+
+type MembershipsFields_discount_text_Update {
+  permission: Boolean!
+}
+
+type MembershipsFields_discount_text_Delete {
+  permission: Boolean!
+}
+
+type MembershipsFields_discount_id {
+  create: MembershipsFields_discount_id_Create
+  read: MembershipsFields_discount_id_Read
+  update: MembershipsFields_discount_id_Update
+  delete: MembershipsFields_discount_id_Delete
+}
+
+type MembershipsFields_discount_id_Create {
+  permission: Boolean!
+}
+
+type MembershipsFields_discount_id_Read {
+  permission: Boolean!
+}
+
+type MembershipsFields_discount_id_Update {
+  permission: Boolean!
+}
+
+type MembershipsFields_discount_id_Delete {
+  permission: Boolean!
+}
+
+type MembershipsFields_slug {
+  create: MembershipsFields_slug_Create
+  read: MembershipsFields_slug_Read
+  update: MembershipsFields_slug_Update
+  delete: MembershipsFields_slug_Delete
+}
+
+type MembershipsFields_slug_Create {
+  permission: Boolean!
+}
+
+type MembershipsFields_slug_Read {
+  permission: Boolean!
+}
+
+type MembershipsFields_slug_Update {
+  permission: Boolean!
+}
+
+type MembershipsFields_slug_Delete {
+  permission: Boolean!
+}
+
+type MembershipsFields_updatedAt {
+  create: MembershipsFields_updatedAt_Create
+  read: MembershipsFields_updatedAt_Read
+  update: MembershipsFields_updatedAt_Update
+  delete: MembershipsFields_updatedAt_Delete
+}
+
+type MembershipsFields_updatedAt_Create {
+  permission: Boolean!
+}
+
+type MembershipsFields_updatedAt_Read {
+  permission: Boolean!
+}
+
+type MembershipsFields_updatedAt_Update {
+  permission: Boolean!
+}
+
+type MembershipsFields_updatedAt_Delete {
+  permission: Boolean!
+}
+
+type MembershipsFields_createdAt {
+  create: MembershipsFields_createdAt_Create
+  read: MembershipsFields_createdAt_Read
+  update: MembershipsFields_createdAt_Update
+  delete: MembershipsFields_createdAt_Delete
+}
+
+type MembershipsFields_createdAt_Create {
+  permission: Boolean!
+}
+
+type MembershipsFields_createdAt_Read {
+  permission: Boolean!
+}
+
+type MembershipsFields_createdAt_Update {
+  permission: Boolean!
+}
+
+type MembershipsFields_createdAt_Delete {
+  permission: Boolean!
+}
+
+type MembershipsCreateAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type MembershipsReadAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type MembershipsUpdateAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type MembershipsDeleteAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type ordersAccess {
+  fields: OrdersFields
+  create: OrdersCreateAccess
+  read: OrdersReadAccess
+  update: OrdersUpdateAccess
+  delete: OrdersDeleteAccess
+}
+
+type OrdersFields {
+  organization: OrdersFields_organization
+  membership: OrdersFields_membership
+  quantity: OrdersFields_quantity
+  expiresAt: OrdersFields_expiresAt
+  price: OrdersFields_price
+  currency: OrdersFields_currency
+  createdBy: OrdersFields_createdBy
+  updatedAt: OrdersFields_updatedAt
+  createdAt: OrdersFields_createdAt
+}
+
+type OrdersFields_organization {
+  create: OrdersFields_organization_Create
+  read: OrdersFields_organization_Read
+  update: OrdersFields_organization_Update
+  delete: OrdersFields_organization_Delete
+}
+
+type OrdersFields_organization_Create {
+  permission: Boolean!
+}
+
+type OrdersFields_organization_Read {
+  permission: Boolean!
+}
+
+type OrdersFields_organization_Update {
+  permission: Boolean!
+}
+
+type OrdersFields_organization_Delete {
+  permission: Boolean!
+}
+
+type OrdersFields_membership {
+  create: OrdersFields_membership_Create
+  read: OrdersFields_membership_Read
+  update: OrdersFields_membership_Update
+  delete: OrdersFields_membership_Delete
+}
+
+type OrdersFields_membership_Create {
+  permission: Boolean!
+}
+
+type OrdersFields_membership_Read {
+  permission: Boolean!
+}
+
+type OrdersFields_membership_Update {
+  permission: Boolean!
+}
+
+type OrdersFields_membership_Delete {
+  permission: Boolean!
+}
+
+type OrdersFields_quantity {
+  create: OrdersFields_quantity_Create
+  read: OrdersFields_quantity_Read
+  update: OrdersFields_quantity_Update
+  delete: OrdersFields_quantity_Delete
+}
+
+type OrdersFields_quantity_Create {
+  permission: Boolean!
+}
+
+type OrdersFields_quantity_Read {
+  permission: Boolean!
+}
+
+type OrdersFields_quantity_Update {
+  permission: Boolean!
+}
+
+type OrdersFields_quantity_Delete {
+  permission: Boolean!
+}
+
+type OrdersFields_expiresAt {
+  create: OrdersFields_expiresAt_Create
+  read: OrdersFields_expiresAt_Read
+  update: OrdersFields_expiresAt_Update
+  delete: OrdersFields_expiresAt_Delete
+}
+
+type OrdersFields_expiresAt_Create {
+  permission: Boolean!
+}
+
+type OrdersFields_expiresAt_Read {
+  permission: Boolean!
+}
+
+type OrdersFields_expiresAt_Update {
+  permission: Boolean!
+}
+
+type OrdersFields_expiresAt_Delete {
+  permission: Boolean!
+}
+
+type OrdersFields_price {
+  create: OrdersFields_price_Create
+  read: OrdersFields_price_Read
+  update: OrdersFields_price_Update
+  delete: OrdersFields_price_Delete
+}
+
+type OrdersFields_price_Create {
+  permission: Boolean!
+}
+
+type OrdersFields_price_Read {
+  permission: Boolean!
+}
+
+type OrdersFields_price_Update {
+  permission: Boolean!
+}
+
+type OrdersFields_price_Delete {
+  permission: Boolean!
+}
+
+type OrdersFields_currency {
+  create: OrdersFields_currency_Create
+  read: OrdersFields_currency_Read
+  update: OrdersFields_currency_Update
+  delete: OrdersFields_currency_Delete
+}
+
+type OrdersFields_currency_Create {
+  permission: Boolean!
+}
+
+type OrdersFields_currency_Read {
+  permission: Boolean!
+}
+
+type OrdersFields_currency_Update {
+  permission: Boolean!
+}
+
+type OrdersFields_currency_Delete {
+  permission: Boolean!
+}
+
+type OrdersFields_createdBy {
+  create: OrdersFields_createdBy_Create
+  read: OrdersFields_createdBy_Read
+  update: OrdersFields_createdBy_Update
+  delete: OrdersFields_createdBy_Delete
+}
+
+type OrdersFields_createdBy_Create {
+  permission: Boolean!
+}
+
+type OrdersFields_createdBy_Read {
+  permission: Boolean!
+}
+
+type OrdersFields_createdBy_Update {
+  permission: Boolean!
+}
+
+type OrdersFields_createdBy_Delete {
+  permission: Boolean!
+}
+
+type OrdersFields_updatedAt {
+  create: OrdersFields_updatedAt_Create
+  read: OrdersFields_updatedAt_Read
+  update: OrdersFields_updatedAt_Update
+  delete: OrdersFields_updatedAt_Delete
+}
+
+type OrdersFields_updatedAt_Create {
+  permission: Boolean!
+}
+
+type OrdersFields_updatedAt_Read {
+  permission: Boolean!
+}
+
+type OrdersFields_updatedAt_Update {
+  permission: Boolean!
+}
+
+type OrdersFields_updatedAt_Delete {
+  permission: Boolean!
+}
+
+type OrdersFields_createdAt {
+  create: OrdersFields_createdAt_Create
+  read: OrdersFields_createdAt_Read
+  update: OrdersFields_createdAt_Update
+  delete: OrdersFields_createdAt_Delete
+}
+
+type OrdersFields_createdAt_Create {
+  permission: Boolean!
+}
+
+type OrdersFields_createdAt_Read {
+  permission: Boolean!
+}
+
+type OrdersFields_createdAt_Update {
+  permission: Boolean!
+}
+
+type OrdersFields_createdAt_Delete {
+  permission: Boolean!
+}
+
+type OrdersCreateAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type OrdersReadAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type OrdersUpdateAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
+type OrdersDeleteAccess {
+  permission: Boolean!
+  where: JSONObject
+}
+
 type partnersAccess {
   fields: PartnersFields
   create: PartnersCreateAccess
@@ -14613,6 +16588,14 @@ type Mutation {
   updateEmailTemplate(id: String!, autosave: Boolean, data: mutationEmailTemplateUpdateInput!, draft: Boolean): EmailTemplate
   deleteEmailTemplate(id: String!): EmailTemplate
   duplicateEmailTemplate(id: String!): EmailTemplate
+  createMembership(data: mutationMembershipInput!, draft: Boolean): Membership
+  updateMembership(id: String!, autosave: Boolean, data: mutationMembershipUpdateInput!, draft: Boolean): Membership
+  deleteMembership(id: String!): Membership
+  duplicateMembership(id: String!): Membership
+  createOrder(data: mutationOrderInput!, draft: Boolean): Order
+  updateOrder(id: String!, autosave: Boolean, data: mutationOrderUpdateInput!, draft: Boolean): Order
+  deleteOrder(id: String!): Order
+  duplicateOrder(id: String!): Order
   createPartner(data: mutationPartnerInput!, draft: Boolean): Partner
   updatePartner(id: String!, autosave: Boolean, data: mutationPartnerUpdateInput!, draft: Boolean): Partner
   deletePartner(id: String!): Partner
@@ -14669,6 +16652,7 @@ input mutationJobInput {
 enum Job_status_MutationInput {
   published
   unpublished
+  expired
 }
 
 enum Job_categories_MutationInput {
@@ -14823,6 +16807,7 @@ input mutationJobUpdateInput {
 enum JobUpdate_status_MutationInput {
   published
   unpublished
+  expired
 }
 
 enum JobUpdate_categories_MutationInput {
@@ -15015,6 +17000,8 @@ input mutationOrganizationInput {
   url: String
   jobsPublished: [String]
   jobsUnpublished: [String]
+  jobsAllowed: Float
+  memberships: [mutationOrganization_MembershipsInput]
   createdBy: String
   updatedAt: String
   createdAt: String
@@ -15047,6 +17034,12 @@ enum Organization_categories_MutationInput {
   other
 }
 
+input mutationOrganization_MembershipsInput {
+  membership: String
+  price: Float
+  id: String
+}
+
 input mutationOrganizationUpdateInput {
   archived: Boolean
   title: String
@@ -15064,6 +17057,8 @@ input mutationOrganizationUpdateInput {
   url: String
   jobsPublished: [String]
   jobsUnpublished: [String]
+  jobsAllowed: Float
+  memberships: [mutationOrganizationUpdate_MembershipsInput]
   createdBy: String
   updatedAt: String
   createdAt: String
@@ -15094,6 +17089,12 @@ enum OrganizationUpdate_categories_MutationInput {
   leisure
   sport
   other
+}
+
+input mutationOrganizationUpdate_MembershipsInput {
+  membership: String
+  price: Float
+  id: String
 }
 
 input mutationCandidateInput {
@@ -15348,6 +17349,90 @@ enum EmailTemplateUpdate_event_MutationInput {
   application_status_accepted
   application_status_rejected
   application_status_interview
+}
+
+input mutationMembershipInput {
+  title: String!
+  featured: Boolean
+  description: String!
+  features: [String]!
+  price: Float!
+  currency: Membership_currency_MutationInput!
+  discount: [mutationMembership_DiscountInput]
+  slug: String
+  updatedAt: String
+  createdAt: String
+}
+
+enum Membership_currency_MutationInput {
+  czk
+  eur
+}
+
+input mutationMembership_DiscountInput {
+  count: Float!
+  discount: Float!
+  text: String!
+  id: String
+}
+
+input mutationMembershipUpdateInput {
+  title: String
+  featured: Boolean
+  description: String
+  features: [String]
+  price: Float
+  currency: MembershipUpdate_currency_MutationInput
+  discount: [mutationMembershipUpdate_DiscountInput]
+  slug: String
+  updatedAt: String
+  createdAt: String
+}
+
+enum MembershipUpdate_currency_MutationInput {
+  czk
+  eur
+}
+
+input mutationMembershipUpdate_DiscountInput {
+  count: Float!
+  discount: Float!
+  text: String!
+  id: String
+}
+
+input mutationOrderInput {
+  organization: String
+  membership: String
+  quantity: Float!
+  expiresAt: String!
+  price: Float!
+  currency: Order_currency_MutationInput!
+  createdBy: String
+  updatedAt: String
+  createdAt: String
+}
+
+enum Order_currency_MutationInput {
+  czk
+  eur
+}
+
+input mutationOrderUpdateInput {
+  organization: String
+  membership: String
+  quantity: Float
+  expiresAt: String
+  price: Float
+  currency: OrderUpdate_currency_MutationInput
+  createdBy: String
+  updatedAt: String
+  createdAt: String
+}
+
+enum OrderUpdate_currency_MutationInput {
+  czk
+  eur
 }
 
 input mutationPartnerInput {

@@ -58,4 +58,4 @@ const SA_A_O_Some_U: Access = ({ req }) => {
   return false
 }
 
-export default SA_A_O_Some_U
+export { SA_A_O_Some_U }

@@ -105,7 +105,10 @@ export const Organizations: CollectionConfig = {
       type: 'tabs',
       tabs: [
         {
-          label: 'Organization Details',
+          label: {
+            en: 'Organization Details',
+            cs: 'Detaily organizace'
+          },
           fields: [
             {
               type: 'row',
@@ -268,7 +271,10 @@ export const Organizations: CollectionConfig = {
           ],
         },
         {
-          label: 'Published Jobs',
+          label: {
+            en: 'Published Jobs',
+            cs: 'Publikované inzeráty',
+          },
           fields: [
             {
               name: 'jobsPublished',
@@ -288,7 +294,10 @@ export const Organizations: CollectionConfig = {
           ],
         },
         {
-          label: 'Unpublished Jobs',
+          label: {
+            en: 'Unpublished Jobs',
+            cs: 'Koncepty'
+          },
           fields: [
             {
               name: 'jobsUnpublished',
@@ -307,6 +316,63 @@ export const Organizations: CollectionConfig = {
             },
           ],
         },
+        {
+          label: {
+            en: 'Membership Custom Options',
+            cs: 'Vlastní možnosti členství',
+          },
+          fields: [
+            {
+              name: 'jobsAllowed',
+              label: {
+                en: 'Number of remaining jobs',
+                cs: 'Počet zbývajících inzerátů',
+              },
+              type: 'number',
+              defaultValue: 0,
+              access: {
+                read: ARCHIVED,
+                update: SA_A
+              },
+              required: true,
+            },
+            {
+              type: 'array',
+              name: 'memberships',
+              access: {
+                read: ARCHIVED,
+                update: SA_A,
+              },
+              fields: [
+                {
+                  name: 'membership',
+                  label: {
+                    en: 'Membership',
+                    cs: 'Členství',
+                  },
+                  type: 'relationship',
+                  relationTo: 'memberships',
+                  access: {
+                    read: ARCHIVED,
+                    update: SA_A
+                  },
+                  required: true,
+
+                  unique: true,
+                },
+                {
+                  name: 'price',
+                  type: 'number',
+                  access: {
+                    read: ARCHIVED,
+                    update: SA_A
+                  },
+                  required: true,
+                }
+              ],
+            },
+          ]
+        }
       ],
     },
     createdBy

@@ -104,11 +104,13 @@ export const cs = {
     "retirees": "Důchodce",
     "applications": "Žádosti",
     "status": "Stav",
+    "expiresAt": "Platí do",
     "actions": "Akce",
     "duplicate": "Duplikovat",
     "askToEdit": "Požádat o úpravu",
     "askToEditRequested": "Žádost odeslána. Dáme vám vědět 😊",
-    "saveJob": "Uložit inzerát"
+    "publishJob": "Publikovat",
+    "saveJob": "Uložit na později",
   },
   "editApplication": {
     "successUpdate": "Žádost byla úspěšně aktualizována.",
@@ -119,9 +121,20 @@ export const cs = {
     "success": "Email byl úspěšně odeslán.",
     "error": "Něco se pokazilo. Zkuste to prosím později."
   },
+  "membership": {
+    "h1": "Zvyšte svou náborovou sílu",
+    "description": "Investujte do balíčku pro zveřejňování pracovních nabídek a najděte pro svou školu ideální uchazeče.",
+    "selectPackage": "Vyberte balíček",
+    "getNow": "Získat nyní",
+    "footer": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do.",
+    "loading": "Načítání...",
+    "success": "Objednávka byla úspěšně dokončena.",
+    "error": "Něco se pokazilo. Zkuste to prosím později."
+  },
   "errors": {
     "createApplication": "Při vytváření žádosti došlo k chybě.",
     "createJob": "Při vytváření nabídky došlo k chybě.",
+    "createOrder": "Při vytváření objednávky došlo k chybě.",
     "imageResolution": "Obrázek musí mít šířku alespoň {width} px nebo výšku {height} px.",
     "noCandidate": "Nebyl nalezen žádný kandidát.",
     "noJobs": "Nebyly nalezeny žádné nabídky.",
@@ -177,10 +190,10 @@ export const cs = {
         "header": "Žádosti",
       },
       "card05": {
-        "header": "Nastavení účtu",
+        "header": "Starší nabídky",
       },
       "card06": {
-        "header": "Nastavení profilu",
+        "header": "Nastavení",
       }
     },
     "noDescriptionPrivate": "Zatím nemáte žádný popis. Co takhle napsat něco o vaší společnosti?",
@@ -268,7 +281,8 @@ export const cs = {
       "rejected": "Odmítnut/a",
       "interview": "Pohovor",
       "published": "Zveřejněno",
-      "unpublished": "Nezveřejněno",
+      "unpublished": "Koncept",
+      "expired": "Vypršela platnost",
       "sq": "Albánština",
       "bg": "Bulharština",
       "ca": "Katalánština",
@@ -498,6 +512,10 @@ export const cs = {
       "title": "Organizace - SchoolJob",
       "description": "Lorem ipsum dolor sit amet consectetur adipiscing elit Ut et massa mi."
     },
+    "pricing": {
+      "title": "Pricing - SchoolJob",
+      "description": "Lorem ipsum dolor sit amet consectetur adipiscing elit Ut et massa mi."
+    },
     "register": {
       "title": "Registrace - SchoolJob",
       "description": "Lorem ipsum dolor sit amet consectetur adipiscing elit Ut et massa mi."
@@ -523,6 +541,7 @@ export const cs = {
     "applications": "{count, plural, =0 {Žádné žádosti} =1 {1 žádost} other {# žádosti}}",
     "applicationDetails": "Podrobnosti žádosti",
     "approve": "Schválit",
+    "buyMoreJobs": "Koupit další nabídky",
     "cancel": "Zrušit",
     "candidate": "Kandidát",
     "createJob": "Vytvořit nabídku",

@@ -59,7 +59,10 @@ export const Candidates: CollectionConfig = {
       type: 'tabs',
       tabs: [
         {
-          label: 'Candidate Details',
+          label: {
+            en: 'Candidate Details',
+            cs: 'Detaily kandidáta',
+          },
           fields: [
             {
               type: 'row',
@@ -168,7 +171,10 @@ export const Candidates: CollectionConfig = {
           ],
         },
         {
-          label: 'Applications',
+          label: {
+            en: 'Applications',
+            cs: 'Žádosti',
+          },
           fields: [
             {
               name: 'applications',
@@ -186,7 +192,10 @@ export const Candidates: CollectionConfig = {
           ],
         },
         {
-          label: 'Saved Jobs',
+          label: {
+            en: 'Saved Jobs',
+            cs: 'Uložené pozice',
+          },
           fields: [
             {
               name: 'jobsSaved',

@@ -19,7 +19,6 @@ import {
   InputList,
   Label,
   LexicalEditor,
-  Message,
   Section,
   Select,
   Switch,
@@ -37,28 +36,29 @@ import {
 } from '@/payload/data'
 import { JobFieldSchema, JobFormData } from '@/types'
 import { createOrUpdateJob } from '@/actions'
+import { NotificationBanner } from '@/components'
 
 interface JobsEditViewProps {
   id?: string
+  jobsAllowed: number
 }
 
 const JobsEditView: React.FC<Partial<JobFormData> & JobsEditViewProps> = formData => {
   const t = useTranslations()
-  const { id } = formData
+  const { id, jobsAllowed } = formData
 
   const {
     register,
     handleSubmit,
     reset,
     formState: { errors },
-    getValues,
     setValue,
     control,
     watch,
   } = useForm<JobFormData>({
     resolver: zodResolver(JobFieldSchema),
     defaultValues: {
-      status: 'unpublished',
+      status: jobsAllowed > 0 ? 'published' : 'unpublished',
       salary: {
         enabled: false,
         range: false,
@@ -99,7 +99,9 @@ const JobsEditView: React.FC<Partial<JobFormData> & JobsEditViewProps> = formDat
       await toast.promise(createOrUpdateJob(data, id), {
         loading: t('ui.submitting'),
         success: () => {
-          router.push('/account/jobs')
+          router.push(
+            jobsAllowed > 0 ? '/account/jobs?status=published' : '/account/jobs?status=unpublished',
+          )
 
           return id ? t('editJob.successUpdated') : t('editJob.successCreated')
         },
@@ -112,12 +114,10 @@ const JobsEditView: React.FC<Partial<JobFormData> & JobsEditViewProps> = formDat
 
   const watchSalary = watch('salary.enabled')
   const watchRange = watch('salary.range')
-  const status = getValues('status')
-  const published = status === 'published' || false
   const title = watch('title')
   const categories = watch('categories')
   const employmentType = watch('employmentType')
-  const canPublish =
+  const canSubmit =
     title &&
     categories &&
     categories.length > 0 &&
@@ -139,14 +139,6 @@ const JobsEditView: React.FC<Partial<JobFormData> & JobsEditViewProps> = formDat
                 </div>
               </div>
               <div className="space-y-8 rounded-md border border-slate-200 bg-white p-6">
-                {status && (
-                  <Message
-                    success={published}
-                    warning={!published}
-                    message={t(`search.options.${status}` as 'search.status')}
-                    className="w-full"
-                  />
-                )}
                 <div>
                   <Label>
                     {t('editJob.title')} <span className="text-rose-500">*</span>
@@ -557,20 +549,40 @@ const JobsEditView: React.FC<Partial<JobFormData> & JobsEditViewProps> = formDat
       </Gutter>
       <div className="sticky bottom-0 z-50 mt-16 border-t border-slate-300 bg-white/50 py-10 backdrop-blur-md">
         <Gutter>
-          <div className="flex gap-4">
-            <Link href="/account/jobs" className="w-1/2" passHref>
+          <div className="flex flex-col justify-between gap-4 md:flex-row">
+            <NotificationBanner type={jobsAllowed === 0 ? 'warning' : 'success'}>
+              <div className="font-medium text-slate-800">
+                You currently have {jobsAllowed} jobs allowed to post.
+              </div>
+            </NotificationBanner>
+            <div className="flex flex-col-reverse items-center gap-4 md:flex-row">
+              <Link href="/account/jobs" className="w-full" passHref>
+                <Button
+                  variant="outline"
+                  size="lg"
+                  className="w-full bg-white shadow-md hover:bg-slate-50/50"
+                  type="button"
+                >
+                  {t('ui.goBack')}
+                </Button>
+              </Link>
               <Button
-                variant="outline"
+                variant={jobsAllowed > 0 ? 'default' : 'outline'}
                 size="lg"
-                className="w-full bg-white shadow-md hover:bg-slate-50/50"
-                type="button"
+                className="w-full shadow-md"
+                type="submit"
+                disabled={!canSubmit}
               >
-                {t('ui.goBack')}
+                {jobsAllowed > 0 ? t('editJob.publishJob') : t('editJob.saveJob')}
               </Button>
-            </Link>
-            <Button size="lg" className="w-1/2 shadow-md" type="submit" disabled={!canPublish}>
-              {t('editJob.saveJob')}
-            </Button>
+              {jobsAllowed === 0 && (
+                <Link href="/account/jobs/buy" passHref>
+                  <Button size="lg" className="w-full" type="button">
+                    {t('ui.buyMoreJobs')}
+                  </Button>
+                </Link>
+              )}
+            </div>
           </div>
         </Gutter>
       </div>

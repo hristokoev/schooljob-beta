@@ -2,6 +2,7 @@ import {
   ArrowRightIcon,
   BookmarkSquareIcon,
   ChatBubbleLeftRightIcon,
+  ClockIcon,
   Cog6ToothIcon,
   EnvelopeIcon,
   HeartIcon,
@@ -12,7 +13,7 @@ import Link from 'next/link'
 import React from 'react'
 
 interface ProfileCardProps {
-  icon: 'account' | 'chat' | 'envelope' | 'heart' | 'history' | 'pencil' | 'settings'
+  icon: 'account' | 'chat' | 'clock' | 'envelope' | 'heart' | 'history' | 'pencil' | 'settings'
   header: string
   link: string
 }
@@ -25,6 +26,8 @@ const Icon = ({ icon }: { icon: string }) => {
       return <UserIcon className={className} />
     case 'chat':
       return <ChatBubbleLeftRightIcon className={className} />
+    case 'clock':
+      return <ClockIcon className={className} />
     case 'envelope':
       return <EnvelopeIcon className={className} />
     case 'heart':

@@ -18,12 +18,13 @@
     color: var(--color-base-800);
   }
 
-  &.unpublished,
+  &.expired,
   &.rejected {
     background-color: var(--theme-error-500);
     color: var(--color-base-800);
   }
 
+  &.unpublished,
   &.pending {
     background-color: var(--theme-warning-500);
     color: var(--color-base-800);
@@ -59,9 +60,14 @@
     background-color: var(--color-success-500);
   }
 
-  &.unpublished {
+  &.expired {
     color: var(--color-base-800);
     background-color: var(--color-error-500);
+  }
+
+  &.unpublished {
+    color: var(--color-base-800);
+    background-color: var(--color-warning-500);
   }
 
   .status-text {

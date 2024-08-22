@@ -11,8 +11,11 @@ export const { cachedPayloadPlugin, getCachedPayload } = buildCachedPayload({
             slug: 'organizations',
         },
         {
+            slug: 'memberships',
+        },
+        {
             slug: 'partners',
-        }
+        },
     ],
     // Log when revalidation runs or operation cache HIT / SKIP
     loggerDebug: true,

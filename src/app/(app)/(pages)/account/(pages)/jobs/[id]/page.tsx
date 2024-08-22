@@ -30,8 +30,13 @@ export default async function EditJob({ params: { id } }: Props) {
     depth: 2,
   })
 
+  const { jobsAllowed } = await payload.findByID({
+    collection: 'organizations',
+    id: typeof user.profile?.value === 'string' ? user.profile.value : user.profile?.value.id || '',
+  })
+
   const frontEndData: JobFormData = {
-    status: data.status as JobFormData['status'],
+    status: jobsAllowed > 0 ? 'published' : 'unpublished',
     title: data.title,
     employmentType: data.employmentType.map(type => {
       return {
@@ -116,7 +121,7 @@ export default async function EditJob({ params: { id } }: Props) {
         <BreadcrumbBlock links={links} current={t('ui.editJob')} />
       </Gutter>
       <Main>
-        <JobsEditView {...frontEndData} id={id} />
+        <JobsEditView {...frontEndData} id={id} jobsAllowed={jobsAllowed} />
       </Main>
     </Fragment>
   )

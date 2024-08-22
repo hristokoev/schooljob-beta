@@ -108,15 +108,24 @@ export const EmailTemplates: CollectionConfig = {
       type: 'select',
       options: [
         {
-          label: 'Admin',
+          label: {
+            en: 'Admin',
+            cs: 'Admin',
+          },
           value: 'admin',
         },
         {
-          label: 'Candidate',
+          label: {
+            en: 'Candidate',
+            cs: 'Kandidát',
+          },
           value: 'candidate',
         },
         {
-          label: 'Organization',
+          label: {
+            en: 'Organization',
+            cs: 'Organizace',
+          },
           value: 'organization',
         },
       ],

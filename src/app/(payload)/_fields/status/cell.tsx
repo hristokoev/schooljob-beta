@@ -22,5 +22,5 @@ export const StatusSelectCell: CustomComponent = () => {
   const { t } = useTranslation<TranslationKeys, CustomTranslationKeys>()
   const { cellData } = useTableCell()
 
-  return cellData === 'published' ? t('other:published') : t('other:unpublished')
+  return t(`other:${cellData}` as 'other:published')
 }

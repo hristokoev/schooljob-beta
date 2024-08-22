@@ -1,5 +1,7 @@
 export * from './Emails'
 export * from './Jobs'
+export * from './Memberships'
+export * from './Orders'
 export * from './Profiles'
 export * from './Uploads'
 export * from './Users'

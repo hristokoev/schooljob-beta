@@ -37,6 +37,7 @@ export const createProfile: CollectionBeforeChangeHook = async ({
         data: {
           title,
           email,
+          jobsAllowed: 0
         },
       })
       profileId = organizationProfile.id

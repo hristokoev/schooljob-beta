@@ -88,14 +88,17 @@ const JobsTableView: React.FC<JobsTableViewProps> = async ({ docs }) => {
     {
       key: 'status',
       label: t('editJob.status'),
-      render: (item: Job) => (
-        <Message
-          success={item.status === 'published'}
-          warning={item.status === 'unpublished'}
-          message={t(`search.options.${item.status}` as 'search.status')}
-          className="w-full"
-        />
-      ),
+      render: (item: Job) => {
+        return (
+          <Message
+            success={item.status === 'published'}
+            warning={item.status === 'unpublished'}
+            error={item.status === 'expired'}
+            message={t(`search.options.${item.status}` as 'search.status')}
+            className="w-full"
+          />
+        )
+      },
     },
     {
       key: 'actions',

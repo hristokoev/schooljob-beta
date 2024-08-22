@@ -6,7 +6,7 @@ type FormatSalaryProps = {
     format?: string
 }
 
-function formatSalary({ value, currency, format = 'cs-CZ' }: FormatSalaryProps): string {
+function formatCurrency({ value, currency, format = 'cs-CZ' }: FormatSalaryProps): string {
     const formatter = new Intl.NumberFormat(format, {
         style: "currency",
         currency: currency,
@@ -22,22 +22,22 @@ function renderSalary(salary: Job['salary'], lang?: string): string | null {
     }
 
     if (salary?.enabled && salary.range) {
-        return `${formatSalary({
+        return `${formatCurrency({
             value: salary.minSalary as number,
             currency: salary.currency as string,
             format: lang,
-        })} - ${formatSalary({
+        })} - ${formatCurrency({
             value: salary.maxSalary as number,
             currency: salary.currency as string,
             format: lang,
         })}`
     }
 
-    return `${formatSalary({
+    return `${formatCurrency({
         value: salary.base as number,
         currency: salary.currency as string,
         format: lang,
     })}`
 }
 
-export { renderSalary }
+export { formatCurrency, renderSalary }

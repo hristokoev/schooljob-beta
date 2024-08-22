@@ -104,11 +104,13 @@ export const en = {
     "retirees": "Retirees",
     "applications": "Applications",
     "status": "Status",
+    "expiresAt": "Expires At",
     "actions": "Actions",
     "duplicate": "Duplicate",
     "askToEdit": "Ask to Edit",
     "askToEditRequested": "Request sent. We'll let you know 😊",
-    "saveJob": "Save Job"
+    "publishJob": "Publish",
+    "saveJob": "Save"
   },
   "editApplication": {
     "successUpdate": "Application successfully updated.",
@@ -119,9 +121,20 @@ export const en = {
     "success": "Email successfully sent.",
     "error": "Something went wrong. Please try again later.",
   },
+  "membership": {
+    "h1": "Boost Your Hiring Power",
+    "description": "Invest in a job posting package and find the perfect fit for your school.",
+    "selectPackage": "Select a package",
+    "getNow": "Get Now",
+    "footer": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do.",
+    "loading": "Loading...",
+    "success": "Package successfully purchased.",
+    "error": "Something went wrong. Please try again later.",
+  },
   "errors": {
     "createApplication": "An error occurred while creating the application.",
     "createJob": "An error occurred while creating the job.",
+    "createOrder": "An error occurred while creating the order.",
     "imageResolution": "Image must be at least {width} px width or {height} px height.",
     "noCandidate": "No candidate found.",
     "noJobs": "No jobs found.",
@@ -177,10 +190,10 @@ export const en = {
         "header": "Applications",
       },
       "card05": {
-        "header": "Account Settings",
+        "header": "Expired Jobs",
       },
       "card06": {
-        "header": "Profile Settings",
+        "header": "Settings",
       }
     },
     "noDescriptionPrivate": "You don't have any description yet. How about writing something about your company?",
@@ -269,6 +282,7 @@ export const en = {
       "interview": "Interview",
       "published": "Published",
       "unpublished": "Unpublished",
+      "expired": "Expired",
       "sq": "Albanian",
       "bg": "Bulgarian",
       "ca": "Catalan",
@@ -498,6 +512,10 @@ export const en = {
       "title": "Organizations - SchoolJob",
       "description": "Lorem ipsum dolor sit amet consectetur adipiscing elit Ut et massa mi."
     },
+    "pricing": {
+      "title": "Pricing - SchoolJob",
+      "description": "Lorem ipsum dolor sit amet consectetur adipiscing elit Ut et massa mi."
+    },
     "register": {
       "title": "Sign Up - SchoolJob",
       "description": "Lorem ipsum dolor sit amet consectetur adipiscing elit Ut et massa mi."
@@ -523,6 +541,7 @@ export const en = {
     "applications": "{count, plural, =0 {No applications} =1 {1 application} other {# applications}}",
     "applicationDetails": "Account Details",
     "approve": "Approve",
+    "buyMoreJobs": "Buy More Jobs",
     "cancel": "Cancel",
     "candidate": "Candidate",
     "createJob": "Create Job",

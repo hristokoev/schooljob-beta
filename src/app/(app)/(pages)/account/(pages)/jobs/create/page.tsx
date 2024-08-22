@@ -29,10 +29,15 @@ export default async function CreateJob({ searchParams }: Props) {
     config: configPromise,
   })
 
+  const { jobsAllowed } = await payload.findByID({
+    collection: 'organizations',
+    id: typeof user.profile?.value === 'string' ? user.profile.value : user.profile?.value.id || '',
+  })
+
   let data: Job | null = null
   let frontEndData: JobFormData = {
     title: '',
-    status: 'unpublished',
+    status: jobsAllowed > 0 ? 'published' : 'unpublished',
     categories: [],
     employmentType: [],
   }
@@ -135,7 +140,7 @@ export default async function CreateJob({ searchParams }: Props) {
         <BreadcrumbBlock links={links} current={t('ui.newJob')} />
       </Gutter>
       <Main>
-        <JobsEditView {...frontEndData} />
+        <JobsEditView {...frontEndData} jobsAllowed={jobsAllowed} />
       </Main>
     </Fragment>
   )

@@ -31,19 +31,19 @@ export const sendEmail = async ({
 
   try {
     const doc = await payload.sendEmail({
-      from: `${from}${process.env.RESEND_FROM_EMAIL}`, // from@domain.com
+      from: `${from}@${process.env.RESEND_FROM_EMAIL}`, // from@domain.com
       to: email,
       subject: title,
       html,
     })
 
     if (!doc) {
-      throw new Error(t('errors.updatePassword'))
+      throw new Error(t('email.error'))
     }
 
     return doc
   } catch (error) {
     console.error(error)
-    throw new Error(t('errors.updatePassword'))
+    throw new Error(t('email.error'))
   }
 }

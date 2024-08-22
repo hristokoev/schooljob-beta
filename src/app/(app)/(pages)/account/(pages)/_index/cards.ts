@@ -38,19 +38,19 @@ const cardsOrganization: ProfileCardProps[] = [
     link: '/account/jobs?status=unpublished',
   },
   {
-    icon: 'history',
+    icon: 'clock',
     header: cs.organization.cards.card04.header,
     link: '/account/applications',
   },
   {
     icon: 'settings',
     header: cs.organization.cards.card05.header,
-    link: '/account/settings',
+    link: '/account/jobs?status=expired',
   },
   {
-    icon: 'account',
+    icon: 'settings',
     header: cs.organization.cards.card06.header,
-    link: '/account/settings/profile',
+    link: '/account/settings',
   },
 ]
 
