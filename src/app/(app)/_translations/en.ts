@@ -149,7 +149,8 @@ export const en = {
     "updateOrganization": "An error occurred while updating the organization.",
     "updatePassword": "An error occurred while updating the password.",
     "uploadCv": "An error occurred while uploading the CV.",
-    "uploadImage": "An error occurred while uploading the image."
+    "uploadImage": "An error occurred while uploading the image.",
+    "jobsAllowed": "You have {jobsAllowed} jobs left.",
   },
   "candidate": {
     "firstName": "First Name",

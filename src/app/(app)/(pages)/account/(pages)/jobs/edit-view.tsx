@@ -552,7 +552,9 @@ const JobsEditView: React.FC<Partial<JobFormData> & JobsEditViewProps> = formDat
           <div className="flex flex-col justify-between gap-4 md:flex-row">
             <NotificationBanner type={jobsAllowed === 0 ? 'warning' : 'success'}>
               <div className="font-medium text-slate-800">
-                You currently have {jobsAllowed} jobs allowed to post.
+                {t('membership.jobsAllowed', {
+                  jobsAllowed,
+                })}
               </div>
             </NotificationBanner>
             <div className="flex flex-col-reverse items-center gap-4 md:flex-row">

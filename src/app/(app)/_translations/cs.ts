@@ -129,7 +129,8 @@ export const cs = {
     "footer": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do.",
     "loading": "Načítání...",
     "success": "Objednávka byla úspěšně dokončena.",
-    "error": "Něco se pokazilo. Zkuste to prosím později."
+    "error": "Něco se pokazilo. Zkuste to prosím později.",
+    "jobsAllowed": "Máte {jobsAllowed} nabídek zbývajících.",
   },
   "errors": {
     "createApplication": "Při vytváření žádosti došlo k chybě.",
