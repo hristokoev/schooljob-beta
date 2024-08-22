@@ -32,7 +32,7 @@ export const Users: CollectionConfig = {
     read: SA_A_O_Self_C_Self_id,
     update: SA_A_O_Self_C_Self_id,
     delete: SA,
-    // admin: ({ req: { user } }) => user?.role === 'super-admin' || user?.role === 'admin',
+    admin: ({ req: { user } }) => user?.role === 'super-admin' || user?.role === 'admin',
   },
   fields: [
     {
