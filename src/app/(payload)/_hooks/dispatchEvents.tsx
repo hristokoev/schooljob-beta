@@ -29,7 +29,7 @@ export const dispatchEvents: (eventOperations: EventOperation[]) => CollectionAf
       })
 
       if (!emailTemplates.docs.length) {
-        throw new Error('No email template found')
+        return
       }
 
       emailTemplates.docs.forEach(async template => {
