@@ -132,6 +132,10 @@ export const cs = {
     "error": "Něco se pokazilo. Zkuste to prosím později.",
     "jobsAllowed": "Máte {jobsAllowed} nabídek zbývajících.",
   },
+  "404": {
+    "h1": "Oops! Tato stránka neexistuje.",
+    "description": "Stránka, kterou hledáte, neexistuje. Můžete se vrátit na <Link>hlavní stranku</Link> nebo zkontrolovat adresu URL.",
+  },
   "errors": {
     "createApplication": "Při vytváření žádosti došlo k chybě.",
     "createJob": "Při vytváření nabídky došlo k chybě.",

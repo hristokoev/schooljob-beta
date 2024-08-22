@@ -131,6 +131,10 @@ export const en = {
     "success": "Package successfully purchased.",
     "error": "Something went wrong. Please try again later.",
   },
+  "404": {
+    "h1": "Uh oh. That page doesn’t exist.",
+    "description": "Head to our <Link>home page</Link> that does exist, or try double-checking the URL."
+  },
   "errors": {
     "createApplication": "An error occurred while creating the application.",
     "createJob": "An error occurred while creating the job.",
