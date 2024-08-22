@@ -24,8 +24,8 @@ export const createOrUpdateJob = async (data: JobFormData, id?: string) => {
     language: data?.language?.map(language => language.value) || [],
     salary: {
       ...data.salary,
-      currency: data?.salary?.currency?.value || '',
-      salaryType: data?.salary?.salaryType?.value || ''
+      currency: data?.salary?.currency?.value,
+      salaryType: data?.salary?.salaryType?.value
     }
   }
 
@@ -67,7 +67,8 @@ export const createOrUpdateJob = async (data: JobFormData, id?: string) => {
     }
 
     return doc
-  } catch {
+  } catch (error) {
+    console.log(error)
     throw new Error(t('errors.createJob'))
   }
 
