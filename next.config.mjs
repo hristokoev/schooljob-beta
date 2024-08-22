@@ -1,5 +1,5 @@
-import { withPayload } from '@payloadcms/next/withPayload'
 import createNextIntlPlugin from 'next-intl/plugin'
+import { withPayload } from '@payloadcms/next/withPayload'
 
 const withNextIntl = createNextIntlPlugin()
 
@@ -17,17 +17,17 @@ const nextConfig = {
       },
       {
         protocol: 'https',
-        hostname: 'schooljob-beta.coolify.koev.cz',
+        hostname: 'schooljob.cz',
         pathname: '/api/logos/file/**',
       },
       {
         protocol: 'https',
-        hostname: 'schooljob-beta.coolify.koev.cz',
+        hostname: 'schooljob.cz',
         pathname: '/api/image-covers/file/**',
       },
       {
         protocol: 'https',
-        hostname: 'schooljob-beta.coolify.koev.cz',
+        hostname: 'schooljob.cz',
         pathname: '/api/photos/file/**',
       },
     ],
