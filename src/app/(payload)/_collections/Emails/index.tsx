@@ -172,7 +172,6 @@ export const EmailTemplates: CollectionConfig = {
         cs: 'Aktivováno při',
       },
       type: 'select',
-      unique: true,
       options: [
         {
           label: {
