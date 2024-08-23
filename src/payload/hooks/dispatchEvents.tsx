@@ -3,6 +3,7 @@ import { EmailTemplate } from '@payload-types'
 import React from 'react'
 import { render } from '@react-email/render'
 
+import { replaceEmailVariables, type ReplacementVariables } from '@/payload/utilities'
 import { compareTwoObjects } from '@/payload/utilities'
 import { Email } from '@/payload/templates'
 
@@ -89,12 +90,32 @@ export const dispatchEvents: (eventOperations: EventOperation[]) => CollectionAf
             },
           )
 
+          const variables: ReplacementVariables = {
+            ...(collection.slug === 'applications' && {
+              candidateFullName: doc.firstName + ' ' + doc.lastName,
+              jobTitle: doc.job.title,
+            }),
+            ...(collection.slug === 'candidates' && {
+              candidateFullName: doc.firstName + ' ' + doc.lastName,
+              candidateEmail: doc.email,
+            }),
+            ...(collection.slug === 'organizations' && {
+              organizationTitle: doc.title,
+              organizationEmail: doc.email,
+            }),
+            ...(collection.slug === 'jobs' && {
+              jobTitle: doc.title,
+              jobStatus: doc.status,
+              organizationTitle: doc.organization.title,
+            }),
+          }
+
           // Send email
           await payload.sendEmail({
             from: `${template.from}@${process.env.RESEND_FROM_EMAIL}`,
             to: emailTo,
-            subject: template.title,
-            html: html,
+            subject: replaceEmailVariables(template.title, variables),
+            html: replaceEmailVariables(html, variables),
           })
         }
       })

@@ -17,7 +17,7 @@ import { updateApplication } from '@/actions'
 
 const ApplicationsEditView: React.FC<Application> = application => {
   const t = useTranslations()
-  const { id, status: originalStatus, email } = application
+  const { id, status: originalStatus, email, job } = application
   const [currentStep, setCurrentStep] = useState(1)
   const [newStatus, setNewStatus] = useState<Application['status']>(originalStatus)
   const [isStatusChanged, setIsStatusChanged] = useState(false)
@@ -94,6 +94,9 @@ const ApplicationsEditView: React.FC<Application> = application => {
           await sendEmail({
             email: email,
             template: emailData,
+            variables: {
+              jobTitle: typeof job === 'object' ? job.title : '',
+            },
           })
         }
       },

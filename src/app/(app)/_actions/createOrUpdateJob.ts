@@ -67,8 +67,7 @@ export const createOrUpdateJob = async (data: JobFormData, id?: string) => {
     }
 
     return doc
-  } catch (error) {
-    console.log(error)
+  } catch {
     throw new Error(t('errors.createJob'))
   }
 
