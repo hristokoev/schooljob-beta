@@ -45,18 +45,19 @@ export default async function Organization({ params: { slug } }: Props) {
   )
 }
 
-export async function generateStaticParams() {
-  const payload = await getPayloadHMR({ config: configPromise })
-  const pages = await payload.find({
-    collection: 'organizations',
-    limit: 100,
-    overrideAccess: false,
-  })
+// TODO: Re-enable SSG for jobs
+// export async function generateStaticParams() {
+//   const payload = await getPayloadHMR({ config: configPromise })
+//   const pages = await payload.find({
+//     collection: 'organizations',
+//     limit: 100,
+//     overrideAccess: false,
+//   })
 
-  return pages.docs?.map(({ slug }) => ({
-    slug,
-  }))
-}
+//   return pages.docs?.map(({ slug }) => ({
+//     slug,
+//   }))
+// }
 
 export async function generateMetadata({ params: { locale, slug } }: Props): Promise<Metadata> {
   const t = await getTranslations({ locale })

@@ -43,7 +43,7 @@ export const fetchDocs = async <T>(
       'Content-Type': 'application/json',
     },
     next: { tags: [collection] },
-    cache: 'force-cache',
+    cache: 'no-cache',
     body: JSON.stringify({
       query: queryMap[collection].query,
       ...(variables && { variables: variablesChangeHyphenToUnderscore(variables) }),

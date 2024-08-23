@@ -357,6 +357,8 @@ export const en = {
     "confirmPasswordPlaceholder": "Confirm Password",
     "title": "Organization name",
     "titlePlaceholder": "Title of your organization",
+    "vatId": "Vat ID",
+    "vatIdPlaceholder": "Vat ID",
     "firstName": "First Name",
     "firstNamePlaceholder": "Your first name",
     "lastName": "Last Name",
@@ -377,6 +379,9 @@ export const en = {
       "titleLength": "Title must be at least {number} characters long.",
       "titleAllowedCharacters": "Title can only contain letters, numbers, and spaces.",
       "titleForbiddenCharacters": "Title cannot contain only spaces.",
+      "vatId": "VAT ID is required.",
+      "vatIdLength": "VAT ID must be {number} characters long.",
+      "vatIdAllowedCharacters": "VAT ID can only contain numbers.",
       "email": "Please enter a valid email address.",
       "password": "Please enter a valid password.",
       "passwordLength": "Password must be at least {number} characters long.",
@@ -469,9 +474,12 @@ export const en = {
     "error": "Something went wrong. Please try again later.",
     "validation": {
       "title": "Title is required.",
-      "titleLength": "Title must be at least {number} characters long.",
+      "titleLength": "Title must be {number} characters long.",
       "titleAllowedCharacters": "Title can only contain letters, numbers, and spaces.",
-      "titleForbiddenCharacters": "Title cannot contain only spaces."
+      "titleForbiddenCharacters": "Title cannot contain only spaces.",
+      "vatId": "VAT ID is required.",
+      "vatIdLength": "VAT ID must be {number} characters long.",
+      "vatIdAllowedCharacters": "VAT ID can only contain numbers.",
     }
   },
   "seo": {

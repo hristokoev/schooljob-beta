@@ -18,7 +18,6 @@ import sharp from 'sharp'
 import { fileURLToPath } from 'url'
 import path from 'path'
 
-import { AccessNavLink, AccessView } from '@/payload/views'
 import {
   Agreements,
   Applications,
@@ -36,8 +35,6 @@ import {
   Users,
 } from '@/payload/collections'
 import { cs as customCs, en as customEn } from '@/payload/translations'
-import { Icon, Logo } from '@/payload/components'
-import { cachedPayloadPlugin } from './cached-local-api'
 import { Data } from '@/payload/globals'
 import { extractTopKeywords } from '@/payload/utilities'
 
@@ -55,16 +52,15 @@ export default buildConfig({
     ],
   }),
   admin: {
-
     components: {
-      afterNavLinks: [AccessNavLink],
+      afterNavLinks: ['src/payload/views/AccessView/NavLink/index.tsx#AccessNavLink'],
       graphics: {
-        Icon: Icon,
-        Logo: Logo,
+        Icon: 'src/payload/components/Icon/index.tsx#Icon',
+        Logo: 'src/payload/components/Logo/index.tsx#Logo',
       },
       views: {
         'access': {
-          Component: AccessView,
+          Component: 'src/payload/views/AccessView/index.tsx#AccessView',
           path: '/access',
           exact: true,
         },
@@ -127,7 +123,6 @@ export default buildConfig({
   // for this before reaching 3.0 stable
   sharp,
   plugins: [
-    cachedPayloadPlugin,
     s3Storage({
       enabled: true,
       config: {
@@ -181,7 +176,8 @@ export default buildConfig({
             }
           }
         },
-        fields: [
+        fields: ({ defaultFields }) => [
+          ...defaultFields,
           {
             name: 'status',
             type: 'text',

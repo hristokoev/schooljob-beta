@@ -1,6 +1,5 @@
 import React, { Fragment } from 'react'
 import configPromise from '@payload-config'
-import { getCachedPayload } from '@cached-local-api'
 import { getPayloadHMR } from '@payloadcms/next/utilities'
 import { getTranslations } from 'next-intl/server'
 import { Metadata } from 'next'
@@ -14,9 +13,7 @@ export default async function Pricing() {
     config: configPromise,
   })
 
-  const cachedPayload = getCachedPayload(payload)
-
-  const memberships = await cachedPayload.find({
+  const memberships = await payload.find({
     collection: 'memberships',
     depth: 1,
     sort: 'price',

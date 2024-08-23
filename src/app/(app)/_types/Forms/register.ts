@@ -7,6 +7,7 @@ type RegisterFormData = {
     passwordConfirm: string
     role: 'candidate' | 'organization'
     title?: string
+    vatId?: string
     firstName?: string
     lastName?: string
 }
@@ -26,6 +27,7 @@ const useRegisterFieldSchema = (): ZodType<RegisterFormData> => {
         passwordConfirm: z.string(),
         role: z.enum(['candidate', 'organization']),
         title: z.string().optional(),
+        vatId: z.string().optional(),
         firstName: z.string().optional(),
         lastName: z.string().optional(),
     })
@@ -61,6 +63,31 @@ const useRegisterFieldSchema = (): ZodType<RegisterFormData> => {
                             ctx.addIssue({
                                 ...issue,
                                 path: ['title'],
+                            })
+                        })
+                    }
+                }
+
+                if (!data.vatId || data.vatId.trim() === '') {
+                    ctx.addIssue({
+                        code: z.ZodIssueCode.custom,
+                        path: ['vatId'],
+                        message: t('vatId'),
+                    })
+                } else {
+                    const vatIdSchema = z.string().length(8, {
+                        message: t('vatIdLength', { number: 8 }),
+                    }).regex(/^[0-9]+$/, {
+                        message: t('vatIdAllowedCharacters'),
+                    })
+
+                    const vatIdCheck = vatIdSchema.safeParse(data.vatId)
+
+                    if (!vatIdCheck.success) {
+                        vatIdCheck.error.issues.forEach(issue => {
+                            ctx.addIssue({
+                                ...issue,
+                                path: ['vatId'],
                             })
                         })
                     }

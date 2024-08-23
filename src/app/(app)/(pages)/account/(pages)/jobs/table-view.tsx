@@ -55,11 +55,12 @@ const JobsTableView: React.FC<JobsTableViewProps> = async ({ docs }) => {
       label: t('editJob.employment'),
       render: item => (
         <div className="flex gap-2 text-left font-medium text-sky-500">
-          {item.employmentType.map((type: Job['employmentType'], index: string) => (
-            <Pill key={index} size="lg" color="blue">
-              {t(`search.options.${type}` as 'search.employmentType')}
-            </Pill>
-          ))}
+          {item.employmentType &&
+            item.employmentType.map((type: Job['employmentType'], index: string) => (
+              <Pill key={index} size="lg" color="blue">
+                {t(`search.options.${type}` as 'search.employmentType')}
+              </Pill>
+            ))}
         </div>
       ),
     },

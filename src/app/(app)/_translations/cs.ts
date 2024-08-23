@@ -202,7 +202,7 @@ export const cs = {
       }
     },
     "noDescriptionPrivate": "Zatím nemáte žádný popis. Co takhle napsat něco o vaší společnosti?",
-    "noDescriptionPublic": "Zdá se, že <strong>{title}</strong> o sobě zatím neposkytl žádné informace.",
+    "noDescriptionPublic": "Zdá se, že <strong>{title}</strong> zatím neposkytli žádné informace.",
     "vatId": "IČO"
   },
   "job": {
@@ -357,6 +357,8 @@ export const cs = {
     "confirmPasswordPlaceholder": "Potvrďte heslo",
     "title": "Název organizace",
     "titlePlaceholder": "Název vaší organizace",
+    "vatId": "IČO",
+    "vatIdPlaceholder": "Vaše IČO",
     "firstName": "Jméno",
     "firstNamePlaceholder": "Vaše jméno",
     "lastName": "Příjmení",
@@ -377,6 +379,9 @@ export const cs = {
       "titleLength": "Název musí mít alespoň {number} znaků.",
       "titleAllowedCharacters": "Název může obsahovat pouze písmena, čísla a mezery.",
       "titleForbiddenCharacters": "Název nemůže obsahovat pouze mezery.",
+      "vatId": "IČO je povinné.",
+      "vatIdLength": "IČO musí mít {number} znaků.",
+      "vatIdAllowedCharacters": "IČO musí obsahovat pouze číslice.",
       "email": "Zadejte prosím platnou e-mailovou adresu.",
       "password": "Zadejte prosím platné heslo.",
       "passwordLength": "Heslo musí mít alespoň {number} znaků.",
@@ -471,7 +476,10 @@ export const cs = {
       "title": "Název je povinný.",
       "titleLength": "Název musí mít alespoň {number} znaků.",
       "titleAllowedCharacters": "Název může obsahovat pouze písmena, čísla a mezery.",
-      "titleForbiddenCharacters": "Název nemůže obsahovat pouze mezery."
+      "titleForbiddenCharacters": "Název nemůže obsahovat pouze mezery.",
+      "vatId": "IČO je povinné.",
+      "vatIdLength": "IČO musí mít {number} znaků.",
+      "vatIdAllowedCharacters": "IČO musí obsahovat pouze číslice.",
     }
   },
   "seo": {

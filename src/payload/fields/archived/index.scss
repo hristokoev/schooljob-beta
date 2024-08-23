@@ -1,0 +1,35 @@
+.cell-archived {
+    color: var(--color-base-0);
+    
+    .btn {
+        width: '100%';
+        transition-property: all;
+        transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+        transition-duration: 150ms;
+    }
+
+    .archived {
+        color: var(--theme-success-400);
+    }
+
+    .archived:hover {
+        color: var(--theme-success-500);
+        transform: rotate(45deg);
+    }
+
+    .published {
+        color: var(--theme-error-500);
+    }
+
+    .published:hover {
+        color: var(--theme-error-400);
+        transform:rotate(5deg);
+        translate:2px -1px;
+    }
+}
+
+.document-fields.document-fields--has-sidebar {
+    &.archived {
+        display: none !important;
+    }
+}

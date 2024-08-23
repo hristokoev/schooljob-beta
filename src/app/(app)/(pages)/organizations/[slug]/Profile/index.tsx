@@ -69,15 +69,13 @@ const ProfileBlock: React.FC<{ slug: string }> = async ({ slug }) => {
                   <h1 className="text-2xl font-bold text-slate-800">{organization.title}</h1>
                 </div>
                 <div className="mb-2 flex flex-wrap justify-center space-x-4 md:justify-start">
-                  {organization.location && (
+                  {organization.location && organization.location.length > 0 && (
                     <div className="flex items-center">
                       <GlobeEuropeAfricaIcon className="h-4 w-4 shrink-0 fill-current text-slate-400" />
                       <span className="ml-2 whitespace-nowrap text-sm font-medium text-slate-500">
-                        {organization.location && organization.location.length > 0
-                          ? organization.location
-                              .map(location => cz.find(l => l.value === location)?.label)
-                              .join(', ')
-                          : '-'}
+                        {organization.location
+                          .map(location => cz.find(l => l.value === location)?.label)
+                          .join(', ')}
                       </span>
                     </div>
                   )}
@@ -101,11 +99,9 @@ const ProfileBlock: React.FC<{ slug: string }> = async ({ slug }) => {
                     </div>
                   )}
                 </div>
-                {organization.vatId && (
-                  <span className="whitespace-nowrap text-sm font-medium text-slate-500">
-                    {t('organization.vatId')}: {organization.vatId}
-                  </span>
-                )}
+                <span className="whitespace-nowrap text-sm font-medium text-slate-500">
+                  {t('organization.vatId')}: {organization.vatId}
+                </span>
               </header>
             </div>
           </div>

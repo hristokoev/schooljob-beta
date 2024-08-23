@@ -111,11 +111,9 @@ const HeaderContent: React.FC<{ user: User }> = ({ user }) => {
             </div>
           )}
         </div>
-        {user.profile.value.vatId && (
-          <span className="whitespace-nowrap text-sm font-medium text-slate-500">
-            {t('organization.vatId')}: {user.profile.value.vatId}
-          </span>
-        )}
+        <span className="whitespace-nowrap text-sm font-medium text-slate-500">
+          {t('organization.vatId')}: {user.profile.value.vatId}
+        </span>
       </Fragment>
     )
   } else {

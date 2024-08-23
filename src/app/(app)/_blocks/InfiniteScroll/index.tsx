@@ -1,6 +1,5 @@
 import React, { Fragment } from 'react'
 import configPromise from '@payload-config'
-import { getCachedPayload } from '@cached-local-api'
 import { getPayloadHMR } from '@payloadcms/next/utilities'
 import { getTranslations } from 'next-intl/server'
 import { type Partner } from '@payload-types'
@@ -13,9 +12,7 @@ const InfiniteScroll: React.FC = async () => {
     config: configPromise,
   })
 
-  const cachedPayload = getCachedPayload(payload)
-
-  const partners = await cachedPayload.find({
+  const partners = await payload.find({
     collection: 'partners',
     depth: 1,
   })

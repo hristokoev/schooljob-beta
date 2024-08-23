@@ -78,7 +78,7 @@ const OrganizationPanel: React.FC<{ user: User }> = ({ user }) => {
     if (organization) {
       reset({
         title: organization?.title || '',
-        vatId: organization?.vatId || '',
+        vatId: organization.vatId,
         categories:
           organization?.categories?.map(category => {
             return {
@@ -209,7 +209,9 @@ const OrganizationPanel: React.FC<{ user: User }> = ({ user }) => {
               />
             </div>
             <div>
-              <Label>{t('organizationSettings.vatId')}</Label>
+              <Label>
+                {t('organizationSettings.vatId')} <span className="text-red-500">*</span>
+              </Label>
               <FormInputField
                 type="text"
                 name="vatId"

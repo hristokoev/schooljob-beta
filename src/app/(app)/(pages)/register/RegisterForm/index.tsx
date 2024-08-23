@@ -119,17 +119,31 @@ const RegisterForm: React.FC = () => {
             />
           </div>
           {tab === 'organization' && (
-            <div>
-              <Label>
-                {t('register.title')} <span className="text-red-500">*</span>
-              </Label>
-              <FormInputField
-                type="text"
-                placeholder={t('register.titlePlaceholder')}
-                name="title"
-                register={register}
-                error={errors.title}
-              />
+            <div className="space-y-4">
+              <div>
+                <Label>
+                  {t('register.title')} <span className="text-red-500">*</span>
+                </Label>
+                <FormInputField
+                  type="text"
+                  placeholder={t('register.titlePlaceholder')}
+                  name="title"
+                  register={register}
+                  error={errors.title}
+                />
+              </div>
+              <div>
+                <Label>
+                  {t('register.vatId')} <span className="text-red-500">*</span>
+                </Label>
+                <FormInputField
+                  type="text"
+                  placeholder={t('register.titlePlaceholder')}
+                  name="vatId"
+                  register={register}
+                  error={errors.vatId}
+                />
+              </div>
             </div>
           )}
           {tab === 'candidate' && (

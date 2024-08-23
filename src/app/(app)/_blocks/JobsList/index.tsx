@@ -1,6 +1,5 @@
 import React, { Fragment } from 'react'
 import configPromise from '@payload-config'
-import { getCachedPayload } from '@cached-local-api'
 import { getPayloadHMR } from '@payloadcms/next/utilities'
 import { getTranslations } from 'next-intl/server'
 
@@ -33,9 +32,7 @@ const JobsList: React.FC<JobSearchParams> = async props => {
     config: configPromise,
   })
 
-  const cachedPayload = getCachedPayload(payload)
-
-  const result = await cachedPayload.find({
+  const result = await payload.find({
     collection: 'jobs',
     depth: 1,
     limit,

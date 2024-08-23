@@ -14,7 +14,7 @@ const ImageCoverSchema = FileSchema
 
 type OrganizationFormData = {
     title: string
-    vatId?: string
+    vatId: string
     categories?: Option[]
     location?: Option[]
     phone?: string
@@ -50,7 +50,11 @@ const useOrganizationFieldSchema = (): ZodType<OrganizationFormData> => {
         }).regex(/^[^\s].+$/, {
             message: t('titleForbiddenCharacters')
         }),
-        vatId: z.string().optional(),
+        vatId: z.string().length(8, {
+            message: t('vatIdLength', { number: 8 }),
+        }).regex(/^[0-9]+$/, {
+            message: t('vatIdAllowedCharacters'),
+        }),
         categories: z.array(z.object({
             label: z.string(),
             value: z.string(),

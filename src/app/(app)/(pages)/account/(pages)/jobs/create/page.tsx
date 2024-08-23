@@ -37,7 +37,7 @@ export default async function CreateJob({ searchParams }: Props) {
   let data: Job | null = null
   let frontEndData: JobFormData = {
     title: '',
-    status: jobsAllowed > 0 ? 'published' : 'unpublished',
+    status: 'unpublished',
     categories: [],
     employmentType: [],
   }

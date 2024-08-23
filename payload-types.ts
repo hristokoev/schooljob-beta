@@ -7,6 +7,9 @@
  */
 
 export interface Config {
+  auth: {
+    users: UserAuthOperations;
+  };
   collections: {
     jobs: Job;
     applications: Application;
@@ -26,12 +29,33 @@ export interface Config {
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
   };
+  db: {
+    defaultIDType: string;
+  };
   globals: {
     data: Data;
   };
   locale: null;
   user: User & {
     collection: 'users';
+  };
+}
+export interface UserAuthOperations {
+  forgotPassword: {
+    email: string;
+    password: string;
+  };
+  login: {
+    email: string;
+    password: string;
+  };
+  registerFirstUser: {
+    email: string;
+    password: string;
+  };
+  unlock: {
+    email: string;
+    password: string;
   };
 }
 /**
@@ -188,10 +212,10 @@ export interface Organization {
         | 'zlinsky-kraj'
       )[]
     | null;
-  vatId?: string | null;
+  vatId: string;
   categories?: ('preschool' | 'primary' | 'secondary' | 'tertiary' | 'leisure' | 'sport' | 'other')[] | null;
-  logo?: string | Logo | null;
-  imageCover?: string | ImageCover | null;
+  logo?: (string | null) | Logo;
+  imageCover?: (string | null) | ImageCover;
   description?: string | null;
   richText?: {
     root: {
@@ -285,7 +309,7 @@ export interface Candidate {
   email: string;
   phone?: string | null;
   location?: string | null;
-  photo?: string | Photo | null;
+  photo?: (string | null) | Photo;
   bio?: string | null;
   applications?: (string | Application)[] | null;
   jobsSaved?: (string | Job)[] | null;
@@ -590,6 +614,13 @@ export interface Data {
   lastApplicationTrackingId?: number | null;
   updatedAt?: string | null;
   createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "auth".
+ */
+export interface Auth {
+  [k: string]: unknown;
 }
 
 

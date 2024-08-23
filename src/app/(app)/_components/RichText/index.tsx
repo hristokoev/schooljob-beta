@@ -3,8 +3,6 @@ import React from 'react'
 import { cn } from '@/utilities/cn'
 import { serializeLexical } from './serialize'
 
-import './style.scss'
-
 type Props = {
   className?: string
   content: any
