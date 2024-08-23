@@ -168,17 +168,17 @@ export function serializeLexical({ nodes }: Props): JSX.Element {
             )
           }
 
-          case 'link': {
-            const node = _node as SerializedLinkNode
+          // case 'link': {
+          //   const node = _node as SerializedLinkNode
 
-            const fields: LinkFields = node.fields
+          //   const fields: LinkFields = node.fields
 
-            return (
-              <CMSLink key={index} newTab={Boolean(fields?.newTab)} url={fields.url}>
-                {serializedChildren}
-              </CMSLink>
-            )
-          }
+          //   return (
+          //     <CMSLink key={index} newTab={Boolean(fields?.newTab)} url={fields.url}>
+          //       {serializedChildren}
+          //     </CMSLink>
+          //   )
+          // }
 
           default:
             return null

@@ -7,7 +7,7 @@ import { getTranslations } from 'next-intl/server'
 import React from 'react'
 import { render } from '@react-email/render'
 
-import { Email } from 'src/payload/templates'
+import { Email } from '@/payload/templates'
 
 export const sendEmail = async ({
   template,

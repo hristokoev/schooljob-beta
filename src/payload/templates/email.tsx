@@ -12,8 +12,7 @@ import {
   Text,
 } from '@react-email/components'
 import type { EmailTemplate } from '@payload-types'
-
-import { RichText } from '@/components'
+import { RichText } from 'src/app/(app)/_components/RichText/index'
 
 interface EmailTemplateProps {
   blocks: EmailTemplate['blocks']
@@ -39,7 +38,7 @@ const Email = ({ blocks, previewText, footerText }: EmailTemplateProps) => (
             case 'Text':
               return (
                 <Text key={index} style={paragraph}>
-                  {/* <RichText content={block.text} /> */}
+                  <RichText content={block.text} />
                 </Text>
               )
             case 'Button':

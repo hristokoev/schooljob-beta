@@ -311,8 +311,6 @@ export const Organizations: CollectionConfig = {
                     update: SA_A
                   },
                   required: true,
-
-                  unique: true,
                 },
                 {
                   name: 'price',

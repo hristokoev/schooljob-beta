@@ -50,7 +50,7 @@ const useRegisterFieldSchema = (): ZodType<RegisterFormData> => {
                 } else {
                     const titleSchema = z.string().min(2, {
                         message: t('titleLength', { number: 2 }),
-                    }).regex(/^[a-zA-Z0-9À-ž ]+$/, {
+                    }).regex(/^[a-zA-Z0-9À-ž. ]+$/, {
                         message: t('titleAllowedCharacters'),
                     }).regex(/^[^\s].+$/, {
                         message: t('titleForbiddenCharacters')
