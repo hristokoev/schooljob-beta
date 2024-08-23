@@ -6,12 +6,13 @@ export const createProfile: CollectionBeforeChangeHook = async ({
   req: { payload },
   operation,
 }) => {
-  const { email, role, title, firstName, lastName } = data as {
+  const { email, role, title, firstName, lastName, vatId } = data as {
     email: string
     role: string
     title: string
     firstName: string
     lastName: string
+    vatId: string
   }
 
   let profileId: string | null = null
@@ -37,7 +38,8 @@ export const createProfile: CollectionBeforeChangeHook = async ({
         data: {
           title,
           email,
-          jobsAllowed: 0
+          jobsAllowed: 0,
+          vatId,
         },
       })
       profileId = organizationProfile.id
