@@ -21,6 +21,7 @@ type Create = (args: {
   title?: string
   firstName?: string
   lastName?: string
+  vatId?: string
 }) => Promise<void>
 
 type Login = (args: { email: string; password: string }) => Promise<User>
@@ -67,6 +68,7 @@ const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => 
             password: args.password,
             passwordConfirm: args.passwordConfirm,
             title: args.title,
+            vatId: args.vatId,
             firstName: args.firstName,
             lastName: args.lastName,
             role: args.role,

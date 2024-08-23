@@ -138,7 +138,7 @@ const RegisterForm: React.FC = () => {
                 </Label>
                 <FormInputField
                   type="text"
-                  placeholder={t('register.titlePlaceholder')}
+                  placeholder={t('register.vatIdPlaceholder')}
                   name="vatId"
                   register={register}
                   error={errors.vatId}
