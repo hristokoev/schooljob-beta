@@ -3,9 +3,9 @@ import { CollectionConfig } from 'payload'
 import { archived, slugField } from '@/payload/fields'
 import { categoriesOptions, cz } from '@/payload/data'
 import { cs, en } from '@/translations'
+import { dispatchEvents, revalidatePath } from '@/payload/hooks'
 import { SA, SA_A, SA_A_O_Self_createdBy } from '@/payload/access'
 import { createdBy } from '@/payload/fields'
-import { dispatchEvents } from '@/payload/hooks'
 
 export const Organizations: CollectionConfig = {
   slug: 'organizations',
@@ -39,6 +39,7 @@ export const Organizations: CollectionConfig = {
           event: 'new-organization',
         },
       ]),
+      revalidatePath
     ]
   },
   access: {

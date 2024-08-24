@@ -1,5 +1,6 @@
 import { CollectionConfig } from 'payload'
 
+import { revalidatePath } from '@/payload/hooks'
 import { SA_A } from '@/payload/access'
 
 export const Partners: CollectionConfig = {
@@ -28,6 +29,11 @@ export const Partners: CollectionConfig = {
     read: () => true,
     update: SA_A,
     delete: SA_A,
+  },
+  hooks: {
+    afterChange: [
+      revalidatePath,
+    ],
   },
   fields: [
     {

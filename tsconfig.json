@@ -23,6 +23,7 @@
       "@/api": ["./src/app/(app)/_api/"],
       "@/blocks": ["./src/app/(app)/_blocks/"],
       "@/components": ["./src/app/(app)/_components/"],
+      "@/endpoints/*": ["./src/app/(app)/(endpoints)/*"],
       "@/graphql": ["./src/app/(app)/_graphql/"],
       "@/pages/*": ["./src/app/(app)/(pages)/*"],
       "@/providers": ["./src/app/(app)/_providers/"],

@@ -3,6 +3,7 @@ import { CollectionConfig } from 'payload'
 import { cs, en } from '@/translations'
 import { SA, SA_A } from '@/payload/access'
 import { currencyOptions } from '@/payload/data'
+import { revalidatePath } from '@/payload/hooks'
 import { SA_A_Limit } from './access/SA_A_Limit'
 import { slugField } from '@/payload/fields'
 
@@ -33,6 +34,11 @@ export const Memberships: CollectionConfig = {
     read: () => true,
     update: SA_A,
     delete: SA
+  },
+  hooks: {
+    afterChange: [
+      revalidatePath,
+    ],
   },
   fields: [
     {

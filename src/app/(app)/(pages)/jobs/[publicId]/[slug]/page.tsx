@@ -43,24 +43,23 @@ export default async function Job({ params: { publicId, slug } }: Props) {
   )
 }
 
-// TODO: Re-enable SSG for jobs
-// export async function generateStaticParams() {
-//   const payload = await getPayloadHMR({ config: configPromise })
-//   const pages = await payload.find({
-//     collection: 'jobs',
-//     limit: 100,
-//     where: {
-//       status: {
-//         equals: 'published',
-//       },
-//     },
-//   })
+export async function generateStaticParams() {
+  const payload = await getPayloadHMR({ config: configPromise })
+  const pages = await payload.find({
+    collection: 'jobs',
+    limit: 100,
+    where: {
+      status: {
+        equals: 'published',
+      },
+    },
+  })
 
-//   return pages.docs?.map(({ publicId, slug }) => ({
-//     publicId: publicId?.toString() || 'job',
-//     slug,
-//   }))
-// }
+  return pages.docs?.map(({ publicId, slug }) => ({
+    publicId: publicId?.toString() || 'job',
+    slug,
+  }))
+}
 
 export async function generateMetadata({
   params: { locale, publicId, slug },

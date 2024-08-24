@@ -4,7 +4,7 @@ import { CollectionConfig } from 'payload'
 import { archived, slugField } from '@/payload/fields'
 import { categoriesOptions, currencyOptions, cz, educationOptions, employmentTypeOptions, experienceOptions, locationTypeOptions, salaryTypeOptions } from '@/payload/data'
 import { cs, en } from '@/translations'
-import { dispatchEvents, populateCreatedBy } from '@/payload/hooks'
+import { dispatchEvents, populateCreatedBy, revalidatePath } from '@/payload/hooks'
 import { SA, SA_A, SA_A_O, SA_A_O_Self_createdBy, SA_O } from '@/payload/access'
 import { createdBy } from '@/payload/fields'
 import { languageField } from '@/payload/fields'
@@ -59,8 +59,9 @@ export const Jobs: CollectionConfig = {
       ]),
       populateGlobalsDataJobs,
       populateOrganizationJobs,
+      revalidatePath,
       updateOrganizationJobs,
-      updateOrganizationJobsAllowed
+      updateOrganizationJobsAllowed,
     ],
   },
   access: {
