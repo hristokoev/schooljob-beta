@@ -19,8 +19,10 @@ import { fileURLToPath } from 'url'
 import path from 'path'
 
 import {
+  Ads,
   Agreements,
   Applications,
+  Banners,
   Candidates,
   Cvs,
   EmailTemplates,
@@ -73,9 +75,11 @@ export default buildConfig({
     Organizations,
     Candidates,
     Cvs,
+    Banners,
     Logos,
     ImageCovers,
     Photos,
+    Ads,
     Agreements,
     EmailTemplates,
     Memberships,
@@ -135,6 +139,7 @@ export default buildConfig({
       },
       bucket: process.env.R2_SITE_UPLOADS_BUCKET || '',
       collections: {
+        banners: { prefix: 'banners' },
         cvs: { prefix: 'cvs' },
         logos: { prefix: 'logos' },
         'image-covers': { prefix: 'covers' },

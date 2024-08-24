@@ -1,3 +1,4 @@
+export { BannerBlock } from './BannerBlock'
 export { BreadcrumbBlock } from './BreadcrumbBlock'
 export { CtaBlock } from './CtaBlock'
 export { EmptyBlock } from './EmptyBlock'

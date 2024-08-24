@@ -3,8 +3,8 @@ import { getTranslations } from 'next-intl/server'
 import Link from 'next/link'
 import { Metadata } from 'next'
 
+import { BannerBlock, CtaBlock, InfiniteScroll, JobsList, JobsListSkeleton } from '@/blocks'
 import { Button, Gutter, TopLabel, VerticalPadding } from '@/components'
-import { CtaBlock, InfiniteScroll, JobsList, JobsListSkeleton } from '@/blocks'
 import {
   JobsSwipe,
   JobsSwipeSkeleton,
@@ -20,6 +20,7 @@ export default async function Index() {
 
   return (
     <Fragment>
+      <BannerBlock page="home" position="afterHeader" />
       <VerticalPadding>
         <Gutter className="min-h-[36dvh] md:mt-[12dvh]">
           <SearchBlock />
@@ -33,6 +34,7 @@ export default async function Index() {
           </Suspense>
         </Gutter>
       </VerticalPadding>
+      <BannerBlock page="home" position="afterFeaturedJobs" />
       <VerticalPadding className="bg-slate-100">
         <Gutter>
           <Suspense fallback={<JobsListSkeleton />}>
@@ -49,7 +51,8 @@ export default async function Index() {
       <VerticalPadding top="lg" bottom="lg">
         <InfiniteScroll />
       </VerticalPadding>
-      <VerticalPadding bottom="none" className="bg-gradient-to-b from-slate-100 to-white">
+      <BannerBlock page="home" position="beforeOrganizations" />
+      <VerticalPadding className="bg-gradient-to-b from-slate-100 to-white">
         <Gutter>
           <TopLabel
             text={t('organizations')}
@@ -68,6 +71,7 @@ export default async function Index() {
           </Suspense>
         </Gutter>
       </VerticalPadding>
+      <BannerBlock page="home" position="afterOrganizations" />
       <VerticalPadding>
         <Gutter>
           <CtaBlock
@@ -78,6 +82,7 @@ export default async function Index() {
           />
         </Gutter>
       </VerticalPadding>
+      <BannerBlock page="home" position="beforeFooter" />
     </Fragment>
   )
 }

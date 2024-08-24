@@ -1,3 +1,4 @@
+export { Banners } from './Banners'
 export { Cvs } from './Cvs'
 export { Logos } from './Logos'
 export { Photos } from './Photos'

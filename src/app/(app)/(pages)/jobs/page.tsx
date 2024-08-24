@@ -2,8 +2,8 @@ import React, { Fragment, Suspense } from 'react'
 import { getTranslations } from 'next-intl/server'
 import { Metadata } from 'next'
 
+import { BannerBlock, JobsList, JobsListSkeleton } from '@/blocks'
 import { Gutter, Hr, MinHeight, TopLabel, VerticalPadding } from '@/components'
-import { JobsList, JobsListSkeleton } from '@/blocks'
 import { JobSearchParams } from '@/types'
 import { parseSearchParams } from '@/utilities'
 import { SearchBlock } from './SearchBlock'
@@ -14,6 +14,7 @@ export default async function Jobs({ searchParams }: { searchParams: JobSearchPa
 
   return (
     <MinHeight className="bg-slate-100">
+      <BannerBlock page="jobs" position="afterHeader" />
       <VerticalPadding className="bg-white">
         <Gutter>
           <SearchBlock />
@@ -38,6 +39,7 @@ export default async function Jobs({ searchParams }: { searchParams: JobSearchPa
               </Suspense>
             </Gutter>
           </VerticalPadding>
+          <BannerBlock page="jobs" position="afterFeaturedJobs" />
           <Gutter>
             <Hr className="my-0 border-slate-300" />
           </Gutter>
@@ -51,6 +53,7 @@ export default async function Jobs({ searchParams }: { searchParams: JobSearchPa
           </VerticalPadding>
         </Fragment>
       )}
+      <BannerBlock page="jobs" position="beforeFooter" />
     </MinHeight>
   )
 }

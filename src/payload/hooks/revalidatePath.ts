@@ -59,6 +59,13 @@ export const revalidatePath: CollectionAfterChangeHook = async ({ doc, req: { pa
       // Revalidate home page
       await revalidate({ collection: collection.slug, path: '/', payload })
       break
+
+    case 'ads':
+      if (doc.page === 'home') {
+        await revalidate({ collection: collection.slug, path: '/', payload })
+      }
+
+      break
   }
 
   return doc

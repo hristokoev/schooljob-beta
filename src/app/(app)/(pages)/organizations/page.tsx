@@ -9,6 +9,7 @@ import {
   OrganizationsSwipe,
   OrganizationsSwipeSkeleton,
 } from '@/blocks'
+import { BannerBlock } from '@/blocks'
 import { OrganizationSearchParams } from '@/types'
 import { parseSearchParams } from '@/utilities/parseSearchParams'
 import { SearchBlock } from './SearchBlock'
@@ -23,6 +24,7 @@ export default async function Organizations({
 
   return (
     <MinHeight className="bg-slate-100">
+      <BannerBlock page="organizations" position="afterHeader" />
       <VerticalPadding className="bg-white">
         <Gutter>
           <SearchBlock />
@@ -53,6 +55,7 @@ export default async function Organizations({
               </Suspense>
             </Gutter>
           </VerticalPadding>
+          <BannerBlock page="organizations" position="afterFeaturedOrganizations" />
           <Gutter>
             <Hr className="my-0 border-slate-300" />
           </Gutter>
@@ -72,6 +75,7 @@ export default async function Organizations({
           </VerticalPadding>
         </Fragment>
       )}
+      <BannerBlock page="organizations" position="beforeFooter" />
     </MinHeight>
   )
 }

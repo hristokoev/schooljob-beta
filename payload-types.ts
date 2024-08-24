@@ -16,9 +16,11 @@ export interface Config {
     organizations: Organization;
     candidates: Candidate;
     cvs: Cv;
+    banners: Banner;
     logos: Logo;
     'image-covers': ImageCover;
     photos: Photo;
+    ads: Ad;
     agreements: Agreement;
     'email-templates': EmailTemplate;
     memberships: Membership;
@@ -451,6 +453,51 @@ export interface Membership {
       }[]
     | null;
   slug?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "banners".
+ */
+export interface Banner {
+  id: string;
+  createdBy?: (string | null) | User;
+  prefix?: string | null;
+  updatedAt: string;
+  createdAt: string;
+  url?: string | null;
+  thumbnailURL?: string | null;
+  filename?: string | null;
+  mimeType?: string | null;
+  filesize?: number | null;
+  width?: number | null;
+  height?: number | null;
+  focalX?: number | null;
+  focalY?: number | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ads".
+ */
+export interface Ad {
+  id: string;
+  enabled?: boolean | null;
+  title: string;
+  bannerDesktop: string | Banner;
+  bannerMobile: string | Banner;
+  page: 'home' | 'jobs' | 'organizations';
+  homePosition?:
+    | ('afterHeader' | 'afterFeaturedJobs' | 'beforeOrganizations' | 'afterOrganizations' | 'beforeFooter')
+    | null;
+  jobsPosition?: ('afterHeader' | 'afterFeaturedJobs' | 'beforeFooter') | null;
+  organizationsPosition?: ('afterHeader' | 'afterFeaturedOrganizations' | 'beforeFooter') | null;
+  width: 'full' | 'normal';
+  height: '36' | '48' | '64' | '72' | '96';
+  paddingTop: 'none' | 'sm' | 'md' | 'lg';
+  paddingBottom: 'none' | 'sm' | 'md' | 'lg';
+  background: 'white' | 'slate-100';
+  url: string;
   updatedAt: string;
   createdAt: string;
 }
