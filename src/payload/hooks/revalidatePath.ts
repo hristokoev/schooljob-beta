@@ -70,16 +70,3 @@ export const revalidatePath: CollectionAfterChangeHook = async ({ doc, req: { pa
 
   return doc
 }
-
-/*
-  If organization: revalidate path /organizations/:slug
-  If organization: revalidate path /jobs/:publicId/:slug that has the organization
-  If organization: revalidate home page
-
-  If jobs: revalidate path /jobs/:publicId/:slug
-  If jobs: revalidate path /organizations/:slug that has the job
-  If jobs: revalidate home page
-
-  If memberships: revalidate path /memberships
-  If partners: revalidate home page
-*/

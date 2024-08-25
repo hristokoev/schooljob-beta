@@ -18,7 +18,7 @@ type Props = {
 
 const TopLabel: React.FC<Props> = ({ text, url, urlText }) => {
   return (
-    <div className="mb-4 flex justify-between">
+    <div className="mb-4 flex items-center justify-between">
       {text && <span className="items-center font-medium text-slate-800">{text}</span>}
       {url && urlText && (
         <Link href={url} className="group inline-flex items-center font-medium text-slate-800">

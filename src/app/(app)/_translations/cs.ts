@@ -5,6 +5,11 @@ export const cs = {
     "logout": "Odhlásit se",
     "register": "Připojte se k nám",
     "signup": "Zaregistrovat se",
+    "organization": "Organizace",
+    "candidate": "Kandidát",
+    "admin": "Admin",
+    "super-admin": "Super Admin",
+    "user": "Uživatel",
     "errors": {
       "alreadyLoggedIn": "Už jste přihlášeni.",
       "fetch": "Při načítání vašeho účtu došlo k chybě.",
@@ -61,8 +66,8 @@ export const cs = {
     "none": "Žádné {name}"
   },
   "editJob": {
-    "successCreated": "Pracovní nabídka byla úspěšně vytvořena.",
-    "successUpdated": "Pracovní nabídka byla úspěšně aktualizována.",
+    "successCreated": "Inzerát byl úspěšně vytvořen.",
+    "successUpdated": "Inzerát byl úspěšně aktualizován.",
     "errorCreating": "Při vytváření nabídky došlo k chybě. Zkuste to prosím znovu.",
     "errorUpdating": "Při aktualizaci nabídky došlo k chybě. Zkuste to prosím znovu.",
     "jobDetails": "Detaily inzerátu",
@@ -502,11 +507,11 @@ export const cs = {
       "description": "Lorem ipsum dolor sit amet consectetur adipiscing elit Ut et massa mi."
     },
     "job": {
-      "title": "{title} - Pracovní nabídky - SchoolJob",
+      "title": "{title} - Inzeráty - SchoolJob",
       "description": "Lorem ipsum dolor sit amet consectetur adipiscing elit Ut et massa mi."
     },
     "jobs": {
-      "title": "Pracovní nabídky - SchoolJob",
+      "title": "Inzeráty - SchoolJob",
       "description": "Lorem ipsum dolor sit amet consectetur adipiscing elit Ut et massa mi."
     },
     "login": {
@@ -571,8 +576,8 @@ export const cs = {
     "next": "Další",
     "sendEmail": "Poslat e-mail",
     "sendEmailDescription": "Pošlete e-mail kandidátovi.",
-    "job": "Pracovní nabídka",
-    "jobs": "{count, plural, =0 {Žádné nabídky} =1 {1 nabídka} other {# nabídky}}",
+    "job": "Inzerát",
+    "jobs": "{count, plural, =0 {Žádné inzeráty} =1 {1 inzerát} other {# inzeráty}}",
     "labelHot": "TOP",
     "labelNew": "NOVÉ",
     "labelRecommended": "Doporučené",
@@ -602,11 +607,11 @@ export const cs = {
   "applications": "Žádosti",
   "feedback": "Poskytnout zpětnou vazbu",
   "home": "Domů",
-  "jobs": "Pracovní nabídky",
+  "jobs": "Inzeráty",
   "notFound": "Stránka nenalezena",
   "organizations": "Organizace",
   "ourPartners": "Naši partneři",
   "profile": "Profil",
-  "savedJobs": "Uložené nabídky",
+  "savedJobs": "Uložené inzeráty",
   "settings": "Nastavení"
 }

@@ -3,6 +3,7 @@
 import React, { Fragment, useCallback, useEffect, useState } from 'react'
 import { Membership } from '@payload-types'
 import { toast } from 'sonner'
+import { useRouter } from 'next/navigation'
 import { useTranslations } from 'next-intl'
 
 import { Button } from '@/components'
@@ -17,6 +18,7 @@ const PricingCard: React.FC<Membership> = membership => {
   const { user } = useAuth()
   const [selected, setSelected] = useState<string | null>(null)
   const [quantity, setQuantity] = useState<number>(1)
+  const router = useRouter()
 
   const getPriceFromSelected = (price: number): string => {
     if (!selected || !discount) {
@@ -36,6 +38,10 @@ const PricingCard: React.FC<Membership> = membership => {
   }
 
   const onSubmit = useCallback(() => {
+    if (!user) {
+      return router.push('/register')
+    }
+
     toast.promise(
       createOrder(
         {
@@ -50,7 +56,7 @@ const PricingCard: React.FC<Membership> = membership => {
         error: t('membership.error'),
       },
     )
-  }, [selected, quantity])
+  }, [selected, quantity, user])
 
   useEffect(() => {
     if (discount) {

@@ -5,6 +5,11 @@ export const en = {
     "logout": "Log Out",
     "register": "Join Us",
     "signup": "Sign Up",
+    "organization": "Organization",
+    "candidate": "Candidate",
+    "admin": "Admin",
+    "super-admin": "Super Admin",
+    "user": "User",
     "errors": {
       "alreadyLoggedIn": "You are already logged in.",
       "fetch": "An error occurred while fetching your account.",

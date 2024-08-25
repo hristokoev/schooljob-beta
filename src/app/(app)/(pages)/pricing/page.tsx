@@ -36,7 +36,7 @@ export default async function Pricing() {
             </div>
           </Gutter>
         </VerticalPadding>
-        <VerticalPadding>
+        <VerticalPadding bottom="lg">
           <Gutter className="max-w-6xl">
             <PricingTable memberships={memberships.docs} />
           </Gutter>

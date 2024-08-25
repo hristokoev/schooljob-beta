@@ -48,10 +48,10 @@ const ProfileCard = ({ icon, header, link }: ProfileCardProps) => {
     <div className="group col-span-full rounded-md sm:col-span-6 xl:col-span-4">
       <Link className="flex h-full flex-col" href={link}>
         <header>
-          <div className="flex items-center rounded-md bg-royal-blue-500 px-4 py-6 text-royal-blue-50 transition duration-100 ease-in-out group-hover:bg-white group-hover:text-slate-800 group-hover:shadow-sm">
+          <div className="flex items-center rounded-md bg-royal-blue-500 px-4 py-6 text-royal-blue-50 transition duration-100 ease-in-out group-hover:bg-royal-blue-600 group-hover:shadow-sm">
             <Icon icon={icon} />
             <h3 className="text-md ml-3 font-semibold leading-snug">{header}</h3>
-            <ArrowRightIcon className="ml-auto size-6 stroke-2 text-white transition duration-100 ease-in-out group-hover:text-slate-800" />
+            <ArrowRightIcon className="ml-auto size-6 stroke-2 text-white transition duration-100 ease-in-out" />
           </div>
         </header>
       </Link>
