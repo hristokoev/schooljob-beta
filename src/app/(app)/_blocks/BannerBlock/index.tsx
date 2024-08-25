@@ -62,7 +62,6 @@ const BannerBlock: React.FC<BannerBlockProps> = async ({ page, position }) => {
           <Media
             resource={bannerDesktop}
             className={cn(
-              width === 'normal' && 'rounded-sm border border-slate-300 shadow-sm',
               height === '36' && 'h-36',
               height === '48' && 'h-48',
               height === '64' && 'h-64',
@@ -78,7 +77,6 @@ const BannerBlock: React.FC<BannerBlockProps> = async ({ page, position }) => {
           <Media
             resource={bannerMobile}
             className={cn(
-              width === 'normal' && 'rounded-sm border border-slate-300 shadow-sm',
               height === '36' && 'h-36',
               height === '48' && 'h-48',
               height === '64' && 'h-64',

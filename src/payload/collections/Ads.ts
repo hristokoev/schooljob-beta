@@ -100,7 +100,7 @@ export const Ads: CollectionConfig = {
             {
               label: {
                 en: 'Jobs',
-                cs: 'Práce',
+                cs: 'Inzeráty',
               },
               value: 'jobs',
             },
@@ -136,7 +136,7 @@ export const Ads: CollectionConfig = {
             {
               label: {
                 en: 'After Featured Jobs',
-                cs: 'Po zvýrazněných jobs',
+                cs: 'Po zvýrazněných inzerátů',
               },
               value: 'afterFeaturedJobs',
             },
