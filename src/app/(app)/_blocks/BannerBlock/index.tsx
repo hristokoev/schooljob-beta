@@ -30,6 +30,10 @@ const BannerBlock: React.FC<BannerBlockProps> = async ({ page, position }) => {
     limit: 1,
   })
 
+  if (!banner) {
+    return null
+  }
+
   const {
     enabled,
     width,
