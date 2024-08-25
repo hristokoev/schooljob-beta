@@ -17,17 +17,22 @@ const nextConfig = {
       },
       {
         protocol: 'https',
-        hostname: 'schooljob.cz',
+        hostname: `${process.env.HOSTNAME}`,
+        pathname: '/api/banners/file/**',
+      },
+      {
+        protocol: 'https',
+        hostname: `${process.env.HOSTNAME}`,
         pathname: '/api/logos/file/**',
       },
       {
         protocol: 'https',
-        hostname: 'schooljob.cz',
+        hostname: `${process.env.HOSTNAME}`,
         pathname: '/api/image-covers/file/**',
       },
       {
         protocol: 'https',
-        hostname: 'schooljob.cz',
+        hostname: `${process.env.HOSTNAME}`,
         pathname: '/api/photos/file/**',
       },
     ],
