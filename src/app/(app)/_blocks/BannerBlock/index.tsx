@@ -7,10 +7,10 @@ import React from 'react'
 import { Gutter, Media, VerticalPadding } from '@/components'
 import { cn } from '@/utilities/cn'
 
-type BannerBlockProps =
-  | { page: 'home'; position: Ad['homePosition'] }
-  | { page: 'jobs'; position: Ad['jobsPosition'] }
-  | { page: 'organizations'; position: Ad['organizationsPosition'] }
+interface BannerBlockProps {
+  page: Ad['page']
+  position: Ad['position']
+}
 
 const BannerBlock: React.FC<BannerBlockProps> = async ({ page, position }) => {
   const payload = await getPayloadHMR({
@@ -20,12 +20,8 @@ const BannerBlock: React.FC<BannerBlockProps> = async ({ page, position }) => {
   const banner = await payload.find({
     collection: 'ads',
     where: {
-      and: [
-        { page: { equals: page } },
-        { ...(page === 'home' && { homePosition: { equals: position } }) },
-        { ...(page === 'jobs' && { jobsPosition: { equals: position } }) },
-        { ...(page === 'organizations' && { organizationsPosition: { equals: position } }) },
-      ],
+      page: { equals: page },
+      position: { equals: position },
     },
     limit: 1,
   })
@@ -73,7 +69,7 @@ const BannerBlock: React.FC<BannerBlockProps> = async ({ page, position }) => {
               height === '72' && 'h-72',
               height === '96' && 'h-96',
               'overflow-hidden',
-              'hidden md:block',
+              'hidden sm:block',
             )}
             imgClassName="object-cover h-full"
             alt={title}
@@ -89,7 +85,7 @@ const BannerBlock: React.FC<BannerBlockProps> = async ({ page, position }) => {
               height === '72' && 'h-72',
               height === '96' && 'h-96',
               'overflow-hidden',
-              'block md:hidden',
+              'block sm:hidden',
             )}
             imgClassName="object-cover h-full"
             alt={title}

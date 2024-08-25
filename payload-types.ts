@@ -487,11 +487,13 @@ export interface Ad {
   bannerDesktop: string | Banner;
   bannerMobile: string | Banner;
   page: 'home' | 'jobs' | 'organizations';
-  homePosition?:
-    | ('afterHeader' | 'afterFeaturedJobs' | 'beforeOrganizations' | 'afterOrganizations' | 'beforeFooter')
-    | null;
-  jobsPosition?: ('afterHeader' | 'afterFeaturedJobs' | 'beforeFooter') | null;
-  organizationsPosition?: ('afterHeader' | 'afterFeaturedOrganizations' | 'beforeFooter') | null;
+  position:
+    | 'afterHeader'
+    | 'afterFeaturedJobs'
+    | 'beforeOrganizations'
+    | 'afterOrganizations'
+    | 'beforeFooter'
+    | 'afterFeaturedOrganizations';
   width: 'full' | 'normal';
   height: '36' | '48' | '64' | '72' | '96';
   paddingTop: 'none' | 'sm' | 'md' | 'lg';

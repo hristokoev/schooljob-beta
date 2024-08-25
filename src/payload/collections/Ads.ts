@@ -1,3 +1,4 @@
+import { Ad } from '@payload-types'
 import { CollectionConfig } from 'payload'
 
 import { SA, SA_A } from '@/payload/access'
@@ -25,7 +26,7 @@ export const Ads: CollectionConfig = {
     hidden: ({ user }) => user?.role === 'organization' || user?.role === 'candidate',
   },
   access: {
-    create: SA_A,
+    create: SA,
     read: () => true,
     update: SA_A,
     delete: SA,
@@ -118,7 +119,7 @@ export const Ads: CollectionConfig = {
           defaultValue: 'home',
         },
         {
-          name: 'homePosition',
+          name: 'position',
           label: {
             en: 'Position',
             cs: 'Umístění',
@@ -135,7 +136,7 @@ export const Ads: CollectionConfig = {
             {
               label: {
                 en: 'After Featured Jobs',
-                cs: 'Po zvýrazněných',
+                cs: 'Po zvýrazněných jobs',
               },
               value: 'afterFeaturedJobs',
             },
@@ -160,88 +161,36 @@ export const Ads: CollectionConfig = {
               },
               value: 'beforeFooter',
             },
-          ],
-          admin: {
-            width: '50%',
-            condition: (data) => Boolean(data?.page === 'home'),
-          },
-          unique: true,
-          required: true,
-        },
-        {
-          name: 'jobsPosition',
-          label: {
-            en: 'Position',
-            cs: 'Umístění',
-          },
-          type: 'select',
-          options: [
-            {
-              label: {
-                en: 'After Header',
-                cs: 'Za hlavičkou',
-              },
-              value: 'afterHeader',
-            },
-            {
-              label: {
-                en: 'After Featured Jobs',
-                cs: 'Po zvýrazněných',
-              },
-              value: 'afterFeaturedJobs',
-            },
-            {
-              label: {
-                en: 'Before Footer',
-                cs: 'Před patičkou',
-              },
-              value: 'beforeFooter',
-            },
-          ],
-          admin: {
-            width: '50%',
-            condition: (data) => Boolean(data?.page === 'jobs'),
-          },
-          unique: true,
-          required: true,
-        },
-        {
-          name: 'organizationsPosition',
-          label: {
-            en: 'Position',
-            cs: 'Umístění',
-          },
-          type: 'select',
-          options: [
-            {
-              label: {
-                en: 'After Header',
-                cs: 'Za hlavičkou',
-              },
-              value: 'afterHeader',
-            },
             {
               label: {
                 en: 'After Featured Organizations',
-                cs: 'Po zvýrazněných',
+                cs: 'Po zvýrazněných organizacích',
               },
               value: 'afterFeaturedOrganizations',
-            },
-            {
-              label: {
-                en: 'Before Footer',
-                cs: 'Před patičkou',
-              },
-              value: 'beforeFooter',
             },
           ],
           admin: {
             width: '50%',
-            condition: (data) => Boolean(data?.page === 'organizations'),
           },
-          unique: true,
           required: true,
-        },
+          validate: (value, { data, req }) => {
+            if (!value) {
+              return req.i18n.t('validation:required')
+            }
+
+            const validPositions = {
+              home: ['afterHeader', 'afterFeaturedJobs', 'beforeOrganizations', 'afterOrganizations', 'beforeFooter'],
+              jobs: ['afterHeader', 'afterFeaturedJobs', 'beforeFooter'],
+              organizations: ['afterHeader', 'afterFeaturedOrganizations', 'beforeFooter'],
+            }
+
+            if (!validPositions[(data as Ad).page].includes(value)) {
+              return req.i18n.t('validation:invalidSelection')
+            }
+
+            return true
+          }
+        }
       ]
     },
     {
