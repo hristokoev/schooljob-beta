@@ -99,7 +99,7 @@ const JobsEditView: React.FC<Partial<JobFormData> & JobsEditViewProps> = formDat
       await toast.promise(createOrUpdateJob(data, id), {
         loading: t('ui.submitting'),
         success: () => {
-          router.push('/account/jobs?status=unpublished')
+          router.push('/account/jobs')
 
           return id ? t('editJob.successUpdated') : t('editJob.successCreated')
         },

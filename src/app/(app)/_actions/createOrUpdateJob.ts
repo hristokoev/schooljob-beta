@@ -39,7 +39,8 @@ export const createOrUpdateJob = async (data: JobFormData, id?: string) => {
         collection: 'jobs',
         id,
         data: jobData as any,
-        user
+        user,
+        depth: 0
       })
 
       if (!doc) {
@@ -59,7 +60,8 @@ export const createOrUpdateJob = async (data: JobFormData, id?: string) => {
         ...jobData as any,
         applications: []
       },
-      user
+      user,
+      depth: 0
     })
 
     if (!doc) {
