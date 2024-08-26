@@ -1,6 +1,7 @@
 'use client'
 
 import React, { Fragment, useEffect } from 'react'
+import { useRouter } from 'next/navigation'
 
 import { Button, Gutter, MinHeight, VerticalPadding } from '@/components'
 
@@ -11,7 +12,10 @@ export default function Error({
   error: Error & { digest?: string }
   reset: () => void
 }) {
+  const router = useRouter()
+
   useEffect(() => {
+    router.push('/404')
     // Log the error to an error reporting service
     console.error(error)
   }, [error])

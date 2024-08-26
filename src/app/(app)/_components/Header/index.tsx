@@ -20,6 +20,8 @@ const Header: React.FC = () => {
   const t = useTranslations()
   const { user, status, loading } = useAuth()
   const pathname = usePathname()
+  const [isHeaderVisible, setIsHeaderVisible] = useState(true)
+  const [lastScrollPos, setLastScrollPos] = useState(0)
   const [isDrawerOpen, setIsDrawerOpen] = useState(false)
   const [cards, setCards] = useState<ProfileCardProps[]>([])
 
@@ -33,6 +35,22 @@ const Header: React.FC = () => {
       setCards(cardsOrganization)
     }
   }, [user])
+
+  const handleScroll = () => {
+    const currentScrollPos = window.pageYOffset
+    const isVisible = currentScrollPos < lastScrollPos || currentScrollPos < 10
+
+    setIsHeaderVisible(isVisible)
+    setLastScrollPos(currentScrollPos)
+  }
+
+  useEffect(() => {
+    window.addEventListener('scroll', handleScroll)
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll)
+    }
+  }, [lastScrollPos])
 
   const renderAccountContent = () => (
     <div className="flex h-full flex-col gap-2">
@@ -52,6 +70,9 @@ const Header: React.FC = () => {
           <span className="text-sm">
             {t(`authentication.${user?.role}` as 'authentication.user')}
           </span>
+          <Link href="/account" className="mt-4" onClick={closeDrawer}>
+            <Button size="sm">{t('authentication.account')}</Button>
+          </Link>
         </div>
       )}
 
@@ -66,12 +87,12 @@ const Header: React.FC = () => {
           ))
         ) : (
           <Fragment>
-            <Link href="/login" className="md:hidden">
+            <Link href="/login" className="md:hidden" onClick={closeDrawer}>
               <Button size="sm" variant="outline" className="w-full">
                 {t('authentication.login')}
               </Button>
             </Link>
-            <Link href="/register" className="md:hidden">
+            <Link href="/register" className="md:hidden" onClick={closeDrawer}>
               <Button size="sm" className="w-full">
                 {t('authentication.register')}
               </Button>
@@ -80,12 +101,12 @@ const Header: React.FC = () => {
         )}
 
         <Hr className="my-4 md:hidden" />
-        <Link href="/jobs" className="md:hidden">
+        <Link href="/jobs" className="md:hidden" onClick={closeDrawer}>
           <Button size="lg" variant="nav" className="w-full">
             {t('jobs')}
           </Button>
         </Link>
-        <Link href="/organizations" className="md:hidden">
+        <Link href="/organizations" className="md:hidden" onClick={closeDrawer}>
           <Button size="lg" variant="nav" className="w-full">
             {t('organizations')}
           </Button>
@@ -93,7 +114,7 @@ const Header: React.FC = () => {
         {user && (
           <Fragment>
             <Hr className="my-4 md:hidden" />
-            <Link href="/logout">
+            <Link href="/logout" onClick={closeDrawer}>
               <Button size="lg" variant="nav" className="w-full">
                 {t('authentication.logout')}
               </Button>
@@ -105,7 +126,11 @@ const Header: React.FC = () => {
   )
 
   return (
-    <header className="sticky top-0 z-20 bg-royal-blue-500 shadow-lg shadow-royal-blue-600/5">
+    <header
+      className={`sticky top-0 z-20 bg-royal-blue-500 shadow-lg shadow-royal-blue-600/5 transition-transform duration-300 ${
+        isHeaderVisible ? 'translate-y-0' : '-translate-y-full'
+      }`}
+    >
       <Gutter>
         <div className="flex min-h-16 items-center justify-between">
           <Link href="/" className="md:hidden">
@@ -113,7 +138,7 @@ const Header: React.FC = () => {
           </Link>
           <div className="hidden items-center text-white md:flex">
             <Link href="/">
-              <Image src={Logo} alt="Schooljob" width={160} height={32} />
+              <Image src={Logo} alt="Schooljob" width={140} height={28} />
             </Link>
             <Link
               href="/jobs"
@@ -135,7 +160,7 @@ const Header: React.FC = () => {
           {loading ? (
             <div className="h-6 w-32 animate-pulse bg-royal-blue-400" />
           ) : (
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-3">
               {status === 'loggedIn' ? (
                 <Fragment>
                   {user && isOrganization(user) && (
@@ -198,14 +223,12 @@ const Header: React.FC = () => {
               ) : (
                 <Fragment>
                   <Link href="/login" className="hidden md:block">
-                    <Button size="sm" variant="outline" className="text-white">
+                    <Button variant="outline" className="text-white">
                       {t('authentication.login')}
                     </Button>
                   </Link>
-                  <Link href="/register" className="hidden md:block">
-                    <Button size="sm" variant="secondary">
-                      {t('authentication.register')}
-                    </Button>
+                  <Link href="/solutions" className="hidden md:block">
+                    <Button variant="secondary">{t('authentication.organizationSignup')}</Button>
                   </Link>
                   <Button
                     onClick={openDrawer}

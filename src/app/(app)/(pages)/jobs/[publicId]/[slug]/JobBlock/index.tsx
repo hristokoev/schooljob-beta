@@ -1,7 +1,7 @@
 import { Job, Organization } from '@payload-types'
 import React, { Fragment } from 'react'
 import { getTranslations } from 'next-intl/server'
-import { redirect } from 'next/navigation'
+import { notFound } from 'next/navigation'
 import StarIcon from '@heroicons/react/24/solid/StarIcon'
 
 import {
@@ -30,7 +30,7 @@ const JobBlock: React.FC<{ publicId: string; slug: string }> = async ({ publicId
   const job = (await getDocument('jobs', slug, depth, publicId)) as Job
 
   if (!job) {
-    redirect('/404')
+    notFound()
   }
 
   const {

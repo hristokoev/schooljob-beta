@@ -16,7 +16,7 @@ export default async function Register() {
   return (
     <Fragment>
       <MinHeight className="bg-slate-50">
-        <VerticalPadding>
+        <VerticalPadding bottom="lg">
           <Gutter>
             <div className="mt-6 flex h-full flex-col after:flex-1">
               <section className="relative before:pointer-events-none before:absolute before:inset-0 before:-z-10 before:h-80 before:bg-gradient-to-b before:from-zinc-100">

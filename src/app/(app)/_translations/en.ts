@@ -5,6 +5,7 @@ export const en = {
     "logout": "Log Out",
     "register": "Join Us",
     "signup": "Sign Up",
+    "organizationSignup": "Post a Job",
     "organization": "Organization",
     "candidate": "Candidate",
     "admin": "Admin",
@@ -58,6 +59,31 @@ export const en = {
     },
     "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
     "button": "Let's get started"
+  },
+  "footer": {
+    "information": "Information",
+    "idea": "Concept",
+    "about": "About",
+    "helpCenter": "Help Center",
+    "links": "Helpful Links",
+    "forOrganizations": "For Organizations",
+    "pricing": "Pricing",
+    "personalData": "Personal Data",
+    "cookies": "Cookies",
+    "media": "For Media",
+    "contact": "Contact",
+    "bottomLinks": {
+      "legal": "Legal Information",
+      "terms": "Terms of Service",
+      "cookies": "Cookies",
+      "personalData": "Management of Personal Data",
+    },
+    "newsletter": {
+      "title": "Subscribe to our newsletter",
+      "description": "Subscribe to our newsletter to receive the latest news and updates.",
+      "placeholder": "Enter your email address",
+      "button": "Subscribe"
+    }
   },
   "editUpload": {
     "change": "Change {name}",
@@ -396,6 +422,12 @@ export const en = {
       "passwordConfirm": "Passwords do not match."
     }
   },
+  "solutions": {
+    "h1": "Lorem ipsum dolor sit amet.\nConsectetur adipiscing <UnderlinedText>elit</UnderlinedText>.",
+    "bullet1": "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
+    "bullet2": "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
+    "bullet3": "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
+  },
   "accountSettings": {
     "header": "My Account",
     "email": "Email",
@@ -536,6 +568,10 @@ export const en = {
     },
     "register": {
       "title": "Sign Up - SchoolJob",
+      "description": "Lorem ipsum dolor sit amet consectetur adipiscing elit Ut et massa mi."
+    },
+    "solutions": {
+      "title": "Solutions - SchoolJob",
       "description": "Lorem ipsum dolor sit amet consectetur adipiscing elit Ut et massa mi."
     },
     "applications": {

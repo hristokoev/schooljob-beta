@@ -24,7 +24,7 @@ export default async function Pricing() {
   return (
     <Fragment>
       <MinHeight>
-        <VerticalPadding top="lg">
+        <VerticalPadding top="lg" bottom="lg">
           <Gutter>
             <div className="text-center">
               <h1 className="mb-6 border-y text-5xl font-bold [border-image:linear-gradient(to_right,transparent,theme(colors.slate.300/.8),transparent)1] md:text-6xl">

@@ -1,10 +1,11 @@
 export const cs = {
   "authentication": {
     "account": "Můj účet",
-    "login": "Přihlásit se",
-    "logout": "Odhlásit se",
+    "login": "Přihlásit",
+    "logout": "Odhlásit",
     "register": "Připojte se k nám",
-    "signup": "Zaregistrovat se",
+    "signup": "Zaregistrovat",
+    "organizationSignup": "Pro Organizace",
     "organization": "Organizace",
     "candidate": "Kandidát",
     "admin": "Admin",
@@ -58,6 +59,31 @@ export const cs = {
     },
     "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
     "button": "Pojďme začít"
+  },
+  "footer": {
+    "information": "Informace",
+    "idea": "Koncept",
+    "about": "O nás",
+    "helpCenter": "Centrum nápovědy",
+    "links": "Užitečné odkazy",
+    "forOrganizations": "Pro organizace",
+    "pricing": "Ceník",
+    "personalData": "Osobní údaje",
+    "cookies": "Cookies",
+    "media": "Pro média",
+    "contact": "Kontakt",
+    "bottomLinks": {
+      "legal": "Právní předpisy",
+      "terms": "Obchodní podmínky",
+      "cookies": "Správa cookies",
+      "personalData": "Ochrana osobních údajů",
+    },
+    "newsletter": {
+      "title": "Přihlásit se k odběru novinek",
+      "description": "Přihlaste se k odběru novinek a zůstaňte v obraze s našimi nejnovějšími nabídkami.",
+      "placeholder": "Váš e-mail",
+      "button": "Přihlásit se k odběru",
+    }
   },
   "editUpload": {
     "change": "Změnit {name}",
@@ -332,7 +358,7 @@ export const cs = {
     "emailPlaceholder": "Email",
     "password": "Heslo",
     "passwordPlaceholder": "Heslo",
-    "button": "Přihlásit se",
+    "button": "Přihlásit",
     "validation": {
       "email": "Zadejte prosím platnou e-mailovou adresu.",
       "password": "Zadejte prosím platné heslo.",
@@ -395,6 +421,12 @@ export const cs = {
       "passwordForbiddenCharacters": "Heslo nesmí obsahovat mezery.",
       "passwordConfirm": "Hesla se neshodují."
     }
+  },
+  "solutions": {
+    "h1": "Lorem ipsum dolor sit amet.\nConsectetur adipiscing <UnderlinedText>elit</UnderlinedText>.",
+    "bullet1": "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
+    "bullet2": "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
+    "bullet3": "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
   },
   "accountSettings": {
     "header": "Můj účet",
@@ -536,6 +568,10 @@ export const cs = {
     },
     "register": {
       "title": "Registrace - SchoolJob",
+      "description": "Lorem ipsum dolor sit amet consectetur adipiscing elit Ut et massa mi."
+    },
+    "solutions": {
+      "title": "Pro organizace - SchoolJob",
       "description": "Lorem ipsum dolor sit amet consectetur adipiscing elit Ut et massa mi."
     },
     "applications": {

@@ -7,6 +7,7 @@
 import { GlobeEuropeAfricaIcon, LinkIcon, PhoneIcon } from '@heroicons/react/24/solid'
 import React, { Fragment } from 'react'
 import { getTranslations } from 'next-intl/server'
+import { notFound } from 'next/navigation'
 import { Organization } from '@payload-types'
 
 import { Gutter, Media, VerticalPadding } from '@/components'
@@ -28,7 +29,7 @@ const ProfileBlock: React.FC<{ slug: string }> = async ({ slug }) => {
   const organization = (await getDocument('organizations', slug, 1)) as Organization
 
   if (!organization) {
-    return <p>{t('errors.noOrganization')}</p>
+    notFound()
   }
 
   return (
