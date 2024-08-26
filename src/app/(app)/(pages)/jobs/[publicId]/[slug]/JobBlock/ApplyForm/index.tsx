@@ -87,7 +87,7 @@ const ApplyForm = ({ jobId, organizationId }: ApplyFormProps) => {
           </div>
         </div>
       )}
-      <Dialog open={isOpen} onClose={() => setIsOpen(false)} className="relative z-50" transition>
+      <Dialog open={isOpen} onClose={() => setIsOpen(false)} className="relative z-40" transition>
         <div className="fixed inset-0 flex w-screen items-center justify-center bg-black/50 p-4 backdrop-blur-sm">
           <DialogPanel className="max-h-[85dvh] overflow-y-auto rounded-md bg-white p-6 md:min-w-[768px]">
             <DialogTitle className="font-bold">

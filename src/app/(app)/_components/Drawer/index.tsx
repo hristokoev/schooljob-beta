@@ -20,7 +20,7 @@ interface DrawerProps {
 
 const Drawer: React.FC<DrawerProps> = ({ isOpen, onClose, title, children, side = 'right' }) => {
   return (
-    <Dialog open={isOpen} onClose={onClose} className="relative z-30">
+    <Dialog open={isOpen} onClose={onClose} className="relative z-50">
       <DialogBackdrop
         transition
         className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity duration-300 ease-in-out data-[closed]:opacity-0"

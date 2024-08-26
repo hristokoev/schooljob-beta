@@ -111,7 +111,7 @@ const PricingCard: React.FC<Membership> = membership => {
           </li>
         ))}
       </ul>
-      {discount && (
+      {discount && discount.length > 0 && (
         <Fragment>
           <div
             className={`mb-3 text-sm font-semibold ${featured ? 'text-slate-100' : 'text-slate-800'}`}

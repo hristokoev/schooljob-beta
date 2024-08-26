@@ -545,7 +545,7 @@ const JobsEditView: React.FC<Partial<JobFormData> & JobsEditViewProps> = formDat
           </Aside>
         </Article>
       </Gutter>
-      <div className="sticky bottom-0 z-50 mt-16 border-t border-slate-300 bg-white/50 py-10 backdrop-blur-md">
+      <div className="sticky bottom-0 z-40 mt-16 border-t border-slate-300 bg-white/50 py-10 backdrop-blur-md">
         <Gutter>
           <div className="flex flex-col justify-between gap-4 md:flex-row">
             <NotificationBanner type={jobsAllowed === 0 ? 'warning' : 'success'}>

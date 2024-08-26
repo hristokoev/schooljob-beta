@@ -60,7 +60,7 @@ const EditUpload = ({ name, image, setImage, minWidth, minHeight, className }: E
           )}
         </div>
       </div>
-      <Dialog open={isOpen} onClose={() => setIsOpen(false)} className="relative z-50" transition>
+      <Dialog open={isOpen} onClose={() => setIsOpen(false)} className="relative z-40" transition>
         <div className="fixed inset-0 flex w-screen items-center justify-center bg-black/50 p-4 backdrop-blur-sm">
           <DialogPanel className="max-w-2xl space-y-4 rounded-md border border-slate-300 bg-white/90 p-6">
             <DialogTitle className="font-bold">{t('editUpload.title')}</DialogTitle>

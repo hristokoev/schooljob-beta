@@ -79,7 +79,7 @@ const Header: React.FC = () => {
       <div className="flex flex-col gap-2 px-4 sm:px-6">
         {user ? (
           cards.map((card, index) => (
-            <Link href={card.link} key={index}>
+            <Link href={card.link} key={index} onClick={closeDrawer}>
               <Button size="lg" variant="nav" className="w-full">
                 {card.header}
               </Button>
