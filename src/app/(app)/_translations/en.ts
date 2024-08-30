@@ -600,6 +600,7 @@ export const en = {
     "candidate": "Candidate",
     "createJob": "Create Job",
     "cropImage": "Crop Image",
+    "document": "Document",
     "downloadPdf": "Download PDF",
     "edit": "Edit",
     "editJob": "Edit Job",
@@ -640,6 +641,7 @@ export const en = {
     "viewAllOrganizations": "View All Organizations"
   },
   "account": "Account",
+  "agreements": "Agreements",
   "applications": "Applications",
   "feedback": "Give Feedback",
   "home": "Home",

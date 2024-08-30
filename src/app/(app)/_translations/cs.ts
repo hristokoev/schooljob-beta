@@ -600,6 +600,7 @@ export const cs = {
     "candidate": "Kandidát",
     "createJob": "Vytvořit nabídku",
     "cropImage": "Oříznout obrázek",
+    "document": "Dokument",
     "downloadPdf": "Stáhnout PDF",
     "edit": "Upravit",
     "editJob": "Upravit nabídku",
@@ -640,6 +641,7 @@ export const cs = {
     "viewAllOrganizations": "Zobrazit všechny organizace"
   },
   "account": "Účet",
+  "agreements": "Souhlasy",
   "applications": "Žádosti",
   "feedback": "Poskytnout zpětnou vazbu",
   "home": "Domů",
