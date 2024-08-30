@@ -277,6 +277,7 @@ export interface User {
   id: string;
   role: 'super-admin' | 'admin' | 'organization' | 'candidate';
   title?: string | null;
+  vatId?: string | null;
   firstName?: string | null;
   lastName?: string | null;
   profile?:
@@ -393,6 +394,7 @@ export interface Agreement {
   id: string;
   archived?: boolean | null;
   title: string;
+  role: ('organization' | 'candidate')[];
   richText: {
     root: {
       type: string;

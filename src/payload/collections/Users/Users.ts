@@ -86,6 +86,18 @@ export const Users: CollectionConfig = {
       },
     },
     {
+      name: 'vatId',
+      label: {
+        en: 'VAT ID',
+        cs: 'IČO',
+      },
+      type: 'text',
+      admin: {
+        position: 'sidebar',
+        condition: (doc) => doc.role === 'organization',
+      },
+    },
+    {
       name: 'firstName',
       label: {
         en: 'First name',
@@ -119,8 +131,8 @@ export const Users: CollectionConfig = {
       relationTo: ['organizations', 'candidates'],
       hasMany: false,
       access: {
-        create: () => false,
-        update: () => false,
+        create: SA,
+        update: SA,
       },
       admin: {
         position: 'sidebar',

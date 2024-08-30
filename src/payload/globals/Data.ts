@@ -1,5 +1,7 @@
 import type { GlobalConfig } from 'payload'
 
+import { SA } from '@/payload/access'
+
 export const Data: GlobalConfig = {
   slug: 'data',
   typescript: {
@@ -28,7 +30,7 @@ export const Data: GlobalConfig = {
           defaultValue: 10000,
           access: {
             read: () => true,
-            update: () => false,
+            update: SA,
           },
           admin: {
             width: '25%',
@@ -44,7 +46,7 @@ export const Data: GlobalConfig = {
           defaultValue: 10000,
           access: {
             read: () => true,
-            update: () => false,
+            update: SA,
           },
           admin: {
             width: '25%',

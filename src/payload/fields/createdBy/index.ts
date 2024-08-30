@@ -10,7 +10,7 @@ export const createdBy: Field = {
     hasMany: false,
     access: {
         read: SA,
-        update: () => false,
+        update: SA,
     },
     admin: {
         position: 'sidebar',

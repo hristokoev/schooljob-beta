@@ -55,9 +55,6 @@ export const Cvs: CollectionConfig = {
       relationTo: 'jobs',
       hasMany: false,
       maxDepth: 0,
-      access: {
-        update: () => false,
-      },
       admin: {
         condition: (data) => Boolean(data?.job),
       },
@@ -72,9 +69,6 @@ export const Cvs: CollectionConfig = {
       relationTo: 'organizations',
       hasMany: false,
       maxDepth: 0,
-      access: {
-        update: () => false,
-      },
       admin: {
         condition: (data) => Boolean(data?.organization),
       },

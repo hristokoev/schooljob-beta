@@ -77,7 +77,7 @@ export const Applications: CollectionConfig = {
             width: '50%',
           },
           access: {
-            update: () => false,
+            update: SA,
           },
           required: true,
         },
@@ -96,7 +96,7 @@ export const Applications: CollectionConfig = {
           },
           access: {
             create: SA_C,
-            update: () => false,
+            update: SA,
           },
           defaultValue: ({ user }: { user: User }) => {
             if (user?.role === 'candidate') {
@@ -238,7 +238,7 @@ export const Applications: CollectionConfig = {
       type: 'upload',
       relationTo: 'cvs',
       access: {
-        update: () => false,
+        update: SA,
       },
       required: true,
     },
@@ -252,7 +252,7 @@ export const Applications: CollectionConfig = {
       relationTo: 'agreements',
       hasMany: true,
       access: {
-        update: () => false,
+        update: SA,
       },
     },
     // Sidebar fields
@@ -313,7 +313,7 @@ export const Applications: CollectionConfig = {
       type: 'number',
       access: {
         read: () => true,
-        update: () => false,
+        update: SA,
       },
       admin: {
         position: 'sidebar',

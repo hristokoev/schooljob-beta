@@ -113,7 +113,7 @@ export const Jobs: CollectionConfig = {
       filterOptions: organizationFilter,
       access: {
         create: SA_O,
-        update: () => false,
+        update: SA,
       },
       defaultValue: ({ user }: { user: User }) => {
         /*
@@ -525,7 +525,7 @@ export const Jobs: CollectionConfig = {
                   the IDs, they can't read the applications because of their own access controls.
                 */
                 read: SA_A_O,
-                update: () => false,
+                update: SA,
               },
             },
           ],
@@ -571,7 +571,7 @@ export const Jobs: CollectionConfig = {
       required: true,
       access: {
         read: () => true,
-        update: () => false,
+        update: SA,
       },
       admin: {
         position: 'sidebar',
