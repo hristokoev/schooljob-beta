@@ -1,8 +1,6 @@
-// TODO: Fix errors typing
-
 'use client'
 
-import { Controller, useForm } from 'react-hook-form'
+import { Controller, FieldError, FieldErrors, useForm } from 'react-hook-form'
 import React, { Fragment, useCallback, useEffect, useRef } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import Link from 'next/link'
@@ -63,6 +61,14 @@ const RegisterForm: React.FC = () => {
   }, [role, setValue])
 
   const [tab, setTab] = React.useState<'candidate' | 'organization'>('candidate')
+
+  // Helper function to safely access nested errors
+  const getFieldError = (
+    errors: FieldErrors<RegisterFormData>,
+    field: string,
+  ): FieldError | undefined => {
+    return (errors as Record<string, FieldError | undefined>)[field]
+  }
 
   return (
     <Fragment>
@@ -146,7 +152,7 @@ const RegisterForm: React.FC = () => {
                   placeholder={t('register.titlePlaceholder')}
                   name="title"
                   register={register}
-                  error={errors.title}
+                  error={getFieldError(errors, 'title')}
                 />
               </div>
               <div>
@@ -158,7 +164,7 @@ const RegisterForm: React.FC = () => {
                   placeholder={t('register.vatIdPlaceholder')}
                   name="vatId"
                   register={register}
-                  error={errors.vatId}
+                  error={getFieldError(errors, 'vatId')}
                 />
               </div>
               <div>
@@ -209,8 +215,10 @@ const RegisterForm: React.FC = () => {
                     />
                   )}
                 />
-                {errors.terms && (
-                  <span className="text-sm text-red-500">{errors.terms.message}</span>
+                {getFieldError(errors, 'terms') && (
+                  <span className="text-sm text-red-500">
+                    {getFieldError(errors, 'terms')?.message}
+                  </span>
                 )}
               </div>
             </div>
@@ -226,7 +234,7 @@ const RegisterForm: React.FC = () => {
                   placeholder={t('register.firstNamePlaceholder')}
                   name="firstName"
                   register={register}
-                  error={errors.firstName}
+                  error={getFieldError(errors, 'firstName')}
                 />
               </div>
               <div>
@@ -238,7 +246,7 @@ const RegisterForm: React.FC = () => {
                   placeholder={t('register.lastNamePlaceholder')}
                   name="lastName"
                   register={register}
-                  error={errors.lastName}
+                  error={getFieldError(errors, 'lastName')}
                 />
               </div>
               <div>
