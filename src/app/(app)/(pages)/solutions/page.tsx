@@ -16,7 +16,7 @@ export default async function Register() {
     <Fragment>
       <VerticalPadding bottom="lg">
         <Gutter>
-          <div className="py-0 md:pb-20 md:pt-40">
+          <VerticalPadding>
             <div className="lg:flex lg:space-x-12 xl:space-x-16">
               {/* Left side */}
               <div className="mb-16 grow text-center lg:mb-0 lg:mt-16 lg:text-left">
@@ -88,7 +88,7 @@ export default async function Register() {
                 </div>
               </div>
             </div>
-          </div>
+          </VerticalPadding>
         </Gutter>
       </VerticalPadding>
     </Fragment>

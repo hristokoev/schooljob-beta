@@ -21,7 +21,7 @@ export interface Config {
     'image-covers': ImageCover;
     photos: Photo;
     ads: Ad;
-    agreements: Agreement;
+    documents: Document;
     'email-templates': EmailTemplate;
     memberships: Membership;
     orders: Order;
@@ -278,6 +278,8 @@ export interface User {
   role: 'super-admin' | 'admin' | 'organization' | 'candidate';
   title?: string | null;
   vatId?: string | null;
+  processingOfPersonalData: boolean;
+  terms?: boolean | null;
   firstName?: string | null;
   lastName?: string | null;
   profile?:
@@ -357,7 +359,7 @@ export interface Application {
   location?: string | null;
   coverLetter?: string | null;
   cv: string | Cv;
-  agreements?: (string | Agreement)[] | null;
+  processingOfPersonalData: boolean;
   status: 'pending' | 'accepted' | 'rejected' | 'interview';
   fullName?: string | null;
   trackingId?: number | null;
@@ -385,34 +387,6 @@ export interface Cv {
   height?: number | null;
   focalX?: number | null;
   focalY?: number | null;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "agreements".
- */
-export interface Agreement {
-  id: string;
-  archived?: boolean | null;
-  title: string;
-  role: ('organization' | 'candidate')[];
-  richText: {
-    root: {
-      type: string;
-      children: {
-        type: string;
-        version: number;
-        [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
-    };
-    [k: string]: unknown;
-  };
-  slug?: string | null;
-  updatedAt: string;
-  createdAt: string;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -502,6 +476,33 @@ export interface Ad {
   paddingBottom: 'none' | 'sm' | 'md' | 'lg';
   background: 'white' | 'slate-100';
   url: string;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "documents".
+ */
+export interface Document {
+  id: string;
+  archived?: boolean | null;
+  title: string;
+  richText: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+  slug?: string | null;
   updatedAt: string;
   createdAt: string;
 }

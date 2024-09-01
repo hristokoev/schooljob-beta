@@ -3,17 +3,17 @@ import { CollectionConfig } from 'payload'
 import { archived, slugField } from '@/payload/fields'
 import { SA, SA_A } from '@/payload/access'
 
-export const Agreements: CollectionConfig = {
-  slug: 'agreements',
+export const Documents: CollectionConfig = {
+  slug: 'documents',
   labels: {
     singular: {
-      en: 'Agreement',
-      cs: 'Souhlas',
+      en: 'Document',
+      cs: 'Dokument',
     },
     plural: {
-      en: 'Agreements',
-      cs: 'Souhlasy',
-    }
+      en: 'Documents',
+      cs: 'Dokumenty',
+    },
   },
   admin: {
     group: {
@@ -53,6 +53,6 @@ export const Agreements: CollectionConfig = {
       type: 'richText',
       required: true,
     },
-    slugField
+    slugField,
   ],
 }

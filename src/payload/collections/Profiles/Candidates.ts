@@ -37,7 +37,7 @@ export const Candidates: CollectionConfig = {
           event: 'new-candidate',
         },
       ]),
-    ]
+    ],
   },
   access: {
     /*
@@ -164,8 +164,8 @@ export const Candidates: CollectionConfig = {
               relationTo: 'applications',
               hasMany: true,
               access: {
-                update: () => false
-              }
+                update: SA,
+              },
             },
           ],
         },
@@ -186,10 +186,10 @@ export const Candidates: CollectionConfig = {
               hasMany: true,
               admin: {
                 readOnly: true,
-              }
+              },
             },
           ],
-        }
+        },
       ],
     },
     createdBy,

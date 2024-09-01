@@ -8,7 +8,7 @@ export const Data: GlobalConfig = {
     interface: 'Data',
   },
   admin: {
-    hidden: ({ user }) => user?.role !== 'super-admin'
+    hidden: ({ user }) => user?.role !== 'super-admin',
   },
   graphQL: {
     name: 'Data',

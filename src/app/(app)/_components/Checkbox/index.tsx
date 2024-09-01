@@ -1,17 +1,18 @@
 'use client'
 
-import React, { useEffect, useState } from 'react'
+import React, { ReactNode, useEffect, useState } from 'react'
 
 interface CheckboxProps {
   name: string
-  label?: string
+  label?: string | ReactNode
   value?: boolean
   onChange?: (value: boolean) => void
   disabled?: boolean
+  required?: boolean
 }
 
 const Checkbox = React.forwardRef<HTMLInputElement, CheckboxProps>(
-  ({ name, label, value = true, onChange, disabled }, ref) => {
+  ({ name, label, value = true, onChange, disabled, required }, ref) => {
     const [isActive, setIsActive] = useState<boolean>(value)
 
     const handleChange = () => {
@@ -52,10 +53,19 @@ const Checkbox = React.forwardRef<HTMLInputElement, CheckboxProps>(
                 <path strokeLinecap="round" strokeLinejoin="round" d="m4.5 12.75 6 6 9-13.5" />
               </svg>
             </span>
-            <span className="sr-only">{label}</span>
+            {typeof label === 'string' && <span className="sr-only">{label}</span>}
           </label>
         </div>
-        <div className="mr-2 text-sm italic text-slate-400">{label}</div>
+        {typeof label === 'string' ? (
+          <label htmlFor={name} className="text-sm font-medium text-slate-900">
+            {label}
+            {required && <span className="text-red-500">*</span>}
+          </label>
+        ) : (
+          <label className="text-sm font-medium">
+            {label} {required && <span className="text-red-500">*</span>}
+          </label>
+        )}
       </div>
     )
   },

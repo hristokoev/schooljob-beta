@@ -82,7 +82,7 @@ export const Users: CollectionConfig = {
       type: 'text',
       admin: {
         position: 'sidebar',
-        condition: (doc) => doc.role === 'organization',
+        condition: doc => doc.role === 'organization',
       },
     },
     {
@@ -94,7 +94,30 @@ export const Users: CollectionConfig = {
       type: 'text',
       admin: {
         position: 'sidebar',
-        condition: (doc) => doc.role === 'organization',
+        condition: doc => doc.role === 'organization',
+      },
+    },
+    {
+      name: 'processingOfPersonalData',
+      label: {
+        en: 'Processing of personal data',
+        cs: 'Zpracování osobních údajů',
+      },
+      type: 'checkbox',
+      access: {
+        update: SA,
+      },
+      required: true,
+    },
+    {
+      name: 'terms',
+      label: {
+        en: 'Terms',
+        cs: 'Obchodní podmínky',
+      },
+      type: 'checkbox',
+      access: {
+        update: SA,
       },
     },
     {
@@ -106,7 +129,7 @@ export const Users: CollectionConfig = {
       type: 'text',
       admin: {
         position: 'sidebar',
-        condition: (doc) => doc.role === 'candidate',
+        condition: doc => doc.role === 'candidate',
       },
     },
     {
@@ -118,7 +141,7 @@ export const Users: CollectionConfig = {
       type: 'text',
       admin: {
         position: 'sidebar',
-        condition: (doc) => doc.role === 'candidate',
+        condition: doc => doc.role === 'candidate',
       },
     },
     {

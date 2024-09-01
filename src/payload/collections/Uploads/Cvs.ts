@@ -15,8 +15,8 @@ export const Cvs: CollectionConfig = {
     },
     plural: {
       en: 'CVs',
-      cs: 'CV'
-    }
+      cs: 'CV',
+    },
   },
   admin: {
     group: {
@@ -55,8 +55,11 @@ export const Cvs: CollectionConfig = {
       relationTo: 'jobs',
       hasMany: false,
       maxDepth: 0,
+      access: {
+        update: () => false,
+      },
       admin: {
-        condition: (data) => Boolean(data?.job),
+        condition: data => Boolean(data?.job),
       },
     },
     {
@@ -69,10 +72,13 @@ export const Cvs: CollectionConfig = {
       relationTo: 'organizations',
       hasMany: false,
       maxDepth: 0,
+      access: {
+        update: () => false,
+      },
       admin: {
-        condition: (data) => Boolean(data?.organization),
+        condition: data => Boolean(data?.organization),
       },
     },
-    createdBy
+    createdBy,
   ],
 }

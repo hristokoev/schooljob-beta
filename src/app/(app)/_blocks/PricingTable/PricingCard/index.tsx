@@ -1,6 +1,7 @@
 'use client'
 
 import React, { Fragment, useCallback, useEffect, useState } from 'react'
+import Link from 'next/link'
 import { Membership } from '@payload-types'
 import { toast } from 'sonner'
 import { useRouter } from 'next/navigation'
@@ -126,7 +127,18 @@ const PricingCard: React.FC<Membership> = membership => {
           {t('membership.getNow')} - {getPriceFromSelected(price)}
         </Button>
       </div>
-      <div className="text-center text-xs italic text-slate-500">{t('membership.footer')}</div>
+      <div className="text-center text-xs italic text-slate-500">
+        {t.rich('membership.footer', {
+          Link: chunks => (
+            <Link
+              href="/documents/terms-of-service"
+              className="text-royal-blue-500 transition duration-150 ease-in-out hover:text-royal-blue-600"
+            >
+              {chunks}
+            </Link>
+          ),
+        })}
+      </div>
     </div>
   )
 }

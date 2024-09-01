@@ -2,7 +2,16 @@ import { Job, User } from '@payload-types'
 import { CollectionConfig } from 'payload'
 
 import { archived, slugField } from '@/payload/fields'
-import { categoriesOptions, currencyOptions, cz, educationOptions, employmentTypeOptions, experienceOptions, locationTypeOptions, salaryTypeOptions } from '@/payload/data'
+import {
+  categoriesOptions,
+  currencyOptions,
+  cz,
+  educationOptions,
+  employmentTypeOptions,
+  experienceOptions,
+  locationTypeOptions,
+  salaryTypeOptions,
+} from '@/payload/data'
 import { cs, en } from '@/translations'
 import { dispatchEvents, populateCreatedBy, revalidatePath } from '@/payload/hooks'
 import { SA, SA_A, SA_A_O, SA_A_O_Self_createdBy, SA_O } from '@/payload/access'
@@ -55,7 +64,7 @@ export const Jobs: CollectionConfig = {
           operation: 'update',
           event: 'job-status-changed',
           field: 'featured',
-        }
+        },
       ]),
       populateGlobalsDataJobs,
       populateOrganizationJobs,
@@ -276,7 +285,7 @@ export const Jobs: CollectionConfig = {
                   },
                   defaultValue: false,
                   admin: {
-                    condition: (data) => Boolean(data?.salary?.enabled),
+                    condition: data => Boolean(data?.salary?.enabled),
                   },
                 },
                 {
@@ -292,9 +301,9 @@ export const Jobs: CollectionConfig = {
                       defaultValue: 0,
                       admin: {
                         width: '50%',
-                        condition: (data) => data?.salary?.enabled && !data?.salary?.range,
+                        condition: data => data?.salary?.enabled && !data?.salary?.range,
                       },
-                      validate: (value) => {
+                      validate: value => {
                         if (value < 1) {
                           return 'Number must be greater than or equal to 1'
                         }
@@ -313,7 +322,7 @@ export const Jobs: CollectionConfig = {
                       defaultValue: 0,
                       admin: {
                         width: '25%',
-                        condition: (data) =>
+                        condition: data =>
                           Boolean(data?.salary?.enabled) && Boolean(data?.salary?.range),
                       },
                       validate: (value, { data }: { data: Partial<Job> }) => {
@@ -339,7 +348,7 @@ export const Jobs: CollectionConfig = {
                       defaultValue: 0,
                       admin: {
                         width: '25%',
-                        condition: (data) =>
+                        condition: data =>
                           Boolean(data?.salary?.enabled) && Boolean(data?.salary?.range),
                       },
                       validate: (value, { data }: { data: Partial<Job> }) => {
@@ -372,7 +381,7 @@ export const Jobs: CollectionConfig = {
                       })),
                       admin: {
                         width: '25%',
-                        condition: (data) => Boolean(data?.salary?.enabled),
+                        condition: data => Boolean(data?.salary?.enabled),
                       },
                       required: true,
                     },
@@ -393,7 +402,7 @@ export const Jobs: CollectionConfig = {
                       })),
                       admin: {
                         width: '25%',
-                        condition: (data) => Boolean(data?.salary?.enabled),
+                        condition: data => Boolean(data?.salary?.enabled),
                       },
                       required: true,
                     },
@@ -575,7 +584,7 @@ export const Jobs: CollectionConfig = {
       },
       admin: {
         position: 'sidebar',
-        condition: (data) => Boolean(data?.publicId),
+        condition: data => Boolean(data?.publicId),
       },
     },
   ],

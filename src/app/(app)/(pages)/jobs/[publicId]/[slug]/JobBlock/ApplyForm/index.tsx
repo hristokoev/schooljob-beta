@@ -4,13 +4,14 @@ import { Controller, useForm } from 'react-hook-form'
 import { Dialog, DialogPanel, DialogTitle } from '@headlessui/react'
 import React, { Fragment, useCallback, useEffect, useState } from 'react'
 import { Candidate } from '@payload-types'
+import Link from 'next/link'
 import { toast } from 'sonner'
 import { useTranslations } from 'next-intl'
 import { XMarkIcon } from '@heroicons/react/24/solid'
 import { zodResolver } from '@hookform/resolvers/zod'
 
 import { ApplicationFormData, useApplicationFieldSchema } from '@/types'
-import { Button, FormInputField, InputFile, Label, Textarea } from '@/components'
+import { Button, Checkbox, FormInputField, InputFile, Label, Textarea } from '@/components'
 import { createApplication, uploadCv } from '@/actions'
 import { useAuth } from '@/providers'
 
@@ -73,6 +74,7 @@ const ApplyForm = ({ jobId, organizationId }: ApplyFormProps) => {
       email: profile.email || '',
       location: profile.location || '',
       phone: profile.phone || '',
+      processingOfPersonalData: false,
     })
   }, [jobId, organizationId, user, reset])
 
@@ -187,21 +189,54 @@ const ApplyForm = ({ jobId, organizationId }: ApplyFormProps) => {
                 />
               </div>
 
-              <Label className="text-md font-bold">
-                {t('applyForm.cv')} <span className="text-red-500">*</span>
-              </Label>
-              <Controller
-                name="cv"
-                control={control}
-                render={({ field: { onChange, value, ...fieldProps } }) => (
-                  <InputFile
-                    {...fieldProps}
-                    file={value}
-                    error={errors.cv}
-                    onChange={event => onChange(event.target.files && event.target.files[0])}
-                  />
+              <div className="flex flex-col">
+                <Label className="text-md font-bold">
+                  {t('applyForm.cv')} <span className="text-red-500">*</span>
+                </Label>
+                <Controller
+                  name="cv"
+                  control={control}
+                  render={({ field: { onChange, value, ...fieldProps } }) => (
+                    <InputFile
+                      {...fieldProps}
+                      file={value}
+                      error={errors.cv}
+                      onChange={event => onChange(event.target.files && event.target.files[0])}
+                    />
+                  )}
+                />
+              </div>
+
+              <div className="flex flex-col">
+                <Controller
+                  name="processingOfPersonalData"
+                  control={control}
+                  render={({ field }) => (
+                    <div className="flex flex-col">
+                      <Checkbox
+                        {...field}
+                        label={t.rich('applyForm.consents.processingOfPersonalData', {
+                          Link: chunks => (
+                            <Link
+                              href="/"
+                              className="text-royal-blue-500 transition duration-150 ease-in-out hover:text-royal-blue-600"
+                            >
+                              {chunks}
+                            </Link>
+                          ),
+                        })}
+                        required
+                      />
+                    </div>
+                  )}
+                />
+                {errors.processingOfPersonalData && (
+                  <span className="text-sm text-red-500">
+                    {errors.processingOfPersonalData.message}
+                  </span>
                 )}
-              />
+              </div>
+
               <Button type="submit" className="h-12">
                 {t('ui.submit')}
                 {/* {loading && <LoadingIcon className="ml-2 size-4" />} */}

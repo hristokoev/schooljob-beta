@@ -20,11 +20,11 @@ import path from 'path'
 
 import {
   Ads,
-  Agreements,
   Applications,
   Banners,
   Candidates,
   Cvs,
+  Documents,
   EmailTemplates,
   ImageCovers,
   Jobs,
@@ -50,7 +50,7 @@ export default buildConfig({
       ItalicFeature(),
       UnderlineFeature(),
       StrikethroughFeature(),
-      FixedToolbarFeature()
+      FixedToolbarFeature(),
     ],
   }),
   admin: {
@@ -61,12 +61,12 @@ export default buildConfig({
         Logo: 'src/payload/components/Logo/index.tsx#Logo',
       },
       views: {
-        'access': {
+        access: {
           Component: 'src/payload/views/AccessView/index.tsx#AccessView',
           path: '/access',
           exact: true,
         },
-      }
+      },
     },
   },
   collections: [
@@ -80,7 +80,7 @@ export default buildConfig({
     ImageCovers,
     Photos,
     Ads,
-    Agreements,
+    Documents,
     EmailTemplates,
     Memberships,
     Orders,
@@ -150,18 +150,20 @@ export default buildConfig({
       collections: ['jobs', 'organizations'],
       defaultPriorities: {
         jobs: 10,
-        organizations: 20
+        organizations: 20,
       },
       beforeSync: ({ originalDoc, searchDoc }) => ({
         ...searchDoc,
         status: originalDoc?.status,
         slug: originalDoc?.slug,
         publicId: originalDoc?.publicId,
-        keywords: originalDoc?.richText ? extractTopKeywords(originalDoc.richText, 25).join(', ') : "",
+        keywords: originalDoc?.richText
+          ? extractTopKeywords(originalDoc.richText, 25).join(', ')
+          : '',
       }),
       searchOverrides: {
         admin: {
-          hidden: ({ user }) => user?.role !== 'super-admin'
+          hidden: ({ user }) => user?.role !== 'super-admin',
         },
         access: {
           read: () => {
@@ -177,34 +179,34 @@ export default buildConfig({
                     equals: 'organizations',
                   },
                 },
-              ] as Where[]
+              ] as Where[],
             }
-          }
+          },
         },
         fields: ({ defaultFields }) => [
           ...defaultFields,
           {
             name: 'status',
             type: 'text',
-            index: true
+            index: true,
           },
           {
             name: 'slug',
             type: 'text',
-            index: true
+            index: true,
           },
           {
             name: 'publicId',
             type: 'text',
-            index: true
+            index: true,
           },
           {
             name: 'keywords',
             type: 'text',
-            index: true
-          }
+            index: true,
+          },
         ],
-      }
-    })
+      },
+    }),
   ],
 })

@@ -1,149 +1,86 @@
-import { z, ZodType } from "zod"
-import { useTranslations } from "next-intl"
+import { z, ZodType } from 'zod'
+import { useTranslations } from 'next-intl'
 
-type RegisterFormData = {
-    email: string
-    password: string
-    passwordConfirm: string
-    role: 'candidate' | 'organization'
-    title?: string
-    vatId?: string
-    firstName?: string
-    lastName?: string
+type CreateBaseArgs = {
+  email: string
+  password: string
+  passwordConfirm: string
+  processingOfPersonalData: boolean
 }
 
+type CreateCandidateArgs = CreateBaseArgs & {
+  role: 'candidate'
+  firstName: string
+  lastName: string
+}
+
+type CreateOrganizationArgs = CreateBaseArgs & {
+  role: 'organization'
+  title: string
+  vatId: string
+  terms: boolean
+}
+
+type RegisterFormData = CreateCandidateArgs | CreateOrganizationArgs
+
 const useRegisterFieldSchema = (): ZodType<RegisterFormData> => {
-    const t = useTranslations('register.validation')
+  const t = useTranslations('register.validation')
 
-    return z.object({
-        email: z.string().email(t('email')),
-        password: z.string().min(6, t('passwordLength', { number: 6 })).max(32, {
-            message: t('passwordMaxLength', { number: 32 }),
-        }).regex(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{6,}$/, {
-            message: t('passwordAllowedCharacters'),
-        }).regex(/^[^\s]+$/, {
-            message: t('passwordForbiddenCharacters'),
+  const baseSchema = {
+    email: z.string().email(t('email')),
+    password: z
+      .string()
+      .min(6, t('passwordLength', { number: 6 }))
+      .max(32, {
+        message: t('passwordMaxLength', { number: 32 }),
+      })
+      .regex(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{6,}$/, {
+        message: t('passwordAllowedCharacters'),
+      })
+      .regex(/^[^\s]+$/, {
+        message: t('passwordForbiddenCharacters'),
+      }),
+    passwordConfirm: z.string(),
+    processingOfPersonalData: z.boolean().refine(data => data === true, {
+      message: t('processingOfPersonalData'),
+    }),
+  }
+
+  return z
+    .discriminatedUnion('role', [
+      z.object({
+        ...baseSchema,
+        role: z.literal('candidate'),
+        firstName: z
+          .string()
+          .min(2, t('firstNameLength', { number: 2 }))
+          .regex(/^[a-zA-ZÀ-ž ]+$/, t('firstNameAllowedCharacters')),
+        lastName: z
+          .string()
+          .min(2, t('lastNameLength', { number: 2 }))
+          .regex(/^[a-zA-ZÀ-ž ]+$/, t('lastNameAllowedCharacters')),
+      }),
+      z.object({
+        ...baseSchema,
+        role: z.literal('organization'),
+        title: z
+          .string()
+          .min(2, t('titleLength', { number: 2 }))
+          .regex(/^[a-zA-Z0-9À-ž. ]+$/, t('titleAllowedCharacters'))
+          .regex(/^[^\s].+$/, t('titleForbiddenCharacters')),
+        vatId: z
+          .string()
+          .length(8, t('vatIdLength', { number: 8 }))
+          .regex(/^[0-9]+$/, t('vatIdAllowedCharacters')),
+        terms: z.boolean().refine(data => data === true, {
+          message: t('terms'),
         }),
-        passwordConfirm: z.string(),
-        role: z.enum(['candidate', 'organization']),
-        title: z.string().optional(),
-        vatId: z.string().optional(),
-        firstName: z.string().optional(),
-        lastName: z.string().optional(),
+      }),
+    ])
+    .refine(data => data.password === data.passwordConfirm, {
+      message: t('passwordConfirm'),
+      path: ['passwordConfirm'],
     })
-        .superRefine((data, ctx) => {
-            if (data.password !== data.passwordConfirm) {
-                ctx.addIssue({
-                    code: z.ZodIssueCode.custom,
-                    path: ['passwordConfirm'],
-                    message: t('passwordConfirm'),
-                })
-            }
-
-            if (data.role === 'organization') {
-                if (!data.title || data.title.trim() === '') {
-                    ctx.addIssue({
-                        code: z.ZodIssueCode.custom,
-                        path: ['title'],
-                        message: t('title'),
-                    })
-                } else {
-                    const titleSchema = z.string().min(2, {
-                        message: t('titleLength', { number: 2 }),
-                    }).regex(/^[a-zA-Z0-9À-ž. ]+$/, {
-                        message: t('titleAllowedCharacters'),
-                    }).regex(/^[^\s].+$/, {
-                        message: t('titleForbiddenCharacters')
-                    })
-
-                    const titleCheck = titleSchema.safeParse(data.title)
-
-                    if (!titleCheck.success) {
-                        titleCheck.error.issues.forEach(issue => {
-                            ctx.addIssue({
-                                ...issue,
-                                path: ['title'],
-                            })
-                        })
-                    }
-                }
-
-                if (!data.vatId || data.vatId.trim() === '') {
-                    ctx.addIssue({
-                        code: z.ZodIssueCode.custom,
-                        path: ['vatId'],
-                        message: t('vatId'),
-                    })
-                } else {
-                    const vatIdSchema = z.string().length(8, {
-                        message: t('vatIdLength', { number: 8 }),
-                    }).regex(/^[0-9]+$/, {
-                        message: t('vatIdAllowedCharacters'),
-                    })
-
-                    const vatIdCheck = vatIdSchema.safeParse(data.vatId)
-
-                    if (!vatIdCheck.success) {
-                        vatIdCheck.error.issues.forEach(issue => {
-                            ctx.addIssue({
-                                ...issue,
-                                path: ['vatId'],
-                            })
-                        })
-                    }
-                }
-            } else if (data.role === 'candidate') {
-                if (!data.firstName || data.firstName.trim() === '') {
-                    ctx.addIssue({
-                        code: z.ZodIssueCode.custom,
-                        path: ['firstName'],
-                        message: t('firstName'),
-                    })
-                } else {
-                    const firstNameSchema = z.string().min(2, {
-                        message: t('firstNameLength', { number: 2 }),
-                    }).regex(/^[a-zA-ZÀ-ž ]+$/, {
-                        message: t('firstNameAllowedCharacters'),
-                    })
-
-                    const firstNameCheck = firstNameSchema.safeParse(data.firstName)
-
-                    if (!firstNameCheck.success) {
-                        firstNameCheck.error.issues.forEach(issue => {
-                            ctx.addIssue({
-                                ...issue,
-                                path: ['firstName'],
-                            })
-                        })
-                    }
-                }
-
-                if (!data.lastName || data.lastName.trim() === '') {
-                    ctx.addIssue({
-                        code: z.ZodIssueCode.custom,
-                        path: ['lastName'],
-                        message: t('lastName'),
-                    })
-                } else {
-                    const lastNameSchema = z.string().min(2, {
-                        message: t('lastNameLength', { number: 2 }),
-                    }).regex(/^[a-zA-ZÀ-ž ]+$/, {
-                        message: t('lastNameAllowedCharacters'),
-                    })
-
-                    const lastNameCheck = lastNameSchema.safeParse(data.lastName)
-
-                    if (!lastNameCheck.success) {
-                        lastNameCheck.error.issues.forEach(issue => {
-                            ctx.addIssue({
-                                ...issue,
-                                path: ['lastName'],
-                            })
-                        })
-                    }
-                }
-            }
-        })
 }
 
 export { type RegisterFormData, useRegisterFieldSchema }

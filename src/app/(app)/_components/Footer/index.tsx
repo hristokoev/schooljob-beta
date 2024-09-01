@@ -167,7 +167,7 @@ const Footer: React.FC = () => {
           <li>
             <a
               className="text-zinc-100 transition hover:text-zinc-300"
-              href="/documents/vseobecne-obchodni-podminky-sluzeb-schooljob-sro-pro-objednatele"
+              href="/documents/terms-of-service"
             >
               {t('footer.bottomLinks.terms')}
             </a>

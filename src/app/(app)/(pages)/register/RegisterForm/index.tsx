@@ -1,14 +1,17 @@
+// TODO: Fix errors typing
+
 'use client'
 
-import React, { Fragment, useCallback, useRef } from 'react'
+import { Controller, useForm } from 'react-hook-form'
+import React, { Fragment, useCallback, useEffect, useRef } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
+import Link from 'next/link'
 import StarIcon from '@heroicons/react/24/solid/StarIcon'
 import { toast } from 'sonner'
-import { useForm } from 'react-hook-form'
 import { useTranslations } from 'next-intl'
 import { zodResolver } from '@hookform/resolvers/zod'
 
-import { Button, FormInputField, Label, LoadingIcon } from '@/components'
+import { Button, Checkbox, FormInputField, Label, LoadingIcon } from '@/components'
 import { RegisterFormData, useRegisterFieldSchema } from '@/types'
 import { useAuth } from '@/providers'
 
@@ -21,14 +24,17 @@ const RegisterForm: React.FC = () => {
   const router = useRouter()
 
   const {
+    control,
     register,
     handleSubmit,
     formState: { errors },
     setValue,
+    watch,
   } = useForm<RegisterFormData>({
     resolver: zodResolver(RegisterFieldSchema),
     defaultValues: {
       role: 'candidate',
+      processingOfPersonalData: false,
     },
   })
 
@@ -44,6 +50,17 @@ const RegisterForm: React.FC = () => {
     },
     [create, router, t],
   )
+
+  const role = watch('role')
+
+  useEffect(() => {
+    if (role === 'candidate') {
+      setValue('processingOfPersonalData', false)
+    } else if (role === 'organization') {
+      setValue('processingOfPersonalData', false)
+      setValue('terms', false)
+    }
+  }, [role, setValue])
 
   const [tab, setTab] = React.useState<'candidate' | 'organization'>('candidate')
 
@@ -144,6 +161,58 @@ const RegisterForm: React.FC = () => {
                   error={errors.vatId}
                 />
               </div>
+              <div>
+                <Controller
+                  name="processingOfPersonalData"
+                  control={control}
+                  render={({ field }) => (
+                    <Checkbox
+                      {...field}
+                      label={t.rich('register.consents.processingOfPersonalData', {
+                        Link: chunks => (
+                          <Link
+                            href="/documents/personal-data"
+                            className="text-royal-blue-500 transition duration-150 ease-in-out hover:text-royal-blue-600"
+                          >
+                            {chunks}
+                          </Link>
+                        ),
+                      })}
+                      required
+                    />
+                  )}
+                />
+                {errors.processingOfPersonalData && (
+                  <span className="text-sm text-red-500">
+                    {errors.processingOfPersonalData.message}
+                  </span>
+                )}
+              </div>
+              <div>
+                <Controller
+                  name="terms"
+                  control={control}
+                  render={({ field }) => (
+                    <Checkbox
+                      {...field}
+                      label={t.rich('register.consents.terms', {
+                        Link: chunks => (
+                          <Link
+                            href="/documents/terms-of-service"
+                            className="text-royal-blue-500 transition duration-150 ease-in-out hover:text-royal-blue-600"
+                          >
+                            {chunks}
+                          </Link>
+                        ),
+                      })}
+                      required
+                    />
+                  )}
+                />
+                {errors.terms && (
+                  <span className="text-sm text-red-500">{errors.terms.message}</span>
+                )}
+              </div>
             </div>
           )}
           {tab === 'candidate' && (
@@ -171,6 +240,33 @@ const RegisterForm: React.FC = () => {
                   register={register}
                   error={errors.lastName}
                 />
+              </div>
+              <div>
+                <Controller
+                  name="processingOfPersonalData"
+                  control={control}
+                  render={({ field }) => (
+                    <Checkbox
+                      {...field}
+                      label={t.rich('register.consents.processingOfPersonalData', {
+                        Link: chunks => (
+                          <Link
+                            href="/documents/personal-data"
+                            className="text-royal-blue-500 transition duration-150 ease-in-out hover:text-royal-blue-600"
+                          >
+                            {chunks}
+                          </Link>
+                        ),
+                      })}
+                      required
+                    />
+                  )}
+                />
+                {errors.processingOfPersonalData && (
+                  <span className="text-sm text-red-500">
+                    {errors.processingOfPersonalData.message}
+                  </span>
+                )}
               </div>
             </Fragment>
           )}

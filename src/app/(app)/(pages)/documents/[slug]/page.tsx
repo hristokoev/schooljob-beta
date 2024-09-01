@@ -19,7 +19,7 @@ export default async function Page({ params }: Props) {
   })
 
   const data = await payload.find({
-    collection: 'agreements',
+    collection: 'documents',
     limit: 1,
     where: {
       slug: {

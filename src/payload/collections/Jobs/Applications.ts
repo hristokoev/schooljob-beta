@@ -92,7 +92,7 @@ export const Applications: CollectionConfig = {
           hasMany: false,
           admin: {
             width: '50%',
-            condition: (data) => data?.candidate,
+            condition: data => data?.candidate,
           },
           access: {
             create: SA_C,
@@ -118,7 +118,7 @@ export const Applications: CollectionConfig = {
           type: 'text',
           admin: {
             width: '50%',
-            condition: (data) => !data?.candidate,
+            condition: data => !data?.candidate,
           },
           access: {
             update: SA,
@@ -139,7 +139,7 @@ export const Applications: CollectionConfig = {
           type: 'text',
           admin: {
             width: '50%',
-            condition: (data) => !data?.candidate,
+            condition: data => !data?.candidate,
           },
           access: {
             update: SA,
@@ -153,7 +153,7 @@ export const Applications: CollectionConfig = {
         },
       ],
       admin: {
-        condition: (data) => !data?.candidate,
+        condition: data => !data?.candidate,
       },
     },
     {
@@ -183,7 +183,7 @@ export const Applications: CollectionConfig = {
           type: 'text',
           admin: {
             width: '50%',
-            condition: (data) => !data?.candidate,
+            condition: data => !data?.candidate,
           },
           access: {
             update: SA,
@@ -196,7 +196,7 @@ export const Applications: CollectionConfig = {
         },
       ],
       admin: {
-        condition: (data) => !data?.candidate,
+        condition: data => !data?.candidate,
       },
     },
     {
@@ -210,7 +210,7 @@ export const Applications: CollectionConfig = {
         update: SA,
       },
       admin: {
-        condition: (data) => !data?.candidate,
+        condition: data => !data?.candidate,
       },
       defaultValue: ({ user }: { user: User }) => {
         if (user?.role === 'candidate') {
@@ -243,17 +243,16 @@ export const Applications: CollectionConfig = {
       required: true,
     },
     {
-      name: 'agreements',
+      name: 'processingOfPersonalData',
       label: {
-        en: 'Agreements',
-        cs: 'Souhlasy',
+        en: 'Processing of Personal Data',
+        cs: 'Zpracování osobních údajů',
       },
-      type: 'relationship',
-      relationTo: 'agreements',
-      hasMany: true,
+      type: 'checkbox',
       access: {
         update: SA,
       },
+      required: true,
     },
     // Sidebar fields
     {
@@ -317,7 +316,7 @@ export const Applications: CollectionConfig = {
       },
       admin: {
         position: 'sidebar',
-        condition: (data) => Boolean(data?.trackingId),
+        condition: data => Boolean(data?.trackingId),
       },
     },
   ],

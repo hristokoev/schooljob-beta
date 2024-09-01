@@ -13,16 +13,31 @@ type ResetPassword = (args: {
 
 type ForgotPassword = (args: { email: string }) => Promise<void>
 
-type Create = (args: {
+type CreateBaseArgs = {
   email: string
   password: string
   passwordConfirm: string
   role: 'candidate' | 'organization'
+  processingOfPersonalData: boolean
   title?: string
   firstName?: string
   lastName?: string
   vatId?: string
-}) => Promise<void>
+}
+
+type CreateCandidateArgs = CreateBaseArgs & {
+  role: 'candidate'
+  terms?: never
+}
+
+type CreateOrganizationArgs = CreateBaseArgs & {
+  role: 'organization'
+  terms: boolean
+}
+
+type CreateArgs = CreateCandidateArgs | CreateOrganizationArgs
+
+type Create = (args: CreateArgs) => Promise<void>
 
 type Login = (args: { email: string; password: string }) => Promise<User>
 
@@ -71,6 +86,8 @@ const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => 
             vatId: args.vatId,
             firstName: args.firstName,
             lastName: args.lastName,
+            processingOfPersonalData: args.processingOfPersonalData,
+            terms: args.terms,
             role: args.role,
           }),
         })
