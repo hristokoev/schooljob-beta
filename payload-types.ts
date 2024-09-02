@@ -420,6 +420,8 @@ export interface Membership {
   features: string[];
   price: number;
   currency: 'czk' | 'eur';
+  employmentType: ('fulltime' | 'parttime' | 'agreement' | 'internship' | 'contract' | 'volunteer')[];
+  expireAfter: 'twoWeeks' | 'oneMonth';
   discount?:
     | {
         count: number;
@@ -579,7 +581,6 @@ export interface Order {
   organization: string | Organization;
   membership: string | Membership;
   quantity: number;
-  expiresAt: string;
   price: number;
   currency: 'czk' | 'eur';
   createdBy?: (string | null) | User;

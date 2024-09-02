@@ -1,8 +1,8 @@
 import { CollectionConfig } from 'payload'
 
 import { cs, en } from '@/translations'
+import { currencyOptions, employmentTypeOptions, expireAfter } from '@/payload/data'
 import { SA, SA_A } from '@/payload/access'
-import { currencyOptions } from '@/payload/data'
 import { revalidatePath } from '@/payload/hooks'
 import { SA_A_Limit } from './access/SA_A_Limit'
 import { slugField } from '@/payload/fields'
@@ -113,6 +113,40 @@ export const Memberships: CollectionConfig = {
           required: true,
         },
       ],
+    },
+    {
+      name: 'employmentType',
+      label: {
+        en: 'Employment Type',
+        cs: 'Typ zaměstnání',
+      },
+      type: 'select',
+      defaultValue: [],
+      options: employmentTypeOptions.map(option => ({
+        label: {
+          en: en.search.options[option as keyof typeof en.search.options],
+          cs: cs.search.options[option as keyof typeof cs.search.options],
+        },
+        value: option,
+      })),
+      hasMany: true,
+      required: true,
+    },
+    {
+      name: 'expireAfter',
+      label: {
+        en: 'Expire After',
+        cs: 'Expirace po',
+      },
+      type: 'select',
+      options: expireAfter.map(option => ({
+        label: {
+          en: en.search.options[option as keyof typeof en.search.options],
+          cs: cs.search.options[option as keyof typeof cs.search.options],
+        },
+        value: option,
+      })),
+      required: true,
     },
     {
       name: 'discount',

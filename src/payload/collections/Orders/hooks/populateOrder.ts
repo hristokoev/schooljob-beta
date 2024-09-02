@@ -50,7 +50,6 @@ export const populateOrder: CollectionBeforeChangeHook = async ({ data, req: { p
                 data.price = basePrice
                 data.organization = organization.id
                 data.currency = membershipDoc.currency
-                data.expiresAt = new Date(new Date().getTime() + 365 * 24 * 60 * 60 * 1000)
 
                 // Add jobsAllowed from organization to context
                 context.jobsAllowed = organization.jobsAllowed

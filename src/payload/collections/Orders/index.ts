@@ -26,7 +26,7 @@ export const Orders: CollectionConfig = {
       cs: 'Další',
     },
     useAsTitle: 'organization',
-    defaultColumns: ['organization', 'membership', 'expiresAt', 'price', 'currency', 'createdAt', 'expiresAt'],
+    defaultColumns: ['organization', 'membership', 'price', 'currency', 'createdAt'],
   },
   access: {
     create: SA_A_O,
@@ -85,18 +85,6 @@ export const Orders: CollectionConfig = {
           },
           required: true,
         },
-        {
-          name: 'expiresAt',
-          label: {
-            en: 'Expires At',
-            cs: 'Vyprší',
-          },
-          type: 'date',
-          admin: {
-            width: '50%',
-          },
-          required: true,
-        }
       ]
     },
     {

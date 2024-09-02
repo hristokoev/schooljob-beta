@@ -1,10 +1,13 @@
 'use client'
 
 import { Controller, useForm } from 'react-hook-form'
-import React, { useCallback, useEffect } from 'react'
+import { Job, Order } from '@payload-types'
+import React, { useCallback, useEffect, useState } from 'react'
 import Link from 'next/link'
+import { PaginatedDocs } from 'payload'
 import { StarIcon } from '@heroicons/react/24/solid'
 import { toast } from 'sonner'
+import { useQuery } from '@tanstack/react-query'
 import { useRouter } from 'next/navigation'
 import { useTranslations } from 'next-intl'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -28,7 +31,6 @@ import {
   currencyOptions,
   cz,
   educationOptions,
-  employmentTypeOptions,
   experienceOptions,
   languageOptions,
   locationTypeOptions,
@@ -110,6 +112,23 @@ const JobsEditView: React.FC<Partial<JobFormData> & JobsEditViewProps> = formDat
     [id, router, t],
   )
 
+  // Load orders
+  const { data: ordersData } = useQuery({
+    queryKey: ['orders'],
+    queryFn: async () => {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/orders`)
+      const data: PaginatedDocs<Order> = await response.json()
+
+      if (data && data.docs && data.docs.length > 0) {
+        return data.docs
+      }
+
+      return null
+    },
+  })
+
+  const [employmentTypeFromOrder, setEmploymentTypeFromOrder] = useState<Job['employmentType']>([])
+
   const watchSalary = watch('salary.enabled')
   const watchRange = watch('salary.range')
   const title = watch('title')
@@ -134,6 +153,30 @@ const JobsEditView: React.FC<Partial<JobFormData> & JobsEditViewProps> = formDat
                   <h1 className="text-2xl font-bold text-slate-800 md:text-3xl">
                     {t('editJob.jobDetails')}
                   </h1>
+                </div>
+              </div>
+              <div className="mb-8 space-y-8 rounded-md border border-slate-200 bg-white p-6">
+                <div>
+                  <Label>
+                    {t('editJob.order')} <span className="text-rose-500">*</span>
+                  </Label>
+                  <Select
+                    options={ordersData?.map(order => ({
+                      value: order.id,
+                      label: order.id,
+                    }))}
+                    onChange={(option: { value: string }) => {
+                      setEmploymentTypeFromOrder(
+                        ordersData?.find(order => order.id === option.value)?.membership
+                          .employmentType || [],
+                      )
+                      setValue('employmentType', [])
+                    }}
+                    className="w-full"
+                  />
+                  <span className="text-sm italic text-slate-400">
+                    {t('editJob.orderDescription')}
+                  </span>
                 </div>
               </div>
               <div className="space-y-8 rounded-md border border-slate-200 bg-white p-6">
@@ -185,7 +228,7 @@ const JobsEditView: React.FC<Partial<JobFormData> & JobsEditViewProps> = formDat
                       <Select
                         {...field}
                         isMulti
-                        options={employmentTypeOptions.map(employmentType => ({
+                        options={employmentTypeFromOrder.map(employmentType => ({
                           value: employmentType,
                           label: t(`search.options.${employmentType}` as 'search.employmentType'),
                         }))}
@@ -540,6 +583,11 @@ const JobsEditView: React.FC<Partial<JobFormData> & JobsEditViewProps> = formDat
                     </Label>
                   </div>
                 </div>
+              </div>
+
+              <div className="space-y-8 rounded-md border border-slate-200 bg-white p-6">
+                <Label>{t('editJob.expiry')}</Label>
+                <span className="text-slate-400">{t('search.options.twoWeeks')}</span>
               </div>
             </div>
           </Aside>
