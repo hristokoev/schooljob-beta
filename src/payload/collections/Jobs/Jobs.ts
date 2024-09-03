@@ -20,6 +20,7 @@ import { languageField } from '@/payload/fields'
 import { organizationFilter } from './filters/organizationFilter'
 import { populateEmail } from './hooks/populateEmail'
 import { populateGlobalsDataJobs } from './hooks/populateGlobalsData'
+import { populateOrdersJobs } from './hooks/populataOrdersJobs'
 import { populateOrganizationJobs } from './hooks/populateOrganizationJobs'
 import { populatePublicId } from './hooks/populatePublicId'
 import { SA_A_O_Some_U } from './access/SA_A_O_Some_U'
@@ -48,7 +49,7 @@ export const Jobs: CollectionConfig = {
     useAsTitle: 'title',
     defaultColumns: ['title', 'organization', 'featured', 'status', 'archived'],
     components: {
-      beforeList: ['src/payload/components/Archived/index.tsx#Archived'],
+      beforeListTable: ['src/payload/components/Archived/index.tsx#Archived'],
     },
     hidden: ({ user }) => user?.role === 'candidate',
   },
@@ -68,6 +69,7 @@ export const Jobs: CollectionConfig = {
       ]),
       populateGlobalsDataJobs,
       populateOrganizationJobs,
+      populateOrdersJobs,
       revalidatePath,
       updateOrganizationJobs,
       updateOrganizationJobsAllowed,
@@ -567,6 +569,18 @@ export const Jobs: CollectionConfig = {
           },
         },
       ],
+    },
+    {
+      name: 'order',
+      type: 'relationship',
+      relationTo: 'orders',
+      admin: {
+        position: 'sidebar',
+      },
+      access: {
+        update: SA,
+      },
+      required: true,
     },
     slugField,
     createdBy,

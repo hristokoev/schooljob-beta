@@ -178,6 +178,7 @@ export interface Job {
   };
   applications?: (string | Application)[] | null;
   featured?: boolean | null;
+  order: string | Order;
   slug?: string | null;
   createdBy?: (string | null) | User;
   publicId?: number | null;
@@ -436,6 +437,22 @@ export interface Membership {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "orders".
+ */
+export interface Order {
+  id: string;
+  organization: string | Organization;
+  membership: string | Membership;
+  quantity: number;
+  price: number;
+  currency: 'czk' | 'eur';
+  jobs?: (string | Job)[] | null;
+  createdBy?: (string | null) | User;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "banners".
  */
 export interface Banner {
@@ -571,21 +588,6 @@ export interface ButtonBlock {
   id?: string | null;
   blockName?: string | null;
   blockType: 'Button';
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "orders".
- */
-export interface Order {
-  id: string;
-  organization: string | Organization;
-  membership: string | Membership;
-  quantity: number;
-  price: number;
-  currency: 'czk' | 'eur';
-  createdBy?: (string | null) | User;
-  updatedAt: string;
-  createdAt: string;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

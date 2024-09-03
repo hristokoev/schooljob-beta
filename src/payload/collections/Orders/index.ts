@@ -32,7 +32,7 @@ export const Orders: CollectionConfig = {
     create: SA_A_O,
     read: SA_A_O_Self_createdBy,
     update: SA,
-    delete: SA
+    delete: SA,
   },
   hooks: {
     beforeChange: [populateCreatedBy, populateOrder],
@@ -67,8 +67,8 @@ export const Orders: CollectionConfig = {
             width: '50%',
           },
           required: true,
-        }
-      ]
+        },
+      ],
     },
     {
       type: 'row',
@@ -85,7 +85,7 @@ export const Orders: CollectionConfig = {
           },
           required: true,
         },
-      ]
+      ],
     },
     {
       type: 'row',
@@ -122,8 +122,17 @@ export const Orders: CollectionConfig = {
           },
           required: true,
         },
-      ]
+      ],
     },
-    createdBy
+    {
+      name: 'jobs',
+      type: 'relationship',
+      relationTo: 'jobs',
+      hasMany: true,
+      access: {
+        update: SA,
+      },
+    },
+    createdBy,
   ],
 }
