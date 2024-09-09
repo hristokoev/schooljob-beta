@@ -1,5 +1,6 @@
 import { ChevronRightIcon } from '@heroicons/react/24/solid'
 import Image from 'next/image'
+import Link from 'next/link'
 import React from 'react'
 
 import { Button } from '@/components'
@@ -11,9 +12,10 @@ interface CtaProps {
   content: string
   items?: string[]
   button: string
+  url?: string
 }
 
-const CtaBlock: React.FC<CtaProps> = ({ title, content, items, button }) => {
+const CtaBlock: React.FC<CtaProps> = ({ title, content, items, button, url }) => {
   return (
     <div className="mx-auto max-w-6xl px-4 sm:px-6">
       <div className="py-12 md:py-20">
@@ -49,10 +51,19 @@ const CtaBlock: React.FC<CtaProps> = ({ title, content, items, button }) => {
                   </ul>
                 )}
               </div>
-              <Button className="group">
-                {button}
-                <ChevronRightIcon className="ml-2 h-5 w-5 transition-transform duration-150 ease-in-out group-hover:translate-x-1" />
-              </Button>
+              {url ? (
+                <Link href={url}>
+                  <Button className="group">
+                    {button}
+                    <ChevronRightIcon className="ml-2 h-5 w-5 transition-transform duration-150 ease-in-out group-hover:translate-x-1" />
+                  </Button>
+                </Link>
+              ) : (
+                <Button className="group">
+                  {button}
+                  <ChevronRightIcon className="ml-2 h-5 w-5 transition-transform duration-150 ease-in-out group-hover:translate-x-1" />
+                </Button>
+              )}
             </div>
           </div>
         </div>

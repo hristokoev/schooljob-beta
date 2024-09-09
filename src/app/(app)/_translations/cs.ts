@@ -56,13 +56,13 @@ export const cs = {
     },
   },
   CTA: {
-    title: 'Připraveni začít?',
+    title: 'Proč se zaregistrovat?',
     items: {
       item01: 'Vytvořit účet',
       item02: 'Procházet nabídky',
     },
     content:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+      'Budete dostávat nabídky do emailu a usnadní Vám to reagovat na vysněné pracovní pozice.',
     button: 'Pojďme začít',
   },
   footer: {
@@ -160,11 +160,11 @@ export const cs = {
   },
   membership: {
     h1: 'Zvyšte svou náborovou sílu',
-    description:
-      'Investujte do balíčku pro zveřejňování pracovních nabídek a najděte pro svou školu ideální uchazeče.',
+    description: 'Objednejte si balíček inzerátů a najděte pro svou organizaci ideální uchazeče.',
     selectPackage: 'Vyberte balíček',
     getNow: 'Získat nyní',
-    footer: 'Koupí tohoto balíčku souhlasíte s našimi <Link>obchodními podmínkami</Link>.',
+    footer: 'Nákupem této služby souhlasíte s našimi <Link>obchodními podmínkami</Link>.',
+    note: 'Pokud jste nenašli správnou variantu, ozvěte se nám pro individuální nabídku.',
     loading: 'Načítání...',
     success: 'Objednávka byla úspěšně dokončena.',
     error: 'Něco se pokazilo. Zkuste to prosím později.',
@@ -384,7 +384,7 @@ export const cs = {
   register: {
     header: 'Připojte se ke komunitě',
     description:
-      'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Provident dolorem voluptatem aliquam corporis deserunt eum quas accusamus.',
+      'Vítejte na našem specializovaném inzertním serveru, který se zaměřuje na pracovní příležitosti v oblasti školství a vzdělávání. Naše platforma spojuje školy, vzdělávací instituce a organizace s kvalifikovanými uchazeči, kteří hledají uplatnění v této klíčové oblasti.',
     h1: 'Registrace',
     button: 'Registrovat',
     hasAccount: 'Už máte účet? ',
@@ -440,10 +440,10 @@ export const cs = {
     },
   },
   solutions: {
-    h1: 'Lorem ipsum dolor sit amet.\nConsectetur adipiscing <UnderlinedText>elit</UnderlinedText>.',
-    bullet1: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
-    bullet2: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
-    bullet3: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
+    h1: 'Vytvořte profil vaší organizace.\nJaké jsou <UnderlinedText>výhody</UnderlinedText> registrace?',
+    bullet1: 'Budete moci inzerovat pracovní pozice.',
+    bullet2: 'Spravovat vaše kandidáty a mít je na jednom místě.',
+    bullet3: '',
   },
   accountSettings: {
     header: 'Můj účet',
