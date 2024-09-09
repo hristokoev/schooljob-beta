@@ -79,6 +79,7 @@ export default async function Index() {
             items={[t('CTA.items.item01'), t('CTA.items.item02')]}
             content={t('CTA.content')}
             button={t('CTA.button')}
+            url="/register"
           />
         </Gutter>
       </VerticalPadding>

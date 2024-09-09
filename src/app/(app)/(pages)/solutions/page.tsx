@@ -60,7 +60,9 @@ export default async function Register() {
                       </svg>
                       <span>{t('solutions.bullet2')}</span>
                     </li>
-                    <li className="flex items-center text-left">
+                    {/* Temporarily disabled */}
+                    {/* TODO: Put some text */}
+                    {/* <li className="flex items-center text-left">
                       <svg
                         className="mr-3 shrink-0"
                         width="20"
@@ -74,7 +76,7 @@ export default async function Register() {
                         />
                       </svg>
                       <span>{t('solutions.bullet3')}</span>
-                    </li>
+                    </li> */}
                   </ul>
                 </div>
               </div>

@@ -25,6 +25,7 @@ export default async function Register() {
                     <h1 className="font-inter-tight pb-4 text-4xl font-bold text-slate-800 md:text-5xl">
                       {t('register.header')}
                     </h1>
+                    {/* TODO: Re-design register page (two halves?) */}
                     <p className="text-lg text-zinc-500">{t('register.description')}</p>
                   </div>
 
