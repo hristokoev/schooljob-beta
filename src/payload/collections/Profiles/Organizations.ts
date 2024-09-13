@@ -245,8 +245,8 @@ export const Organizations: CollectionConfig = {
               maxDepth: 0,
               hasMany: true,
               unique: false,
-              admin: {
-                readOnly: true,
+              access: {
+                update: SA,
               }
             },
           ],
@@ -268,8 +268,8 @@ export const Organizations: CollectionConfig = {
               maxDepth: 0,
               hasMany: true,
               unique: false,
-              admin: {
-                readOnly: true,
+              access: {
+                update: SA,
               }
             },
           ],

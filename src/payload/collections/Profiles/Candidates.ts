@@ -184,8 +184,8 @@ export const Candidates: CollectionConfig = {
               type: 'relationship',
               relationTo: 'jobs',
               hasMany: true,
-              admin: {
-                readOnly: true,
+              access: {
+                update: SA,
               },
             },
           ],

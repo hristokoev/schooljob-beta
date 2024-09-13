@@ -115,7 +115,7 @@ export const Memberships: CollectionConfig = {
       ],
     },
     {
-      name: 'employmentType',
+      name: 'jobsEmploymentType',
       label: {
         en: 'Employment Type',
         cs: 'Typ zaměstnání',
@@ -133,10 +133,10 @@ export const Memberships: CollectionConfig = {
       required: true,
     },
     {
-      name: 'expireAfter',
+      name: 'jobsExpireAfter',
       label: {
-        en: 'Expire After',
-        cs: 'Expirace po',
+        en: 'Jobs Expire After',
+        cs: 'Expirace inzerátů po',
       },
       type: 'select',
       options: expireAfter.map(option => ({
@@ -149,7 +149,7 @@ export const Memberships: CollectionConfig = {
       required: true,
     },
     {
-      name: 'discount',
+      name: 'discounts',
       label: {
         en: 'Discount(s)',
         cs: 'Sleva(y)',

@@ -12,7 +12,7 @@ export const createOrder = async (data: any, user: User | null | undefined) => {
     const payload = await getPayloadHMR({
         config: configPromise,
     })
-    const { organization, membership, quantity, price, currency } = data
+    const { organization, membership, count, price, currency, jobsAllowed } = data
 
     try {
         const doc = await payload.create({
@@ -20,9 +20,10 @@ export const createOrder = async (data: any, user: User | null | undefined) => {
             data: {
                 organization,
                 membership,
-                quantity,
+                count,
                 price,
                 currency,
+                jobsAllowed,
             },
             overrideAccess: false,
             user,

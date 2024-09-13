@@ -311,12 +311,13 @@ export const Applications: CollectionConfig = {
       },
       type: 'number',
       access: {
+        create: SA,
         read: () => true,
         update: SA,
       },
       admin: {
         position: 'sidebar',
-        condition: data => Boolean(data?.trackingId),
+        condition: data => data?.trackingId,
       },
     },
   ],

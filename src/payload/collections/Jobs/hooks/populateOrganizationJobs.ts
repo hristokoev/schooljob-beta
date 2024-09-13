@@ -32,7 +32,7 @@ export const populateOrganizationJobs: CollectionAfterChangeHook = async ({
         },
       })
 
-      // Put the current quantity of allowed jobs in context
+      // Put the current count of allowed jobs in context
       context.jobsAllowed = organizationDoc.jobsAllowed
     } catch (error) {
       console.error("Error updating organization's jobs:", error)

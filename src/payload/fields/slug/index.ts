@@ -15,10 +15,12 @@ const slugField: Field = {
     beforeValidate: [formatSlug],
   },
   access: {
+    create: SA,
     update: SA,
   },
   admin: {
     position: 'sidebar',
+    condition: (data) => data?.slug,
   }
 }
 

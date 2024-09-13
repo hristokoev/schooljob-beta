@@ -52,6 +52,22 @@ export const Data: GlobalConfig = {
             width: '25%',
           },
         },
+        {
+          name: 'dailyOrders',
+          type: 'number',
+          label: {
+            en: 'Daily Orders',
+            cs: 'Denní objednávky',
+          },
+          defaultValue: 0,
+          access: {
+            read: () => true,
+            update: SA,
+          },
+          admin: {
+            width: '25%',
+          },
+        },
       ],
     },
   ],

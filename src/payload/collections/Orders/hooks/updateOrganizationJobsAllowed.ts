@@ -8,7 +8,7 @@ export const updateOrganizationJobsAllowed: CollectionAfterChangeHook = async ({
                     collection: 'organizations',
                     id: typeof doc.organization === 'string' ? doc.organization : doc.organization.id,
                     data: {
-                        jobsAllowed: context.jobsAllowed as number + doc.quantity,
+                        jobsAllowed: context.jobsAllowed as number + doc.count,
                     },
                     depth: 0,
                 })

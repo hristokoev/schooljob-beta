@@ -9,10 +9,12 @@ export const createdBy: Field = {
   maxDepth: 0,
   hasMany: false,
   access: {
+    create: SA,
     read: SA,
-    update: () => false,
+    update: SA,
   },
   admin: {
     position: 'sidebar',
+    condition: (data) => data?.createdBy,
   },
 }

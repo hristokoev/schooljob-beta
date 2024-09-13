@@ -9,7 +9,7 @@ interface Props {
 }
 
 const CardOptions: React.FC<Props> = ({ membership, selected, setSelected }) => {
-  const { featured, discount } = membership
+  const { featured, discounts } = membership
 
   const handleSelect = (id: string) => {
     if (selected === id) {
@@ -21,11 +21,11 @@ const CardOptions: React.FC<Props> = ({ membership, selected, setSelected }) => 
     setSelected(id)
   }
 
-  if (!discount) return null
+  if (!discounts) return null
 
   return (
     <ul className="mb-4 space-y-2 sm:flex sm:space-x-2 sm:space-y-0 lg:flex-col lg:space-x-0 lg:space-y-2">
-      {discount.map(item => (
+      {discounts.map(item => (
         <li key={item.id} className="relative">
           <button
             onClick={() => handleSelect(item.id!)}

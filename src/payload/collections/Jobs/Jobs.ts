@@ -28,6 +28,7 @@ import { SA_O_jobsAllowed } from './access/SA_O_jobsAllowed'
 import { statusField } from '@/payload/fields'
 import { updateOrganizationJobs } from './hooks/updateOrganizationJobs'
 import { updateOrganizationJobsAllowed } from './hooks/updateOrganizationJobsAllowed'
+import { validateEmploymentType } from './hooks/validateEmploymentType'
 
 export const Jobs: CollectionConfig = {
   slug: 'jobs',
@@ -49,11 +50,12 @@ export const Jobs: CollectionConfig = {
     useAsTitle: 'title',
     defaultColumns: ['title', 'organization', 'featured', 'status', 'archived'],
     components: {
-      beforeListTable: ['src/payload/components/Archived/index.tsx#Archived'],
+      // beforeListTable: ['src/payload/components/Archived/index.tsx#Archived'],
     },
     hidden: ({ user }) => user?.role === 'candidate',
   },
   hooks: {
+    beforeValidate: [validateEmploymentType],
     beforeChange: [populateCreatedBy, populateEmail, populatePublicId],
     afterChange: [
       dispatchEvents([
@@ -142,12 +144,38 @@ export const Jobs: CollectionConfig = {
       required: true,
     },
     {
+      name: 'order',
+      type: 'relationship',
+      relationTo: 'orders',
+      admin: {
+        condition: data => data?.organization,
+      },
+      access: {
+        update: SA,
+      },
+      filterOptions: ({ data }) => {
+        return {
+          organization: {
+            equals: data?.organization,
+          }
+        }
+      },
+      required: true,
+    },
+    {
       name: 'email',
       label: {
         en: 'Email',
         cs: 'Email',
       },
       type: 'text',
+      admin: {
+        condition: data => data?.email,
+      },
+      access: {
+        create: SA,
+        update: SA
+      },
       required: true,
     },
     {
@@ -570,18 +598,6 @@ export const Jobs: CollectionConfig = {
         },
       ],
     },
-    {
-      name: 'order',
-      type: 'relationship',
-      relationTo: 'orders',
-      admin: {
-        position: 'sidebar',
-      },
-      access: {
-        update: SA,
-      },
-      required: true,
-    },
     slugField,
     createdBy,
     {
@@ -593,12 +609,13 @@ export const Jobs: CollectionConfig = {
       type: 'number',
       required: true,
       access: {
+        create: SA,
         read: () => true,
         update: SA,
       },
       admin: {
         position: 'sidebar',
-        condition: data => Boolean(data?.publicId),
+        condition: data => data?.publicId,
       },
     },
   ],

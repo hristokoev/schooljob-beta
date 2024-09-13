@@ -5,8 +5,9 @@ import { SA, SA_A_O, SA_A_O_Self_createdBy } from '@/payload/access'
 import { createdBy } from '@/payload/fields'
 import { currencyOptions } from '@/payload/data'
 import { populateCreatedBy } from '@/payload/hooks'
+import { populateGlobalsDataOrders } from './hooks/populateGlobalsDataOrders'
 import { populateOrder } from './hooks/populateOrder'
-import { updateOrganizationJobsAllowed } from './hooks/updateOrganizationJobsAllowed'
+import { populateOrderId } from './hooks/populateOrderId'
 
 export const Orders: CollectionConfig = {
   slug: 'orders',
@@ -25,8 +26,8 @@ export const Orders: CollectionConfig = {
       en: 'Others',
       cs: 'Další',
     },
-    useAsTitle: 'organization',
-    defaultColumns: ['organization', 'membership', 'price', 'currency', 'createdAt'],
+    useAsTitle: 'orderId',
+    defaultColumns: ['orderId', 'organization', 'membership', 'price', 'currency', 'createdAt'],
   },
   access: {
     create: SA_A_O,
@@ -35,8 +36,9 @@ export const Orders: CollectionConfig = {
     delete: SA,
   },
   hooks: {
-    beforeChange: [populateCreatedBy, populateOrder],
-    afterChange: [updateOrganizationJobsAllowed],
+    beforeChange: [populateCreatedBy, populateOrder, populateOrderId],
+    afterChange: [populateGlobalsDataOrders],
+    // afterChange: [updateOrganizationJobsAllowed],
   },
   fields: [
     {
@@ -74,9 +76,9 @@ export const Orders: CollectionConfig = {
       type: 'row',
       fields: [
         {
-          name: 'quantity',
+          name: 'count',
           label: {
-            en: 'Quantity',
+            en: 'Count',
             cs: 'Počet',
           },
           type: 'number',
@@ -99,6 +101,10 @@ export const Orders: CollectionConfig = {
           type: 'number',
           admin: {
             width: '50%',
+            condition: data => data?.price,
+          },
+          access: {
+            create: SA
           },
           required: true,
         },
@@ -109,7 +115,6 @@ export const Orders: CollectionConfig = {
             cs: 'Měna',
           },
           type: 'select',
-          defaultValue: 'czk',
           options: currencyOptions.map(option => ({
             label: {
               en: en.search.options[option as keyof typeof en.search.options],
@@ -119,6 +124,10 @@ export const Orders: CollectionConfig = {
           })),
           admin: {
             width: '50%',
+            condition: data => data?.currency,
+          },
+          access: {
+            create: SA
           },
           required: true,
         },
@@ -128,11 +137,42 @@ export const Orders: CollectionConfig = {
       name: 'jobs',
       type: 'relationship',
       relationTo: 'jobs',
-      hasMany: true,
       access: {
-        update: SA,
+        create: SA
       },
+      admin: {
+        condition: data => data?.jobs,
+      },
+      hasMany: true,
+    },
+    {
+      name: 'jobsAllowed',
+      type: 'number',
+      access: {
+        create: SA
+      },
+      admin: {
+        condition: data => data?.jobsAllowed,
+      },
+      required: true
     },
     createdBy,
+    {
+      name: 'orderId',
+      label: {
+        en: 'Order ID',
+        cs: 'ID objednávky',
+      },
+      type: 'text',
+      access: {
+        create: SA,
+        read: () => true,
+        update: SA,
+      },
+      admin: {
+        position: 'sidebar',
+        condition: data => data?.orderId,
+      },
+    }
   ],
 }

@@ -15,18 +15,18 @@ import { useAuth } from '@/providers'
 
 const PricingCard: React.FC<Membership> = membership => {
   const t = useTranslations()
-  const { id, title, price, currency, description, features, featured, discount } = membership
+  const { id, title, price, currency, description, features, featured, discounts } = membership
   const { user } = useAuth()
   const [selected, setSelected] = useState<string | null>(null)
-  const [quantity, setQuantity] = useState<number>(1)
+  const [count, setCount] = useState<number>(1)
   const router = useRouter()
 
   const getPriceFromSelected = (price: number): string => {
-    if (!selected || !discount) {
+    if (!selected || !discounts) {
       return formatCurrency({ currency, value: price })
     }
 
-    const selectedDiscount = discount.find(item => item.id === selected)
+    const selectedDiscount = discounts.find(item => item.id === selected)
 
     if (!selectedDiscount) {
       return formatCurrency({ currency, value: price })
@@ -47,7 +47,7 @@ const PricingCard: React.FC<Membership> = membership => {
       createOrder(
         {
           membership: id,
-          quantity,
+          count,
         },
         user,
       ),
@@ -57,13 +57,13 @@ const PricingCard: React.FC<Membership> = membership => {
         error: t('membership.error'),
       },
     )
-  }, [selected, quantity, user])
+  }, [selected, count, user])
 
   useEffect(() => {
-    if (discount) {
-      setQuantity(discount.find(item => item.id === selected)?.count || 1)
+    if (discounts) {
+      setCount(discounts.find(item => item.id === selected)?.count || 1)
     }
-  }, [discount, selected])
+  }, [discounts, selected])
 
   return (
     <div
@@ -112,7 +112,7 @@ const PricingCard: React.FC<Membership> = membership => {
           </li>
         ))}
       </ul>
-      {discount && discount.length > 0 && (
+      {discounts && discounts.length > 0 && (
         <Fragment>
           <div
             className={`mb-3 text-sm font-semibold ${featured ? 'text-slate-100' : 'text-slate-800'}`}

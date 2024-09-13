@@ -56,10 +56,10 @@ export const Cvs: CollectionConfig = {
       hasMany: false,
       maxDepth: 0,
       access: {
-        update: () => false,
+        update: SA,
       },
       admin: {
-        condition: data => Boolean(data?.job),
+        condition: data => data?.job,
       },
     },
     {
@@ -73,10 +73,10 @@ export const Cvs: CollectionConfig = {
       hasMany: false,
       maxDepth: 0,
       access: {
-        update: () => false,
+        update: SA,
       },
       admin: {
-        condition: data => Boolean(data?.organization),
+        condition: data => data?.organization,
       },
     },
     createdBy,

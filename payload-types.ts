@@ -71,7 +71,8 @@ export interface Job {
   title: string;
   categories: ('preschool' | 'primary' | 'secondary' | 'tertiary' | 'leisure' | 'sport' | 'other')[];
   organization: string | Organization;
-  email: string;
+  order?: (string | null) | Order;
+  email?: string | null;
   employmentType: ('fulltime' | 'parttime' | 'agreement' | 'internship' | 'contract' | 'volunteer')[];
   location?:
     | (
@@ -178,7 +179,6 @@ export interface Job {
   };
   applications?: (string | Application)[] | null;
   featured?: boolean | null;
-  order: string | Order;
   slug?: string | null;
   createdBy?: (string | null) | User;
   publicId?: number | null;
@@ -421,9 +421,9 @@ export interface Membership {
   features: string[];
   price: number;
   currency: 'czk' | 'eur';
-  employmentType: ('fulltime' | 'parttime' | 'agreement' | 'internship' | 'contract' | 'volunteer')[];
-  expireAfter: 'twoWeeks' | 'oneMonth';
-  discount?:
+  jobsEmploymentType: ('fulltime' | 'parttime' | 'agreement' | 'internship' | 'contract' | 'volunteer')[];
+  jobsExpireAfter: 'twoWeeks' | 'oneMonth';
+  discounts?:
     | {
         count: number;
         discount: number;
@@ -443,11 +443,13 @@ export interface Order {
   id: string;
   organization: string | Organization;
   membership: string | Membership;
-  quantity: number;
-  price: number;
-  currency: 'czk' | 'eur';
+  count: number;
+  price?: number | null;
+  currency?: ('czk' | 'eur') | null;
   jobs?: (string | Job)[] | null;
+  jobsAllowed?: number | null;
   createdBy?: (string | null) | User;
+  orderId?: string | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -667,6 +669,7 @@ export interface Data {
   id: string;
   lastPublicJobId?: number | null;
   lastApplicationTrackingId?: number | null;
+  dailyOrders?: number | null;
   updatedAt?: string | null;
   createdAt?: string | null;
 }
